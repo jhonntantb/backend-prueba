@@ -3,23 +3,21 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     sequelize.define('order', {
         id: {
-          type: DataTypes.UUID,
-          allowNull: false,
-          primaryKey : true,
-          
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
         },
         date: {
-          type: DataTypes.DATE,
-          allowNull: false,
+            type: DataTypes.DATE,
+            allowNull: false,
         },
         status: {
-          type: DataTypes.STRING,
-          allowNull: false,
+            type: DataTypes.ENUM('Entregado', 'En espera', 'En preparacion'),
         },
         total_price: {
-          type: DataTypes.FLOAT,
-          allowNull: false,
-        }, 
+            type: DataTypes.FLOAT,
+            allowNull: false,
+        },
         home_address: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -37,8 +35,9 @@ module.exports = (sequelize) => {
             allowNull: false,
           },
         delivery_time: {
-          type: DataTypes.FLOAT,
-          allowNull: false,
-        }       
-      });
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+    });
 }
+
