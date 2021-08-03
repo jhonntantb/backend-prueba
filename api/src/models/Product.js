@@ -7,6 +7,11 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
+        catalog_id:{
+            type: DataTypes.INTEGER,
+            allowNull:false,
+            unique: true,
+        },
         title: {
             type: DataTypes.STRING
         },
