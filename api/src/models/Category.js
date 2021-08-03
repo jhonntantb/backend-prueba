@@ -1,18 +1,18 @@
 const { DataTypes } = require("sequelize");
 
-modelDefine = (sequelize) => {
+module.exports = (sequelize) => {
     sequelize.define("category", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
-            allowNull: false, 
+            allowNull: false,
             primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            // fede jacowicky
         }
     });
 }
 
-module.exports = modelDefine;
