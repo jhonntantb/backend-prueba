@@ -9,6 +9,10 @@ module.exports = (sequelize) => {
         catalog_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+        },
+        catalog_id:{
+            type: DataTypes.INTEGER,
+            allowNull:false,
             unique: true,
         },
         title: {
