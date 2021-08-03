@@ -13,6 +13,7 @@ const ProductCreation = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        
         console.log(addProduct);
     }
 
@@ -27,6 +28,7 @@ const ProductCreation = () => {
         <div className="container">
             <h1 className="text-center mt-3">Creación de productos</h1>
             <form onSubmit={handleSubmit}>
+                <p>Order: 123</p>
                 <div className="mb-3">
                     <label className="form-label">
                         Nombre del Producto
@@ -36,6 +38,7 @@ const ProductCreation = () => {
                         value={addProduct.title}
                         onChange={handleChange}
                         className="form-control"
+                        autoComplete="off"
                     />
                 </div>
                 <div className="mb-3">
@@ -47,6 +50,7 @@ const ProductCreation = () => {
                         value={addProduct.resume}
                         onChange={handleChange}
                         className="form-control"
+                        autoComplete="off"
                     />
                 </div>
                 <div className="form-floating">
@@ -56,7 +60,8 @@ const ProductCreation = () => {
                         value={addProduct.detail}
                         onChange={handleChange}
                         id="floatingTextarea"
-                        
+                        autoComplete="off"
+
                     />
                     <label htmlFor="floatingTextarea">Detalle</label>
                 </div>
@@ -72,10 +77,21 @@ const ProductCreation = () => {
                         onChange={handleChange}
                         className="form-control"
                         placeholder="$"
+                        autoComplete="off"
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                    <select
+                        className="form-select form-select-sm"
+                        aria-label=".form-select-sm example"
+                        >
+                        <option >-Categoria-</option>
+                        <option >One</option>
+                        <option >Two</option>
+                        <option >Three</option>
+                    </select>
+
+                <button type="submit" className="btn btn-primary mt-3">
                     Submit
                 </button>
             </form>
