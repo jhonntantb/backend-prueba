@@ -11,7 +11,6 @@ modelDefine = (sequelize) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            // fede jacowicky
         }
     });
 }
