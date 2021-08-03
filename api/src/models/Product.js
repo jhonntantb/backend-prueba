@@ -1,7 +1,8 @@
-const {DataTypes} =require("sequelize")
-module.exports=(sequelize)=>{
-    sequelize.define("product",{
-        id:{
+const { DataTypes } = require("sequelize")
+module.exports = (sequelize) => {
+
+    sequelize.define("product", {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
@@ -11,17 +12,17 @@ module.exports=(sequelize)=>{
             allowNull:false,
             unique: true,
         },
-        title:{
+        title: {
             type: DataTypes.STRING
         },
-        resume:{
-            type:DataTypes.STRING
+        resume: {
+            type: DataTypes.STRING
         },
-        detail:{
+        detail: {
             type: DataTypes.TEXT
         },
-        price:{
-            tyep: DataTypes.FLOAT
+        price: {
+            type: DataTypes.FLOAT
         },
     });
-} 
+}

@@ -1,11 +1,13 @@
 const { DataTypes } = require("sequelize");
 
-modelDefine = (sequelize) => {
+module.exports = (sequelize) => {
+
     sequelize.define("schedule", {
+
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
-            allowNull: false, 
+            allowNull: false,
             primaryKey: true
         },
         date: {
@@ -15,4 +17,3 @@ modelDefine = (sequelize) => {
     });
 }
 
-module.exports = modelDefine;
