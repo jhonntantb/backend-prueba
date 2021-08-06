@@ -10,16 +10,17 @@ import './Product.css'
 function ProductList() {
 const dispatch = useDispatch()  
 
-useEffect( () => {
+/* useEffect( () => {
   dispatch(getAllProduct());
 
-}, [])
- 
+}, []) */
+
+dispatch(getAllProduct());
 
 
 const list = useSelector(state => state.products)
 
-console.log(list);
+console.log("****************",list);
 
 if (list && list.length > 0) {
  return (
@@ -65,10 +66,8 @@ if (list && list.length > 0) {
 } else {
   return (
    <div> 
-     <h2>No hay datos</h2> 
-     <Link to={'/home'} className="btn">
-      {'Home'} 
-    </Link>
+     <h3>No hay datos</h3> 
+  
    </div>
   )
 }
