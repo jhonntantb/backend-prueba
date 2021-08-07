@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
   sequelize.define('user', {
 
     id: {
+
       type: DataTypes.STRING,
       // defaultValue: UUIDV4,
       allowNull: false,
@@ -32,6 +33,7 @@ module.exports = (sequelize) => {
     //   type: DataTypes.STRING,
     //   allowNull: false,
     // },
+
     isAdmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

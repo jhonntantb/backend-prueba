@@ -1,20 +1,25 @@
 import React from 'react';
 import {Link , withRouter} from 'react-router-dom';
 import { useState } from 'react';
+
 import { useDispatch } from 'react-redux';
+
 import {compose} from 'recompose';
 
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
+
 import {createUser} from '../../../redux/actions/user/index';
 
 import './index.css';
 import { Alert } from 'reactstrap';
 
 
+
 const SignUpPage = () => (
     <div>
         <h1>Registrarse</h1>
+
         <SignUpForm /> 
     </div>
   );
@@ -29,12 +34,16 @@ const initial_state= {
 
 function SignUpFormBase (props) {
 
+
     const dispatch= useDispatch();
+
 
     var [state, setState] = useState(initial_state)
 
     const onSubmitHandler = async (e) => {
+
         const { user_name, first_name, last_name, email, passwordOne, province, city, street, number } = state;
+
 
         e.preventDefault();
 
@@ -47,6 +56,7 @@ function SignUpFormBase (props) {
             // console.log('credential ' + authUser.credential)
             // console.log('additionalUserInfo : ' + Object.keys(authUser.additionalUserInfo) )
             // console.log('operationType:  ' + authUser.operationType)
+
             var userOk={
               id: authUser.user.uid, 
               user_name,
@@ -60,6 +70,7 @@ function SignUpFormBase (props) {
             if(authUser!==undefined) {
                 setState({...initial_state})
             props.history.push(ROUTES.SIGN_IN)
+
             }
             
         } catch (error) {
@@ -101,7 +112,9 @@ function SignUpFormBase (props) {
     
 
     return (
+
         <form className='user-main' onSubmit={onSubmitHandler}>
+
             <input
           name="user_name"
           value={user_name}
@@ -144,6 +157,7 @@ function SignUpFormBase (props) {
           type="password"
           placeholder="Confirm Password"
         />
+
         <input
           name="province"
           value={province}
@@ -172,6 +186,7 @@ function SignUpFormBase (props) {
           type="text"
           placeholder="numero de calle"
         />
+
         <button disabled={isInvalid} type="submit">Sign Up</button>
 
         

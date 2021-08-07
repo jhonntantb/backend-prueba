@@ -14,6 +14,7 @@ const userReducer = (state = initialState, action) => {
             ...state,
             user:action.payload   
         }
+
         case TYPES.CREATE_USER: return  {...state, newUser: action.payload} 
         case TYPES.UPDATE_USER: return state
         case TYPES.DELETE_USER: return state

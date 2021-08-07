@@ -17,7 +17,9 @@ import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
 import Login from './components/Login/Login'
 import Navbar from './components/Nav/Navbar';
-import Form from './components/Admin/FormDetail/Form';
+
+import Form from './components/Admin/FormDetail/FormCategory';
+
 
 function App() {
   return (
