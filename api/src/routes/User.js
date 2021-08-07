@@ -28,6 +28,27 @@ router.post("/",async (req,res,next)=>{
         next(error)
     }
 })
+router.put("/",async (req,res,next)=>{
+    const changes=req.body.changes;
+    //solo el admi puede modificar su active
+    try {
+        const modUser=await User.update(changes,{where:{id:req.body.id}})
+        res.send(modUser)
+    } catch (error) {
+        next(error)
+    }
+})
+router.delete("/",async (req,res,next)=>{
+    const id=req.body;
+    try {
+        const deleteUser=await User.destroy({where:{id:id}})
+        res.send(deleteUser)
+        console.log(deleteUser)//para saber que manda
+    } catch (error) {
+        next(error)
+    }
+})
+
 
 
 

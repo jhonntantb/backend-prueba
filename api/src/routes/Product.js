@@ -63,11 +63,13 @@ router.post("/", async function(req,res, next){
     if (!created) {  res.status(400).json("Ya existe producto con mismo nro catalogo") 
     }
     else {
-      await product.setCategories(req.body.category);
+      req.body.category.map(async(c)=>{
+        await product.setCategories(c);
+      })
       await Stock.create({
           productId:product.id,
           office_id:req.body.office_id,
-          quantity:0,
+          quantity:req.body.quantity,
           })   
           
           if(req.body.image.length > 0){
