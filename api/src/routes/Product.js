@@ -13,7 +13,9 @@ router.get("/", async function(req,res, next){
      res.status(200).json(product)
   }
   catch (error) {next(error)};
+
  } )
+
 
  /*  if(!name) {
    try{

@@ -4,6 +4,11 @@ import SearchBar from './SearchBar'
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
 
+
+import SignOutButton from '../Authentication/SignOut/index';
+import * as ROUTES from '../../routes';
+
+
 const Navbar = () => {
 
     var authUser = sessionStorage.getItem("pg_merceria")
@@ -39,14 +44,24 @@ const Navbar = () => {
                             Agregar productos
                         </NavLink>
 
+                        {authUser==='guest'||!authUser?
+                        <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink>:null}
+                        
+                        {authUser&&authUser!=='guest'?(
+                            <div>
+                            <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
+                            </div>
+                        ):null}
+
+                       
+
                     </div>
                     <div className="d-flex">
-                        <NavLink to={ROUTES.SIGN_IN}>
-                            <button className="btn btn-info">Sing In</button>
-                        </NavLink>
-                        <NavLink to="/">
-                            <button className="btn btn-info">Logout</button>
-                        </NavLink>
+
+                    <SearchBar />
+                    
+                    <SignOutButton />
+
                     </div>
                 </div>
             </div>
