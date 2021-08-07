@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';

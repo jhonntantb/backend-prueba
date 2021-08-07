@@ -3,13 +3,30 @@ const { Sequelize } = require('sequelize');
 const { DataTypes } = require("sequelize")
 const fs = require('fs');
 const path = require('path');
-const {DB_USER, DB_PASSWORD, DB_HOST} = process.env;
+const { Console } = require('console');
+const {DB_USER, DB_PASSWORD, DB_HOST, ELEPHANT_CONNECT, CONNECT} = process.env;
+console.log(CONNECT);
+console.log(DB_HOST);
 
+if(CONNECT==='CLOUD') {
+  // Codigo para cloud service
+  console.log('Conexión a base cloud')
+  var sequelize = new Sequelize(ELEPHANT_CONNECT, {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  });
+  }
+  else {
+  //Codigo para Postgress local
+   console.log('Conexión a base local');
+  var sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/merceria`, {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  });
+  }
+ 
+  
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/merceria`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-});
 const basename = path.basename(__filename);
 
 const modelDefiners = [];

@@ -5,5 +5,3 @@ export const LogInUser = (mail) => {
         return dispatch({type: TYPES.LOG_IN_USER, payload: mail})
     }
 }
-
- 

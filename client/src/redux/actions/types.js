@@ -6,7 +6,7 @@ export const GET_ALL_PRODUCT = "getAllProduct"
 export const GET_PRODUCT = "get_product"
 export const CREATE_PRODUCT = "create_product" 
 export const UPDATE_PRODUCT = "update_product" 
-export const DELETE_PRODUCT = "get_product"  
+export const DELETE_PRODUCT = "get_product"
 
 //User
 export const GET_ALL_USER = "get_all_user"
@@ -20,21 +20,21 @@ export const GET_ALL_REVIEW = "get_all_review"
 export const GET_REVIEW = "get_review"
 export const CREATE_REVIEW = "create_review" 
 export const UPDATE_REVIEW = "update_review" 
-export const DELETE_REVIEW = "get_review"  
+export const DELETE_REVIEW = "get_review"
 
 //Order
 export const GET_ALL_ORDER = "get_all_order"
 export const GET_ORDER = "get_order"
 export const CREATE_ORDER = "create_order" 
 export const UPDATE_ORDER = "update_order" 
-export const DELETE_ORDER= "get_order"  
+export const DELETE_ORDER= "get_order"
 
 //Stock
 export const GET_ALL_STOCK = "get_all_stock"
 export const GET_STOCK = "get_stock"
 export const CREATE_STOCK = "create_stock" 
 export const DELETE_STOCK = "get_stock"
-export const UPDATE_STOCK = "update_stock"  
+export const UPDATE_STOCK = "update_stock"
 
 //Bundle
 export const GET_ALL_BUNDLE = "get_all_bundle"
@@ -55,4 +55,4 @@ export const GET_ALL_OFFICE = "get_all_office"
 export const GET_OFFICE = "get_office"
 export const CREATE_OFFICE = "create_office" 
 export const UPDATE_OFFICE = "update_office" 
-export const DELETE_OFFICE = "get_office"  
+export const DELETE_OFFICE = "get_office"
