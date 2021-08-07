@@ -1,4 +1,3 @@
-import axios from 'axios';
 import * as TYPES from "../types";
 
 export const LogInUser = (mail) => {
