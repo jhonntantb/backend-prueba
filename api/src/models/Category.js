@@ -11,8 +11,11 @@ module.exports = (sequelize) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            // fede jacowicky
-        }
+        },
+        /*status: {
+            type:DataTypes.ENUM('active','inactive'),
+            allowNull:false
+        }*/
     });
 }
 
