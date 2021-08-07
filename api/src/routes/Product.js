@@ -7,7 +7,17 @@ const { Op } = require("sequelize");
 //////////  GET PRODUCT  /////////////
 router.get("/", async function(req,res, next){
   const { name } = req.query ;
-  if(!name) {
+  console.log('ruta get product name: ', name);
+  try{
+    const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+     res.status(200).json(product)
+  }
+  catch (error) {next(error)};
+
+ } )
+
+
+ /*  if(!name) {
    try{
      const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
       res.status(200).json(product)
@@ -20,19 +30,7 @@ router.get("/", async function(req,res, next){
        res.status(200).json(product)
     }
     catch (error) {next(error)}; 
-  }
-})
-
-router.get("/", async function(req,res, next){
-  try{
-
-    const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
-     res.status(200).json(product)
-  }
-  catch (error) {next(error)};
-})
-
-
+  } */
 
 
 router.get("/:idProducto", async function(req,res, next){
@@ -46,9 +44,6 @@ router.get("/:idProducto", async function(req,res, next){
   } 
    catch (error) {next(error)};
 })
-
-
-
 
 ///////////    POST PRODUCT    ///////////
 
@@ -68,11 +63,13 @@ router.post("/", async function(req,res, next){
     if (!created) {  res.status(400).json("Ya existe producto con mismo nro catalogo") 
     }
     else {
-      await product.setCategories(req.body.category);
+      req.body.category.map(async(c)=>{
+        await product.setCategories(c);
+      })
       await Stock.create({
           productId:product.id,
           office_id:req.body.office_id,
-          quantity:0,
+          quantity:req.body.quantity,
           })   
           
           if(req.body.image.length > 0){
