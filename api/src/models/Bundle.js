@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        discout: {
+        discount: {
             type: DataTypes.FLOAT,
             allowNull: false
         }

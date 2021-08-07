@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, UUIDV4 } = require('sequelize');
 
 module.exports = (sequelize) => {
 
@@ -6,6 +6,7 @@ module.exports = (sequelize) => {
 
     id: {
       type: DataTypes.UUID,
+      defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
@@ -19,7 +20,7 @@ module.exports = (sequelize) => {
       unique: true,
     },
     phone: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
     },
   });
