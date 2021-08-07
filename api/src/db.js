@@ -135,8 +135,8 @@ Order.belongsTo(User);
 User.hasMany(Review);
 Review.belongsTo(User);
 
-Order.hasMany(Review);
-Review.belongsTo(Order);
+Product.hasMany(Review);
+Review.belongsTo(Product);
 
 User.hasMany(Schedule);
 Schedule.belongsTo(User);

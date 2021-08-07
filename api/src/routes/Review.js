@@ -23,6 +23,18 @@ router.get("/:id", (req, res) => {
     })
 })
 
+router.get("/:product_id", (req, res) => {
+    Review.findOne({where: {
+        productId: req.body.review.product_id
+    }})
+    .then((review) => {
+        res.status(200).send(reviews)
+    })
+    .catch((error) => {
+        res.status(400).send(error)
+    })
+})
+
 router.post("/", (req, res)=>{
     Review.create(req.body.review)
     .then(()=>{
