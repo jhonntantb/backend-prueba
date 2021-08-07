@@ -6,8 +6,8 @@ import firebaseConfig from '../FireBase/FBconfig';
 
 
 
-const ReactFirebaseFileUpload = (  images, setImages ) => {
-    // const [images, setImages] = useState([]);
+const ReactFirebaseFileUpload = (  storeImages, setStoreImages ) => {
+    const [images, setImages] = useState([]);
     const [urls, setUrls] = useState([]);
     const [progress, setProgress] = useState(0);
 
@@ -15,7 +15,7 @@ const ReactFirebaseFileUpload = (  images, setImages ) => {
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
             newImage["id"] = Math.random();
-            // setImages((prevState) => [...prevState, newImage]);
+            setImages((prevState) => [...prevState, newImage]);
         }
     };
 
@@ -31,18 +31,18 @@ const ReactFirebaseFileUpload = (  images, setImages ) => {
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     );
                     setProgress(progress);
-                },
+                    },
                 (error) => {
                     console.log(error);
-                },
+                    },
                 async () => {
                     await firebase.storage()
                         .ref("images")
                         .child(image.name)
                         .getDownloadURL()
-                        .then((urls) => {
-                            setUrls((prevState) => [...prevState, urls]);
-                            setImages(urls)
+                        .then((url) => {
+                            setUrls((prevState) => [...prevState, url]);
+                            setStoreImages(storeImages.concat(urls))
                             //ojooo
                             //aqui tiene que ir el dispatch de las imagenes
                         });

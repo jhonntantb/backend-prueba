@@ -30,10 +30,10 @@ function Form() {
    
 
     const handleSendCategory = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         if(newCategory.trim().length > 0){
-        dispatch(postCategory(newCategory))
-        dispatch(getAllCategory())}
+        await dispatch(postCategory(newCategory))
+        await dispatch(getAllCategory())}
     }
     const handleInput= async (e) => {
         e.preventDefault();

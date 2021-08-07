@@ -34,7 +34,7 @@ const ProductCreation = () => {
         setaddProduct({...addProduct, image: images})
         try {
             dispatch(postCategory(addProduct))
-            alert('agregado exitosamente')
+            // alert('agregado exitosamente')
         }
         catch(err) {
             console.log(err)
