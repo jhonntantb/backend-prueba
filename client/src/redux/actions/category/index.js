@@ -17,13 +17,13 @@ export const getCategory = (id) => {
 }
 
 
-
 export const postCategory = (name) => {
     return async (dispatch) => {
         const res = await axios.post('http://localhost:3001/category?name=' + name)
         return dispatch({ type: TYPES.CREATE_CATEGORY, payload: res.data })
     }
 }
+
 
 
 
@@ -40,9 +40,11 @@ export function deleteCategory(id) {
 }
 
 export const updateCategory = (id) => {
+
     return async (dispatch) => {
         const res = await axios.put('http://localhost:3001/category/'+ id)
         return dispatch({ type: TYPES.UPDATE_CATEGORY, payload: res.data })
     }
 }
+
 
