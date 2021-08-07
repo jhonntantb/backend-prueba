@@ -5,8 +5,8 @@ module.exports = (sequelize) => {
   sequelize.define('user', {
 
     id: {
-      type: DataTypes.UUID,
-      defaultValue: UUIDV4,
+      type: DataTypes.STRING,
+      // defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
@@ -23,19 +23,15 @@ module.exports = (sequelize) => {
       type:DataTypes.STRING,
       allowNull:false
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    // password: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -48,7 +44,7 @@ module.exports = (sequelize) => {
     },
     address: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
   });
 }

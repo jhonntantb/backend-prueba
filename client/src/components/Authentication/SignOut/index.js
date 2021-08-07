@@ -31,7 +31,7 @@ import {LogInUser} from '../../../redux/actions/login/index';
     }
 
     return (
-  <button type="button" onClick={clickHandler}>
+  <button type="button" onClick={clickHandler} className="btn btn-danger">
     Log Out
   </button>
 );}

@@ -13,12 +13,12 @@ router.post("/",async (req,res,next)=>{
         const [user,created]=await User.findOrCreate({
             where:{user_name: req.body.user_name},
             defaults:{
+                id: req.body.id,
                 user_name: req.body.user_name,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
-                name: req.body.name,
                 email: req.body.email,
-                password: req.body.password,
+                // password: req.body.password,
                 address: req.body.address
             }
         })
