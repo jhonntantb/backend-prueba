@@ -10,8 +10,9 @@ export default function Product (id){
     //const product = useEffect(state => state.product)
     //const reviews = useEffect(state => state.reviews)
     const product = {}
-    const reviews = {}
-    
+    const reviews = [
+        {score: 4, description: "Me parecio un gran producto", date: "07/06/2021"}
+    ]
 
     useEffect(()=>{
         dispatch(getProduct(id))
@@ -19,6 +20,7 @@ export default function Product (id){
 
     return (
         <div>
+            
             <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"/>
             <Carrousel/>
             <h1 id="title">TITULO</h1>
@@ -26,11 +28,12 @@ export default function Product (id){
                 -resumen
                 -resumen
                 -resumen
-            </div>
+            </div>                                            
             <div id="description">
                 descripcion
             </div>
-            {/* <ShowReviews reviews={reviews}/> */}
+            
+            <ShowReviews reviews={reviews}/>
         </div>
     )
 }
