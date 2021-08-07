@@ -6,67 +6,7 @@ import firebaseConfig from '../FireBase/FBconfig';
 
 
 
-// export default function FileUpload(props) {
-//     var [status, setStatus] = useState({ uploadValue: 0, picture: null });
-
-
-
-//     // if (!firebase.apps.length) {
-//     //     const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-//     //     const db = firebaseApp.firestore();
-
-//     //  }else {
-//     //     firebase.app(); // if already initialized, use that one
-//     //  }
-
-
-//     function handleUpload(e) {
-//         var file = e.target.files[0];
-//         var storageRef = firebase.storage().ref('images/' + file.name);
-//         const task = storageRef.put(file)
-
-//         var file = e.target.files
-
-//         var storageRef = firebase.storage().ref('images/' + file.name);
-//         const task = storageRef.put(file)
-
-//         task.on('state_changed',
-//             function progress(snapshot) {
-//                 var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//                 setStatus({ uploadValue: percentage });
-//             },
-//             function error(err) {
-//                 if (err.message) {
-//                     return err.message;
-//                 } else {
-//                     return 'An error ocurred'
-//                 }
-//             },
-//             async function complete() {
-//                 setStatus({
-//                     uploadValue: 100,
-//                     picture: await storageRef.getDownloadURL()
-//                 })
-//                 console.log('File Uploaded Succesfully');
-//                 return status.picture
-//             }
-//         )
-//     }
-
-//     return (
-//         <div>
-//             <progress value={status.uploadValue} max="100"></progress>
-//             <br />
-//             <input type='file' multiple onChange={handleUpload} />
-//             <br />
-//             <img width='200' height='170' src={status.picture} alt="" />
-//         </div>
-//     )
-
-// }
-
-const ReactFirebaseFileUpload = ({ setImages, images }) => {
+const ReactFirebaseFileUpload = (  images, setImages ) => {
     // const [images, setImages] = useState([]);
     const [urls, setUrls] = useState([]);
     const [progress, setProgress] = useState(0);
@@ -75,7 +15,7 @@ const ReactFirebaseFileUpload = ({ setImages, images }) => {
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
             newImage["id"] = Math.random();
-            setImages((prevState) => [...prevState, newImage]);
+            // setImages((prevState) => [...prevState, newImage]);
         }
     };
 
@@ -102,6 +42,7 @@ const ReactFirebaseFileUpload = ({ setImages, images }) => {
                         .getDownloadURL()
                         .then((urls) => {
                             setUrls((prevState) => [...prevState, urls]);
+                            setImages(urls)
                             //ojooo
                             //aqui tiene que ir el dispatch de las imagenes
                         });
@@ -139,7 +80,7 @@ const ReactFirebaseFileUpload = ({ setImages, images }) => {
             {urls.map((url, i) => (
                 <img
                     key={i}
-                    style={{ width: "500px" }}
+                    style={{ width: "250px" }}
                     src={url || "http://via.placeholder.com/300"}
                     alt="firebase-image"
                 />

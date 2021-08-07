@@ -45,12 +45,12 @@ function Form() {
         //botton agregar categorias
         <div>
             <div>
-            {category.length > 0 ? category.map((c) => (
+            {categories?category.length > 0 ? category.map((c) => (
                 <span className="" >
                     <button className="x" onClick={(e) => handleDeleteCategory(e,c.id)}>Eliminar</button>
                     <span>{c.name}</span>  
                 </span>
-            )): <p>No hay categorias</p>}
+            )): <p>No hay categorias</p>:null}
             </div>
             <div>
                 <label htmlFor="SendCategory">Agregar categoria</label>
