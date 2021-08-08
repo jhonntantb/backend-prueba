@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 const ProductCreation = () => {
+    const dispatch=useDispatch();
+
+    const storeCategories = useSelector(state=>state.categoryReducer.categories)
+
+    const [inputCategories, setInputCategories] = useState([])
 
     const [addProduct, setaddProduct] = useState(
         {
@@ -22,6 +28,37 @@ const ProductCreation = () => {
             ...addProduct,
             [e.target.name]: e.target.value
         })
+    }
+
+    function selectCategory (e) {
+        var categorySelected = e.target.value;
+        
+        if(!e.target.checked) {
+            let filtered = inputCategories.filter(e => e!=categorySelected)
+            setInputCategories(filtered)
+        }else {
+            setInputCategories(inputCategories.concat([categorySelected]))
+        }
+    }
+
+    function renderCategories() {
+        return (
+            <div>
+                {storeCategories.map((c, i)=>{
+                    return (
+                        <div>
+                            <input 
+                            type='checkbox' 
+                            id={i} 
+                            name={c.name}
+                            value={c.id}
+                            onChange={e=>selectCategory(e)}/>
+                            <label for={i}>{c.name}</label><br/>
+                        </div>
+                    )
+                })}
+            </div>
+        )
     }
 
     return (
@@ -81,7 +118,7 @@ const ProductCreation = () => {
                     />
                 </div>
 
-                    <select
+                    {/* <select
                         className="form-select form-select-sm"
                         aria-label=".form-select-sm example"
                         >
@@ -89,7 +126,8 @@ const ProductCreation = () => {
                         <option >One</option>
                         <option >Two</option>
                         <option >Three</option>
-                    </select>
+                    </select> */}
+                {renderCategories()}  
 
                 <button type="submit" className="btn btn-primary mt-3">
                     Submit
