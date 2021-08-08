@@ -17,11 +17,12 @@ export default function Product ({match}){
         console.log(match.params.id)
         dispatch(getProduct(match.params.id))
     }, [])
+    
     console.log(product)
     return (
         product ?
             <div>
-            <img src={product.image[0]}/>
+            {/* <img src={product.image[0]}/> */}
             <Carrousel/>
             <h1 id="title">{product.name}</h1>
             <div id="resume">
