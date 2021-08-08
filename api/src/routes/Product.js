@@ -70,17 +70,17 @@ router.post("/", async function(req,res, next){
           
           if(req.body.image.length>0){
             req.body.image.forEach( async(c) =>
-            await Productimage.create({
+             await Productimage.create({
                 productId: product.id, 
                 image_url:c
-            }) 
-        ) 
-    }
+             }) 
+            ) 
+          }
 
 
           
  
-        } 
+        
 
       res.status(200).json(product) 
     }

@@ -10,12 +10,12 @@ import './Product.css'
 function ProductList() {
 const dispatch = useDispatch()  
 
-/* useEffect( () => {
+useEffect( () => {
   dispatch(getAllProduct());
 
-}, []) */
+}, [])
 
-dispatch(getAllProduct());
+
 
 
 const list = useSelector(state => state.productReducer.products)
@@ -38,14 +38,15 @@ if (list && list.length > 0) {
         <div>
             <li key={r.catalog_id} className={"caja"}>
               <div className={"caja-datos"}>
-                 <img src={r.productimages[0].image_url} width="350" alt='Imagen no disponible' className={"caja-imagen"}/>
+
+                {r.productimages.length > 0? <img src={r.productimages[0].image_url} width="350" alt='Imagen no disponible' className={"caja-imagen"}/> : null}
                  <div className={"caja-datosTexto"}>
                    <Link to={`/productdetail/${r.id}`} className={"caja-nombre"}>
                     {r.title} 
                    </Link>
                    <p>{`Artículo: ${r.catalog_id}`}</p>
                    <p>{`Precio: ${r.price}`}</p>
-                   <p>{`Categoria: ${r.categories[0].name}`}</p>
+                  {r.categories.length > 0? <p>{`Categoria: ${r.categories[0].name}`}</p> : null}
  
                  </div>
               </div>
