@@ -9,8 +9,11 @@ export default function Product (id){
     const dispatch = useDispatch();
     //const product = useEffect(state => state.product)
     product = {}
-    const reviews = useEffect(state => state.reviews)
-
+    const reviews = {
+        score: 3,
+        date: "sadsdasd",
+        description: "esto es una descripcion"
+    }
     useEffect(()=>{
         dispatch(getProduct(id))
     }, [])

@@ -2,6 +2,7 @@ import Review from "../Review/Review"
 
 export default function ShowReviews({reviews})
 {
+    console.log(reviews)
     return (
     
     <div id="allReviews">
