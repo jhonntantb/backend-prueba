@@ -7,13 +7,7 @@ import Carrousel from "../../Carrousel/Carrousel"
 export default function Product (id){
     const [content, setContent] = useState({})
     const dispatch = useDispatch();
-    //const product = useEffect(state => state.product)
-    product = {}
-    const reviews = {
-        score: 3,
-        date: "sadsdasd",
-        description: "esto es una descripcion"
-    }
+
     useEffect(()=>{
         dispatch(getProduct(id))
     }, [])
@@ -29,7 +23,7 @@ export default function Product (id){
             <div id="description">
                 {product.detail}
             </div>
-            <ShowReviews reviews={reviews}/>
+            <ShowReviews/>
         </div>
     )
 }

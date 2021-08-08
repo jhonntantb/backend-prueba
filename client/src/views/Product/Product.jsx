@@ -11,7 +11,7 @@ export default function Product (id){
     //const reviews = useEffect(state => state.reviews)
     const product = {}
     const reviews = [
-        {score: 4, description: "Me parecio un gran producto", date: "07/06/2021"}
+        {score: 2, description: "Me parecio un gran producto", date: "07/06/2021"}
     ]
 
     useEffect(()=>{
