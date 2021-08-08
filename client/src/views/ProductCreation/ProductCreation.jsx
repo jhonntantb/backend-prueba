@@ -14,7 +14,7 @@ const ProductCreation = (props) => {
     const [inputCategories, setInputCategories] = useState([]);
     const [inputOffice, setInputOffice] =useState([])
     const [storeImages, setStoreImages] = useState([]);
-    
+     
     const local_initial_state = {
             title: '',
             resume: '',
