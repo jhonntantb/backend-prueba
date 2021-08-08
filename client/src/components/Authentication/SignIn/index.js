@@ -14,8 +14,7 @@ const SignInPage = () => (
   <div className="container">
 
     <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
+
   </div>
 );
 
@@ -101,7 +100,10 @@ function SignInFormBase(props) {
 
 
               {error && <p className="text-danger text-center">{error.message}</p>}
-
+              <div className="d-grip gap-2">
+                <PasswordForgetLink />
+                <SignUpLink />
+              </div>
 
             </form>
           </div>

@@ -23,7 +23,7 @@ export default function Product ({match}){
         product ?
             <div>
             {/* <img src={product.image[0]}/> */}
-            {/* <Carrousel images={product.productimages}/> */}
+            <Carrousel images={product.productimages}/>
             <h1 id="title">{product.name}</h1>
             <div id="resume">
                 {product.resume}

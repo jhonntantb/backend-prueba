@@ -6,6 +6,7 @@ import { getProduct} from "../../redux/actions/product/index.js";
 
 
 
+
 function ProductDetail() {
     
     const dispatch = useDispatch()
