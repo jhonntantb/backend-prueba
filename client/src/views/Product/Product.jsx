@@ -4,36 +4,36 @@ import { getProduct } from "../../redux/actions/product/index"
 import ShowReviews from "../../components/ShowReviews/ShowReviews"
 import Carrousel from '../../components/Carrousel/Carrousel'
 
-export default function Product (id){
+export default function Product ({match}){
     const [content, setContent] = useState({})
     const dispatch = useDispatch();
-    //const product = useEffect(state => state.product)
+    const product = useSelector(state => state.productReducer.product)
     //const reviews = useEffect(state => state.reviews)
-    const product = {}
     const reviews = [
         {score: 2, description: "Me parecio un gran producto", date: "07/06/2021"}
     ]
 
     useEffect(()=>{
-        dispatch(getProduct(id))
+        console.log(match.params.id)
+        dispatch(getProduct(match.params.id))
     }, [])
-
+    console.log(product)
     return (
-        <div>
-            
-            <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"/>
+        product ?
+            <div>
+            <img src={product.image[0]}/>
             <Carrousel/>
-            <h1 id="title">TITULO</h1>
+            <h1 id="title">{product.name}</h1>
             <div id="resume">
-                -resumen
-                -resumen
-                -resumen
+                {product.resume}
             </div>                                            
             <div id="description">
-                descripcion
+                {product.detail}
             </div>
             
             <ShowReviews reviews={reviews}/>
         </div>
+        :
+        <div></div>
     )
 }
