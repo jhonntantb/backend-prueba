@@ -1,37 +1,42 @@
 const router = require('express').Router();
 const { Stock } = require('../db')
 
-router.get("/", (_req, res) => {
-    Stock.findAll()
-    .then(stocks => res.status(200).send(stocks))
-    .catch(error => res.status(400).send(error))
+router.get("/",async (_req, res,next) => {
+    //{include:[{model:office},{model:product}]}
+    try {
+        const stock=await Stock.findAll()
+        res.send(stock)
+    } catch (error) {
+       next(error) 
+    }
 })
-
-router.get("/:id", (req, res) => {
+// al agregar stock de un producto setear ala oficina?? 
+// se debe relacionar al producto
+router.post("/",async (req,res,next) => {
+    const newStock=req.body;
+    //body tiene que traer: id de la officina id del producto el cual se agrega el sotck
+    try {
+        const stock=await Stock.create({quantity:req.body.quantity})
+        res.send(stock)
+        await stock.setOffices(newStock.officeId)
+        await stock.setProducts(newStock.productId)
+    } catch (error) {
+        next(error)
+    }
+    
+    //seteamos ese stock a una officina y producto 
+})
+//modificariomos en el caso que entre otra cantidad del mismo producto
+router.put("/:id",async (req,res,next) => {
+    try {
+        const stock=await Stock.update(re.body,{where:{id:req.params.id}})
+    } catch (error) {
+        next(error)
+    }
     Stock.findOne({
         where: {
             id: req.body.stock.id
         }
     })
-    .then(stocks => res.status(200).send(stocks))
-    .catch(error => res.status(400).send(error))
 })
-
-router.post("/", (req, res) => {
-    Stock.create(req.body.stock)
-    .then(() => res.status(200).json("Stock creado exitosamente"))
-    .catch(error => res.status(400).send(error))
-})
-
-router.delete("/", (req, res) => {
-    Stock.findOne({
-        where: {
-            id: req.body.stock.id
-        }
-    })
-    .then(stock => stock.update({
-        active: false
-    }))
-    .then(() => res.status(200).json("Eliminado exitosamente"))
-    .catch(error => res.status(400).send(error))
-})
+module.exports = router;

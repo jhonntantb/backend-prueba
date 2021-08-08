@@ -1,7 +1,7 @@
 import * as TYPES from "../types";
 
 const initialState = {
-    offices:[],
+    offices:["OFICINA LA GAROMPA"],
     office:[],
   };
 

@@ -4,8 +4,10 @@ const data = require ('./src/data')
 const dataCategories = require ('./src/dataCategories')
 
 // Syncing all the models at once.
+
 const update = true ;
 conn.sync({ force: update }).then(() => {
+
   server.listen(3001, () => {
     console.log('%s listening at 3001'); 
     if(update) {
@@ -27,3 +29,4 @@ conn.sync({ force: update }).then(() => {
     }
   });
 });
+
