@@ -1,5 +1,5 @@
 const server = require('./src/app');
-const { conn, Product } = require('./src/db');
+const { conn, Product, Category } = require('./src/db');
 const data = require ('./src/data')
 const dataCategories = require ('./src/dataCategories')
 
