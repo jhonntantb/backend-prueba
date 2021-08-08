@@ -9,7 +9,7 @@ router.get("/",(_req,res,next)=>{
 });
 router.post("/",async(req,res,next)=>{
     const newOffice=req.body
-    const schedule=["9:00-10:00","10:00-11:00","11:00-12:00","12:00-1:00"]
+    const schedule=["9:00-10:00","10:00-11:00","11:00-12:00","12:00-1:00","17:00-18:00" ,"18:00-19:00", "19:00-20:00"]
     try {
         const [office,created]=await Office.findOrCreate({
             where:{address:newOffice.address},
