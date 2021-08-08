@@ -8,20 +8,14 @@ import ReactFirebaseFileUpload from '../../components/FileUploader/FileUploader'
 const ProductCreation = (props) => {
     const dispatch=useDispatch();
 
-    
-
     const storeCategories = useSelector(state=>state.categoryReducer.categories)
-    const storeProducts = useSelector(state => state.productReducer.products)
-    
-
     const storeOffices = useSelector(state => state.officeReducer.offices)
 
     const [inputCategories, setInputCategories] = useState([]);
     const [inputOffice, setInputOffice] =useState([])
     const [storeImages, setStoreImages] = useState([]);
-
-    const [addProduct, setaddProduct] = useState(
-        {
+    
+    const local_initial_state = {
             title: '',
             resume: '',
             detail: '',
@@ -32,19 +26,28 @@ const ProductCreation = (props) => {
             quantity: 0, 
             office: ''
         }
-    )
 
-    const handleSubmit =async (e) => {
+
+    const [addProduct, setaddProduct] = useState(local_initial_state)
+
+    const handleSubmit = (e) => {
         e.preventDefault()
-        //// hacer dispatch para que haga el post
-        setaddProduct({...addProduct, image: storeImages, office: inputOffice})
-        try {
-             dispatch(createProduct(addProduct))
-             dispatch(getAllProduct())
-            // alert('agregado exitosamente')
-        }
-        catch(err) {
-            console.log(err)
+   
+        if(addProduct.title != ''&&
+            addProduct.resume !==''&&
+            addProduct.detail !== "" &&
+            addProduct.price !== '' &&
+            addProduct.catalog_id !== null &&
+            addProduct.image.length > 0 &&
+            addProduct.quantity >0 &&
+            addProduct.office !== '') {
+                
+                dispatch(createProduct(addProduct))
+                dispatch(getAllProduct())
+               props.history.push('/productcreation')
+            }
+        else {
+            throw alert('TODOS LOS CAMPOS SON OBLIGATORIOS')
         }
         
     }
@@ -143,14 +146,12 @@ const ProductCreation = (props) => {
         
     },[storeOffices])
 
-    useEffect(()=>{
-        
-    },[storeProducts])
-
+    
+    // onSubmit={(e)=>handleSubmit(e)}
     return (
         <div className="container">
             <h1 className="text-center mt-3">Creación de productos</h1>
-            <form onSubmit={handleSubmit}>
+            <form >
                 <p>Order: 123</p>
                 <div className="mb-3">
                     <label className="form-label">
@@ -238,11 +239,19 @@ const ProductCreation = (props) => {
                 </div>
                 {renderOffices()}
                 {renderCategories()}  
-                {/* {ReactFirebaseFileUpload([...storeImages],setStoreImages)} */}
                 <ReactFirebaseFileUpload storeImages={storeImages} setStoreImages={setStoreImages}/>    
-
-                <button type="submit" className="btn btn-primary mt-3">
-                    Submit
+                {storeImages.length>0?(
+                    storeImages.forEach(url=>{
+                        return (
+                            <p>{url}</p>
+                        )
+                    })
+                ):null}
+                <button  
+                    disabled={storeImages.length>0?false:true} 
+                    className="btn btn-primary mt-3"
+                    onClick={(e)=>{handleSubmit(e)}}>
+                    Crear Producto
                 </button>
             </form>
 
