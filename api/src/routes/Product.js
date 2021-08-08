@@ -13,8 +13,7 @@ router.get("/", async function(req,res, next){
      res.status(200).json(product)
   }
   catch (error) {next(error)};
-
- } )
+}) 
 
 
  /*  if(!name) {
@@ -38,7 +37,7 @@ router.get("/:idProducto", async function(req,res, next){
      
     const product_id = req.params.idProducto;
      console.log(product_id);
-    const product = Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+    const product = await Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
     if (product) {return  res.status(200).json(product)}
     else {res.status(400) }
   } 
@@ -47,9 +46,9 @@ router.get("/:idProducto", async function(req,res, next){
 
 ///////////    POST PRODUCT    ///////////
 
-router.post("/", async function(req,res, next){
+router.post("/", async function(req, res, next){
  try{ 
-
+    console.log(req.body)
     const [product, created] =  await  Product.findOrCreate({
                  where: {catalog_id: req.body.catalog_id},
                  defaults: {
@@ -72,14 +71,19 @@ router.post("/", async function(req,res, next){
           quantity:req.body.quantity,
           })   
           
-          if(req.body.image.length > 0){
-                req.body.image.map( c =>
-                Productimage.create({
-                    productId: product.id, 
-                    image_url:c
-                }) 
+          if(req.body.image.length>0){
+            req.body.image.forEach( async(c) =>
+             await Productimage.create({
+                productId: product.id, 
+                image_url:c
+             }) 
             ) 
-        } 
+          }
+
+
+          
+ 
+        
 
       res.status(200).json(product) 
     }
