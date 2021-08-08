@@ -14,18 +14,14 @@ const store = ConfigureStore();
 ReactDOM.render(
 
   <React.StrictMode>
-    
-    <Provider store={store}>
-   develop
+
+   <Provider store={store}>
    <BrowserRouter>
       <FirebaseContext.Provider value={new Firebase()}>
-        
           <App />
-        
       </FirebaseContext.Provider>
       </BrowserRouter>
     </Provider>
-    
   </React.StrictMode>,
     
   document.getElementById('root')

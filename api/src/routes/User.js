@@ -13,17 +13,37 @@ router.post("/",async (req,res,next)=>{
         const [user,created]=await User.findOrCreate({
             where:{user_name: req.body.user_name},
             defaults:{
+                id: req.body.id,
                 user_name: req.body.user_name,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
-                name: req.body.name,
                 email: req.body.email,
-                password: req.body.password,
+                // password: req.body.password,
                 address: req.body.address
             }
         })
         res.send(user);
         console.log(created);
+    } catch (error) {
+        next(error)
+    }
+})
+router.put("/",async (req,res,next)=>{
+    const changes=req.body.changes;
+    //solo el admi puede modificar su active
+    try {
+        const modUser=await User.update(changes,{where:{id:req.body.id}})
+        res.send(modUser)
+    } catch (error) {
+        next(error)
+    }
+})
+router.delete("/",async (req,res,next)=>{
+    const id=req.body;
+    try {
+        const deleteUser=await User.destroy({where:{id:id}})
+        res.send(deleteUser)
+        console.log(deleteUser)//para saber que manda
     } catch (error) {
         next(error)
     }

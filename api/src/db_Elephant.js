@@ -3,29 +3,21 @@ const { Sequelize } = require('sequelize');
 const { DataTypes } = require("sequelize")
 const fs = require('fs');
 const path = require('path');
-const { Console } = require('console');
-const {DB_USER, DB_PASSWORD, DB_HOST, ELEPHANT_CONNECT, CONNECT} = process.env;
-console.log(CONNECT);
-console.log(DB_HOST);
+const {DB_USER, DB_PASSWORD, DB_HOST} = process.env;
+console.log(DB_USER)
 
-if(CONNECT==='CLOUD') {
-  // Codigo para cloud service
-  console.log('Conexión a base cloud')
-  var sequelize = new Sequelize(ELEPHANT_CONNECT, {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  });
-  }
-  else {
-  //Codigo para Postgress local
-   console.log('Conexión a base local');
-  var sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/merceria`, {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  });
-  }
- 
-  
+// Prueba con ElephantSQL
+var conString = "postgres://lfcaslhu:cWEdG3nDXnD2aE8pV4dOMmKYXkdL-6cg@kesavan.db.elephantsql.com/lfcaslhu" //ElephantSQL conn string
+const sequelize = new Sequelize(conString, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+});
+
+//Codigo para Postgress local
+/* const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/merceria`, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+}); */
 
 const basename = path.basename(__filename);
 
@@ -92,15 +84,15 @@ const Order_Product = sequelize.define('Order_Product', {
 Product.belongsToMany(Order,{through: Order_Product});
 Order.belongsToMany(Product,{through: Order_Product});
 
-// const Order_Schedule = sequelize.define('Order_Schedule', {
-//   id: {type: DataTypes.UUID,
-//     allowNull: false,
-//     primaryKey: true},
-// });
+const Order_Schedule = sequelize.define('Order_Schedule', {
+  id: {type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true},
+});
 
 
-// Order.belongsToMany(Schedule, {through: Order_Schedule});
-// Schedule.belongsToMany(Order, {through: Order_Schedule});
+Order.belongsToMany(Schedule, {through: Order_Schedule});
+Schedule.belongsToMany(Order, {through: Order_Schedule});
 
 Wishlist.belongsToMany(Stock,{through:"wishlist_stock"});
 Stock.belongsToMany(Wishlist,{through:"wishlist_stock"});
@@ -127,8 +119,8 @@ Wishlist.belongsTo(User);
 Office.hasMany(Stock);
 Stock.belongsTo(Office)
 
-Office.hasOne(Schedule);
-Schedule.belongsTo(Office);
+Office.hasMany(Schedule);
+Schedule.belongsTo(Office)
 
 User.hasMany(Order);
 Order.belongsTo(User);
