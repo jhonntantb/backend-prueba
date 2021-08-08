@@ -5,7 +5,7 @@ const dataCategories = require ('./src/dataCategories')
 
 // Syncing all the models at once.
 
-const update = true ;
+const update = false ;
 conn.sync({ force: update }).then(() => {
 
   server.listen(3001, () => {
@@ -29,4 +29,3 @@ conn.sync({ force: update }).then(() => {
     }
   });
 });
-
