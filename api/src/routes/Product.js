@@ -19,36 +19,31 @@ router.post('/prueba', async function (req, res, next) {
 router.get("/", async function(req,res, next){
   const { name } = req.query ;
   console.log('ruta get product name: ', name);
-//   try{
-//     var product = await Product.findAll(
-//           {include: [{ model: Category, attributes: ['id', 'name']}, 
-//                       {model: Productimage, attributes: ['id', 'image_url']}, 
-//                       {model: Stock, attributes: ['id', 'quantity', 'officeId']}
-//                     ]})
+  try{
+    const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+     res.status(200).json(product)
+  }
+  catch (error) {next(error)};
 
-//      res.status(200).json(product)
-//   }
-//   catch (error) {next(error)};
+  //   if(!name) {
+  //    try{
+  //      const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+  //       res.status(200).json(product)
+  //    }
+  //    catch (error) {
+  //      console.log('ERROR AL CREAR: ' + error.message)
+  //     next(error)};
+  //   } 
+  //   else {
+  //     try{
+  //       const product = await Product.findAll({where: {title: {[Op.substring]: name}}, include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+  //        res.status(200).json(product)
+  //     }
+  //     catch (error) {next(error)}; 
+  //   } 
 
-//  } )
-
-  if(!name) {
-   try{
-     const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
-      res.status(200).json(product)
-   }
-   catch (error) {
-     console.log('ERROR AL CREAR: ' + error.message)
-    next(error)};
-  } 
-  else {
-    try{
-      const product = await Product.findAll({where: {title: {[Op.substring]: name}}, include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
-       res.status(200).json(product)
-    }
-    catch (error) {next(error)}; 
-  } 
 }) 
+
 
 
 router.get("/:idProducto", async function(req,res, next){
@@ -56,7 +51,7 @@ router.get("/:idProducto", async function(req,res, next){
      
     const product_id = req.params.idProducto;
      console.log(product_id);
-    const product = Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+    const product = await Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
     if (product) {return  res.status(200).json(product)}
     else {res.status(400) }
   } 
@@ -90,12 +85,7 @@ router.post("/", async function(req, res, next){
            })
  
            if(req.body.image.length>0){
-            //  req.body.image.forEach( async(c) =>
-            //   await Productimage.create({
-            //      productId: product.id, 
-            //      image_url:c
-            //   }) 
-            //  ) 
+            
             try{
               for (let i=0; i< req.body.image.length;i++) {
                 await Productimage.create({
@@ -107,24 +97,13 @@ router.post("/", async function(req, res, next){
             } catch(err) {next(err)}
             
            }
+           
        res.status(200).json(product) 
      }
  
   }
  catch (error) {next(error)};
  })
-
-router.post('/prueba', async function (req, res, next) {
-  var image = req.body
-  try {
-    Productimage.create({
-      productId: image.productId, 
-      image_url:image.url
-      })
-
-  } catch (err) {next(err)};
-
-})
 
 
 module.exports = router;

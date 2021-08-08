@@ -18,7 +18,19 @@ router.get("/:id",async (req, res,next) => {
         next(error)
     }  
 })
-// al crear una review se le relaciona con el usuario//solo logueado y comprado
+
+router.get("/:product_id", (req, res) => {
+    Review.findOne({where: {
+        productId: req.body.review.product_id
+    }})
+    .then((review) => {
+        res.status(200).send(reviews)
+    })
+    .catch((error) => {
+        res.status(400).send(error)
+    })
+})
+
 router.post("/",async (req, res)=>{
     try {
         const review=await Review.create(req.body.review)
@@ -27,7 +39,6 @@ router.post("/",async (req, res)=>{
     } catch (error) {
         next(error)
     }
-  
 })
 router.delete("/",async (req,res,next)=>{
     try {
