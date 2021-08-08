@@ -3,6 +3,7 @@ import {useState, useEffect} from "react"
 import { getProduct } from "../../redux/actions/product/index"
 import ShowReviews from "../../components/ShowReviews/ShowReviews"
 import Carrousel from '../../components/Carrousel/Carrousel'
+import { Card, CardBody, CardSubtitle, CardTitle } from "reactstrap"
 
 export default function Product ({match}){
     const [content, setContent] = useState({})
@@ -10,7 +11,9 @@ export default function Product ({match}){
     const product = useSelector(state => state.productReducer.product)
     //const reviews = useEffect(state => state.reviews)
     const reviews = [
-        {score: 2, description: "Me parecio un gran producto", date: "07/06/2021"}
+        {score: 4, description: "Me parecio un gran producto", date: "07/06/2021"},
+        {score: 5, description: "Lo mejor", date: "04/06/2021"},
+        {score: 2, description: "Malisimo", date: "03/06/2021"}
     ]
 
     useEffect(()=>{
@@ -22,16 +25,17 @@ export default function Product ({match}){
     return (
         product ?
             <div>
-            {/* <img src={product.image[0]}/> */}
-            <Carrousel/>
-            <h1 id="title">{product.name}</h1>
-            <div id="resume">
-                {product.resume}
-            </div>                                            
+            <img src={product.image[0]}/>
+            <Carrousel images={product.images}/>
+            <Card>
+                <CardBody>
+                    <CardTitle>{product.title}</CardTitle>
+                    <CardSubtitle>{product.resume}</CardSubtitle>
+                </CardBody>
+            </Card>                                     
             <div id="description">
                 {product.detail}
             </div>
-            
             <ShowReviews reviews={reviews}/>
         </div>
         :
