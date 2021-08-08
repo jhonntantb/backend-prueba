@@ -17,12 +17,13 @@ export default function Product ({match}){
         console.log(match.params.id)
         dispatch(getProduct(match.params.id))
     }, [])
+    console.log("Productooooooooooooooo")
     console.log(product)
     return (
         product ?
             <div>
-            <img src={product.image[0]}/>
-            <Carrousel/>
+            {/* <img src={product.image[0]}/> */}
+            {/* <Carrousel images={product.productimages}/> */}
             <h1 id="title">{product.name}</h1>
             <div id="resume">
                 {product.resume}

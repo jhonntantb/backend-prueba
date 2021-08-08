@@ -41,7 +41,7 @@ if (list && list.length > 0) {
 
                 {r.productimages.length > 0? <img src={r.productimages[0].image_url} width="350" alt='Imagen no disponible' className={"caja-imagen"}/> : null}
                  <div className={"caja-datosTexto"}>
-                   <Link to={`/productdetail/${r.id}`} className={"caja-nombre"}>
+                   <Link to={`/product/${r.id}`} className={"caja-nombre"}>
                     {r.title} 
                    </Link>
                    <p>{`Artículo: ${r.catalog_id}`}</p>
