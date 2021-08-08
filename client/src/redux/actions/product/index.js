@@ -12,6 +12,7 @@ export const createProduct = (product) => {
 export const getProduct = (id) => {
     return async  (dispatch) => {
         const res = await axios.get('http://localhost:3001/product/' + id)
+        console.log(res)
         return dispatch({ type: TYPES.GET_PRODUCT, payload: res.data })
     }
 }

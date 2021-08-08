@@ -108,7 +108,6 @@ Stock.belongsToMany(Wishlist,{through:"wishlist_stock"});
 Product.hasMany(Productfeature);
 Productfeature.belongsTo(Product);
 
-
 Product.hasMany(Productimage);
 Productimage.belongsTo(Product);
 
