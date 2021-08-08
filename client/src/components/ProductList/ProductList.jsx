@@ -10,49 +10,6 @@ import './ProductList.css'
 
 
 function ProductList() {
-<<<<<<< HEAD
-const dispatch = useDispatch()  
-
-useEffect( () => {
-  dispatch(getAllProduct());
-
-}, [])
-
-
-
-
-const list = useSelector(state => state.productReducer.products)
-
-console.log("****************",list);
-
-if (list && list.length > 0) {
- return (
-    
-  <>    
-    <div className={"caja-headers"}>     
-         <h2>Listado de Productos</h2>
-         <h2>Total de productos: {list.length}</h2>
-    </div>   
-          
-    {list ? (
-     <> 
-       <ul style={{listStyleType: "none"}}>
-        {list.map((r) => 
-        <div>
-            <li key={r.catalog_id} className={"caja"}>
-              <div className={"caja-datos"}>
-
-                {r.productimages.length > 0? <img src={r.productimages[0].image_url} width="350" alt='Imagen no disponible' className={"caja-imagen"}/> : null}
-                 <div className={"caja-datosTexto"}>
-                   <Link to={`/product/${r.id}`} className={"caja-nombre"}>
-                    {r.title} 
-                   </Link>
-                   <p>{`Artículo: ${r.catalog_id}`}</p>
-                   <p>{`Precio: ${r.price}`}</p>
-                  {r.categories.length > 0? <p>{`Categoria: ${r.categories[0].name}`}</p> : null}
- 
-                 </div>
-=======
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -100,7 +57,7 @@ if (list && list.length > 0) {
                   <div className="card" style={{ width: "18rem" }}>
                     {r.productimages.length > 0 ? <img src={r.productimages[0].image_url} width="350" alt='Imagen no disponible' className="card-img-top" /> : null}
                     <div className="card-body">
-                      <NavLink to={`/productdetail/${r.id}`}>
+                      <NavLink to={`/product/${r.id}`}>
                         <h5 className="card-title">{r.title}</h5>
                       </NavLink>
                       <p className="card-text">
@@ -115,7 +72,6 @@ if (list && list.length > 0) {
                     </div>
                   </div>
                 </div>
->>>>>>> 2dacda321a224597d5c37062fa92c11f7cac4821
               </div>
             )}
 

@@ -24,12 +24,12 @@ export default function Product ({match}){
             <div>
             {/* <img src={product.image[0]}/> */}
             <Carrousel images={product.productimages}/>
-            <h1 id="title">{product.name}</h1>
+            <h1 id="title">Nombre:{product.title}</h1>
             <div id="resume">
-                {product.resume}
+                <h1>Resumen:{product.resume}</h1>
             </div>                                            
             <div id="description">
-                {product.detail}
+              <h1>Detalle: {product.detail}</h1> 
             </div>
             
             <ShowReviews reviews={reviews}/>
