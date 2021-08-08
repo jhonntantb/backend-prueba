@@ -18,7 +18,7 @@ const dispatch = useDispatch()
 dispatch(getAllProduct());
 
 
-const list = useSelector(state => state.products)
+const list = useSelector(state => state.productReducer.products)
 
 console.log("****************",list);
 

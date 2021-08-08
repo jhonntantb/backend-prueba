@@ -13,7 +13,7 @@ router.get("/", async function(req,res, next){
      res.status(200).json(product)
   }
   catch (error) {next(error)};
- } 
+ }) 
 
  /*  if(!name) {
    try{
@@ -29,7 +29,7 @@ router.get("/", async function(req,res, next){
     }
     catch (error) {next(error)}; 
   } */
-})
+
 
 router.get("/:idProducto", async function(req,res, next){
   try{ 
@@ -66,15 +66,20 @@ router.post("/", async function(req,res, next){
           productId:product.id,
           office_id:req.body.office_id,
           quantity:0,
-          })   
+          })  
           
-          if(req.body.image.length > 0){
-                req.body.image.map( c =>
-                Productimage.create({
-                    productId: product.id, 
-                    image_url:c
-                }) 
-            ) 
+          if(req.body.image.length>0){
+            req.body.image.forEach( async(c) =>
+            await Productimage.create({
+                productId: product.id, 
+                image_url:c
+            }) 
+        ) 
+    }
+
+
+          
+ 
         } 
 
       res.status(200).json(product) 
