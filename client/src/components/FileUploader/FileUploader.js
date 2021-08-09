@@ -10,46 +10,51 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
     const [images, setImages] = useState([]);
     const [urls, setUrls] = useState([]);
     const [progress, setProgress] = useState(0);
+    // var aux=[]
 
-    const handleChange = (e) => {
+    const handleChange2 = (e) => {
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
             newImage["id"] = Math.random();
             setImages((prevState) => [...prevState, newImage]);
         }
     };
-    var aux=[]
-    const handleUpload = () => {
+    
+    const handleUpload = (e) => {
+        e.preventDefault();
         const promises = [];
-        images.map((image) => {
-            const uploadTask = firebase.storage().ref(`images/${image.name}`).put(image);
+        images.forEach( (image) => {
+            const uploadTask =  firebase.storage().ref(`images/${image.name}`).put(image);
             promises.push(uploadTask);
             
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    setProgress(progress);
-                    },
-                (error) => {
-                    console.log(error);
-                    },
-                async () => {
-                    await firebase.storage()
-                        
-                        .ref("images")
-                        .child(image.name)
-                        .getDownloadURL()
-                        .then((url) => {
-                            console.log(url)
-                            aux.push(url)
-                            setUrls(aux);
-                        });
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = Math.round(
+                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                        );
+                        setProgress(progress);
+                        },
+                    (error) => {
+                        console.log(error);
+                        },
+                    async () => {
+                        await firebase.storage()
                             
-                }
-            );
+                            .ref("images")
+                            .child(image.name)
+                            .getDownloadURL()
+                            .then((url) => {
+                                let aux=[]
+                                console.log(url)
+                                aux.push(url)
+                                setUrls(aux.concat(urls));
+                            });
+                                
+                    }
+                );
+
+            
         }
         
         );
@@ -69,7 +74,7 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
     
 
     useEffect(()=>{
-        setStoreImages([...storeImages.concat(urls)])
+        setStoreImages(urls)
     },[urls])
 
 
@@ -78,18 +83,18 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
             <progress value={progress} max="100" />
             <br />
             <br />
-            <input className="btn btn-" type="file" multiple onChange={handleChange} />
-            <button className="btn btn-info" onClick={handleUpload}>Upload</button>
+            <input className="btn btn-" type="file" multiple onChange={handleChange2} />
+            <button className="btn btn-info"  onClick={(e)=>handleUpload(e)}>Upload</button>
             <br />
-            {urls.length>0?aux.map((url, i) => (
+            {/* {urls.length>0?urls.map((url, i) => (
                 <div key={i}>
                     <a href={url} target="_blank">
                         {url}
                     </a>
                 </div>
-            )):null}
+            )):null} */}
             <br />
-            {urls.length>0?aux.map((url, i) => (
+            {urls.length>0?urls.map((url, i) => (
                 <img
                     key={i}
                     style={{ width: "250px" }}

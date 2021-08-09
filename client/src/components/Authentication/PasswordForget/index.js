@@ -77,8 +77,8 @@ function PasswordForgetFormBase(props) {
 }
 
 const PasswordForgetLink = () => (
-  <p >
-    <a href={ROUTES.PASSWORD_FORGET}>Forgot Password?</a>
+  <p>
+    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
   </p>
 );
 

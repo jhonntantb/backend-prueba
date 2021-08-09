@@ -29,7 +29,7 @@ router.post("/",async (req,res,next) => {
 //modificariomos en el caso que entre otra cantidad del mismo producto
 router.put("/:id",async (req,res,next) => {
     try {
-        const stock=await Stock.update(req.body,{where:{id:req.params.id}})
+        const stock=await Stock.update(re.body,{where:{id:req.params.id}})
     } catch (error) {
         next(error)
     }

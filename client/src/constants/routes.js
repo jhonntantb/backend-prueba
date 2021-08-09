@@ -8,5 +8,6 @@ export const CREATE_PRODUCT = '/product/form';
 export const ACCOUNT = '/account';
 export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
+export const PASSWORD_CHANGE = '/pw-change';
 export const PRODUCTS = '/productlist'
 export const PRODDETAIL = '/productdetail'

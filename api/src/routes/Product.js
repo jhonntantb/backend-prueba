@@ -3,41 +3,32 @@ const {Product, Category, Productimage,Stock} = require ('../db');
 const router = require('express').Router();
 const { Op } = require("sequelize");
 
+router.post('/prueba', async function (req, res, next) {
+  var image = req.body
+  try {
+    Productimage.create({
+      productId: image.productId, 
+      image_url:image.url
+      })
+      
+  } catch (err) {next(err)};
+
+})
 
 //////////  GET PRODUCT  /////////////
 router.get("/", async function(req,res, next){
-  const  name  = req.query.name ;
-  console.log('ruta get product name: ', name);
-  if(name) {
-    try {
-        let product = await Product.findAll({
-            where: {
-              [Op.and]: [{
-                title: {
-                    [Op.iLike]: '%' + name + '%'//COMPARA LOS SUBSTRINGS (CASE-INSENSITIVE)
-                },
-                resume: {
-                  [Op.iLike]: '%' + name + '%'//COMPARA LOS SUBSTRINGS (CASE-INSENSITIVE)
-              }/*,
-              detail: {
-                [Op.iLike]: '%' + name + '%'//COMPARA LOS SUBSTRINGS (CASE-INSENSITIVE)
-            }*/
-            }]}
-        });
-        return res.send(product)
-    } catch (error) {
-        res.status(404).send("No se encontro")
-    }
-  } 
-  else try{
+  const { name } = req.query ;
+  
+/*   try{
     const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
      res.status(200).json(product)
   }
   catch (error) {next(error)};
+
 }) 
+ */
 
-
- /*  if(!name) {
+  if(!name) {
    try{
      const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
       res.status(200).json(product)
@@ -50,8 +41,8 @@ router.get("/", async function(req,res, next){
        res.status(200).json(product)
     }
     catch (error) {next(error)}; 
-  } */
-
+  }
+}) 
 
 router.get("/:idProducto", async function(req,res, next){
   try{ 
@@ -66,54 +57,52 @@ router.get("/:idProducto", async function(req,res, next){
 })
 
 ///////////    POST PRODUCT    ///////////
-
 router.post("/", async function(req, res, next){
- try{ 
-    console.log(req.body)
-    const [product, created] =  await  Product.findOrCreate({
-                 where: {catalog_id: req.body.catalog_id},
-                 defaults: {
-                    title:req.body.title,
-                    catalog_id:req.body.catalog_id,
-                    resume:req.body.resume,
-                    detail:req.body.detail,
-                    price:req.body.price}
-                 });
 
-    if (!created) {  res.status(400).json("Ya existe producto con mismo nro catalogo") 
-    }
-    else {
-      req.body.category.map(async(c)=>{
-        await product.setCategories(c);
-      })
-      await Stock.create({
-          productId:product.id,
-          office_id:req.body.office_id,
-          quantity:req.body.quantity,
-          })   
-          
-          if(req.body.image.length>0){
-            req.body.image.forEach( async(c) =>
-             await Productimage.create({
-                productId: product.id, 
-                image_url:c
-             }) 
-            ) 
-          }
-
-
-          
+  try{ 
+     console.log(req.body)
+     const [product, created] =  await  Product.findOrCreate({
+                  where: {catalog_id: req.body.catalog_id},
+                  defaults: {
+                     title:req.body.title,
+                     catalog_id:req.body.catalog_id,
+                     resume:req.body.resume,
+                     detail:req.body.detail,
+                     price:req.body.price}
+                  });
  
-        
+     if (!created) {  res.status(400).json("Ya existe producto con mismo nro catalogo") 
+     }
+     else {
+       req.body.category.map(async(c)=>{
+         await product.setCategories(c);
+       })
+       await Stock.create({
+           productId:product.id,
+           office_id:req.body.office_id,
+           quantity:req.body.quantity,
+           })
+ 
+           if(req.body.image.length>0){
+            
+            try{
+              for (let i=0; i< req.body.image.length;i++) {
+                await Productimage.create({
+                  productId: product.id,
+                  image_url: req.body.image[i]
+                })
+              }
 
-      res.status(200).json(product) 
-    }
-
-  
- }
-catch (error) {next(error)};
-})
-
+            } catch(err) {next(err)}
+            
+           }
+           
+       res.status(200).json(product) 
+     }
+ 
+  }
+ catch (error) {next(error)};
+ })
 
 
 module.exports = router;

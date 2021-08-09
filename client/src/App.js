@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import * as ROUTES from './routes';
-
+import { PASSWORD_CHANGE } from './constants/routes';
 //views
 import Home from './views/Home/Home';
 import Product from './views/Product/Product';
@@ -13,6 +13,7 @@ import SignUpPage from './components/Authentication/SignUp/index';
 import SignInPage from './components/Authentication/SignIn';
 import Account from './components/Authentication/Account';
 import PasswordForgetPage from './components/Authentication/PasswordForget';
+import { PasswordChangeForm } from './components/Authentication/PasswordChange';
 import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
 import Login from './components/Login/Login'
