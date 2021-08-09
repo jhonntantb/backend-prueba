@@ -65,7 +65,7 @@ function SignInFormBase(props) {
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Sing in</h3>
+            <h3 className="mb-4 text-center fs-1">Sign in</h3>
             <form className="mb-3" onSubmit={onSubmit}>
               <div className="form-floating mb-3">
                 <input
