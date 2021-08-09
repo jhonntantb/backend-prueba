@@ -1,3 +1,4 @@
+import { Divider } from '@material-ui/core';
 import React, { useState } from 'react';
 import {
     Carousel,
@@ -6,20 +7,21 @@ import {
     CarouselIndicators,
     CarouselCaption
 } from 'reactstrap';
+import './Carrusel.css'
 
 const items = [
     {
-        src: 'https://images.unsplash.com/photo-1549558549-415fe4c37b60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTA2ODZ8MHwxfHNlYXJjaHwxfHxwYWlzYWplc3xlbnwwfHx8fDE2MjgxMTEwMzA&ixlib=rb-1.2.1&q=80&w=1080',
+        src: 'https://4.bp.blogspot.com/-JMELF9YnRDs/Vs2p4gzxUsI/AAAAAAAAAUc/HOMNUdLG-ZQ/s1600/m1.jpg',
         altText: 'Slide 1',
         caption: 'Slide 1'
     },
     {
-        src: 'https://images.unsplash.com/photo-1578922180039-6c13a4671d82?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTA2ODZ8MHwxfHNlYXJjaHwzfHxwYWlzYWplc3xlbnwwfHx8fDE2MjgxMTEwMzA&ixlib=rb-1.2.1&q=80&w=1080',
+        src: 'https://3.bp.blogspot.com/-7Rr2SDhGcQo/Vs2qFalmlYI/AAAAAAAAAUg/1gFQR4uZYa0/s1600/m22.jpg',
         altText: 'Slide 2',
         caption: 'Slide 2'
     },
     {
-        src: 'https://images.unsplash.com/photo-1569061831972-d1ed3635136e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTA2ODZ8MHwxfHNlYXJjaHw0fHxwYWlzYWplc3xlbnwwfHx8fDE2MjgxMTEwMzA&ixlib=rb-1.2.1&q=80&w=1080',
+        src: 'https://merceriacadi.com/wp-content/uploads/2021/05/merceria-Cadi-024.jpg',
         altText: 'Slide 3',
         caption: 'Slide 3'
     }
@@ -48,14 +50,17 @@ const Carrousel = (props) => {
 
     const slides = items.map((item) => {
         return (
-            <CarouselItem
+            
+            <CarouselItem class="container"
                 onExiting={() => setAnimating(true)}
                 onExited={() => setAnimating(false)}
                 key={item.src}
             >
-                <img src={item.src} alt={item.altText} width="100%" height="350px" />
+                <img  class ="carrusel"src={item.src} alt={item.altText}  />
                 <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+ 
             </CarouselItem>
+            
         );
     });
 

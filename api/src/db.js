@@ -92,22 +92,21 @@ const Order_Product = sequelize.define('Order_Product', {
 Product.belongsToMany(Order,{through: Order_Product});
 Order.belongsToMany(Product,{through: Order_Product});
 
-const Order_Schedule = sequelize.define('Order_Schedule', {
-  id: {type: DataTypes.UUID,
-    allowNull: false,
-    primaryKey: true},
-});
+// const Order_Schedule = sequelize.define('Order_Schedule', {
+//   id: {type: DataTypes.UUID,
+//     allowNull: false,
+//     primaryKey: true},
+// });
 
 
-Order.belongsToMany(Schedule, {through: Order_Schedule});
-Schedule.belongsToMany(Order, {through: Order_Schedule});
+// Order.belongsToMany(Schedule, {through: Order_Schedule});
+// Schedule.belongsToMany(Order, {through: Order_Schedule});
 
 Wishlist.belongsToMany(Stock,{through:"wishlist_stock"});
 Stock.belongsToMany(Wishlist,{through:"wishlist_stock"});
 
 Product.hasMany(Productfeature);
 Productfeature.belongsTo(Product);
-
 
 Product.hasMany(Productimage);
 Productimage.belongsTo(Product);
@@ -127,8 +126,8 @@ Wishlist.belongsTo(User);
 Office.hasMany(Stock);
 Stock.belongsTo(Office)
 
-Office.hasMany(Schedule);
-Schedule.belongsTo(Office)
+Office.hasOne(Schedule);
+Schedule.belongsTo(Office);
 
 User.hasMany(Order);
 Order.belongsTo(User);
@@ -136,8 +135,8 @@ Order.belongsTo(User);
 User.hasMany(Review);
 Review.belongsTo(User);
 
-Order.hasMany(Review);
-Review.belongsTo(Order);
+Product.hasMany(Review);
+Review.belongsTo(Product);
 
 User.hasMany(Schedule);
 Schedule.belongsTo(User);
