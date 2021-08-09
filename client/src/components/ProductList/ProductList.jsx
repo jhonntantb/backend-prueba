@@ -28,9 +28,13 @@ function ProductList() {
     return (
 
       <div className="container">
-        <div className={"caja-headers"}>
-          <h2>Listado de Productos</h2>
-          <h2>Total de productos: {list.length}</h2>
+        <div className="row text-center mt-5">
+          <div className="col-6 row">
+            <h2>Listado de Productos</h2>
+          </div>
+          <div className="col-6 row">
+            <h2>Total de productos: {list.length}</h2>
+          </div>
         </div>
 
         {list ? (
