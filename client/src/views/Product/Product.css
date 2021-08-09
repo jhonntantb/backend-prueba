@@ -1,0 +1,10 @@
+.productImages{
+    float: left;
+    width: 50%;
+}
+
+.productDetails{
+    float: right;
+    width: 50%;
+    height: 400px;
+}
