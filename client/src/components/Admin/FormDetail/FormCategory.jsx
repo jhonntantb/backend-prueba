@@ -68,7 +68,7 @@ function Form() {
                                 </li>
                             </ul>
                         
-                    )) : <p>No hay categorias</p> : null}
+                    )) : <p className="text-center mt-3" style={{textStyle: "bold"}}>No hay categoría</p> : null}
                 </div>
             </div>
         </div>

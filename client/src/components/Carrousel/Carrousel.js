@@ -9,7 +9,7 @@ import {
 
 const items = [
     {
-        src: 'https://images.unsplash.com/photo-1549558549-415fe4c37b60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTA2ODZ8MHwxfHNlYXJjaHwxfHxwYWlzYWplc3xlbnwwfHx8fDE2MjgxMTEwMzA&ixlib=rb-1.2.1&q=80&w=1080',
+        src: '',
         altText: 'Slide 1',
         caption: 'Slide 1'
     },
@@ -59,8 +59,8 @@ const Carrousel = (props) => {
             </CarouselItem>
         );
     });
-    
-    
+
+
     return (
         <Carousel
             activeIndex={activeIndex}
