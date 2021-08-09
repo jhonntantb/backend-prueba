@@ -57,13 +57,13 @@ function ProductList() {
                   <div className="card" style={{ width: "18rem" }}>
                     {r.productimages.length > 0 ? <img src={r.productimages[0].image_url} width="350" alt='Imagen no disponible' className="card-img-top" /> : null}
                     <div className="card-body">
-                      <NavLink to={`/productdetail/${r.id}`}>
+                      <NavLink style={{textDecoration: 'none'}} to={`/productdetail/${r.id}`}>
                         <h5 className="card-title">{r.title}</h5>
                       </NavLink>
+                      <hr />
                       <p className="card-text">
                         Articulo: {r.catalog_id}
                       </p>
-                      <hr />
                       <p className="card-text">
                         Precio: {r.price}
                       </p>

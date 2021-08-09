@@ -9,61 +9,95 @@ import * as ROUTES from '../../routes';
 
 const Navbar = () => {
 
-    var authUser = sessionStorage.getItem("pg_merceria")
+  var authUser = sessionStorage.getItem("pg_merceria")
 
 
-    return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/">
-                    Merceria
-                </a>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="/">
+          Merceria
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav me-auto mb-2 mb-lg-0">
+            <NavLink activeClassName="text-white" className="nav-link" aria-current="page" to="/">
+              Inicio
+            </NavLink>
+            <NavLink activeClassName="text-white" className="nav-link" to="/productlist">
+              Articulos
+            </NavLink>
+            <NavLink activeClassName="text-white" className="nav-link" to="/productcreation">
+              Agregar productos
+            </NavLink>
+
+            {authUser === 'guest' || !authUser ?
+              <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> : null}
+
+            {authUser && authUser !== 'guest' ? (
+              // <div>
+              // <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
+
+              // </div>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                    <span className="navbar-toggler-icon" />
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <NavLink activeClassName="text-white" className="nav-link" aria-current="page" to="/">
-                            Inicio
-                        </NavLink>
-                        <NavLink activeClassName="text-white" className="nav-link" to="/productlist">
-                            Articulos
-                        </NavLink>
-                        <NavLink activeClassName="text-white" className="nav-link" to="/productcreation">
-                            Agregar productos
-                        </NavLink>
+                  Dropdown
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Action
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Another action
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Something else here
+                    </a>
+                  </li>
+                </ul>
+              </li>
 
-                        {authUser==='guest'||!authUser?
-                        <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink>:null}
-                        
-                        {authUser&&authUser!=='guest'?(
-                            <div>
-                            <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
-                            </div>
-                        ):null}
+            ) : null}
 
-                       
 
-                    </div>
-                    <div className="d-flex">
 
-                    <SearchBar />
-                    
-                    <SignOutButton />
+          </div>
+          <div className="d-flex">
 
-                    </div>
-                </div>
-            </div>
-        </nav>
-    )
+            <SearchBar />
+
+            <SignOutButton />
+
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
 }
 
 export default Navbar
