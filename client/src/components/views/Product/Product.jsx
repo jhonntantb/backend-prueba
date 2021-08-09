@@ -13,7 +13,7 @@ export default function Product (id){
     }, [])
 
     return (
-        <div>
+        <div className='main-container'>
             <img src={product.img}/>
             <Carrousel/>
             <h1 id="title">{product.title}</h1>

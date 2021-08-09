@@ -29,13 +29,13 @@ const  onSubmit = event => {
 
  const onChange = event => {
     setState({ [event.target.name]: event.target.value });
+    console.log('isInvalid? ' + isInvalid)
   };
 
   
     const { passwordOne, passwordTwo, error } = state;
 
-    const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '';
+    const isInvalid = passwordOne !== passwordTwo || passwordOne === '';
 
     return (
       <form onSubmit={onSubmit}>
@@ -47,6 +47,7 @@ const  onSubmit = event => {
           placeholder="New Password"
         />
         <input
+          className={"danger"&&isInvalid}
           name="passwordTwo"
           value={passwordTwo}
           onChange={onChange}

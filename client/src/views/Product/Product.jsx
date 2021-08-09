@@ -25,19 +25,19 @@ export default function Product ({match}){
     console.log(product)
     return (
         product ?
-        <div>
-            <div>
+        <div className='main-container'>
+            <div className='card-container'>
+                    <Card fluid>
+                        <CardBody >
+                        <CardTitle className='product-title'>{product.title}</CardTitle>
+                        <CardSubtitle>{product.resume}</CardSubtitle>
+                        </CardBody>
+                    </Card>
                 <div className="productImages">
                     <Carrousel images={product.productimages || []}/>
                 </div>
-                <div className="productDetails">
-                    <Card fluid>
-                        <CardBody >
-                        <CardTitle>{product.title}</CardTitle>
-                        <CardSubtitle>{product.resume}</CardSubtitle>
-                    </CardBody>
-                    </Card>
-                </div>
+                {/* <div className="productDetails">
+                </div> */}
             </div>
             <div>
                 {product.detail}
