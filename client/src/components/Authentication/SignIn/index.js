@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SignUpLink } from '../SignUp/index';
 import { PasswordForgetLink } from '../PasswordForget/index';
-import { PasswordChangeLink } from '../PasswordChange';
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
+import {getUser} from '../../../redux/actions/user/index';
 
 const SignInPage = () => (
   <div className="container">
@@ -26,6 +26,7 @@ const initial_state = {
 };
 
 function SignInFormBase(props) {
+  const user = useSelector(state=>state.userReducer.user)
   var [state, setState] = useState(initial_state)
   const dispatch = useDispatch();
 
@@ -36,11 +37,13 @@ function SignInFormBase(props) {
       .doSignInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         // console.log('userCredentials tiene: ' + Object.keys(userCredentials))
+        // console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
         dispatch(LogInUser(userCredentials.user.email))
-        sessionStorage.setItem("pg_merceria", userCredentials.user.email)
+
+        dispatch(getUser(userCredentials.user.uid))
         setState({ ...initial_state });
 
-        props.history.push(ROUTES.HOME);
+        
       })
       .catch(error => {
         setState({ error });
@@ -55,6 +58,26 @@ function SignInFormBase(props) {
       [event.target.name]: event.target.value
     });
   };
+
+  useEffect(()=>{
+    console.log('esto es user:  ' + user)
+    if(user!=='guest') {
+      //si user no es guest, verifica si es admin
+      if(user.isAdmin===true) {
+        sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
+        props.history.push(ROUTES.HOME);
+      }else {
+        //si no es admin simplemente setea la sesion con el id de usuario
+        sessionStorage.setItem("pg_merceria", user.id)
+        props.history.push(ROUTES.HOME);
+      }
+    } else {
+      //si user es guest, setea la session a guest
+      sessionStorage.setItem("pg_merceria", 'guest')
+
+    }
+    
+  },[user])
 
 
   const { email, password, error } = state;

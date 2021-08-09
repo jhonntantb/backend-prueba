@@ -45,11 +45,12 @@ const Navbar = () => {
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> : 
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>}
 
-            {authUser && authUser !== 'guest' ? (
+            {authUser && authUser.includes('admin') ? (
               // <div>
               // <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
 
               // </div>
+            
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -80,15 +81,13 @@ const Navbar = () => {
               </li>
 
             ) : null}
-
+            {authUser=='guest'?null:<SignOutButton />}
 
 
           </div>
           <div className="d-flex">
 
             <SearchBar />
-
-            <SignOutButton />
 
           </div>
         </div>

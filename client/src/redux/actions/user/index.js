@@ -35,3 +35,9 @@ export const deleteUser = (params) => {
         return dispatch({ type: TYPES.DELETE_USER, payload: res.data })
     }
 }
+
+export const clearUser = () => {
+    return (dispatch) => {
+        return dispatch({type: TYPES.CLEAR_USER})
+    }
+}

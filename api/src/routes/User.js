@@ -1,12 +1,29 @@
 const {User} = require ('../db');
 const router = require('express').Router();
 const { Op } = require("sequelize");
+
+
+router.get("/:id", async  (req,res,next) => {
+    console.log('req.params  ' + req.params)
+    var id=req.params.id
+    console.log('id? ' + id)
+    try {
+        var user= await User.findByPk(id)
+
+        res.send(user)
+
+    } catch (err) {next(err)}
+})
+
 // crea y envia 
 router.get("/",(_req,res)=>{
+
     User.findAll()
     .then(User => res.status(200).json(User))
     .catch(error => res.status(400).send(error))
 })
+
+
 router.post("/",async (req,res,next)=>{
     //console.log(req.body)
     try {

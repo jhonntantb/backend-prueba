@@ -1,7 +1,8 @@
 import * as TYPES from "../types";
 
 const initialState = {
-    newUser: 'guest',
+    user: 'guest',
+    users: []
   };
 
 const userReducer = (state = initialState, action) => {
@@ -15,9 +16,10 @@ const userReducer = (state = initialState, action) => {
             user:action.payload   
         }
 
-        case TYPES.CREATE_USER: return  {...state, newUser: action.payload} 
+        case TYPES.CREATE_USER: return  {...state} 
         case TYPES.UPDATE_USER: return state
         case TYPES.DELETE_USER: return state
+        case TYPES.CLEAR_USER: return {...state, user: 'guest'}
         default:                  return state;
     }
 }
