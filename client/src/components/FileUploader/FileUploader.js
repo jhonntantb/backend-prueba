@@ -92,7 +92,7 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
                         {url}
                     </a>
                 </div>
-            )):null}
+            )):null} */}
             <br />
             {urls.length>0?urls.map((url, i) => (
                 <img
@@ -101,7 +101,7 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
                     src={url || "http://via.placeholder.com/300"}
                     alt="firebase-image"
                 />
-            )):null} */}
+            )):null}
 
 
         </div>

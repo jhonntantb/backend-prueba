@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { PasswordForgetLink } from '../PasswordForget/index';
-import {ROUTES} from '../../../constants/routes';
+import * as ROUTES from '../../../constants/routes';
 
 function AccountPage  () {
     return (

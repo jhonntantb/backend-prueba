@@ -18,6 +18,7 @@ import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
 import Login from './components/Login/Login'
 import Navbar from './components/Nav/Navbar';
+import {PASSWORD_CHANGE} from './constants/routes';
 
 import Form from './components/Admin/FormDetail/FormCategory';
 
@@ -31,7 +32,7 @@ function App() {
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangeForm} />
+      <Route path={PASSWORD_CHANGE} component={PasswordChangeForm} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
