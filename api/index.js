@@ -6,9 +6,7 @@ const dataOffices = require ('./src/dataOffices')
 
 // Syncing all the models at once.
 
-const update = false ;
-conn.sync({ force: update }).then(() => {
-
+conn.sync({ force: false }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); 
 
@@ -63,3 +61,4 @@ conn.sync({ force: update }).then(() => {
     }
   });
 });
+
