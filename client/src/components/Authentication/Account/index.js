@@ -1,14 +1,15 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import { PasswordForgetForm } from '../PasswordForget';
-import PasswordChangeForm from '../PasswordChange';
+import { PasswordForgetLink } from '../PasswordForget/index';
+import * as ROUTES from '../../../constants/routes';
 
 function AccountPage  () {
     return (
   <div>
     <h1>Account Page</h1>
-    <PasswordForgetForm />
-    <PasswordChangeForm />
+    <PasswordForgetLink />
+    <NavLink to={ROUTES.PASSWORD_CHANGE} >Cambiar mi Contraseña</NavLink>
   </div>
 );}
 
