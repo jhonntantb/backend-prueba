@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import * as ROUTES from './routes';
-
+import { PASSWORD_CHANGE } from './constants/routes';
 //views
 import Home from './views/Home/Home';
 import Product from './views/Product/Product';
