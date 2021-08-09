@@ -94,7 +94,7 @@ function SignInFormBase(props) {
               </div>
               <div className="d-grip gap-2 mb-3 text-center">
                 <button className="btn btn-dark btn-lg border-0 rounded-0" disabled={isInvalid} type="submit">
-                  Sign In
+                  Submit
                 </button>
               </div>
 
