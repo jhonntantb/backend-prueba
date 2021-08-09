@@ -3,6 +3,8 @@ import {useState, useEffect} from "react"
 import { getProduct } from "../../redux/actions/product/index"
 import ShowReviews from "../../components/ShowReviews/ShowReviews"
 import Carrousel from '../../components/Carrousel/Carrousel'
+import { Card, CardBody, CardSubtitle, CardTitle, CardText} from "reactstrap"
+import "./Product.css"
 
 export default function Product ({match}){
     const [content, setContent] = useState({})
@@ -10,7 +12,9 @@ export default function Product ({match}){
     const product = useSelector(state => state.productReducer.product)
     //const reviews = useEffect(state => state.reviews)
     const reviews = [
-        {score: 2, description: "Me parecio un gran producto", date: "07/06/2021"}
+        {score: 4, description: "Me parecio un gran producto", date: "07/06/2021"},
+        {score: 5, description: "Lo mejor", date: "04/06/2021"},
+        {score: 2, description: "Malisimo", date: "03/06/2021"}
     ]
 
     useEffect(()=>{
@@ -21,17 +25,23 @@ export default function Product ({match}){
     console.log(product)
     return (
         product ?
+        <div>
             <div>
-            {/* <img src={product.image[0]}/> */}
-            <Carrousel images={product.productimages}/>
-            <h1 id="title">Nombre:{product.title}</h1>
-            <div id="resume">
-                <h1>Resumen:{product.resume}</h1>
-            </div>                                            
-            <div id="description">
-              <h1>Detalle: {product.detail}</h1> 
+                <div className="productImages">
+                    <Carrousel images={product.productimages || []}/>
+                </div>
+                <div className="productDetails">
+                    <Card fluid>
+                        <CardBody >
+                        <CardTitle>{product.title}</CardTitle>
+                        <CardSubtitle>{product.resume}</CardSubtitle>
+                    </CardBody>
+                    </Card>
+                </div>
             </div>
-            
+            <div>
+                {product.detail}
+            </div>
             <ShowReviews reviews={reviews}/>
         </div>
         :
