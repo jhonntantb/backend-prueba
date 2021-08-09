@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { PasswordForgetLink } from '../PasswordForget/index';
+import { PasswordChangeLink } from '../PasswordChange';
 import * as ROUTES from '../../../constants/routes';
 
 function AccountPage  () {
@@ -9,7 +10,7 @@ function AccountPage  () {
   <div>
     <h1>Account Page</h1>
     <PasswordForgetLink />
-    <NavLink to={ROUTES.PASSWORD_CHANGE} >Cambiar mi Contraseña</NavLink>
+    <PasswordChangeLink/>
   </div>
 );}
 

@@ -13,7 +13,7 @@ import SignUpPage from './components/Authentication/SignUp/index';
 import SignInPage from './components/Authentication/SignIn';
 import Account from './components/Authentication/Account';
 import PasswordForgetPage from './components/Authentication/PasswordForget';
-import { PasswordChangeForm } from './components/Authentication/PasswordChange';
+import PasswordChangePage from './components/Authentication/PasswordChange';
 import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
 import Login from './components/Login/Login'
@@ -31,7 +31,7 @@ function App() {
       <Route path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route path={PASSWORD_CHANGE} component={PasswordChangeForm}/>
+      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangePage}/>
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />

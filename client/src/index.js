@@ -16,11 +16,12 @@ ReactDOM.render(
   <React.StrictMode>
 
    <Provider store={store}>
+   <FirebaseContext.Provider value={new Firebase()}>
    <BrowserRouter>
-      <FirebaseContext.Provider value={new Firebase()}>
+      
           <App />
-      </FirebaseContext.Provider>
       </BrowserRouter>
+    </FirebaseContext.Provider>
     </Provider>
   </React.StrictMode>,
     

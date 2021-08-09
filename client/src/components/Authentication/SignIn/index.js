@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { SignUpLink } from '../SignUp/index';
 import { PasswordForgetLink } from '../PasswordForget/index';
+import { PasswordChangeLink } from '../PasswordChange';
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
