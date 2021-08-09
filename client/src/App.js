@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import * as ROUTES from './routes';
-
+import { PASSWORD_CHANGE } from './constants/routes';
 //views
 import Home from './views/Home/Home';
 import Product from './views/Product/Product';
@@ -31,7 +31,7 @@ function App() {
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangeForm} />
+      <Route path={PASSWORD_CHANGE} component={PasswordChangeForm} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
