@@ -13,7 +13,7 @@ import SignUpPage from './components/Authentication/SignUp/index';
 import SignInPage from './components/Authentication/SignIn';
 import Account from './components/Authentication/Account';
 import PasswordForgetPage from './components/Authentication/PasswordForget';
-import {PasswordChangeForm} from './components/Authentication/PasswordChange';
+import { PasswordChangeForm } from './components/Authentication/PasswordChange';
 import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
 import Login from './components/Login/Login'
@@ -27,7 +27,7 @@ function App() {
   return (
     <React.Fragment>
       <Route path="/" component={Navbar} />
-      <Route exact path='/' component={Navigation} />
+      {/* <Route exact path='/' component={Navigation} /> */}
       <Route path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
