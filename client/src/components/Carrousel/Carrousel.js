@@ -48,7 +48,7 @@ const Carrousel = (props) => {
         setActiveIndex(newIndex);
     }
 
-    const slides = props.images.map((item) => {
+    const slides = items.map((item) => {
         console.log(item)
         return (
             

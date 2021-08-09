@@ -27,7 +27,7 @@ function App() {
   return (
     <React.Fragment>
       <Route path="/" component={Navbar} />
-      <Route exact path='/' component={Navigation} />
+      {/*<Route exact path='/' component={Navigation} />*/}
       <Route path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
