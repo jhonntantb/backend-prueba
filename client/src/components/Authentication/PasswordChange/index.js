@@ -29,32 +29,20 @@ function PasswordChangeForm(props) {
 
   const onChange = event => {
     setState({ [event.target.name]: event.target.value });
-    console.log('isInvalid? ' + isInvalid)
   };
 
 
+  const { passwordOne, passwordTwo, error } = state;
 
-    return (
-      <form onSubmit={onSubmit}>
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={onChange}
-          type="password"
-          placeholder="New Password"
-        />
-        <input
-          className={"danger"&&isInvalid}
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={onChange}
-          type="password"
-          placeholder="Confirm New Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
+  const isInvalid =
+    passwordOne !== passwordTwo || passwordOne === '';
 
+  return (
+    <div className="container mt-5">
+      <div className="row content d-flex justify-content-center">
+        <div className="col-md-5">
+          <div className="box shadow bg-white p-4">
+            <h3 className="mb-4 text-center fs-1">Reset your password?</h3>
             <form className="mb-3" onSubmit={onSubmit}>
               <input
                 name="passwordOne"
