@@ -11,7 +11,7 @@ import './Carrusel.css'
 
 const items = [
     {
-        src: '',
+        src: 'https://merceriacadi.com/wp-content/uploads/2021/05/merceria-Cadi-024.jpg',
         altText: 'Slide 1',
         caption: 'Slide 1'
     },
@@ -48,8 +48,8 @@ const Carrousel = (props) => {
         setActiveIndex(newIndex);
     }
 
-    const slides = items.map((item) => {
-        // console.log(item)
+    const slides = props.images.map((item) => {
+        console.log(item.image_url)
         return (
 
             <CarouselItem class="container"
@@ -57,7 +57,7 @@ const Carrousel = (props) => {
                 onExited={() => setAnimating(false)}
                 key={item.src}
             >
-                <img class="carrusel" src={item.src} alt={item.altText} />
+                <img class="carrusel" src={item.image_url} alt={item.altText} />
                 <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
 
             </CarouselItem>

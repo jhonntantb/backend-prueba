@@ -35,7 +35,8 @@ router.post("/",async (req, res)=>{
     try {
         const review=await Review.create(req.body.review)
         res.send(review)
-        await review.setUsers(req.body.userId)
+       
+         await review.setProduct(req.body.productId)
     } catch (error) {
         next(error)
     }

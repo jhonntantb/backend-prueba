@@ -24,7 +24,7 @@ function ProductList() {
 
   console.log("****************", list);
 
-  if (list && list.length > 0) {
+  if (list.length > 0) {
     return (
 
       <div className="container">
