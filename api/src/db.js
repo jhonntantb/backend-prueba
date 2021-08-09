@@ -5,8 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const { Console } = require('console');
 const {DB_USER, DB_PASSWORD, DB_HOST, ELEPHANT_CONNECT, CONNECT} = process.env;
-console.log(CONNECT);
-console.log(DB_HOST);
 
 if(CONNECT==='CLOUD') {
   // Codigo para cloud service
