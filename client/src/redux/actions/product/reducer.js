@@ -8,8 +8,8 @@ const initialState = {
 const productReducer = (state = initialState, action) => {
     switch (action.type) { 
         case TYPES.GET_ALL_PRODUCT: 
-        console.log('estoy en reducer');
-        console.log(action.payload);
+        //console.log('estoy en reducer');
+        //console.log(action.payload);
         return{
             ...state,
             products:action.payload   
