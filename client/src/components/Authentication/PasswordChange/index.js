@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-export function PasswordChangeForm (props) {
+function PasswordChangeForm (props) {
   const [state, setState] = useState(INITIAL_STATE)
 
 
@@ -65,3 +65,4 @@ const  onSubmit = event => {
 
 export default withFirebase(PasswordChangeForm);
 
+export {PasswordChangeForm};
