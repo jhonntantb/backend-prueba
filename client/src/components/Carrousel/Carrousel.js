@@ -11,7 +11,7 @@ import './Carrusel.css'
 
 const items = [
     {
-        src: 'https://4.bp.blogspot.com/-JMELF9YnRDs/Vs2p4gzxUsI/AAAAAAAAAUc/HOMNUdLG-ZQ/s1600/m1.jpg',
+        src: '',
         altText: 'Slide 1',
         caption: 'Slide 1'
     },
@@ -51,21 +51,21 @@ const Carrousel = (props) => {
     const slides = items.map((item) => {
         console.log(item)
         return (
-            
+
             <CarouselItem class="container"
                 onExiting={() => setAnimating(true)}
                 onExited={() => setAnimating(false)}
                 key={item.src}
             >
-                <img  class ="carrusel"src={item.src} alt={item.altText}  />
+                <img class="carrusel" src={item.src} alt={item.altText} />
                 <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
- 
+
             </CarouselItem>
-            
+
         );
     });
-    
-    
+
+
     return (
         <Carousel
             activeIndex={activeIndex}
