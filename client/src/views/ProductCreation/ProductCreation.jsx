@@ -14,7 +14,7 @@ const ProductCreation = (props) => {
     const [inputCategories, setInputCategories] = useState([]);
     const [inputOffice, setInputOffice] =useState([])
     const [storeImages, setStoreImages] = useState([]);
-    
+     
     const local_initial_state = {
             title: '',
             resume: '',
@@ -44,7 +44,7 @@ const ProductCreation = (props) => {
                 
                 dispatch(createProduct(addProduct))
                 dispatch(getAllProduct())
-               props.history.push('/productcreation')
+               props.history.push('/productlist')
             }
         else {
             throw alert('TODOS LOS CAMPOS SON OBLIGATORIOS')

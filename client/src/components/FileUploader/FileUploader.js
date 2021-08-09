@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 
 
-const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
+const ReactFirebaseFileUpload = ({ storeImages, setStoreImages }) => {
     const [images, setImages] = useState([]);
     const [urls, setUrls] = useState([]);
     const [progress, setProgress] = useState(0);
@@ -19,63 +19,63 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
             setImages((prevState) => [...prevState, newImage]);
         }
     };
-    
+
     const handleUpload = (e) => {
         e.preventDefault();
         const promises = [];
-        images.forEach( (image) => {
-            const uploadTask =  firebase.storage().ref(`images/${image.name}`).put(image);
+        images.forEach((image) => {
+            const uploadTask = firebase.storage().ref(`images/${image.name}`).put(image);
             promises.push(uploadTask);
-            
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress = Math.round(
-                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                        );
-                        setProgress(progress);
-                        },
-                    (error) => {
-                        console.log(error);
-                        },
-                    async () => {
-                        await firebase.storage()
-                            
-                            .ref("images")
-                            .child(image.name)
-                            .getDownloadURL()
-                            .then((url) => {
-                                let aux=[]
-                                console.log(url)
-                                aux.push(url)
-                                setUrls(aux.concat(urls));
-                            });
-                                
-                    }
-                );
 
-            
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    setProgress(progress);
+                },
+                (error) => {
+                    console.log(error);
+                },
+                async () => {
+                    await firebase.storage()
+
+                        .ref("images")
+                        .child(image.name)
+                        .getDownloadURL()
+                        .then((url) => {
+                            let aux = []
+                            console.log(url)
+                            aux.push(url)
+                            setUrls(aux.concat(urls));
+                        });
+
+                }
+            );
+
+
         }
-        
+
         );
 
         Promise.all(promises)
             .then(() => {
                 console.log("All images uploaded")
                 console.log('URLS DENTRO DE LA PROMISE: ' + urls)
-                })
-                
+            })
+
             .catch((err) => console.log(err));
     };
 
     console.log("images: ", images);
-    console.log('storeImages : ' , storeImages)
+    console.log('storeImages : ', storeImages)
     console.log("urls", urls);
-    
 
-    useEffect(()=>{
+
+    useEffect(() => {
         setStoreImages(urls)
-    },[urls])
+    }, [urls])
 
 
     return (
@@ -84,7 +84,7 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
             <br />
             <br />
             <input className="btn btn-" type="file" multiple onChange={handleChange2} />
-            <button className="btn btn-info"  onClick={(e)=>handleUpload(e)}>Upload</button>
+            <button className="btn btn-info" onClick={(e) => handleUpload(e)}>Upload</button>
             <br />
             {/* {urls.length>0?urls.map((url, i) => (
                 <div key={i}>
@@ -92,16 +92,16 @@ const ReactFirebaseFileUpload = (  {storeImages, setStoreImages} ) => {
                         {url}
                     </a>
                 </div>
-            )):null}
+            )):null} */}
             <br />
-            {urls.length>0?urls.map((url, i) => (
+            {urls.length > 0 ? urls.map((url, i) => (
                 <img
                     key={i}
                     style={{ width: "250px" }}
                     src={url || "http://via.placeholder.com/300"}
                     alt="firebase-image"
                 />
-            )):null} */}
+            )) : null}
 
 
         </div>

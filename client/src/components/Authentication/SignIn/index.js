@@ -14,8 +14,7 @@ const SignInPage = () => (
   <div className="container">
 
     <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
+
   </div>
 );
 
@@ -66,7 +65,7 @@ function SignInFormBase(props) {
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Sing in</h3>
+            <h3 className="mb-4 text-center fs-1">Sign in</h3>
             <form className="mb-3" onSubmit={onSubmit}>
               <div className="form-floating mb-3">
                 <input
@@ -95,13 +94,16 @@ function SignInFormBase(props) {
               </div>
               <div className="d-grip gap-2 mb-3 text-center">
                 <button className="btn btn-dark btn-lg border-0 rounded-0" disabled={isInvalid} type="submit">
-                  Sign In
+                  Submit
                 </button>
               </div>
 
 
               {error && <p className="text-danger text-center">{error.message}</p>}
-
+              <div className="d-grip gap-2">
+                <PasswordForgetLink />
+                <SignUpLink />
+              </div>
 
             </form>
           </div>
