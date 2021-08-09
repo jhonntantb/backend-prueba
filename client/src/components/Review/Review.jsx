@@ -1,3 +1,5 @@
+import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap"
+
 export default function Review({content}){
     const checked = {
         color: "orange"
@@ -16,14 +18,15 @@ export default function Review({content}){
     }
     
     return (
-    <span id="review">
-        {starsCreation(content.score)}
-        <div id="description">
-            {content.description}
-        </div>
-        <div id="date">
-            {content.date}
-        </div>
-    </span>
+    <div id="review">
+        <Card fluid>
+            <CardBody >
+            {starsCreation(content.score)}
+            <CardTitle></CardTitle>
+            <CardSubtitle>{content.date}</CardSubtitle>
+            <CardText>{content.description}</CardText>
+            </CardBody>
+        </Card>
+    </div>
     )
 }
