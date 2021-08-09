@@ -44,7 +44,7 @@ const ProductCreation = (props) => {
                 
                 dispatch(createProduct(addProduct))
                 dispatch(getAllProduct())
-               props.history.push('/productcreation')
+               props.history.push('/productlist')
             }
         else {
             throw alert('TODOS LOS CAMPOS SON OBLIGATORIOS')
