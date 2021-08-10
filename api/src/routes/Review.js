@@ -49,18 +49,18 @@ router.get("/",async (_req, res,next) => {
     }
 })
 
-router.post("/",async (req, res)=>{
+router.post("/",async (req, res, next)=>{
     try {
         const review=await Review.create(
             { date: req.body.date,
               score: req.body.score,
               description: req.body.description,
-              productId: product.dataValues.id,
-              userId: user.dataValues.id,
-            })
-        res.send(review)
+             })
+      
        
          await review.setProduct(req.body.productId)
+         await review.setUser(req.body.userId)
+         res.send(review)
     } catch (error) {
         next(error)
     }
