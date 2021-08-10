@@ -1,15 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import SearchBar from './SearchBar'
 
 
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
-
+import { getAllProduct } from '../../redux/actions/product';
 
 
 const Navbar = () => {
-
+  const dispatch = useDispatch();
   var authUser = sessionStorage.getItem("pg_merceria")
 
 
@@ -38,7 +39,14 @@ const Navbar = () => {
           
           <div className="navbar-nav me-auto mb-2 mb-lg-0">
 
+
             <NavLink activeClassName="text-white" className="nav-link" to="/productlist">
+
+            <NavLink activeClassName="text-white" className="nav-link" aria-current="page" to="/">
+              Inicio
+            </NavLink>
+            <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+
               Articulos
             </NavLink>
 

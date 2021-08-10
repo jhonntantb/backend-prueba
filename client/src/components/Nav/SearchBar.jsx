@@ -1,30 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
+
 import { getProduct } from "../../redux/actions/product/index.js";
 import './SearchBar.css'
 
-
-/*const SearchBar = () => {
-    const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
-
-    const dispatch = useDispatch() 
+import { useHistory} from "react-router-dom"
+import { getAllProduct } from "../../redux/actions/product/index.js";
 
 
-    return (
-      <input 
-       style={BarStyling}
-       key="random1"
-       value={keyword}
-       placeholder={"Agujas.."}
-       onChange={(e) => setKeyword(e.target.value)}
-       autoComplete="off"
-      />
-    );
-  }
-
-export default SearchBar*/
 
 export default function SearchBar() {
+
   const dispatch = useDispatch();
   const BarStyling = { width: "20rem", background: "#F2F1F9", border: "none", padding: "0.5rem" };
   const [name, setName] = useState("")
@@ -52,6 +38,31 @@ export default function SearchBar() {
           placeholder="Crochets, Bastidores"
         />
         <button className="btn">Buscar</button>
+
+  const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
+  const dispatch = useDispatch();
+  const {push} =useHistory()
+  
+  const [name,setName] = useState("")
+
+  const handleInputSearch=(e)=>{
+    e.preventDefault()
+    setName(e.target.value)
+}
+const handleClickSearch= (e)=>{
+    e.preventDefault();
+    if(name.trim().length>0){
+        dispatch(getAllProduct(name))
+        setName("")
+        push("/productlist")
+
+    }
+}
+
+  return (
+      <div className="divSearch">
+          <input style={BarStyling} className="inputsearch" type="text" placeholder="Buscar... " value={name} onChange={(e)=>handleInputSearch(e)} />
+          <button style={{padding:"0.5rem",margin:"5px"}} className="buttonsearch" onClick={(e)=>handleClickSearch(e)}>Buscar</button>
       </div>
 
     </div>
