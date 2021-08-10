@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
     id: {
 
       type: DataTypes.STRING,
-      // defaultValue: UUIDV4,
+      defaultValue: UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
@@ -46,6 +46,18 @@ module.exports = (sequelize) => {
     },
     address: {
       type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    province: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    country: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
   });
