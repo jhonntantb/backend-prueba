@@ -1,5 +1,6 @@
 import * as TYPES from "../types";
 
+
 const initialState = {
     products: [],
     product:[],
