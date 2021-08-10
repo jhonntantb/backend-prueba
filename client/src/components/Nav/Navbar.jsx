@@ -45,7 +45,7 @@ const Navbar = () => {
             {authUser === 'guest' || !authUser ?
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> :
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>}
-            <SignOutButton />
+            {authUser && authUser !== 'guest' ? <SignOutButton/>  : null  }
           </div>
           <div>
             
