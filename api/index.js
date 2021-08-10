@@ -1,8 +1,9 @@
 const server = require('./src/app');
-const { conn, Product, Category, Office, Productimage } = require('./src/db');
+const { conn, Product, Category, Office, Productimage, User } = require('./src/db');
 const data = require ('./src/data')
 const dataCategories = require ('./src/dataCategories')
 const dataOffices = require ('./src/dataOffices')
+const dataUsers = require ('./src/dataUsers')
 
 // Syncing all the models at once.
 
@@ -14,12 +15,14 @@ conn.sync({ force: update }).then(() => {
 
  // **************  PRECARGA DE DATOS A BASE DE DATOS **********************************   
     if(update) {
+      // Categorias
       dataCategories.forEach(async (e) => await Category.create(
           {name: e.name,
           }
           ));
       console.log('Categorias pre-cargadas')
 
+      // Productos
        data.forEach(async (e) => {product = await Product.create(
          {title: e.title,
          catalog_id: e.catalog_id,
@@ -52,6 +55,7 @@ conn.sync({ force: update }).then(() => {
 
       console.log('Productos pre-cargados')
 
+      // Oficinas
       dataOffices.forEach(async (e) => await Office.create(
           {name: e.name,
             address: e.address,
@@ -59,7 +63,25 @@ conn.sync({ force: update }).then(() => {
           }
           ));
           console.log('Offices pre-cargadas')  
+
+      // Usuarios
+      dataUsers.forEach(async (e) => await User.create(
+        { user_name: e.user_name,
+          first_name: e.first_name,
+          last_name: e.last_name,
+          email: e.email,
+          isAdmin: e.isAdmin,
+          active: e.active,
+          address: e.address,
+          location: e.location,
+          province: e.province,
+          country: e.country,
+          
+        }
+        ));
+        console.log('Users pre-cargados')       
       
+
     }
   });
 });
