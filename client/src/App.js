@@ -5,6 +5,7 @@ import * as ROUTES from './routes';
 import { PASSWORD_CHANGE } from './constants/routes';
 //views
 import Home from './views/Home/Home';
+import ShopCart from './views/ShopCart/ShopCart';
 import Product from './views/Product/Product';
 import ProductCreation from './views/ProductCreation/ProductCreation';
 
@@ -36,6 +37,7 @@ function App() {
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
+      <Route path={ROUTES.CART} component={ShopCart} />
       <Route exact path='/' component={Home} />
       <Route exact path={ROUTES.HOME} component={Newsletter}/>
       <Route exact path={ROUTES.LANDING} component={Newsletter}/>
