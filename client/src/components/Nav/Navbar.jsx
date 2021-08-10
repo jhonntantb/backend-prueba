@@ -40,7 +40,7 @@ const Navbar = () => {
           <div className="navbar-nav me-auto mb-2 mb-lg-0">
 
 
-            <NavLink activeClassName="text-white" className="nav-link" to="/productlist">
+            <NavLink activeClassName="text-white" className="nav-link" to="/productlist"> 
 
             <NavLink activeClassName="text-white" className="nav-link" aria-current="page" to="/">
               Inicio

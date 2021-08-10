@@ -8,7 +8,7 @@ export default function CreateReview ({match}){
     const [values,setValues] = React.useState({
         description:"",
         score:1, 
-        userId:"USERID", //ACA TENGO QUE ACCEDER AL SESSION STORAGE PARA OBTENER EL USERID
+        userId:sessionStorage.getItem("pg_merceria") , //ACA TENGO QUE ACCEDER AL SESSION STORAGE PARA OBTENER EL USERID
         productId:match
     })
     const[send,setsend] = useState("False");
