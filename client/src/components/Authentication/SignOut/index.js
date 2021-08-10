@@ -34,7 +34,7 @@ function SignOutButtonBase(props) {
 
     <button type="button" onClick={clickHandler} className="btn btn-danger">
 
-      Log Out
+      Salir
     </button>
   );
 }
