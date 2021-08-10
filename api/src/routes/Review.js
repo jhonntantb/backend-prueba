@@ -2,15 +2,16 @@ const router = require('express').Router();
 const { Op } = require("sequelize");
 const { Review, User, Product } = require('../db')
 
-////////////// GET ESPECIFICO //////////////////////
-// Busqueda de reviews de un review id o todos los reviews de un producto o todos los reviews de eun usuario,via query
+////////////// GET ESPECIFICO o TODOS //////////////////////
+// Busqueda de reviews de un review id o todos los reviews de un producto o todos los reviews de eun usuario,via query.
+// Sin parametro de query devuelve todos
 // Uso:
 // /review?reviewId=
 // /review?productId=
 // /review?userId=
-//
+// /review               
 router.get("/",async (req, res,next) => {
-    
+    console.log(req.query);
       try {
        if (req.query.reviewId) {
         // Devuelve el review del id que se le pasó   
@@ -33,46 +34,46 @@ router.get("/",async (req, res,next) => {
             const review=await Review.findAll({where: {userId: req.query.userId}, include: [{model:User, attributes:['user_name','first_name', 'last_name']},{model:Product, attributes:['catalog_id', 'title']}]} )
             return res.send(review)
         }
+            const review=await Review.findAll({include:[{model:User, attributes:['user_name', 'first_name', 'last_name']},{model:Product, attributes:['catalog_id', 'title']}]});
+            res.send(review)
+        
       } catch (error) {next(error)} 
    
-     return res.status(300).send('No recibio dato valido por query)')
+     // return res.status(300).send('No recibio dato valido por query)')
 })
 
-////// GET ALL /////////////////////
-router.get("/",async (_req, res,next) => {
-    console.log('get reviews all');
-    try {
-        const review=await Review.findAll({include:[{model:User, attributes:['user_name', 'first_name', 'last_name']},{model:Product, attributes:['catalog_id', 'title']}]});
-        res.send(review)
-    } catch (error) {
-        next(error)
-    }
-})
+
+///////////// POST REVIEW /////////////////////////////////////
 
 router.post("/",async (req, res, next)=>{
+    console.log(req.body)
     try {
         const review=await Review.create(
-            { date: req.body.date,
-              score: req.body.score,
+            { score: req.body.score,
               description: req.body.description,
+              productId: req.body.productId,
+              userId: req.body.userId
              })
       
-       
-         await review.setProduct(req.body.productId)
-         await review.setUser(req.body.userId)
+       //  await review.setProducts(req.body.productId)
+       //  await review.setUsers(req.body.userId)
          res.send(review)
     } catch (error) {
         next(error)
     }
 })
-router.delete("/",async (req,res,next)=>{
+
+
+//////////////////// DELETE REVIEW  //////////////////////////
+router.delete("/:reviewId",async (req,res,next)=>{
     try {
-        const review=await Review.destroy({where:{id:req.body}})
-        res.send(review)
+        const review=await Review.destroy({where:{id:req.params.reviewId}})
+        if(review) return  res.send("Review eliminado")
+        return res.sendStatus(400)
     } catch (error) {
         next(error)
     }
 })
-// no se púede modificar una review
+// no se púede modificar una review, por eso no se incluye update
 
 module.exports = router;

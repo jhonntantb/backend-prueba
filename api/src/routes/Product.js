@@ -1,4 +1,4 @@
-const {Product, Category, Productimage,Stock} = require ('../db');
+const {Product, Category, Productimage,Stock, Review} = require ('../db');
 
 const router = require('express').Router();
 const { Op } = require("sequelize");
@@ -10,14 +10,14 @@ router.get("/", async function(req,res, next){
   
   if(!name) {
    try{
-     const product = await Product.findAll({order: [['catalog_id','ASC']] ,   include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+     const product = await Product.findAll({order: [['catalog_id','ASC']] ,   include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model:Review, attributes: ['id','date','score','description']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
       res.status(200).json(product)
    }
    catch (error) {next(error)};
   } 
   else {
     try{
-      const product = await Product.findAll({where: {title: {[Op.iLike]: "%"+name +"%"}}, include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+      const product = await Product.findAll({where: {title: {[Op.iLike]: "%"+name +"%"}}, include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model:Review, attributes: ['id','date','score','description']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
        res.status(200).json(product)
     }
     catch (error) {next(error)}; 
@@ -29,7 +29,7 @@ router.get("/:idProducto", async function(req,res, next){
      
     const product_id = req.params.idProducto;
      console.log(product_id);
-    const product = await Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+    const product = await Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']},{model:Review, attributes: ['id','date','score','description']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
     if (product) {return  res.status(200).json(product)}
     else {res.status(400) }
   } 
