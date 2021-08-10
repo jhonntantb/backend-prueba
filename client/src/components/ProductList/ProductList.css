@@ -6,3 +6,6 @@
     align-items: center;
     padding: 5px;
 }
+.list {
+    justify-content: center;
+}
