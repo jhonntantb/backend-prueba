@@ -48,7 +48,7 @@ const Carrousel = (props) => {
         setActiveIndex(newIndex);
     }
 
-    const slides = props.images.map((item) => {
+    const slides = items.map((item) => {
         //console.log(item.image_url)
         return (
 
@@ -57,7 +57,7 @@ const Carrousel = (props) => {
                 onExited={() => setAnimating(false)}
                 key={item.src}
             >
-                <img class="carrusel" src={item.image_url} alt={item.altText} />
+                <img class="carrusel" src={item.src} alt={item.altText} />
                 <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
 
             </CarouselItem>

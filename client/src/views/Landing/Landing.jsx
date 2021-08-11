@@ -31,18 +31,23 @@ export const Landing = () => {
       dispatch(getAllProduct());
    }, [])
    
-   let list5 = []
-   //list5.push(list[1],list[2],list[3],list[4],list[5])
-    list5.push(list[1])
+   let list4 = []
+   list4.push(list[1],list[2],list[3],list[4])
+  
    //console.log("LIST: ",list5)
 
     return (
+  
         <div>
             <h1>LANDING</h1>
-            
-                {list.length > 0 && list5.map(c => 
+            <Carrousel images={items}/>
+                <div class="row">
+                  <div class="row">
+                {list.length > 0 && list4.map(c => 
                   <CardProduct url={c.productimages[0].image_url} price={c.price} title={c.title}/>  )}
-                  <Carrousel images={items}/>
+                  </div>
+                </div>
+                  
          </div>
         
     )
