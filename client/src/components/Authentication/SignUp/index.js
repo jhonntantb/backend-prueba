@@ -239,9 +239,9 @@ function SignUpFormBase(props) {
 }
 
 const SignUpLink = () => {
-  return (<p> Don´t have an Account?
+  return (<p className="text-dark"> Don´t have an Account?
     <br />
-    <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    <Link className="text-dark" to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>)
 }
 
