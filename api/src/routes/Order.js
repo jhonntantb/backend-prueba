@@ -1,18 +1,20 @@
 const router = require('express').Router();
-const { Order } = require('../db')
+const { Order, User, Product } = require('../db')
 //para que serviria esta ruta para admin 
+
 router.get("/",async (_req, res,next) =>{
+  console.log('ruta orden');  
     try {
-        const allOrder=await Order.findAll();
+        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  });
         res.send(allOrder)
     } catch (error) {
         next(error)
     }
 })
 //para que nos serviria esta ruta par aver el estado y modificar de una order
-router.get("/:id",async (req, res) =>{
+router.get("/:id",async (req, res, next) =>{
     try {
-        const order=await Order.findOne({where:{id:req.params.id}})
+        const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] } ] })
         res.send(order)
     } catch (error) {
         next(error)
@@ -23,15 +25,25 @@ router.get("/:id",async (req, res) =>{
 //la orden se relaciona con una oficina---->con un calendario
 //-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
-router.post("/",async (req, res) => {
+router.post("/",async (req, res, next) => {
     try {
-        const order=await Order.create(req.body.order)
+        const order=await Order.create({
+            status: req.body.status,
+            total_price: req.body.total_price,
+            home_address: req.body.home_address,
+            location: req.body.location,
+            province: req.body.province,
+            country: req.body.country,
+            delivery_date: req.body.delivery_date,
+            userId: req.body.userId
+        })
+        req.body.products.forEach(async (e) => {
+            await order.setProducts(e.productId)
+        })
         res.send(order)
-        await order.setProducts(req.body.products)
+    //    await order.setProducts(req.body.products)
     //la relacion del calendario pendiente 
-    } catch (error) {
-        next(error)
-    }
+    } catch (error) {next(error)    }
    //body tiene que traer el id de productos en un array si es uno o mas[]
    
 })
@@ -52,3 +64,5 @@ router.delete("/:id",async (req, res) => {
         next(error)
     }
 })
+
+module.exports = router;

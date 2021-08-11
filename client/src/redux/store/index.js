@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
 const ConfigureStore = () => {
+    sessionStorage.setItem("pg_merceria", "guest")
     var initialState = {};
     try {
         initialState = sessionStorage.getItem("pg_merceria") ? JSON.parse(sessionStorage.getItem("pg_merceria")) : initialState;

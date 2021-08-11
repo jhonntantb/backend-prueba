@@ -13,8 +13,11 @@ function CardProduct(props) {
           <img onclick="change_image(this)" src={props.url} width="70"/> 
           <img onclick="change_image(this)" src={props.url} width="70"/> 
         </div>
-        <div class="about text-center">
-            <h6>{props.title}</h6> <span>${props.price}</span>
+        <div class="about text-center"> 
+              <NavLink to={`/product/${props.id}`}>
+                <a href="#" class="btn btn-primary"><h6>{props.title}</h6></a>
+                </NavLink>    
+          <span>${props.price}</span>
         </div>
         <div class="cart-button mt-3 px-2 d-flex justify-content-between align-items-center"> <button class="btn btn-dark text-uppercase">Add to cart</button>
             <div class="add"> 

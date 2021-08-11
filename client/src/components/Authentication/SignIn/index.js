@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SignUpLink } from '../SignUp/index';
 import { PasswordForgetLink } from '../PasswordForget/index';
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
+import {getUser, clearUser} from '../../../redux/actions/user/index';
+
 
 const SignInPage = () => (
   <div className="container">
@@ -25,25 +27,34 @@ const initial_state = {
 };
 
 function SignInFormBase(props) {
+  const user = useSelector(state=>state.userReducer.user)
   var [state, setState] = useState(initial_state)
   const dispatch = useDispatch();
 
-  const onSubmit = event => {
+  const onSubmit = async event => {
     const { email, password } = state;
+    //modificar para que checkee el state del usuario en esta instancia
+    
 
-    props.firebase
-      .doSignInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        // console.log('userCredentials tiene: ' + Object.keys(userCredentials))
-        dispatch(LogInUser(userCredentials.user.email))
-        sessionStorage.setItem("pg_merceria", userCredentials.user.email)
-        setState({ ...initial_state });
+      props.firebase
+        .doSignInWithEmailAndPassword(email, password)
+        .then((userCredentials) => {
+          // console.log('userCredentials tiene: ' + Object.keys(userCredentials))
+          // console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
+          
+          dispatch(getUser(userCredentials.user.uid))
 
-        props.history.push(ROUTES.HOME);
-      })
-      .catch(error => {
-        setState({ error });
-      });
+          
+          setState({ ...initial_state });
+  
+          
+        })
+        .catch(error => {
+          setState({ error });
+        });
+    
+      
+    
 
     event.preventDefault();
   };
@@ -54,6 +65,42 @@ function SignInFormBase(props) {
       [event.target.name]: event.target.value
     });
   };
+
+  useEffect(()=>{
+    // console.log('esto es user:  ' + user)
+    if(user.active!==undefined) {
+
+
+        //verifica el estado active del usuario
+
+          if(user.active===true) {
+            //verifica si es admin
+            if(user.isAdmin===true) {
+              sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
+              props.history.push(ROUTES.HOME);
+            }else {
+
+              //setea el id del usuario al sessionStorage
+              sessionStorage.setItem("pg_merceria", user.id)
+              props.history.push(ROUTES.HOME);
+
+            }
+            dispatch(LogInUser(user.email))
+          }else {
+            //si esta inactivo arroja un mensaje
+            dispatch(clearUser())
+            alert('El usuario ha sido inhabilitado por el administrador')
+            props.history.push('/')
+
+          }
+
+    } else {
+      //si user es guest, setea la session a guest
+      sessionStorage.setItem("pg_merceria", 'guest')
+      dispatch(clearUser())
+    }
+
+  },[user])
 
 
   const { email, password, error } = state;
