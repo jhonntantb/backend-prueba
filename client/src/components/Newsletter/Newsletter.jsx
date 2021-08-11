@@ -8,7 +8,7 @@ export const Newsletter = () => {
             <div class="row justify justify-content-start">
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-3">
                     <form class="">
-                        <div id="card news" class="card">
+                        <div id="cardnews" class="card">
                             <div class="row justify-content-center">
                                 <div class="col-md-9 col-11">
                                     <div class="row mt-0">

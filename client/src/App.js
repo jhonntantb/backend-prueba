@@ -14,8 +14,8 @@ import SignUpPage from './components/Authentication/SignUp/index';
 import SignInPage from './components/Authentication/SignIn';
 import Account from './components/Authentication/Account';
 import PasswordForgetPage from './components/Authentication/PasswordForget';
-import { PasswordChangeForm } from './components/Authentication/PasswordChange';
-//import Navigation from './components/Navigation';
+import PasswordChangePage from './components/Authentication/PasswordChange';
+import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
 import Login from './components/Login/Login'
 import Navbar from './components/Nav/Navbar';
@@ -23,6 +23,7 @@ import Footer  from './components/Footer/Footer';
 import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import Stock from './components/Admin/Stock/Stock.jsx';
+import UsersAdmin from './components/Admin/Users/index';
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
       <Route  exact path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route path={PASSWORD_CHANGE} component={PasswordChangeForm}/>
+      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangePage}/>
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
@@ -47,6 +48,7 @@ function App() {
       <Route exact path= {ROUTES.HOME}component={Footer}/>
       <Route exact path= {ROUTES.LANDING}component={Footer}/>
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
+      <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
     </React.Fragment>
   )
 }
