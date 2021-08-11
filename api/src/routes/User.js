@@ -35,7 +35,10 @@ router.post("/",async (req,res,next)=>{
                 last_name: req.body.last_name,
                 email: req.body.email,
                 // password: req.body.password,
-                address: req.body.address
+                address: req.body.address,
+                location: req.body.location,
+                province: req.body.province,
+                country: req.body.country
             }
         })
         res.send(user);

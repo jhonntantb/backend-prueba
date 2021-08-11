@@ -68,7 +68,7 @@ function SignInFormBase(props) {
 
   useEffect(()=>{
     // console.log('esto es user:  ' + user)
-    if(user!=='guest') {
+    if(user.active!==undefined) {
       
       
         //verifica el estado active del usuario

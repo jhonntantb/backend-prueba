@@ -88,7 +88,6 @@ const Navbar = () => {
             <SearchBar />
 
           </div>
-            <SearchBar />
          
         </div>
       </div>
