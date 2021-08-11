@@ -89,7 +89,7 @@ const Order_Product = sequelize.define('Order_Product', {
   unitprice: {type: DataTypes.FLOAT,
              defaultValue: 0},
   totalcost: {type: DataTypes.VIRTUAL,
-             get() {return unitprice * quantity ;} },
+             get() {return this.unitprice * this.quantity ;} },
 
 });
 
