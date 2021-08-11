@@ -83,10 +83,14 @@ Product.belongsToMany(Category,{ through: 'Category_Product'});
 
 
 const Order_Product = sequelize.define('Order_Product', {
-  id: {type: DataTypes.UUID,
-    allowNull: false,
-    primaryKey: true},
-    quantity: DataTypes.INTEGER,
+
+  quantity: {type: DataTypes.INTEGER,
+             defaultValue: 0},
+  unitprice: {type: DataTypes.FLOAT,
+             defaultValue: 0},
+  totalcost: {type: DataTypes.VIRTUAL,
+             get() {return unitprice * quantity ;} },
+
 });
 
 
