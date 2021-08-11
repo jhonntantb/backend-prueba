@@ -11,8 +11,9 @@ module.exports = (sequelize) => {
             primaryKey: true
         },
         date: {
-            type: DataTypes.DATE,
-            allowNull: false
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            defaultValue: new Date()
         },
         score: {
             type: DataTypes.INTEGER,
