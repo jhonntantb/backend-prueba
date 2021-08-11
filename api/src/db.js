@@ -62,7 +62,8 @@ const bundle_product = sequelize.define('bundle_product', {
   defaultValue: UUIDV4,  
   allowNull: false,
   primaryKey: true},
-  quantity: DataTypes.INTEGER
+  quantity: {type: DataTypes.INTEGER,
+              allowNull: false}
 });
 
 
