@@ -38,7 +38,8 @@ export default function SearchBar() {
           placeholder="Crochets, Bastidores"
         />
         <button className="btn">Buscar</button>
-
+        </div> 
+     
   const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
   const dispatch = useDispatch();
   const {push} =useHistory()
@@ -65,6 +66,6 @@ const handleClickSearch= (e)=>{
           <button style={{padding:"0.5rem",margin:"5px"}} className="buttonsearch" onClick={(e)=>handleClickSearch(e)}>Buscar</button>
       </div>
 
-    </div>
+    
   );
 }
