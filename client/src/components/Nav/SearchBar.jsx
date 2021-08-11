@@ -7,7 +7,7 @@ import { getProduct } from "../../redux/actions/product/index.js";
 import './SearchBar.css'
 
 export default function SearchBar() {
-  const BarStyling = { width: "20rem", background: "#F2F1F9", border: "none", padding: "0.5rem" };
+  
 
 
 
@@ -34,8 +34,7 @@ export default function SearchBar() {
 
   return (
     <div className="search">
-    <i className="fa fa-search" />
-       <input style={BarStyling} className="form-control" type="text" placeholder="Crochets, Bastidores" onChange={(e) => handleInputSearch(e)} /> 
+       <input  className="form-control" type="text" placeholder="Crochets, Bastidores" onChange={(e) => handleInputSearch(e)} /> 
        <button className="btn"  onClick={(e) => handleClickSearch(e)}>Buscar</button>
     </div>
     // <div className="search">
