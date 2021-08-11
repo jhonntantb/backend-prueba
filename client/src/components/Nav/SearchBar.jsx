@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { useDispatch } from "react-redux";
 import { useHistory} from "react-router-dom"
 import { getAllProduct } from "../../redux/actions/product/index.js";
+import './SearchBar.css'
 
 
 export default function SearchBar() {
