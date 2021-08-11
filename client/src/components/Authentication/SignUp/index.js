@@ -41,28 +41,23 @@ function SignUpFormBase(props) {
 
   const onSubmitHandler = async (e) => {
 
-    const { user_name, first_name, last_name, email, passwordOne, province, city, street, number } = state;
+    const { user_name, first_name, last_name, email, passwordOne, province, city, street, number, country } = state;
 
 
     e.preventDefault();
 
     try {
       var authUser = await props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne);
-      // console.log('authUser : ' + Object.keys(authUser))
-      // console.log('user:  ' + Object.keys(authUser.user))
-      // console.log('user.uid : '  + authUser.user.uid )
-      // console.log('user.email : ' + authUser.user.email)
-      // console.log('credential ' + authUser.credential)
-      // console.log('additionalUserInfo : ' + Object.keys(authUser.additionalUserInfo) )
-      // console.log('operationType:  ' + authUser.operationType)
-
       var userOk = {
         id: authUser.user.uid,
         user_name,
         first_name,
         last_name,
         email,
-        address: province + ' - ' + city + ' - ' + street + ' - ' + number
+        address: street + ' - ' + number,
+        province: province,
+        location: city,
+        country: country
       }
       dispatch(createUser(userOk))
 
@@ -99,6 +94,7 @@ function SignUpFormBase(props) {
     email,
     passwordOne,
     passwordTwo,
+    country,
     province,
     city,
     street,
@@ -178,6 +174,16 @@ function SignUpFormBase(props) {
                   onChange={onChangeHandler}
                   type="password"
                   placeholder="Confirm Password"
+                  className="form-control"
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  name="country"
+                  value={country}
+                  onChange={onChangeHandler}
+                  type="text"
+                  placeholder="Pais"
                   className="form-control"
                 />
               </div>

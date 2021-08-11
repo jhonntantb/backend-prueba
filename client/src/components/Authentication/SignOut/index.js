@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { useDispatch } from 'react-redux';
+import {clearUser} from '../../../redux/actions/user/index';
 
 import { withFirebase } from '../../FireBase/context';
 import { LogInUser } from '../../../redux/actions/login/index';
@@ -14,7 +15,7 @@ function LogOutButton() {
 
 
 function SignOutButtonBase(props) {
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   function clickHandler() {
     console.log('hiciste click')
@@ -22,7 +23,7 @@ function SignOutButtonBase(props) {
       props.firebase.doSignOut();
       // sessionStorage.clear()
       sessionStorage.setItem("pg_merceria", "guest")
-      //dispatch(LogInUser('guest'))
+      dispatch(clearUser());
       props.history.push('/')
     } catch (error) {
       console.log(error.message);

@@ -10,6 +10,7 @@ export const createUser = (user) => {
 
 export const updateUser = (params) => {
     return async  (dispatch) => {
+        
         const res = await axios.put('http://localhost:3001/user', params)
         return dispatch({ type: TYPES.UPDATE_USER, payload: res.data })
     }
@@ -33,5 +34,11 @@ export const deleteUser = (params) => {
     return async  (dispatch) => {
         const res = await axios.delete('http://localhost:3001/user', params)
         return dispatch({ type: TYPES.DELETE_USER, payload: res.data })
+    }
+}
+
+export const clearUser = () => {
+    return (dispatch) => {
+        return dispatch({type: TYPES.CLEAR_USER})
     }
 }
