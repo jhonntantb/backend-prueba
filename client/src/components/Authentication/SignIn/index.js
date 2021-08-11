@@ -97,7 +97,7 @@ function SignInFormBase(props) {
     } else {
       //si user es guest, setea la session a guest
       sessionStorage.setItem("pg_merceria", 'guest')
-      
+      dispatch(clearUser())
     }
     
   },[user])
