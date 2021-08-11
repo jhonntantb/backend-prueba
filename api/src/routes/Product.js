@@ -59,7 +59,7 @@ router.post("/", async function(req, res, next){
        })
        await Stock.create({
            productId:product.id,
-           office_id:req.body.office_id,
+           officeId:req.body.office_id,
            quantity:req.body.quantity,
            })
  
