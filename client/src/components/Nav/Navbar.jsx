@@ -42,58 +42,52 @@ const Navbar = () => {
             {authUser === 'guest' || !authUser ?
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> :
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>}
-            {authUser && authUser !== 'guest' ? <SignOutButton/>  : null  }
-          </div>
-          <div>
+
+            {authUser && authUser.includes('admin') ? (
+              // <div>
+              // <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
+
+              // </div>
             
-            <div className="d-flex">
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Admin
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <div>
+                      <NavLink activeClassName="text-dark" className="dropdown-item" to={ROUTES.FORM}>
+                        Agregar Categoria
+                      </NavLink>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <NavLink activeClassName="text-dark" className="dropdown-item" to='/productcreation'>
+                        Agregar Producto
+                      </NavLink>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+            ) : null}
+            {authUser=='guest'?null:<SignOutButton />}
 
 
-
-
-              {authUser && authUser !== 'guest' ? (
-                // <div>
-                // <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
-
-                // </div> 
-
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Admin
-                  </a>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                      <div>
-                        <NavLink activeClassName="text-dark" className="dropdown-item" to={ROUTES.FORM}>
-                          Agregar Categoria
-                        </NavLink>
-                      </div>
-                    </li>
-                    <li>
-                      <div>
-                        <NavLink activeClassName="text-dark" className="dropdown-item" to='/productcreation'>
-                          Agregar Producto
-                        </NavLink>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-
-              )
-
-
-                : null}
-
-            </div>
           </div>
+          <div className="d-flex">
+
             <SearchBar />
+
+          </div>
          
         </div>
       </div>
