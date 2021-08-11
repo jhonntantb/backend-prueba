@@ -46,14 +46,24 @@ router.post("/",async (req,res,next)=>{
     }
 })
 router.put("/",async (req,res,next)=>{
-    const changes=req.body.changes;
+//entra un array con los cambio a realizar
+
+ var arr = req.body
+
+     arr.forEach(async (c) => {
+            let changes=c.changes
+            let id=c.id
+         try {
+             await User.update(changes,{where:{id:id}}) 
+         } catch (error) {
+             next(error)
+         }
+
+     })
+
+     const allUsers= await User.findAll()
     //solo el admi puede modificar su active
-    try {
-        const modUser=await User.update(changes,{where:{id:req.body.id}})
-        res.send(modUser)
-    } catch (error) {
-        next(error)
-    }
+    return res.send(allUsers)
 })
 router.delete("/",async (req,res,next)=>{
     const id=req.body;

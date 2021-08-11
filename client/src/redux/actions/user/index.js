@@ -10,6 +10,7 @@ export const createUser = (user) => {
 
 export const updateUser = (params) => {
     return async  (dispatch) => {
+        
         const res = await axios.put('http://localhost:3001/user', params)
         return dispatch({ type: TYPES.UPDATE_USER, payload: res.data })
     }

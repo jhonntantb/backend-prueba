@@ -10,6 +10,7 @@ import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
 import {getUser} from '../../../redux/actions/user/index';
+import { NavbarText } from 'reactstrap';
 
 const SignInPage = () => (
   <div className="container">
@@ -30,7 +31,7 @@ function SignInFormBase(props) {
   var [state, setState] = useState(initial_state)
   const dispatch = useDispatch();
 
-  const onSubmit = event => {
+  const onSubmit = async event => {
     const { email, password } = state;
 
     props.firebase
@@ -67,9 +68,20 @@ function SignInFormBase(props) {
         sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
         props.history.push(ROUTES.HOME);
       }else {
-        //si no es admin simplemente setea la sesion con el id de usuario
-        sessionStorage.setItem("pg_merceria", user.id)
-        props.history.push(ROUTES.HOME);
+        //si no es admin verifica el estado active del usuario
+        try {
+          if(user.active===true) {
+            //si está activo setea el id del usuario al sessionStorage
+            sessionStorage.setItem("pg_merceria", user.id)
+            props.history.push(ROUTES.HOME);
+          }else {
+            //si esta inactivo arroja un mensaje
+            throw alert('El usuario ha sido inhabilitado por el administrador')
+          }
+
+        } catch (err) {console.log(err)}
+        
+        
       }
     } else {
       //si user es guest, setea la session a guest
