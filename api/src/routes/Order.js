@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { Order, User, Product } = require('../db')
-//para que serviria esta ruta para admin 
 
+
+///////////////   GET GENERAL ////////////////////////////////
 router.get("/",async (_req, res,next) =>{
   console.log('ruta orden');  
     try {
@@ -11,7 +12,7 @@ router.get("/",async (_req, res,next) =>{
         next(error)
     }
 })
-//para que nos serviria esta ruta par aver el estado y modificar de una order
+//////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
         const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] } ] })
@@ -20,10 +21,37 @@ router.get("/:id",async (req, res, next) =>{
         next(error)
     }
 })
+
+
 // la orden se relaciona con un usuario
 //la orden se relaciona con un o varios productos
 //la orden se relaciona con una oficina---->con un calendario
 //-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
+
+//////////// P O S T ////////////////////////////////////////
+
+// *************** FORMATO EJEMPLO DEL POST **********************
+// {"status": "En preparacion",
+// "total_price": 10000,
+// "home_address": "Artigas 2028",
+// "location": "Villa Tachitos",
+// "province": "Buenos Aires",
+// "country": "Argentina",
+// "delivery_date": "2021-08-20",
+// "userId": "046fb71e-14f1-445c-a66a-2e69556ebdad",
+// "products": [
+//     {
+//         "productId":"b346d07c-0a61-40f2-b220-d84b494f7b5c",
+//         "quantity": 20,
+//         "unitprice": 200.50
+//     },
+//     {
+//        "productId": "5949ff09-1a77-4b66-87d7-a3d60a27ec9b",
+//        "quantity": 100,
+//        "unitprice": 500
+//     }
+// ]
+// }
 
 router.post("/",async (req, res, next) => {
     try {
@@ -38,23 +66,36 @@ router.post("/",async (req, res, next) => {
             userId: req.body.userId
         })
         req.body.products.forEach(async (e) => {
-            await order.setProducts(e.productId)
+            await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
         })
         res.send(order)
-    //    await order.setProducts(req.body.products)
+ 
     //la relacion del calendario pendiente 
     } catch (error) {next(error)    }
-   //body tiene que traer el id de productos en un array si es uno o mas[]
+  
    
 })
+
+///////////////////////// UPDATE //////////////////////////
 //solo puede modificar el  admin el status o lo que quiera
+// Formato ejemplo del body esperado:
+// {"status": "En preparacion",
+// "total_price": 100000,
+// "province": "Tucuman"
+// }
+
 router.put("/:id",async (req,res,next) => {
+    let changes = req.body
+    console.log(changes);
     try {
-        const order=await Order.update(req.body,{where:{id:req.params.id}})
+        const order=await Order.update(changes,  {where:{id:req.params.id}})
+        res.send(order);
     } catch (error) {
         next(error)
     }
 })
+
+//////////////////////////// DELETE ////////////////////////
 //solo puede deletear el admin
 router.delete("/:id",async (req, res) => {
     try {
