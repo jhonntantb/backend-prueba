@@ -9,7 +9,9 @@ const Office =require('./Office');
 const Bundle=require("./Boundle")
 const User=require("./User");
 const Schedule = require("./Schudule");
-const Stock =require("./Stock")
+const Stock =require("./Stock");
+const Order =require("./Order")
+
 const router = Router();
 
 router.use("/product", Product ) 
@@ -21,5 +23,6 @@ router.use("/bundle",Bundle)
 router.use("/user",User)
 router.use("/schedule",Schedule)
 router.use("/stock",Stock)
+router.use("/order",Order)
 
 module.exports = router;
