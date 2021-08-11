@@ -7,6 +7,7 @@ import { PASSWORD_CHANGE } from './constants/routes';
 import Home from './views/Home/Home';
 import Product from './views/Product/Product';
 import ProductCreation from './views/ProductCreation/ProductCreation';
+import Landing from './views/Landing/Landing';
 
 //components
 import SignUpPage from './components/Authentication/SignUp/index';
@@ -29,7 +30,8 @@ function App() {
     <React.Fragment>
       <Route path="/" component={Navbar} />
       {/*<Route exact path='/' component={Navigation} />*/}
-      <Route path={ROUTES.HOME} component={Home} />
+      <Route exact path='/' component={Landing} />
+      <Route  exact path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangePage}/>
@@ -37,7 +39,6 @@ function App() {
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
-      <Route exact path='/' component={Home} />
       <Route exact path={ROUTES.HOME} component={Newsletter}/>
       <Route exact path={ROUTES.LANDING} component={Newsletter}/>
       <Route path={ROUTES.FORM} component={Form} />

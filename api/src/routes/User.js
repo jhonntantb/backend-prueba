@@ -1,4 +1,4 @@
-const {User} = require ('../db');
+const {User, Review} = require ('../db');
 const router = require('express').Router();
 const { Op } = require("sequelize");
 
@@ -17,8 +17,7 @@ router.get("/:id", async  (req,res,next) => {
 
 // crea y envia 
 router.get("/",(_req,res)=>{
-
-    User.findAll()
+    User.findAll({include: {model:Review, attributes: ['id','date','score','description']}})
     .then(User => res.status(200).json(User))
     .catch(error => res.status(400).send(error))
 })

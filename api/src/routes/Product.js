@@ -1,43 +1,23 @@
-const {Product, Category, Productimage,Stock} = require ('../db');
+const {Product, Category, Productimage,Stock, Review} = require ('../db');
 
 const router = require('express').Router();
 const { Op } = require("sequelize");
 
-router.post('/prueba', async function (req, res, next) {
-  var image = req.body
-  try {
-    Productimage.create({
-      productId: image.productId, 
-      image_url:image.url
-      })
-      
-  } catch (err) {next(err)};
-
-})
 
 //////////  GET PRODUCT  /////////////
 router.get("/", async function(req,res, next){
   const { name } = req.query ;
   
-/*   try{
-    const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
-     res.status(200).json(product)
-  }
-  catch (error) {next(error)};
-
-}) 
- */
-
   if(!name) {
    try{
-     const product = await Product.findAll({include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+     const product = await Product.findAll({order: [['catalog_id','ASC']] ,   include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model:Review, attributes: ['id','date','score','description']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
       res.status(200).json(product)
    }
    catch (error) {next(error)};
   } 
   else {
     try{
-      const product = await Product.findAll({where: {title: {[Op.substring]: name}}, include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+      const product = await Product.findAll({where: {title: {[Op.iLike]: "%"+name +"%"}}, include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model:Review, attributes: ['id','date','score','description']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
        res.status(200).json(product)
     }
     catch (error) {next(error)}; 
@@ -49,7 +29,7 @@ router.get("/:idProducto", async function(req,res, next){
      
     const product_id = req.params.idProducto;
      console.log(product_id);
-    const product = await Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
+    const product = await Product.findByPk(product_id, {include: [{ model: Category, attributes: ['id', 'name']}, {model: Productimage, attributes: ['id', 'image_url']},{model:Review, attributes: ['id','date','score','description']}, {model: Stock, attributes: ['id', 'quantity', 'officeId']}]})
     if (product) {return  res.status(200).json(product)}
     else {res.status(400) }
   } 
@@ -79,7 +59,7 @@ router.post("/", async function(req, res, next){
        })
        await Stock.create({
            productId:product.id,
-           office_id:req.body.office_id,
+           officeId:req.body.office_id,
            quantity:req.body.quantity,
            })
  
@@ -103,6 +83,44 @@ router.post("/", async function(req, res, next){
   }
  catch (error) {next(error)};
  })
+
+///////////    DELETE PRODUCT    ///////////
+// En general solo para usar via postman para borrar por mantenimiento
+//
+// By id
+router.delete("/:id",async function (req,res,next){
+  //console.log("REQ PRODUCT: ",req.params)
+ await Product.destroy( {
+     where: {
+         id:req.params.id
+     }
+ }).then(() => {
+     res.status(200).json("borrado exitosamente")
+ }).catch((err) => next(err)) 
+})
+
+// By query id or catalog_id
+router.delete("/",async function (req,res,next){
+  if (req.query.id) {
+     await Product.destroy( {
+      where: { id: req.query.id }})
+      .then(() => {res.status(200).json("borrado exitosamente")})
+      .catch((err) => next(err)) 
+ }
+ else
+ {
+   if(req.query.catalog_id) {
+          await Product.destroy( {
+          where: {catalog_id: req.query.catalog_id}})
+          .then(() => {res.status(200).json("borrado exitosamente")})
+          .catch((err) => next(err)) 
+    } 
+    else
+    {
+      res.status(300).json("No vino ni id ni catalog_id para borrar")   
+    }
+ }   
+})
 
 
 module.exports = router;

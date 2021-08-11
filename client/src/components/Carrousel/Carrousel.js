@@ -30,7 +30,7 @@ const items = [
 const Carrousel = (props) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
-    // console.log(props)
+    //console.log(props)
     const next = () => {
         if (animating) return;
         const nextIndex = activeIndex === props.images.length - 1 ? 0 : activeIndex + 1;
@@ -49,7 +49,7 @@ const Carrousel = (props) => {
     }
 
     const slides = props.images.map((item) => {
-        console.log(item.image_url)
+        //console.log(item.image_url)
         return (
 
             <CarouselItem class="container"
