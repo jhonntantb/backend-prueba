@@ -1,8 +1,8 @@
 import React,{useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProduct } from '../../../redux/actions/product';
-import Carrousel from '../../Carrousel/Carrousel';
-import CardProduct from '../../ProductList/CardProduct';
+import { getAllProduct } from '../../redux/actions/product';
+import Carrousel from '../../components/Carrousel/Carrousel';
+import CardProduct from '../../components/ProductList/CardProduct';
 
 
 export const Landing = () => {

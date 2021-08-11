@@ -7,7 +7,7 @@ import { PASSWORD_CHANGE } from './constants/routes';
 import Home from './views/Home/Home';
 import Product from './views/Product/Product';
 import ProductCreation from './views/ProductCreation/ProductCreation';
-import Landing from './components/views/Landing/Landing';
+import Landing from './views/Landing/Landing';
 
 //components
 import SignUpPage from './components/Authentication/SignUp/index';
