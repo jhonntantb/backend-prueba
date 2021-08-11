@@ -1,10 +1,12 @@
 require('dotenv').config();
-const { Sequelize } = require('sequelize');
+const { Sequelize, UUIDV4 } = require('sequelize');
 const { DataTypes } = require("sequelize")
 const fs = require('fs');
 const path = require('path');
 const { Console } = require('console');
 const {DB_USER, DB_PASSWORD, DB_HOST, ELEPHANT_CONNECT, CONNECT} = process.env;
+console.log(CONNECT);
+console.log(DB_HOST);
 
 if(CONNECT==='CLOUD') {
   // Codigo para cloud service
@@ -55,16 +57,17 @@ Productfeature.belongsTo(Product,{foreignKey:"product_id"});*/
 BuyHistory.belongsToMany(Order,{through:"buyhistory_order"});
 Order.belongsToMany(BuyHistory,{through:"buyhistory_order"});
 
-const Bundle_Product = sequelize.define('Bundle_Product', {
+const bundle_product = sequelize.define('bundle_product', {
   id: {type: DataTypes.UUID,
+  defaultValue: UUIDV4,  
   allowNull: false,
   primaryKey: true},
   quantity: DataTypes.INTEGER
 });
 
 
-Bundle.belongsToMany(Product,{ through: Bundle_Product });
-Product.belongsToMany(Bundle,{ through: Bundle_Product });
+Bundle.belongsToMany(Product,{ through: 'bundle_product' });
+Product.belongsToMany(Bundle,{ through: 'bundle_product' });
 
 
 /* const Category_Product = sequelize.define('Category_Product', {
