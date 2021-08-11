@@ -12,7 +12,11 @@ const data = [
   Es pack surtido:  Sí`,
   detail: "RECIEN INGRESADOS Y AL MEJOR PRECIO - NO LO DUDES!!",
   price: 1700,
-  image: ["https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp","https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp"],
+  image: ["https://drive.google.com/file/d/1DnIe3mDMdgYxKPFqvyGb1r90qY7Zl5n9/view?usp=sharing",
+  "https://drive.google.com/file/d/16Z_QYegFAmUiWeLPf0Dg9a6ININaOxHU/view?usp=sharing",
+  "https://drive.google.com/file/d/1JXzXwG8oYlLP6vtGxMuanRaeXq1DRmH-/view?usp=sharing",
+  "https://drive.google.com/file/d/1sILlv1k3O-Gcq99AuU-7Epi90XEopITF/view?usp=sharing",
+  "https://drive.google.com/file/d/1e3wRNZsrShwsO5ThmX5ox7UzwKzFc4xK/view?usp=sharing"],
   category: ["Agujas","Cintas"],
 }
 ,
