@@ -69,17 +69,17 @@ function SignInFormBase(props) {
   useEffect(()=>{
     // console.log('esto es user:  ' + user)
     if(user.active!==undefined) {
-      
-      
+
+
         //verifica el estado active del usuario
-        
+
           if(user.active===true) {
             //verifica si es admin
             if(user.isAdmin===true) {
               sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
               props.history.push(ROUTES.HOME);
             }else {
-              
+
               //setea el id del usuario al sessionStorage
               sessionStorage.setItem("pg_merceria", user.id)
               props.history.push(ROUTES.HOME);
@@ -91,7 +91,7 @@ function SignInFormBase(props) {
             dispatch(clearUser())
             alert('El usuario ha sido inhabilitado por el administrador')
             props.history.push('/')
-            
+
           }
 
     } else {
@@ -99,7 +99,7 @@ function SignInFormBase(props) {
       sessionStorage.setItem("pg_merceria", 'guest')
       dispatch(clearUser())
     }
-    
+
   },[user])
 
 
