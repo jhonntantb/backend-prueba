@@ -16,7 +16,7 @@ export default function SearchBar() {
   const dispatch = useDispatch();
   const {push} =useHistory()
   
-  const [name,setName] = useState("")
+
 
   const handleInputSearch=(e)=>{
     e.preventDefault()
@@ -34,9 +34,9 @@ const handleClickSearch= (e)=>{
 
   return (
     <div className="divSearch">
-      {/* <input style={BarStyling} className="inputsearch" type="text" placeholder="Buscar... " onChange={(e) => handleInputChange(e)} /> */}
-      {/* <button className="buttonsearch" onClick={(e) => handleClick(e)}><i class="fa fa-search"></i></button> */}
-      <div className="search">
+       <input style={BarStyling} className="form-control" type="text" placeholder="Buscar... " onChange={(e) => handleInputSearch(e)} /> 
+       <button  onClick={(e) => handleClickSearch(e)}><i class="fa fa-search"></i></button>
+    {/*  <div className="search">
         {" "}
         <i class="fa fa-search" />{" "}
         <input
@@ -45,7 +45,7 @@ const handleClickSearch= (e)=>{
           placeholder="Crochets, Bastidores"
         />
         <button className="btn">Buscar</button>
-    </div>
+      </div>*/}
     </div>
   )
 }
