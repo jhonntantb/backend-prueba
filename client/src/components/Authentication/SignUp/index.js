@@ -119,7 +119,7 @@ function SignUpFormBase(props) {
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Sing Up</h3>
+            <h3 className="mb-4 text-center fs-1">Sign Up</h3>
             <form className='user-main mb-3' onSubmit={onSubmitHandler}>
               <div className="mb-3">
                 <input
