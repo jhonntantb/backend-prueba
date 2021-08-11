@@ -5,6 +5,7 @@ import {withFirebase} from '../../FireBase/index';
 
 import SetAdminUser from './SetAdminUser';
 import BannAdminUser from './BannUser';
+import ForcePasswordResetButton  from './ForcePSWreset';
 
 
 
@@ -64,6 +65,7 @@ export default function UsersAdmin (props) {
              <div>
              <SetAdminUser users={usersSelected} changed={changed} setChanged={setChanged}/>
              <BannAdminUser users={usersSelected} changed={changed} setChanged={setChanged}/>
+             <ForcePasswordResetButton users={usersSelected} changed={changed} setChanged={setChanged}/>
              </div>
              
              <table className='table'>

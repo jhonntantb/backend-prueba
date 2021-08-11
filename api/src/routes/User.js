@@ -49,7 +49,7 @@ router.put("/",async (req,res,next)=>{
 //entra un array con los cambio a realizar
 
  var arr = req.body
-
+    //reformular para trabajar con promise.all
      arr.forEach(async (c) => {
             let changes=c.changes
             let id=c.id

@@ -11,6 +11,7 @@ export default function SetAdminUser (props) {
     var changed=props.changed
     console.log('changed es: ' , changed)
     var aux =[];
+
         function toogleAdmin (e, users) {
             
             users.forEach(u => {
@@ -19,6 +20,7 @@ export default function SetAdminUser (props) {
             dispatch(updateUser(aux))
             setChanged(!changed)
             console.log('changed AHORA ES es: ' , changed)
+            aux=[];
         }
 
     return (

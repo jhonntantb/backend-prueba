@@ -9,8 +9,8 @@ import { PasswordForgetLink } from '../PasswordForget/index';
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
-import {getUser} from '../../../redux/actions/user/index';
-import { NavbarText } from 'reactstrap';
+import {getUser, clearUser} from '../../../redux/actions/user/index';
+
 
 const SignInPage = () => (
   <div className="container">
@@ -33,22 +33,28 @@ function SignInFormBase(props) {
 
   const onSubmit = async event => {
     const { email, password } = state;
+    //modificar para que checkee el state del usuario en esta instancia
+    
 
-    props.firebase
-      .doSignInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        // console.log('userCredentials tiene: ' + Object.keys(userCredentials))
-        // console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
-        dispatch(LogInUser(userCredentials.user.email))
+      props.firebase
+        .doSignInWithEmailAndPassword(email, password)
+        .then((userCredentials) => {
+          // console.log('userCredentials tiene: ' + Object.keys(userCredentials))
+          // console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
+          
+          dispatch(getUser(userCredentials.user.uid))
 
-        dispatch(getUser(userCredentials.user.uid))
-        setState({ ...initial_state });
-
-        
-      })
-      .catch(error => {
-        setState({ error });
-      });
+          
+          setState({ ...initial_state });
+  
+          
+        })
+        .catch(error => {
+          setState({ error });
+        });
+    
+      
+    
 
     event.preventDefault();
   };
@@ -61,32 +67,37 @@ function SignInFormBase(props) {
   };
 
   useEffect(()=>{
-    console.log('esto es user:  ' + user)
+    // console.log('esto es user:  ' + user)
     if(user!=='guest') {
-      //si user no es guest, verifica si es admin
-      if(user.isAdmin===true) {
-        sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
-        props.history.push(ROUTES.HOME);
-      }else {
-        //si no es admin verifica el estado active del usuario
-        try {
+      
+      
+        //verifica el estado active del usuario
+        
           if(user.active===true) {
-            //si está activo setea el id del usuario al sessionStorage
-            sessionStorage.setItem("pg_merceria", user.id)
-            props.history.push(ROUTES.HOME);
+            //verifica si es admin
+            if(user.isAdmin===true) {
+              sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
+              props.history.push(ROUTES.HOME);
+            }else {
+              
+              //setea el id del usuario al sessionStorage
+              sessionStorage.setItem("pg_merceria", user.id)
+              props.history.push(ROUTES.HOME);
+
+            }
+            dispatch(LogInUser(user.email))
           }else {
             //si esta inactivo arroja un mensaje
-            throw alert('El usuario ha sido inhabilitado por el administrador')
+            dispatch(clearUser())
+            alert('El usuario ha sido inhabilitado por el administrador')
+            props.history.push('/')
+            
           }
 
-        } catch (err) {console.log(err)}
-        
-        
-      }
     } else {
       //si user es guest, setea la session a guest
       sessionStorage.setItem("pg_merceria", 'guest')
-
+      
     }
     
   },[user])
