@@ -2,13 +2,11 @@ import { useSelector } from "react-redux";
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from "react-redux";
 import { getAllProduct } from "../../redux/actions/product/index.js";
-import { getAllCategory } from "../../redux/actions/category/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
-import { getAllProduct, getProductCategory } from "../../redux/actions/product/index.js";
 import { getAllCategory} from "../../redux/actions/category/index.js"
 import './ProductList.css'
 import CardProduct from "./CardProduct.jsx";
-import { useRef } from "react";
+
 
 
 
