@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       defaultValue: new Date()
     },
     status: {
-      type: DataTypes.ENUM('Entregado', 'En espera', 'En preparacion'),
+      type: DataTypes.ENUM('shipped', 'cart', 'checkout', 'cancelled','delivered'),
     },
     total_price: {
       type: DataTypes.FLOAT,
