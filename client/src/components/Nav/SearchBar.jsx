@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllProduct } from "../../redux/actions/product/index.js";
-
 import { getProduct } from "../../redux/actions/product/index.js";
+import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import "./SearchBar.css";
 
 export default function SearchBar() {
@@ -11,6 +11,7 @@ export default function SearchBar() {
 
   const dispatch = useDispatch();
   const { push } = useHistory();
+ 
 
   const handleInputSearch = (e) => {
     e.preventDefault();
@@ -21,6 +22,7 @@ export default function SearchBar() {
     if (name.trim().length > 0) {
       dispatch(getAllProduct(name));
       setName("");
+      dispatch(SetCategoriesFiltradas("Todas"))
       push("/productlist");
     }
   };

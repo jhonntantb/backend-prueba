@@ -50,6 +50,7 @@ export const GET_CATEGORY = "get_category"
 export const CREATE_CATEGORY = "create_category" 
 export const UPDATE_CATEGORY = "update_category" 
 export const DELETE_CATEGORY = "get_category"
+export const SET_CATEGORY_FILTRADA = "set_category_filtrada"
 
 //Office
 export const GET_ALL_OFFICE = "get_all_office"
