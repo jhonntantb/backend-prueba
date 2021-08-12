@@ -1,7 +1,3 @@
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
-
 .search {
   position: relative;
   box-shadow: 0 0 40px rgba(51, 51, 51, 0.1);
@@ -25,10 +21,11 @@
   left: 16px;
 }
 
-.btn-block {
-  background-color: #ee8585;
-  color: #ffffff;
-  font-weight: bold;
+.search button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
   height: 50px;
-  width: 100%;
+  width: 110px;
+  background: #ee8585;
 }
