@@ -1,5 +1,6 @@
 import React,{ useState,useEffect } from 'react'
 import { useSelector, useDispatch} from "react-redux"
+import { useHistory} from "react-router-dom"
 import { getAllOffice } from "../../../redux/actions/office/index"
 import { getAllProduct } from '../../../redux/actions/product'
 import { updateStock } from '../../../redux/actions/stock'
@@ -9,11 +10,12 @@ import "./Table.css"
 
 function Stock() {
     const dispatch=useDispatch()
+    const {push} =useHistory()
 
     const [stock,setStock]=useState([])//en que viene para la tabla
     const [product,setProduct]=useState([])//lo que vamos enviar para modificar
     const [checked,setChecked]=useState([])
-    const [available,setAvailable]=useState(true)
+    // const [finish,setFinish]=useState(false)
     
     useEffect(() => {
         dispatch(getAllOffice())
@@ -50,11 +52,17 @@ function Stock() {
         const stockback=product.filter(e=>e.id!==event.target.id)
         setProduct(stockback.concat([{id:event.target.id,quantity:+(search.stocks[0].quantity)+ +(event.target.value)}]))
     }
-  
+    
     const handleChanges=()=>{
-        console.log("hola")
-        //dispatch(updateStock({stocks:product}))
+        dispatch(updateStock({stocks:product}))
+        setChecked([])
+        setProduct([])
+        //setFinish(true)
     }
+    // useEffect(() => {
+    //     dispatch(getAllProduct())
+    //     dispatch(getAllOffice())
+    // }, [finish])
 
     return (
         <div>
@@ -92,7 +100,7 @@ function Stock() {
                         <td>{e.title}</td>
                         <td>{e.stocks[0].quantity}</td>  
                         <td id={e.id}>
-                            <input  type="number"
+                            <input id={e.stocks[0].id} type="number"
                         onChange={event=>handleStockchange(event)} 
                         disabled={!checked.includes(e.id)}/>
                         </td> 
