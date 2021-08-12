@@ -23,7 +23,8 @@ import Footer from './components/Footer/Footer';
 import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import UsersAdmin from './components/Admin/Users/index';
-import AboutUs from './components/AboutsUs/AboutUs';
+import AboutUs from './components/AboutUs/AboutUs'
+
 
 
 function App() {
@@ -45,10 +46,10 @@ function App() {
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path='/login' component={Login} />
+      <Route path ='/ourteam'component={AboutUs} />
       <Route exact path={ROUTES.HOME} component={Footer} />
       <Route exact path={ROUTES.LANDING} component={Footer} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin} />
-      <Route path='/aboutus' component={AboutUs} />
     </React.Fragment>
   )
 }
