@@ -62,7 +62,8 @@ const bundle_product = sequelize.define('bundle_product', {
   defaultValue: UUIDV4,  
   allowNull: false,
   primaryKey: true},
-  quantity: DataTypes.INTEGER
+  quantity: {type: DataTypes.INTEGER,
+              allowNull: false}
 });
 
 
@@ -83,15 +84,27 @@ Product.belongsToMany(Category,{ through: 'Category_Product'});
 
 
 const Order_Product = sequelize.define('Order_Product', {
-  id: {type: DataTypes.UUID,
-    allowNull: false,
-    primaryKey: true},
-    quantity: DataTypes.INTEGER,
+
+  quantity: {type: DataTypes.INTEGER,
+             defaultValue: 0},
+  unitprice: {type: DataTypes.FLOAT,
+             defaultValue: 0},
+  totalcost: {type: DataTypes.VIRTUAL,
+             get() {return this.unitprice * this.quantity ;} },
+
 });
 
 
+
+
+// Super Many-to-Many Relationship (ver documentacion sequelize)
 Product.belongsToMany(Order,{through: Order_Product});
 Order.belongsToMany(Product,{through: Order_Product});
+Product.hasMany(Order_Product);
+Order_Product.belongsTo(Product);
+Order.hasMany(Order_Product);
+Order_Product.belongsTo(Order);
+
 
 // const Order_Schedule = sequelize.define('Order_Schedule', {
 //   id: {type: DataTypes.UUID,

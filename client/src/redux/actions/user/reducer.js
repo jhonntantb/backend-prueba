@@ -16,7 +16,7 @@ const userReducer = (state = initialState, action) => {
             user:action.payload   
         }
 
-        case TYPES.CREATE_USER: return  {...state} 
+        case TYPES.CREATE_USER: return  {...state, user: action.payload} 
         case TYPES.UPDATE_USER: return {...state, users: action.payload}
         case TYPES.DELETE_USER: return state
         case TYPES.CLEAR_USER: return {...state, user: 'guest'}

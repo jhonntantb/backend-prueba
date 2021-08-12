@@ -1,50 +1,48 @@
 import { useDispatch } from "react-redux";
-import {updateUser, getAllUser} from '../../../redux/actions/user/index';
+import { updateUser, getAllUser } from "../../../redux/actions/user/index";
 
-export default function SetAdminUser (props) {
+export default function SetAdminUser(props) {
+  const dispatch = useDispatch();
 
-    const dispatch=useDispatch()
+  var users = props.users;
+  var setChanged = props.setChanged;
+  var changed = props.changed;
+  console.log("changed es: ", changed);
+  var aux = [];
 
-    
-    var users=props.users;
-    var setChanged=props.setChanged;
-    var changed=props.changed
-    console.log('changed es: ' , changed)
-    var aux =[];
+  function toogleAdmin(e, users) {
+    users.forEach((u) => {
+      aux.push({ id: u.id, changes: { isAdmin: !u.isAdmin } });
+    });
+    dispatch(updateUser(aux));
+    setChanged(!changed);
+    console.log("changed AHORA ES es: ", changed);
+    aux = [];
+  }
 
-        function toogleAdmin (e, users) {
-            
-            users.forEach(u => {
-                aux.push({id: u.id, changes:{isAdmin:!u.isAdmin}})
-            });
-            dispatch(updateUser(aux))
-            setChanged(!changed)
-            console.log('changed AHORA ES es: ' , changed)
-            aux=[];
-        }
-
-    return (
-        <div>
-            <button onClick={e=>toogleAdmin(e , users)}>
-                Otorgar / Quitar Permisos de Administrador
-                </button>
-        </div>
-    )
+  return (
+    <div>
+      <button
+        className="btn btn-primary"
+        onClick={(e) => toogleAdmin(e, users)}
+      >
+        Otorgar / Quitar Permisos de Administrador
+      </button>
+    </div>
+  );
 }
 
-
 // export default function BannAdminUser (props) {
-    
-    
+
 //     const dispatch=useDispatch()
-    
+
 //     var users=props.users;
 //     var setChanged=props.setChanged;
 //     var changed=props.changed
 //     console.log('changed es: ' , changed)
 //     var aux =[];
 //         function toogleAdmin (e, users) {
-            
+
 //             users.forEach(u => {
 //                 aux.push({id: u.id, changes:{isAdmin:!u.active}})
 //             });
@@ -55,7 +53,7 @@ export default function SetAdminUser (props) {
 
 //     return (
 //         <div>
-            
+
 //             <button onClick={e=> toogleActive(e, users)}>
 //                 Habilitar/Inhabilitar Usuarios
 //                 </button>

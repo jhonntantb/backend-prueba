@@ -7,13 +7,19 @@ body {
  font-size:15px
 }
 
+.row {
+    --bs-gutter-x:0; 
+}
 ul {
- padding:5px;
- margin:2px
+ padding:1%;
 }
 
 li {
  list-style:none
+}
+
+a{
+    text-decoration: none;
 }
 
 a:focus,a:hover {
@@ -77,11 +83,11 @@ a {
 }
 
 .footer-big {
- padding: 40px 0 65px 200px
+ padding: 2% 
 }
 
 .footer-big .footer-widget{
- margin-bottom: 0px
+ margin-top: 5%
 }
 
 .footer--light {
@@ -93,7 +99,7 @@ a {
 }
 
 .social {
-    font-size: 30px !important;
+    font-size: 200% !important;
 }
 
 
@@ -130,13 +136,13 @@ a {
 .mini-footer {
  background:#192027;
  text-align:center;
- padding:32px 0
+ padding: 2rem 0
 }
 
 .mini-footer p {
  margin:0;
- line-height:26px;
- font-size:15px;
+ line-height:0%;
+ font-size:100%;
  color:#999
 }
 

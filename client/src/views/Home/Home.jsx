@@ -1,5 +1,7 @@
 import React from 'react'
 import Carrousel from '../../components/Carrousel/Carrousel'
+import Newsletter from '../../components/Newsletter/Newsletter';
+import Footer from './../../components/Footer/Footer';
 
 function Home() {
   const items = [
@@ -20,10 +22,14 @@ function Home() {
     }
 ];
   return (
+    <div>
     <div className="container">
       <h1 className="text-center">PG Merceria</h1>
       <hr />
       <Carrousel  images={items}/>
+    </div>
+    <Newsletter/>
+    <Footer />
     </div>
   )
 }
