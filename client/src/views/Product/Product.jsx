@@ -48,7 +48,7 @@ export default function Product ({match}){
                 {product.detail}
             </div>
             <CreateReview match={match.params.id}/>
-            <ShowReviews reviews={reviews}/>
+            <ShowReviews reviews={product.reviews}/>
         </div>
         :
         <div></div>
