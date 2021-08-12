@@ -1,5 +1,5 @@
-#cards{
-    display:inline-table;
+.cards{
+    display: inline-flex;
     flex-direction: row;
     justify-content:space-around;
     padding: 1%;

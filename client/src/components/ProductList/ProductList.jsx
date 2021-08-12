@@ -24,7 +24,7 @@ function ProductList() {
             <div key={e.id} className="list">
               <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} /> 
             </div>
-        ):<p>No hay productos</p>}
+        ):<h3 className="text-center mt-4">No hay productos</h3>}
     </div>
   )
 
