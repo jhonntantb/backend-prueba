@@ -46,7 +46,7 @@ const dataUsers = [
     first_name: "Federico",
     last_name: "Jakowicki",
     email: "riakgamer@gmail.com",
-    isAdmin: false,
+    isAdmin: true,
     active: true,
     
 },

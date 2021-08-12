@@ -29,6 +29,13 @@ export const getAllOrder = () => {
     }
 }
 
+export const getOrdersFromUser = (user_id) => {
+    return async (dispatch) => {
+        const res = await axios.get('http://localhost:3001/order/' + user_id)
+        return dispatch({ type: TYPES.GET_ALL_ORDER, payload: res.data })
+    }
+}
+
 export const deleteOrder = (params) => {
     return async (dispatch) => {
         const res = await axios.delete('http://localhost:3001/order', params)
