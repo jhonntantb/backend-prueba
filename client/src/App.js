@@ -46,8 +46,6 @@ function App() {
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path='/login' component={Login} />
-      <Route exact path= {ROUTES.HOME}component={Footer}/>
-      <Route exact path= {ROUTES.LANDING}component={Footer}/>
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
       <Route path='/signin/google' component={GoogleButton}/>
     </React.Fragment>
