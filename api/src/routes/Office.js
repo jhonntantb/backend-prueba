@@ -1,11 +1,11 @@
 const { Router} = require('express');
-const {Office,Schedule}=require('../db')
+const {Office,Schedule,Product,Stock}=require('../db')
 const { Op } = require('sequelize');
 const router = Router();
 
 router.get("/",(_req,res,next)=>{
     //incluido el calendario
-    return Office.findAll({include:{model:Schedule}}).then(response=>res.send(response)).catch(err=>next(err))
+    return Office.findAll({include:[{model:Schedule},{model:Stock}]}).then(response=>res.send(response)).catch(err=>next(err))
 });
 router.post("/",async(req,res,next)=>{
     const newOffice=req.body

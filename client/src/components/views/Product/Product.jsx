@@ -4,6 +4,7 @@ import { getProduct } from "../../../redux/actions/product/index"
 import ShowReviews from "../../showReviews/ShowReviews"
 import Carrousel from "../../Carrousel/Carrousel"
 
+
 export default function Product (id){
     const [content, setContent] = useState({})
     const dispatch = useDispatch();
@@ -11,6 +12,8 @@ export default function Product (id){
     useEffect(()=>{
         dispatch(getProduct(id))
     }, [])
+
+
 
     return (
         <div className='main-container'>
@@ -23,7 +26,8 @@ export default function Product (id){
             <div id="description">
                 {product.detail}
             </div>
-            <ShowReviews/>
+            {console.log("acaa?"+product.reviews)}
+            {/* <ShowReviews /> */}
         </div>
     )
 }

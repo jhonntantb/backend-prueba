@@ -40,4 +40,9 @@ export const deleteProduct = (params) => {
         return dispatch({ type: TYPES.DELETE_PRODUCT, payload: res.data })
     }
 }
+export const getProductCategory = (categoryId) => {
+    return   (dispatch) => {
+        return dispatch({ type: TYPES.PRODUCT_CATEGORY, payload: categoryId })
+    }
+}
 

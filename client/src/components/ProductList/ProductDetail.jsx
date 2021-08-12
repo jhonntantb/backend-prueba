@@ -11,17 +11,17 @@ function ProductDetail() {
     
     const dispatch = useDispatch()
     const {idProduct} = useParams()
-    console.log('aqui estoy');
-    console.log("acaaaaaaa estoy")
-    console.log("Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    console.log(idProduct)
+   // console.log('aqui estoy');
+    //console.log("acaaaaaaa estoy")
+    //console.log("Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    //console.log(idProduct)
     useEffect(() => {
         dispatch(getProduct(idProduct));
     },[idProduct, dispatch]);
 
     const producto = useSelector(state => state.product);
     
-    console.log('producto: ',producto);
+    //console.log('producto: ',producto);
 
     if (producto) {
       return (
