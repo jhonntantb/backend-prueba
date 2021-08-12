@@ -31,7 +31,7 @@ const dataUsers = [
     isAdmin: false,
     active: true,
     
-// },
+ },
 {
     user_name: "xTico",
     first_name: "Marcelo",
