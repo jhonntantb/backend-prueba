@@ -1,14 +1,11 @@
 import { useSelector } from "react-redux";
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from "react-redux";
-<<<<<<< HEAD
 import { getAllProduct } from "../../redux/actions/product/index.js";
 import { getAllCategory } from "../../redux/actions/category/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
-=======
 import { getAllProduct, getProductCategory } from "../../redux/actions/product/index.js";
 import { getAllCategory} from "../../redux/actions/category/index.js"
->>>>>>> develop
 import './ProductList.css'
 import CardProduct from "./CardProduct.jsx";
 import { useRef } from "react";
@@ -18,7 +15,6 @@ import { useRef } from "react";
 
 function ProductList() {
   const dispatch = useDispatch()
-<<<<<<< HEAD
   
   const list = useSelector(state => state.productReducer.products)
   const categorias = useSelector(state => state.categoryReducer.categories)
@@ -28,23 +24,11 @@ function ProductList() {
   const [Maximo, setMaximo] = useState("");
   const [orden,setOrden] = useState("A-Z");
 
-=======
-  const [category,setCategory]=useState("")
-  useEffect(() => {
-    dispatch(getAllCategory())
-  }, [])
-  
-  const list = useSelector(state => state.productReducer.products)
-  const categories=useSelector(state =>state.categoryReducer.categories)
-
-  
->>>>>>> develop
   useEffect(() => {
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory())
  }, [])
   
-<<<<<<< HEAD
 
   var lista_filtrada = [];
   if(categoryFiltrada != "Todas")
@@ -116,18 +100,6 @@ function ProductList() {
       
   }
 
-=======
- useEffect(() => {
-    dispatch(getProductCategory(category))
- }, [category])
-  //comenzamos el filtrado 
-
-  const handleCategory=(e,id)=>{
-    dispatch(getAllProduct())
-    e.preventDefault()
-    setCategory(id)
-  }
->>>>>>> develop
   return (
     <div id="cards" className="card" >
 
