@@ -42,3 +42,15 @@ export const clearUser = () => {
         return dispatch({type: TYPES.CLEAR_USER})
     }
 }
+
+export const getGoogleUser = (user) => {
+    return async (dispatch) => {
+        const res = await axios.get('http://localhost:3001/user/' + user.id)
+        if(res.data.email) {
+            return dispatch({type: TYPES.GET_USER, payload: res.data})
+        }else {
+            const userNew = await axios.post('http://localhost:3001/user', user)
+            return dispatch({ type: TYPES.CREATE_USER, payload: userNew.data })
+        }
+    }
+}
