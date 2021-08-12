@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order, User, Product } = require('../db')
+const { Order, User, Product, Order_Product } = require('../db')
 
 
 ///////////////   GET GENERAL ////////////////////////////////
@@ -15,7 +15,8 @@ router.get("/",async (_req, res,next) =>{
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-        const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id']} ] })
+       const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id']} ] })
+    //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
     } catch (error) {
         next(error)
@@ -89,6 +90,7 @@ router.put("/:id",async (req,res,next) => {
     console.log(changes);
     try {
         const order=await Order.update(changes,  {where:{id:req.params.id}})
+
         res.send(order);
     } catch (error) {
         next(error)
