@@ -5,21 +5,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import {getGoogleUser, clearUser} from '../../../redux/actions/user/index';
 import {LogInUser} from '../../../redux/actions/login/index';
 import * as ROUTES from '../../../routes';
+import { useHistory } from 'react-router-dom';
 
 
 const GoogleButton = (props) => {
+    const history=useHistory();
     return (<div className='google-btn'>
-        <RenderButton props={props}/>
+        <RenderButton props={props} history={history}/>
     </div>)
 }
 
 
 
 const GoogleBase = (props) => {
+    const {history}=props
     const dispatch = useDispatch();
     const storeUser = useSelector(state=>state.userReducer.user);
 
-
+  console.log('props: ' , props)
     function handleGoogle(e) {
 
         // console.log('Firebase: ')
@@ -28,7 +31,7 @@ const GoogleBase = (props) => {
 
         
 
-        props.props.firebase
+        props.firebase
             .doSignInWithGoogle()
             .then(credentials => {
 
@@ -63,12 +66,12 @@ const GoogleBase = (props) => {
                 //verifica si es admin
                 if(storeUser.isAdmin===true) {
                   sessionStorage.setItem("pg_merceria" , ('admin-'+storeUser.id))
-                  props.props.history.push(ROUTES.HOME);
+                  history.push(ROUTES.HOME);
                 }else {
     
                   //setea el id del usuario al sessionStorage
                   sessionStorage.setItem("pg_merceria", storeUser.id)
-                  props.props.history.push(ROUTES.HOME);
+                  history.push(ROUTES.HOME);
     
                 }
                 dispatch(LogInUser(storeUser.email))
@@ -76,8 +79,8 @@ const GoogleBase = (props) => {
                 //si esta inactivo arroja un mensaje
                 dispatch(clearUser())
                 alert('El usuario ha sido inhabilitado por el administrador')
-                props.props.history.push('/')
-    
+                history.push('/')
+                
               }
     
         } else {

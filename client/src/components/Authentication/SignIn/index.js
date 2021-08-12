@@ -151,7 +151,7 @@ function SignInFormBase(props) {
               <div className="d-grip gap-2">
                 <PasswordForgetLink />
                 <SignUpLink />
-                <GoogleButton/>
+                <GoogleButton props={props}/>
 
               </div>
 
