@@ -1,0 +1,36 @@
+.inline{
+    float: left
+}
+
+#cartProduct{
+    width: 600px;
+}
+
+#cartProductImage{
+    margin-right: 20px;
+}
+
+#cartProductTitle{
+    margin-top: 40px;
+    margin-right: 30px;
+}
+
+#cartProductPrice{
+    width: 50px;
+    margin-top: 40px;
+    margin-right: 50px;
+}
+
+#cartProductCant{
+    color: blue;
+    width: fit-content;
+}
+
+#cartProductCantValue{
+    margin-top: 40px;
+    margin-right: 30px;
+}
+
+#cartProductCantButtons{
+    margin-top: 15px;
+}

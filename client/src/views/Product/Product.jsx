@@ -12,21 +12,35 @@ export default function Product ({match}){
     const dispatch = useDispatch();
     const product = useSelector(state => state.productReducer.product)
     const reviews = useSelector((state) => state.reviews );
-  
    
     useEffect(()=> {
         dispatch(getReview(match.params.id))
     },[dispatch])
 
-    // const reviews = [
-    //     {score: 4, description: "Me parecio un gran producto", date: "07/06/2021"},
-    //     {score: 5, description: "Lo mejor", date: "04/06/2021"},
-    //     {score: 2, description: "Malisimo", date: "03/06/2021"}
-    // ]
-
     useEffect(()=>{
         dispatch(getProduct(match.params.id))
     }, [])
+
+    const handleAddCart = () => {
+        const cart = JSON.parse(localStorage.getItem("cart"))
+        const prod = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            cant: 1,
+            img: product.productimages[0].image_url
+        }
+
+        if(cart)
+        {
+            if(cart.find((e) => e.id == prod.id))
+                alert("El producto ya esta agregado al carrito")
+            else
+                localStorage.setItem("cart", JSON.stringify([...cart, prod]))
+        } 
+        else 
+            localStorage.setItem("cart", JSON.stringify([prod]))
+    }
    
     return (
         product ?
@@ -34,8 +48,9 @@ export default function Product ({match}){
             <div className='card-container'>
                     <Card fluid>
                         <CardBody >
-                        <CardTitle className='product-title'>{product.title}</CardTitle>
-                        <CardSubtitle>{product.resume}</CardSubtitle>
+                            <CardTitle className='product-title'>{product.title}</CardTitle>
+                            <button onClick={handleAddCart}>Añadir al carrito</button>
+                            <CardSubtitle>{product.resume}</CardSubtitle>
                         </CardBody>
                     </Card>
                 <div className="productImages">

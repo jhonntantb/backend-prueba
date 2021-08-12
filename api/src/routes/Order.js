@@ -2,20 +2,28 @@ const router = require('express').Router();
 const { Order, User, Product, Order_Product } = require('../db')
 
 
-///////////////   GET GENERAL ////////////////////////////////
-router.get("/",async (_req, res,next) =>{
-  console.log('ruta orden');  
+///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
+// Si no viene ingun parametro en el query lista todas las ordenes
+router.get("/",async (req, res,next) =>{
+    const {userId, productId, status} = req.query ;
+    var filtro = {};
+    var filtroProd = {};
+    userId ? filtro.userId = userId : null;
+    productId ? filtroProd.id = productId: null;
+    status ? filtro.status = status : null;
+   
     try {
-        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  }); 
-        res.send(allOrder)
-    } catch (error) {
+          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+          res.send(allOrder)
+     } catch (error) {
         next(error)
-    }
+    
+} 
 })
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-       const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id']} ] })
+       const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
     //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
     } catch (error) {
@@ -24,8 +32,7 @@ router.get("/:id",async (req, res, next) =>{
 })
 
 
-// la orden se relaciona con un usuario
-//la orden se relaciona con un o varios productos
+// relacion con oficina (pendiente)
 //la orden se relaciona con una oficina---->con un calendario
 //-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
