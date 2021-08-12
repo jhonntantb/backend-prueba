@@ -15,7 +15,7 @@ const reviewReducer = (state = initialState, action) => {
             ...state,
             review:action.payload
         }
-        case TYPES.CREATE_REVIEW: return state
+        case TYPES.CREATE_REVIEW: return {...state,review: action.payload}
         case TYPES.UPDATE_REVIEW: return state
         case TYPES.DELETE_REVIEW: return state
         default:                  return state;

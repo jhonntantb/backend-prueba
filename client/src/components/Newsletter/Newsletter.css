@@ -21,12 +21,11 @@ body {
     margin-bottom: 0px
 }
 
-.card {
+#cardnews {
     padding: 2%;
     padding-bottom: 30px;
     padding-top: 35px;
     margin-top: 250px;
-    margin-left: 50px;
     margin-bottom: 50px;
     background-color: #f7f7f7;
     border-radius: 0
@@ -79,7 +78,7 @@ input.btn-black {
     color: #ffffff;
     font-weight: bold;
     height: 50px;
-    width: 280px;
+    width: 100%;
 }
 
 .thanks {
