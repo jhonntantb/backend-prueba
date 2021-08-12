@@ -3,12 +3,12 @@ import './Newsletter.css';
 
 export const Newsletter = () => {
     return (
-        <div class="container-fluid">
+        <div class="container">
         <div >
             <div class="row justify justify-content-start">
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-3">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-4">
                     <form class="">
-                        <div id="cardnews" class="card">
+                        <div id="cardnews">
                             <div class="row justify-content-center">
                                 <div class="col-md-9 col-11">
                                     <div class="row mt-0">

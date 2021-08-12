@@ -27,7 +27,7 @@ router.post("/",async (req,res,next)=>{
     //console.log(req.body)
     try {
         const [user,created]=await User.findOrCreate({
-            where:{user_name: req.body.user_name},
+            where:{email: req.body.email},
             defaults:{
                 id: req.body.id,
                 user_name: req.body.user_name,

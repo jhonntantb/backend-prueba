@@ -1,12 +1,12 @@
 const router = require('express').Router();
-const { Order, User, Product } = require('../db')
+const { Order, User, Product, Order_Product } = require('../db')
 
 
 ///////////////   GET GENERAL ////////////////////////////////
 router.get("/",async (_req, res,next) =>{
   console.log('ruta orden');  
     try {
-        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  });
+        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  }); 
         res.send(allOrder)
     } catch (error) {
         next(error)
@@ -15,7 +15,8 @@ router.get("/",async (_req, res,next) =>{
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-        const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] } ] })
+       const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id']} ] })
+    //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
     } catch (error) {
         next(error)
@@ -28,7 +29,7 @@ router.get("/:id",async (req, res, next) =>{
 //la orden se relaciona con una oficina---->con un calendario
 //-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
-//////////// P O S T ////////////////////////////////////////
+//////////// P O S T ////////////////////////////////////////******/
 
 // *************** FORMATO EJEMPLO DEL POST **********************
 // {"status": "En preparacion",
@@ -89,6 +90,7 @@ router.put("/:id",async (req,res,next) => {
     console.log(changes);
     try {
         const order=await Order.update(changes,  {where:{id:req.params.id}})
+
         res.send(order);
     } catch (error) {
         next(error)

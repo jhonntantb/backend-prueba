@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
@@ -8,7 +7,7 @@ const Footer = () => {
       <div class="footer-big">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-3 col-sm-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
               <div class="footer-widget">
                 <div class="widget-about">
                   <img
@@ -16,8 +15,8 @@ const Footer = () => {
                     alt=""
                     height="200"
                   />
-                  <div class="row ">
-                    <div class="col-xl-7  col-md-1 col-sm-1 col-auto my-md-2 mt-10 order-sm-5 order-3 ">
+                  <div class="row-fluid ">
+                    <div class="col-lg-9 col-xs-12 col-md-12 col-sm-12 col-auto my-md-2 mt-10 order-sm-5 order-3 ">
                       <p class="social text-muted mb-0 pb-0 bold-text ">
                         <span class="mx-4">
                           <a href="https://www.facebook.com/aracelimerceria">
@@ -40,9 +39,9 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div class="col-md-3 ">
+            <div class="col-lg-3 col-md-12 col-sm-12 ">
               <div class="footer-widget">
-                <div class="footer-menu footer-menu--1">
+                <div class="widget widgets-footercontact toggled-on">
                   <h4 class="footer-widget-title">Contactanos</h4>
                   <ul>
                     <li>
@@ -55,7 +54,7 @@ const Footer = () => {
                             aria-hidden="true"
                           ></i>
                         </span>{" "}
-                        +54 381 366-9905{" "}
+                        +54 381 ***-****{" "}
                       </big>
                     </li>
                     <br />
@@ -69,7 +68,7 @@ const Footer = () => {
                             aria-hidden="true"
                           ></i>
                         </span>{" "}
-                        0381 477-0635{" "}
+                        0381 ***-****{" "}
                       </big>
                     </li>
                     <br />
@@ -83,9 +82,7 @@ const Footer = () => {
                             aria-hidden="true"
                           ></i>
                         </span>
-                        <a href="aracelimerceria@gmail.com">
-                          aracelimerceria@gmail.com
-                        </a>
+                        <a href="aracelimerceria@gmail.com">****@gmail.com</a>
                       </big>
                     </li>
                     <br />
@@ -112,13 +109,13 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div class="col-md-3 col-sm-4">
+            <div class="col-lg-3 col-md-12 col-sm-12">
               <div class="footer-widget">
                 <div class="footer-menu">
                   <h4 class="footer-widget-title">Nuestros Servicios</h4>
                   <ul>
                     <li>
-                      <NavLink to="/ourteam">Nuestro equipo</NavLink>
+                      <a href="#">Acerca de nosotros</a>
                     </li>
                     <br />
                     <li>
@@ -137,7 +134,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-4">
+            <div class="col-lg-3 col-md-12 col-sm-12">
               <div class="footer-widget">
                 <div class="footer-menu no-padding">
                   <h4 class="footer-widget-title">Ayuda</h4>
