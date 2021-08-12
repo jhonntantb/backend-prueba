@@ -23,15 +23,15 @@ const dataUsers = [
 //     province: "Tucuman",
 //     country: "Argentina",
 // },
-{
-    user_name: "Maxiii",
-    first_name: "Maximiliano",
-    last_name: "Menendez",
-    email: "menendez.maximiliano@gmail.com",
-    isAdmin: false,
-    active: true,
+// {
+//     user_name: "Maxiii",
+//     first_name: "Maximiliano",
+//     last_name: "Menendez",
+//     email: "menendez.maximiliano@gmail.com",
+//     isAdmin: false,
+//     active: true,
     
-},
+// },
 {
     user_name: "Tico",
     first_name: "Marcelo",
