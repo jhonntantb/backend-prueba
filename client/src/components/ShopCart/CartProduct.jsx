@@ -4,29 +4,30 @@ import { ListGroupItem } from "reactstrap";
 import "./CartProduct.css"
 
 export default function CartProduct({content, addPrice}){
-    const [cant, setCant] = useState(1)
+    const [cant, setCant] = useState(content.cant)
     const [localPrice, setLocalPrice] = useState(content.price)
-    console.log("precio: " + localPrice)
-    useEffect(() =>{
+    
+    useEffect(() => {
         setLocalPrice(content.price * cant)
+        var cart = JSON.parse(localStorage.getItem("cart"))
+
+        cart = cart.map((e) => (e.id == content.id) ? {...e, cant: cant} : e)
+
+        localStorage.setItem("cart", JSON.stringify(cart))
     }, [cant])
 
     useEffect(() => addPrice({id: content.id, value: localPrice}), [localPrice])
 
-    const handleCant = (e) => {
-        setCant(e.target.value)
-    }
-
     return (
         <ListGroupItem id="cartProduct">
-            <Link to={"/product/3b5bcc3c-2a4c-4e78-a278-fc11a73818c8"} style={{ textDecoration: 'none', color: "blue"}}>
+            <Link to={"/product/" + content.id} style={{ textDecoration: 'none', color: "blue"}}>
                 <img id="cartProductImage" className="inline" src={content.img} height="100px" width="100px"/>
                 <div id="cartProductTitle" className="inline">{content.title + "   "}</div>
                 <div id="cartProductPrice" className="inline">${localPrice}</div>
             </Link>
             <div id="cartProductCant" className="inline">
                 Cant:
-                <input id="cartProductCantValue" type="number" min="1" max="10000" onChange={handleCant} value={cant}/>
+                <input id="cartProductCantValue" type="number" min="1" max="10000" onChange={e => setCant(e.target.value)} value={cant}/>
             </div>
         </ListGroupItem>
     )

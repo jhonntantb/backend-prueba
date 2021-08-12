@@ -9,19 +9,17 @@ export default function ShopCart(){
     const [order, setOrder] = useState("")
     const user =  useSelector(state => state.userReducer.user)
     const dbOrder = useSelector(state => state.orderReducer.order)
-
-    console.log(JSON.stringify(order))
     
     useEffect(() => {
-        if(user)
+        if(user.id)
             dispatch(getOrder(user.id))
         else
             setOrder(JSON.parse(localStorage.getItem("cart")))
-    }, [session])
+    }, [user])
 
     return order ? 
         <div>
-            {dbOrder ? <ShowCartProducts products={[...dbOrder, ...order]} setTotal={setTotal}/>
+            {dbOrder ? <ShowCartProducts products={[ ...order, ...dbOrder]} setTotal={setTotal}/>
             : <ShowCartProducts products={order} setTotal={setTotal}/>}
             
             Total: {total}

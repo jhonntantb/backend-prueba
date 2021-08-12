@@ -22,11 +22,12 @@ export default function Product ({match}){
     }, [])
 
     const handleAddCart = () => {
-        const cart = JSON.parse(localStorage.getItem("cart")) 
+        const cart = JSON.parse(localStorage.getItem("cart"))
         const prod = {
             id: product.id,
             title: product.title,
             price: product.price,
+            cant: 1,
             img: product.productimages[0].image_url
         }
 
@@ -40,7 +41,6 @@ export default function Product ({match}){
         else 
             localStorage.setItem("cart", JSON.stringify([prod]))
     }
-    console.log(product)
    
     return (
         product ?
