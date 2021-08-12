@@ -12,7 +12,7 @@ function Stock() {
 
     const [stock,setStock]=useState([])//en que viene para la tabla
     const [product,setProduct]=useState([])//lo que vamos enviar para modificar
-    const [numero,setNumero]=useState(null)
+    const [checked,setChecked]=useState([])
     const [available,setAvailable]=useState(true)
     
     useEffect(() => {
@@ -27,23 +27,28 @@ function Stock() {
         setStock(productsAll.filter(e=>e.stocks[0].officeId===id))
     }
 
-    const selectProduct=(e)=>{
+    const selectProduct=(e,id)=>{
         const stockId=e.target.value
         if(!e.target.checked) {
             const selecteds = product.filter(e => e.id !==stockId)
+            const checkeds= checked.filter(e=>e!==id)
+            setChecked(checkeds)
             setProduct(selecteds)
-            setAvailable(true)
+            
         }else {
             let added = productsAll.find(e=>e.stocks[0].id==stockId)  
             setProduct([...product , {id:added.stocks[0].id,quantity:added.stocks[0].quantity}])
-           setAvailable(false)
+            //var abled=document.getElementById(id)
+            setChecked(checked.concat([id]))
+
+           
         } 
     }
     const handleStockchange=(event)=>{
         event.preventDefault()
         const search=productsAll.find(e=>e.stocks[0].id===event.target.id)
         const stockback=product.filter(e=>e.id!==event.target.id)
-        setProduct(stockback.concat([{id:event.target.id,quantity:parseInt(search.stocks[0].quantity)+parseInt(event.target.value)}]))
+        setProduct(stockback.concat([{id:event.target.id,quantity:+(search.stocks[0].quantity)+ +(event.target.value)}]))
     }
   
     const handleChanges=()=>{
@@ -74,21 +79,22 @@ function Stock() {
                 </thead>
                     <tbody>
                 {stock&&stock.length>0?stock.map( e =>
-                    <tr key={e.id}>
+                    <tr>
                         <td>
                         <input className='checkbox' 
                             type='checkbox' 
                                 value={e.stocks[0].id}
-                                onChange={event=>selectProduct(event)}
+                                onChange={event=>selectProduct(event,e.id)}
                                 defaultChecked={false}     
                         />
                         </td>
                         <td>{e.catalog_id}</td>
                         <td>{e.title}</td>
                         <td>{e.stocks[0].quantity}</td>  
-                        <td><input id={e.stocks[0].id} type="number" min="0" value={numero} 
+                        <td id={e.id}>
+                            <input  type="number"
                         onChange={event=>handleStockchange(event)} 
-                        disabled={available}/>
+                        disabled={!checked.includes(e.id)}/>
                         </td> 
                     </tr>
                     ):null

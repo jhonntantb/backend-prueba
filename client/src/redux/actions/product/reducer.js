@@ -22,6 +22,10 @@ const productReducer = (state = initialState, action) => {
         case TYPES.CREATE_PRODUCT: return state
         case TYPES.UPDATE_PRODUCT: return state
         case TYPES.DELETE_PRODUCT: return state
+        case TYPES.PRODUCT_CATEGORY: return{
+            ...state,
+            products: state.products.filter(e=>e.categories[0].id===action.payload)
+        }
         default:                  return state;
     }
 }
