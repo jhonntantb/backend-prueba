@@ -41,28 +41,23 @@ function SignUpFormBase(props) {
 
   const onSubmitHandler = async (e) => {
 
-    const { user_name, first_name, last_name, email, passwordOne, province, city, street, number } = state;
+    const { user_name, first_name, last_name, email, passwordOne, province, city, street, number, country } = state;
 
 
     e.preventDefault();
 
     try {
       var authUser = await props.firebase.doCreateUserWithEmailAndPassword(email, passwordOne);
-      // console.log('authUser : ' + Object.keys(authUser))
-      // console.log('user:  ' + Object.keys(authUser.user))
-      // console.log('user.uid : '  + authUser.user.uid )
-      // console.log('user.email : ' + authUser.user.email)
-      // console.log('credential ' + authUser.credential)
-      // console.log('additionalUserInfo : ' + Object.keys(authUser.additionalUserInfo) )
-      // console.log('operationType:  ' + authUser.operationType)
-
       var userOk = {
         id: authUser.user.uid,
         user_name,
         first_name,
         last_name,
         email,
-        address: province + ' - ' + city + ' - ' + street + ' - ' + number
+        address: street + ' - ' + number,
+        province: province,
+        location: city,
+        country: country
       }
       dispatch(createUser(userOk))
 
@@ -99,6 +94,7 @@ function SignUpFormBase(props) {
     email,
     passwordOne,
     passwordTwo,
+    country,
     province,
     city,
     street,
@@ -119,7 +115,7 @@ function SignUpFormBase(props) {
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Sing Up</h3>
+            <h3 className="mb-4 text-center fs-1">Sign Up</h3>
             <form className='user-main mb-3' onSubmit={onSubmitHandler}>
               <div className="mb-3">
                 <input
@@ -183,6 +179,16 @@ function SignUpFormBase(props) {
               </div>
               <div className="mb-3">
                 <input
+                  name="country"
+                  value={country}
+                  onChange={onChangeHandler}
+                  type="text"
+                  placeholder="Pais"
+                  className="form-control"
+                />
+              </div>
+              <div className="mb-3">
+                <input
                   name="province"
                   value={province}
                   onChange={onChangeHandler}
@@ -239,9 +245,9 @@ function SignUpFormBase(props) {
 }
 
 const SignUpLink = () => {
-  return (<p> Don´t have an Account?
+  return (<p className="text-dark"> Don´t have an Account?
     <br />
-    <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    <Link className="text-dark" to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>)
 }
 

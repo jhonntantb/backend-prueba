@@ -7,10 +7,12 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true
     },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: new Date()
     },
     status: {
       type: DataTypes.ENUM('Entregado', 'En espera', 'En preparacion'),
@@ -35,7 +37,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    delivery_time: {
+    delivery_date: {
       type: DataTypes.DATE,
       allowNull: false,
     },
