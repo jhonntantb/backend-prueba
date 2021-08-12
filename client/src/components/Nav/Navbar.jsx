@@ -89,7 +89,7 @@ const Navbar = () => {
                 </li>
 
               ) : null}
-              {authUser == 'guest' ? null : <SignOutButton />}
+              
 
 
             </div>
