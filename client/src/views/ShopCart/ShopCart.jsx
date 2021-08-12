@@ -1,18 +1,30 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrder } from "../../redux/actions/order/index"
+import { getOrder } from "../../redux/actions/order/index"
 import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts"
 
 export default function ShopCart(){
-    const products = [{
-        title: "Autitos de juguete",
-        price: 900,
-        productimages: [{url: "https://http2.mlstatic.com/D_NQ_NP_722299-MLA46928877990_072021-O.webp"}]
-    }]
+    const dispatch = useDispatch()
+    const [total, setTotal] = useState(0)
+    const [order, setOrder] = useState("")
+    const user =  useSelector(state => state.userReducer.user)
+    const dbOrder = useSelector(state => state.orderReducer.order)
+
+    console.log(JSON.stringify(order))
     
-    return (
-    <div>
-        <ShowCartProducts products={products}/>
-    </div>
-    )
+    useEffect(() => {
+        if(user)
+            dispatch(getOrder(user.id))
+        else
+            setOrder(JSON.parse(localStorage.getItem("cart")))
+    }, [session])
+
+    return order ? 
+        <div>
+            {dbOrder ? <ShowCartProducts products={[...dbOrder, ...order]} setTotal={setTotal}/>
+            : <ShowCartProducts products={order} setTotal={setTotal}/>}
+            
+            Total: {total}
+        </div>
+        : <div>No hay articulos en tu carrito</div>
 }
