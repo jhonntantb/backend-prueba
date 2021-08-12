@@ -11,6 +11,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const PRODUCTS = '/productlist';
 export const STOCK = '/admin/stock'
 export const PASSWORD_CHANGE = '/pw-change';
-export const PRODUCTS = '/productlist';
 export const PRODDETAIL = '/productdetail';
 export const MANAGE_USERS ='/manage-users';
