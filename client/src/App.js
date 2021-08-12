@@ -1,4 +1,3 @@
-//dependencies
 import React from 'react';
 import { Route } from 'react-router-dom';
 import * as ROUTES from './routes';
@@ -16,18 +15,13 @@ import SignInPage from './components/Authentication/SignIn';
 import Account from './components/Authentication/Account';
 import PasswordForgetPage from './components/Authentication/PasswordForget';
 import PasswordChangePage from './components/Authentication/PasswordChange';
-import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
-import Login from './components/Login/Login'
 import Navbar from './components/Nav/Navbar';
-import Footer from './components/Footer/Footer';
 import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import UsersAdmin from './components/Admin/Users/index';
 import AboutUs from './components/AboutUs/AboutUs'
 
-
-import GoogleButton from './components/Authentication/SignIn/GoogleSignIn';
 
 
 function App() {
