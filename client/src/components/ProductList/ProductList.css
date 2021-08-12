@@ -1,11 +1,9 @@
-.cards{
-    display: flex;
+#cards{
+    display:inline-table;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
-    padding: 5px;
+    justify-content:space-around;
+    padding: 1%;
 }
 .list {
-    justify-content: center;
+    justify-content: center
 }
