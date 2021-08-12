@@ -10,6 +10,7 @@ import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
 import {getUser, clearUser} from '../../../redux/actions/user/index';
+import {GoogleButton} from './GoogleSignIn';
 
 
 const SignInPage = () => (
@@ -69,17 +70,17 @@ function SignInFormBase(props) {
   useEffect(()=>{
     // console.log('esto es user:  ' + user)
     if(user.active!==undefined) {
-      
-      
+
+
         //verifica el estado active del usuario
-        
+
           if(user.active===true) {
             //verifica si es admin
             if(user.isAdmin===true) {
               sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
               props.history.push(ROUTES.HOME);
             }else {
-              
+
               //setea el id del usuario al sessionStorage
               sessionStorage.setItem("pg_merceria", user.id)
               props.history.push(ROUTES.HOME);
@@ -91,15 +92,15 @@ function SignInFormBase(props) {
             dispatch(clearUser())
             alert('El usuario ha sido inhabilitado por el administrador')
             props.history.push('/')
-            
+
           }
 
     } else {
       //si user es guest, setea la session a guest
       sessionStorage.setItem("pg_merceria", 'guest')
-      
+      // dispatch(clearUser())
     }
-    
+
   },[user])
 
 
@@ -150,6 +151,8 @@ function SignInFormBase(props) {
               <div className="d-grip gap-2">
                 <PasswordForgetLink />
                 <SignUpLink />
+                <GoogleButton props={props}/>
+
               </div>
 
             </form>

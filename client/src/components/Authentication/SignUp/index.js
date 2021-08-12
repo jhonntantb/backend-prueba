@@ -12,7 +12,7 @@ import * as ROUTES from '../../../routes';
 import { createUser } from '../../../redux/actions/user/index';
 
 import './index.css';
-import { Alert } from 'reactstrap';
+
 
 
 
@@ -245,9 +245,9 @@ function SignUpFormBase(props) {
 }
 
 const SignUpLink = () => {
-  return (<p> Don´t have an Account?
+  return (<p className="text-dark"> 
     <br />
-    <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    <Link className="text-dark" to={ROUTES.SIGN_UP}>crear cuenta</Link>
   </p>)
 }
 

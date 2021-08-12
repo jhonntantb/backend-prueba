@@ -26,6 +26,7 @@ export const DELETE_REVIEW = "get_review"
 
 //Order
 export const GET_ALL_ORDER = "get_all_order"
+export const GET_ALL_ORDER_USER = "get_all_order_user"
 export const GET_ORDER = "get_order"
 export const CREATE_ORDER = "create_order" 
 export const UPDATE_ORDER = "update_order" 
