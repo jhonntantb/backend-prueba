@@ -6,7 +6,7 @@ const { Order, User, Product } = require('../db')
 router.get("/",async (_req, res,next) =>{
   console.log('ruta orden');  
     try {
-        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  });
+        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  }); 
         res.send(allOrder)
     } catch (error) {
         next(error)
@@ -15,7 +15,7 @@ router.get("/",async (_req, res,next) =>{
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-        const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] } ] })
+        const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id']} ] })
         res.send(order)
     } catch (error) {
         next(error)
@@ -28,7 +28,7 @@ router.get("/:id",async (req, res, next) =>{
 //la orden se relaciona con una oficina---->con un calendario
 //-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
-//////////// P O S T ////////////////////////////////////////
+//////////// P O S T ////////////////////////////////////////******/
 
 // *************** FORMATO EJEMPLO DEL POST **********************
 // {"status": "En preparacion",
