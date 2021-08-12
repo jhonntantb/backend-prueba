@@ -5,11 +5,12 @@ import { createReview } from "../../redux/actions/review/index"
 
 export default function CreateReview ({match}){
     const dispatch = useDispatch();
+    const id = useSelector((state) => state.userReducer.user.id );
+
     const [values,setValues] = React.useState({
         description:"",
         score:1, 
-        // userId:sessionStorage.getItem("pg_merceria") , //ACA TENGO QUE ACCEDER AL SESSION STORAGE PARA OBTENER EL USERID
-        userId:"74964ec9-ea57-4700-8a01-d6fa0220ce24",
+        userId:id, //ACA TENGO QUE ACCEDER AL SESSION STORAGE PARA OBTENER EL USERID
         productId:match
     })
     const[send,setsend] = useState("False");
@@ -21,6 +22,7 @@ function handleSubmit(e){
         else if(parseInt(values.score) < 1 || parseInt(values.score) > 5 )
             alert("El Valor de score esta fuera del permitido")
         else{
+            console.log(values)
             dispatch(createReview(values))
             setsend("true");}
         }  
