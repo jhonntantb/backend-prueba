@@ -19,10 +19,12 @@ import Navigation from './components/Navigation';
 import ProductList from './components/ProductList/ProductList';
 import Login from './components/Login/Login'
 import Navbar from './components/Nav/Navbar';
-import Footer  from './components/Footer/Footer';
+import Footer from './components/Footer/Footer';
 import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import UsersAdmin from './components/Admin/Users/index';
+import AboutUs from './components/AboutUs/AboutUs'
+
 
 import GoogleButton from './components/Authentication/SignIn/GoogleSignIn';
 
@@ -31,23 +33,18 @@ function App() {
   return (
     <React.Fragment>
       <Route path="/" component={Navbar} />
-      {/*<Route exact path='/' component={Navigation} />*/}
       <Route exact path='/' component={Landing} />
-      <Route  exact path={ROUTES.HOME} component={Home} />
+      <Route exact path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangePage}/>
+      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangePage} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
-      {/*<Route exact path={ROUTES.HOME} component={Newsletter}/>*/}
-      {/*<Route exact path={ROUTES.LANDING} component={Newsletter}/>*/}
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
-      <Route path='/login' component={Login} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
-      <Route path='/signin/google' component={GoogleButton}/>
     </React.Fragment>
   )
 }
