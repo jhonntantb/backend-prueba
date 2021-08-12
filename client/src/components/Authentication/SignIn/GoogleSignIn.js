@@ -1,14 +1,17 @@
 import {withFirebase} from '../../FireBase/index'
 import './google.css';
-import {  useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {getGoogleUser, clearUser} from '../../../redux/actions/user/index';
+import {getGoogleUser, clearUser, getUser} from '../../../redux/actions/user/index';
 import {LogInUser} from '../../../redux/actions/login/index';
 import * as ROUTES from '../../../routes';
 import { useHistory } from 'react-router-dom';
 
 
 const GoogleButton = (props) => {
+
+  
+
     const history=useHistory();
     return (<div className='google-btn'>
         <RenderButton props={props} history={history}/>
@@ -18,6 +21,7 @@ const GoogleButton = (props) => {
 
 
 const GoogleBase = (props) => {
+  const [userok, setUserOk] = useState()
     const {history}=props
     const dispatch = useDispatch();
     const storeUser = useSelector(state=>state.userReducer.user);
@@ -49,14 +53,25 @@ const GoogleBase = (props) => {
                     country: 'no especificado'
                 }
                 //voy a tener que implementar una action especifica para esto =(
+                    
                     dispatch(getGoogleUser(user))
-
+                    setUserOk(user)
             })
             .catch(err=>console.log(err))
     }
 
     useEffect(()=>{
+      if(userok){
+        dispatch(getUser(userok.id))
+      }
+      
+
+    },[userok])
+
+
+    useEffect(()=>{
         // console.log('esto es user:  ' + user)
+        
         if(storeUser.active!==undefined) {
     
     
