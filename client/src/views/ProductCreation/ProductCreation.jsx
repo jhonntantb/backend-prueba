@@ -259,4 +259,4 @@ const ProductCreation = (props) => {
     )
 }
 
-export default ProductCreation
+export default ProductCreation;

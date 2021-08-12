@@ -24,6 +24,8 @@ import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import UsersAdmin from './components/Admin/Users/index';
 
+import GoogleButton from './components/Authentication/SignIn/GoogleSignIn';
+
 
 function App() {
   return (
@@ -47,6 +49,7 @@ function App() {
       <Route exact path= {ROUTES.HOME}component={Footer}/>
       <Route exact path= {ROUTES.LANDING}component={Footer}/>
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
+      <Route path='/signin/google' component={GoogleButton}/>
     </React.Fragment>
   )
 }

@@ -10,6 +10,7 @@ import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
 import {getUser, clearUser} from '../../../redux/actions/user/index';
+import {GoogleButton} from './GoogleSignIn';
 
 
 const SignInPage = () => (
@@ -150,6 +151,8 @@ function SignInFormBase(props) {
               <div className="d-grip gap-2">
                 <PasswordForgetLink />
                 <SignUpLink />
+                <GoogleButton/>
+
               </div>
 
             </form>
