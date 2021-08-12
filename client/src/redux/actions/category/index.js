@@ -46,5 +46,14 @@ export const updateCategory = (id) => {
         return dispatch({ type: TYPES.UPDATE_CATEGORY, payload: res.data })
     }
 }
+export function SetCategoriesFiltradas(response){
+    return(dispatch) => {
 
+            dispatch({
+                type:TYPES.SET_CATEGORY_FILTRADA,
+                payload:response
+            });
+
+        } 
+    }
 

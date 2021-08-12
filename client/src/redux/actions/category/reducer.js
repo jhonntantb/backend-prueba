@@ -3,6 +3,7 @@ import * as TYPES from "../types";
 const initialState = {
     categories: [],
     category:[],
+    categoryFiltrada:["Todas"],
   };
 
 const categoryReducer = (state = initialState, action) => {
@@ -15,9 +16,14 @@ const categoryReducer = (state = initialState, action) => {
             ...state,
             category:action.payload
         }
+        case TYPES.SET_CATEGORY_FILTRADA: return{
+            ...state,
+            categoryFiltrada:action.payload
+        }
         case TYPES.CREATE_CATEGORY: return state
         case TYPES.UPDATE_CATEGORY: return state
         case TYPES.DELETE_CATEGORY: return state
+        
         default:                  return state;
     }
 }

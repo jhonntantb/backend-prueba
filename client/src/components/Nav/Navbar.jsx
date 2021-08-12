@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import SearchBar from './SearchBar'
 
-
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
 import { getAllProduct } from '../../redux/actions/product';
@@ -11,6 +10,7 @@ import { getAllProduct } from '../../redux/actions/product';
 const Navbar = () => {
   const dispatch = useDispatch();
   var authUser = sessionStorage.getItem("pg_merceria")
+  
 
 
   return (
