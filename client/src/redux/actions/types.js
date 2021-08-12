@@ -7,6 +7,7 @@ export const GET_PRODUCT = "get_product"
 export const CREATE_PRODUCT = "create_product" 
 export const UPDATE_PRODUCT = "update_product" 
 export const DELETE_PRODUCT = "get_product"
+export const PRODUCT_CATEGORY="product_by_category"
 
 //User
 export const GET_ALL_USER = "get_all_user"

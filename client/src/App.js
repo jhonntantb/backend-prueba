@@ -19,6 +19,7 @@ import ProductList from './components/ProductList/ProductList';
 import Navbar from './components/Nav/Navbar';
 import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
+import Stock from './components/Admin/Stock/Stock.jsx';
 import UsersAdmin from './components/Admin/Users/index';
 import AboutUs from './components/AboutUs/AboutUs'
 
@@ -41,6 +42,7 @@ function App() {
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
+      <Route exact path= {ROUTES.STOCK} component={Stock}/>
     </React.Fragment>
   )
 }
