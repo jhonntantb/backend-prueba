@@ -22,6 +22,7 @@ import Form from './components/Admin/FormDetail/FormCategory';
 import Stock from './components/Admin/Stock/Stock.jsx';
 import UsersAdmin from './components/Admin/Users/index';
 import AboutUs from './components/AboutUs/AboutUs'
+import NavAdmin from './components/Admin/NavAdmin/NavAdmin';
 
 
 
@@ -42,7 +43,9 @@ function App() {
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
+      <Route path="/admin" component={NavAdmin} />
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
+      
     </React.Fragment>
   )
 }

@@ -84,8 +84,8 @@ conn.sync({ force: update }).then(() => {
          ));
          console.log('Users pre-cargados')  
         
-       // Reviews  (Todavia no se como pre-cargar las reviews. Las promesas no funcionan con el forEach)
-//////////////////////////////////////////////////////////////
+      //  Reviews  (Todavia no se como pre-cargar las reviews. Las promesas no funcionan con el forEach)
+////////////////////////////////////////////////////////////
      /*  for(let i=0; i<dataReviews.length; i++){
         console.log('Review ',dataReviews[i]);
         const product = Product.findOne({where: {catalog_id: dataReviews[i].catalog_id}})
@@ -105,7 +105,7 @@ conn.sync({ force: update }).then(() => {
          } 
          } )
       } */
-/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 /*       const datos =  
        dataReviews.map((e) => {
@@ -132,7 +132,7 @@ conn.sync({ force: update }).then(() => {
          .then((res) => console.log('Reviews recargados'))
          .catch(err => console.log(err))  */
 
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
   
   
@@ -157,12 +157,12 @@ conn.sync({ force: update }).then(() => {
    console.log('Reviews pre-cargados')  */
 
  
-//////////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////////  
 
          
-    
-      
 
+       
+       
    }
   });
 });
