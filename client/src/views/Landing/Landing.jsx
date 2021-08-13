@@ -5,7 +5,8 @@ import Carrousel from "../../components/Carrousel/Carrousel";
 import CardProduct from "../../components/ProductList/CardProduct";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "./../../components/Footer/Footer";
-//import './Landing.css'
+import './Landing.css'
+
 
 export const Landing = () => {
   const items = [
@@ -44,15 +45,16 @@ export const Landing = () => {
     <div>
       <h1>LANDING</h1>
       <div class="container ">
-        <div class="site-content">
           <Carrousel images={items} />
-        </div>
       </div>
-      <div class="container-fluid  ">
-        <div class="row-fluid ">
-          <div class="col-xl-10 col-lg-8 col-md-12 col-sm-12">
+      <div class="container-fluid position-relative">
+        <div class="row row-cols-lg-1 row-cols-md-2 row-cols-sm-2 row-cols-xs-2">
+          <div class="col col-xl-5 col-lg-6 col-md-12 col-sm-12 col-xs-12 position-relative">
             <Newsletter />
-            <div class="cards">
+            </div>
+            <div class="w-500 d-none d-sm-block d-md-block"></div>
+            <div id="cardgroup" class="card-deck col col-lg-6 position-absolute bottom-0 start-50 translate-middle-x">
+              <div className=" col-lg-12 col-md-12 col-sm-12">
               {list.length > 0 &&
                 list4.map((c) => (
                   <CardProduct
@@ -61,8 +63,8 @@ export const Landing = () => {
                     title={c.title}
                   />
                 ))}
+                </div>
             </div>
-          </div>
         </div>
       </div>
 

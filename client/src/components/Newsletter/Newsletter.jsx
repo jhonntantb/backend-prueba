@@ -4,9 +4,8 @@ import './Newsletter.css';
 export const Newsletter = () => {
     return (
         <div class="container">
-        <div >
-            <div class="row justify justify-content-start">
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-4">
+            <div class="row  justify-content-start">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                     <form class="">
                         <div id="cardnews">
                             <div class="row justify-content-center">
@@ -34,7 +33,6 @@ export const Newsletter = () => {
                     </form>
                 </div>
             </div>
-        </div>
     </div>
     )
 }

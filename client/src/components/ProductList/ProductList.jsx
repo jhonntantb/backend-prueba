@@ -18,14 +18,14 @@ function ProductList() {
  }, [])
   
   return (
-    <div id="cards" className="card" >
+      <div >
       {
         list&&list.length>0?list.map(e=>
             <div key={e.id} className="list">
               <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} /> 
             </div>
         ):<h3 className="text-center mt-4">No hay productos</h3>}
-    </div>
+        </div>
   )
 
 

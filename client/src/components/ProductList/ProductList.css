@@ -1,9 +1,7 @@
-.cards{
-    display: inline-flex;
+/*.cards{
+    display: flex;
     flex-direction: row;
     justify-content:space-around;
     padding: 1%;
-}
-.list {
-    justify-content: center
-}
+}*/
+
