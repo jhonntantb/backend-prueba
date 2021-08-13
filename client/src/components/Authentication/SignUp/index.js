@@ -245,8 +245,8 @@ function SignUpFormBase(props) {
 }
 
 const SignUpLink = () => {
-  return (<p className="text-dark"> 
-    <br />
+  return (<p> 
+    <hr />
     <Link className="text-dark" to={ROUTES.SIGN_UP}>crear cuenta</Link>
   </p>)
 }
