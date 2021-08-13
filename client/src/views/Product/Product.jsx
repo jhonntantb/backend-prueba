@@ -31,7 +31,7 @@ export default function Product ({match}){
             img: product.productimages[0].image_url
         }
 
-        if(cart)
+        if(cart.length > 0)
         {
             if(cart.find((e) => e.id == prod.id))
                 alert("El producto ya esta agregado al carrito")

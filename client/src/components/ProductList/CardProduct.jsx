@@ -13,7 +13,7 @@ function CardProduct(props) {
         img: props.url
     }
 
-    if(cart)
+    if(cart.length > 0)
     {
         if(cart.find((e) => e.id == prod.id))
             alert("El producto ya esta agregado al carrito")
