@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order, User, Product, Order_Product } = require('../db')
+const { Order, User, Product, Order_Product, Office, Stock } = require('../db')
 
 
 ///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
@@ -13,7 +13,7 @@ router.get("/",async (req, res,next) =>{
     status ? filtro.status = status : null;
    
     try {
-          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
           res.send(allOrder)
      } catch (error) {
         next(error)
@@ -92,28 +92,9 @@ router.post("/",async (req, res, next) => {
    
 })
 
-///////////////////////// UPDATE //////////////////////////
-//solo puede modificar el  admin el status o lo que quiera
-// Formato ejemplo del body esperado:
-// {"status": "En preparacion",
-// "province": "Tucuman"
-// }
 
-/* router.put("/:id",async (req,res,next) => {
-    console.log('update general')
-    let changes = req.body
-    //console.log(changes);
-    try {
-        const order=await Order.update(changes,  {where:{id:req.params.id}})
-   
-         res.send(order);
-    } catch (error) {
-        next(error)
-    }
-}) */
 
-//////// NUEVO UPDATE GENERAL: BUSCA LA ORDEN, LA MODIFICA  Y VUELVE A GRABARLA
-// todavia no se ocmo hacer esto de actualizar la tabla intermedia order_product
+////////  UPDATE GENERAL: BUSCA LA ORDEN, LA MODIFICA  Y VUELVE A GRABARLA
 
 router.put("/:id",async (req,res,next) => {
     console.log('update general')
@@ -150,6 +131,34 @@ router.put('/:id/:Status', async (req, res) => {
     console.log('update status')
     const { id, Status } = req.params;
     const order = await Order.findByPk(id);
+    // Busco id de sucursal central codesuc = 0
+    const sucursal = await Office.findOne({where: {codesuc: 0}})
+    var sucid = sucursal.dataValues.id
+    // Valida que sea un cambio de status valido:
+    const statusAnt = order.status
+    const statusNew = Status
+    const statusDupla = statusAnt + "/" + statusNew;
+    const validDuplas = [
+    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled"
+    ];
+
+    if(!validDuplas.includes(statusDupla)) return res.status(300).send('Cambio de status invalido');
+
+    var oper = 'na'
+    statusAnt === "checkout" && statusNew === "approved" ? oper = 'resta' : null ;
+    statusAnt === "approved" && statusNew === "cancelled" ? oper = 'suma' : null ;
+
+    // Si corresponde actualizar el stock:
+    if (oper != 'na') {
+      // Tomo los productos de la orden
+      const products = await order.getOrder_Products({where:{orderId: id}})
+      // Actualizo el stock para cada producto d ela orden restando la cantidad
+      products.map( async e => {
+        const [stock, created] = await Stock.findOrCreate({ defaults:{quantity: 0},where:{productId: e.dataValues.productId, officeId: sucid}})
+        oper === 'resta' ?  stock.quantity = stock.quantity - e.dataValues.quantity : stock.quantity = stock.quantity + e.dataValues.quantity ;
+        await stock.save()
+      })
+    } 
 
     order.status = Status;
     order.save()
