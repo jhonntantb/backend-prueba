@@ -1,71 +1,80 @@
-import {useDispatch, useSelector} from "react-redux"
-import {useState, useEffect} from "react"
-import { getProduct } from "../../redux/actions/product/index"
-import { getReview } from "../../redux/actions/review/index"
-import ShowReviews from "../../components/ShowReviews/ShowReviews"
-import CreateReview from "../../components/Review/CreateReview"
-import Carrousel from '../../components/Carrousel/Carrousel'
-import { Card, CardBody, CardSubtitle, CardTitle, CardText} from "reactstrap"
-import "./Product.css"
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { getProduct } from "../../redux/actions/product/index";
+import { getReview } from "../../redux/actions/review/index";
+import ShowReviews from "../../components/ShowReviews/ShowReviews";
+import CreateReview from "../../components/Review/CreateReview";
+import Carrousel from "../../components/Carrousel/Carrousel";
+import { Card, CardBody, CardSubtitle, CardTitle, CardText } from "reactstrap";
+import "./Product.css";
 
-export default function Product ({match}){
-    const dispatch = useDispatch();
-    const product = useSelector(state => state.productReducer.product)
-    const reviews = useSelector((state) => state.reviews );
-   
-    useEffect(()=> {
-        dispatch(getReview(match.params.id))
-    },[dispatch])
+export default function Product({ match }) {
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.productReducer.product);
+  const reviews = useSelector((state) => state.reviews);
 
-    useEffect(()=>{
-        dispatch(getProduct(match.params.id))
-    }, [])
+  useEffect(() => {
+    dispatch(getReview(match.params.id));
+  }, [dispatch]);
 
-    const handleAddCart = () => {
-        const cart = JSON.parse(localStorage.getItem("cart"))
-        const prod = {
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            cant: 1,
-            img: product.productimages[0].image_url
-        }
+  useEffect(() => {
+    dispatch(getProduct(match.params.id));
+  }, []);
 
-        if(cart.length > 0)
-        {
-            if(cart.find((e) => e.id == prod.id))
-                alert("El producto ya esta agregado al carrito")
-            else
-                localStorage.setItem("cart", JSON.stringify([...cart, prod]))
-        } 
-        else 
-            localStorage.setItem("cart", JSON.stringify([prod]))
-    }
-   
-    return (
-        product ?
-        <div className='main-container'>
-            <div className='card-container'>
-                    <Card fluid>
-                        <CardBody >
-                            <CardTitle className='product-title'>{product.title}</CardTitle>
-                            <button onClick={handleAddCart}>Añadir al carrito</button>
-                            <CardSubtitle>{product.resume}</CardSubtitle>
-                        </CardBody>
-                    </Card>
-                <div className="productImages">
-                    <Carrousel images={product.productimages || []}/>
-                </div>
-                {/* <div className="productDetails">
-                </div> */}
+  const handleAddCart = () => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    const prod = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      cant: 1,
+      img: product.productimages[0].image_url,
+    };
+
+    if (cart) {
+      if (cart.find((e) => e.id == prod.id))
+        alert("El producto ya esta agregado al carrito");
+      else localStorage.setItem("cart", JSON.stringify([...cart, prod]));
+    } else localStorage.setItem("cart", JSON.stringify([prod]));
+  };
+
+  return product ? (
+    <div className="container">
+      <div className="cartas">
+        <div className="container-fluid">
+          <div className="wrapper row box-shadow bg-white">
+            <div className="preview col-md-6">
+              <div className="preview-pic tab-content">
+                <Carrousel images={product.productimages || []} />
+              </div>
             </div>
-            <div>
-                {product.detail}
+
+            <div className="details col-md-6 text-center">
+              <h3 className="product-title">{product.title}</h3>
+
+              <p className="product-description text-dark">{product.resume}</p>
+
+              <h5 className="text-dark">{product.detail}</h5>
+              <h4 className="price text-dark mt-3">{product.price}$</h4>
+              {/* <div className="productDetails">
+              </div> */}
+              <div className="action">
+                <button
+                  className="add-to-cart btn btn-default"
+                  onClick={handleAddCart}
+                  style={{ marginLeft: "20px" }}
+                >
+                  Añadir al carrito
+                </button>
+              </div>
             </div>
-            <CreateReview match={match.params.id}/>
-            <ShowReviews reviews={product.reviews}/>
+            <CreateReview match={match.params.id} />
+            <ShowReviews reviews={product.reviews} />
+          </div>
         </div>
-        :
-        <div></div>
-    )
+      </div>
+    </div>
+  ) : (
+    <div></div>
+  );
 }

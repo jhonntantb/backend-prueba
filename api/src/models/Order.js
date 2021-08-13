@@ -16,10 +16,12 @@ module.exports = (sequelize) => {
     },
     status: {
       type: DataTypes.ENUM('shipped', 'cart', 'checkout', 'cancelled','delivered'),
+      defaultValue: "cart",
     },
     total_price: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      defaultValue: 0,
     },
     home_address: {
       type: DataTypes.STRING,

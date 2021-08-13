@@ -36,7 +36,7 @@ router.put("/",async (req,res,next) => {
         for(let i=0;i<stocks.length; i++){
             await Stock.update({quantity:stocks[i].quantity},{where:{id:stocks[i].id}})
         }
-        res.send("terminado")
+        res.status(200)
     } catch (error) {
         next(error)
     }

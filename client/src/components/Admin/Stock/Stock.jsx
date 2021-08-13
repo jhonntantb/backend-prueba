@@ -15,7 +15,7 @@ function Stock() {
     const [stock,setStock]=useState([])//en que viene para la tabla
     const [product,setProduct]=useState([])//lo que vamos enviar para modificar
     const [checked,setChecked]=useState([])
-    // const [finish,setFinish]=useState(false)
+    const [prueba,setPrueba]=useState("")
     
     useEffect(() => {
         dispatch(getAllOffice())
@@ -25,6 +25,7 @@ function Stock() {
     const offices= useSelector(state =>state.officeReducer.offices)
     const productsAll= useSelector(state =>state.productReducer.products)
     const handleClick=(e,id)=>{
+        setPrueba(id)
         e.preventDefault()
         setStock(productsAll.filter(e=>e.stocks[0].officeId===id))
     }
@@ -53,16 +54,16 @@ function Stock() {
         setProduct(stockback.concat([{id:event.target.id,quantity:+(search.stocks[0].quantity)+ +(event.target.value)}]))
     }
     
-    const handleChanges=()=>{
-        dispatch(updateStock({stocks:product}))
+    const handleChanges=(e)=>{
+         dispatch(updateStock({stocks:product}))
+         //window.location.reload() en caso extremo
         setChecked([])
         setProduct([])
-        //setFinish(true)
+        dispatch(getAllProduct())
+        dispatch(getAllOffice())
+        setStock([])
+        
     }
-    // useEffect(() => {
-    //     dispatch(getAllProduct())
-    //     dispatch(getAllOffice())
-    // }, [finish])
 
     return (
         <div>
@@ -107,7 +108,7 @@ function Stock() {
                     </tr>
                     ):null
                 }
-                {stock&&stock.length>0?<button onClick={handleChanges}>Enviar cambios</button>:null}
+                {stock&&stock.length>0?<button onClick={e=>handleChanges(e)}>Enviar cambios</button>:null}
                     </tbody>
 
 
