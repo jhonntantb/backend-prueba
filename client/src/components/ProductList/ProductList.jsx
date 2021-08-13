@@ -95,7 +95,7 @@ function ProductList() {
         <label htmlFor="categories">Filtrar por categorias</label>
         <select className="form-select" aria-label=".form-select-lg " id="categories" onChange={(e) => { dispatch(SetCategoriesFiltradas(e.target.value)) }} >
           <option value={categoryFiltrada}>{categoryFiltrada}</option>
-          {categoryFiltrada != "Todas" && <option selected value="Todas">Todas</option>}
+          {categoryFiltrada != "Todas" && <option value="Todas">Todas</option>}
 
           {(categorias && categorias.length > 0) && categorias.map(lista =>
             lista.name != categoryFiltrada &&
