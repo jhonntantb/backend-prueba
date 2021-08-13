@@ -13,15 +13,17 @@ function CardProduct(props) {
         img: props.url
     }
 
-    if(cart)
-    {
-        if(cart.find((e) => e.id == prod.id))
-            alert("El producto ya esta agregado al carrito")
-        else
-            localStorage.setItem("cart", JSON.stringify([...cart, prod]))
+    if(cart){
+        if (cart.find((e) => e.id == prod.id))
+            alert("El producto ya esta agregado al carrito") 
+        else {
+          localStorage.setItem("cart", JSON.stringify([...cart, prod])) 
+        }  
     } 
-    else 
-        localStorage.setItem("cart", JSON.stringify([prod]))
+    else  {
+       localStorage.setItem("cart", JSON.stringify([prod]))
+        alert("Producto agregado")
+    }
   }
 
   return (
@@ -39,15 +41,12 @@ function CardProduct(props) {
             </NavLink>
             <span>${props.price}</span>
           </div>
-          <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
+          <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center h-100">
             {" "}
-            <button class="btn btn-dark text-uppercase" onClick={handleAddCart}>Add to cart</button>
+            <button class="btn btn-dark text-uppercase " onClick={handleAddCart}>Add to cart</button>
             <div class="add">
               <span class="product_fav">
                 <i class="fa fa-heart-o"></i>
-              </span>
-              <span class="product_fav">
-                <i class="fa fa-opencart"></i>
               </span>
             </div>
           </div>
