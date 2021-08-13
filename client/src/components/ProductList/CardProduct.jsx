@@ -4,14 +4,14 @@ import "./CardProduct.css";
 
 function CardProduct(props) {
   const handleAddCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart"))
+    const cart = JSON.parse(localStorage.getItem("cart"));
     const prod = {
-        id: props.id,
-        title: props.title,
-        price: props.price,
-        cant: 1,
-        img: props.url
-    }
+      id: props.id,
+      title: props.title,
+      price: props.price,
+      cant: 1,
+      img: props.url,
+    };
 
     if(cart){
         if (cart.find((e) => e.id == prod.id))

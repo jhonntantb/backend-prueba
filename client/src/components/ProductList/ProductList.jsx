@@ -1,23 +1,21 @@
 import { useSelector } from "react-redux";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getAllProduct } from "../../redux/actions/product/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
-import { getAllCategory } from "../../redux/actions/category/index.js"
-import './ProductList.css'
+import { getAllCategory } from "../../redux/actions/category/index.js";
+import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
 import { BrowserRouter } from 'react-router-dom';
 
-
-
-
-
 function ProductList() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const list = useSelector(state => state.productReducer.products)
-  const categorias = useSelector(state => state.categoryReducer.categories)
-  var categoryFiltrada = useSelector((state) => state.categoryReducer.categoryFiltrada)
+  const list = useSelector((state) => state.productReducer.products);
+  const categorias = useSelector((state) => state.categoryReducer.categories);
+  var categoryFiltrada = useSelector(
+    (state) => state.categoryReducer.categoryFiltrada
+  );
 
   const [Minimo, setMinimo] = useState("");
   const [Maximo, setMaximo] = useState("");
@@ -25,71 +23,69 @@ function ProductList() {
 
   useEffect(() => {
     !list.length && dispatch(getAllProduct());
-    dispatch(getAllCategory())
-  }, [])
-
+    dispatch(getAllCategory());
+  }, []);
 
   var lista_filtrada = [];
   if (categoryFiltrada != "Todas") {
-    list.map(e =>
-
-      e.categories.map(a => { if (a.name === categoryFiltrada) lista_filtrada.push(e) })
-
-    )
-
-
-  } else lista_filtrada = list
-  console.log(list)
-  console.log("CATEGORY" + categoryFiltrada)
-  console.log("lISTA_FILTRADA" + lista_filtrada)
-  console.log(Minimo)
-  console.log(Maximo)
+    list.map((e) =>
+      e.categories.map((a) => {
+        if (a.name === categoryFiltrada) lista_filtrada.push(e);
+      })
+    );
+  } else lista_filtrada = list;
+  console.log(list);
+  console.log("CATEGORY" + categoryFiltrada);
+  console.log("lISTA_FILTRADA" + lista_filtrada);
+  console.log(Minimo);
+  console.log(Maximo);
 
   if (Minimo != "" && Maximo != "") {
     lista_filtrada = lista_filtrada.filter((val) => {
       if (val.price > Minimo && val.price < Maximo) {
         return val;
       }
-    })
+    });
   }
-
   if (Minimo != "" && Maximo == "") {
     lista_filtrada = lista_filtrada.filter((val) => {
       if (val.price > Minimo) {
         return val;
       }
-    }
-
-    )
-
+    });
   }
   if (Minimo == "" && Maximo != "") {
     lista_filtrada = lista_filtrada.filter((val) => {
       if (val.price < Maximo) {
         return val;
       }
-    }
-
-    )
-
+    });
   }
   if (Minimo == "" && Maximo == "" && orden == "A-Z") {
     lista_filtrada.sort(function (a, b) {
-      if (a.title < b.title) { return -1; }
-      if (a.title > b.title) { return 1; }
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
       return 0;
-    })
-
+    });
   }
 
   if (Minimo == "" && Maximo == "" && orden == "Z-A") {
     lista_filtrada.sort(function (a, b) {
-      if (a.title > b.title) { return -1; }
-      if (a.title < b.title) { return 1; }
+      if (a.title > b.title) {
+        return -1;
+      }
+      if (a.title < b.title) {
+        return 1;
+      }
       return 0;
-    })
-
+    });
   }
+
+  
  
   return (
 

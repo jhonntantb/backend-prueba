@@ -107,12 +107,32 @@ const GoogleBase = (props) => {
       },[storeUser])
 
     return (
-    <div>
-    <button onClick={(e) =>handleGoogle(e)}>
-        iniciar sesion con Google
-    </button>
+    // <div>
+    // <button onClick={(e) =>handleGoogle(e)}>
+    //     iniciar sesion con Google
+    // </button>
 
-    </div>)
+    // </div>)
+    <div className="container text-center">
+  <a
+    className="btn btn-outline-dark"
+    role="button"
+    style={{ textTransform: "none" }}
+    onClick={(e) =>handleGoogle(e)}
+  >
+    <img
+      width="20px"
+      height= "20px"
+      style={{ marginBottom: 3, marginRight: 5 }}
+      alt="Google sign-in"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+      
+    />
+    Login with Google
+  </a>
+</div>
+
+    )
 }
 
 const RenderButton = withFirebase(GoogleBase)
