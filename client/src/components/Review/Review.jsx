@@ -21,9 +21,9 @@ export default function Review({ content }) {
 
   return (
     <div>
-      <hr />
       <div className="container mt-5">
         <div>
+          <hr />
           <div>{starsCreation(content.score)}</div>
           <div>{content.date}</div>
           <div>{content.description}</div>
