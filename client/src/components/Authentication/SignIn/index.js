@@ -77,12 +77,12 @@ function SignInFormBase(props) {
           if(user.active===true) {
             //verifica si es admin
             if(user.isAdmin===true) {
-              sessionStorage.setItem("pg_merceria" , ('admin-'+user.id))
+              localStorage.setItem("pg_merceria" , ('admin-'+user.id))
               props.history.push(ROUTES.HOME);
             }else {
 
               //setea el id del usuario al sessionStorage
-              sessionStorage.setItem("pg_merceria", user.id)
+              localStorage.setItem("pg_merceria", user.id)
               props.history.push(ROUTES.HOME);
 
             }
@@ -97,7 +97,7 @@ function SignInFormBase(props) {
 
     } else {
       //si user es guest, setea la session a guest
-      sessionStorage.setItem("pg_merceria", 'guest')
+      localStorage.setItem("pg_merceria", 'guest')
       // dispatch(clearUser())
     }
 

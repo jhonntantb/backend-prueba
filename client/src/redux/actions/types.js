@@ -59,3 +59,6 @@ export const CREATE_OFFICE = "create_office"
 export const UPDATE_OFFICE = "update_office" 
 export const DELETE_OFFICE = "get_office"
 
+//Checkout
+
+export const GO_TO_CHECKOUT = "go_to_checkout"

@@ -10,7 +10,7 @@ import { getAllProduct } from '../../redux/actions/product';
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  var authUser = sessionStorage.getItem("pg_merceria")
+  var authUser = localStorage.getItem("pg_merceria")
 
 
   return (

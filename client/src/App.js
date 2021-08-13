@@ -21,6 +21,7 @@ import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import UsersAdmin from './components/Admin/Users/index';
 import AboutUs from './components/AboutUs/AboutUs'
+import CreateCheckoutButton from './components/MPago/index';
 
 
 
@@ -41,6 +42,7 @@ function App() {
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
+      <Route path='/pagar' component={CreateCheckoutButton}/>
     </React.Fragment>
   )
 }
