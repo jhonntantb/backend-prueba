@@ -30,9 +30,9 @@ export const deleteStock = (params) => {
     }
 }
 
-export const updateStock = (id) => {
+export const updateStock = (objetoconlarpropiedadchangesquetienearray) => {
     return async (dispatch) => {
-        const res = await axios.put('http://localhost:3001/stock', id)
+        const res = await axios.put('http://localhost:3001/stock', objetoconlarpropiedadchangesquetienearray)
         return dispatch({ type: TYPES.UPDATE_STOCK, payload: res.data })
     }
 }

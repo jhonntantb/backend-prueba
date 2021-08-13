@@ -1,7 +1,7 @@
 import Review from "../Review/Review"
 
 export default function ShowReviews({reviews})
-{
+{   console.log("acaaaaa")
     console.log(reviews)
      return  reviews ? (
     

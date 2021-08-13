@@ -2,21 +2,31 @@ const router = require('express').Router();
 const { Order, User, Product, Order_Product } = require('../db')
 
 
-///////////////   GET GENERAL ////////////////////////////////
-router.get("/",async (_req, res,next) =>{
-  console.log('ruta orden');  
+///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
+// Si no viene ingun parametro en el query lista todas las ordenes
+router.get("/",async (req, res,next) =>{
+    const {userId, productId, status} = req.query ;
+    var filtro = {};
+    var filtroProd = {};
+    userId ? filtro.userId = userId : null;
+    productId ? filtroProd.id = productId: null;
+    status ? filtro.status = status : null;
+   
     try {
-        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  }); 
-        res.send(allOrder)
-    } catch (error) {
+          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+          res.send(allOrder)
+     } catch (error) {
         next(error)
-    }
+    
+} 
 })
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-       const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id']} ] })
-    //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
+     //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
+ 
+       //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
     } catch (error) {
         next(error)
@@ -24,8 +34,7 @@ router.get("/:id",async (req, res, next) =>{
 })
 
 
-// la orden se relaciona con un usuario
-//la orden se relaciona con un o varios productos
+// relacion con oficina (pendiente)
 //la orden se relaciona con una oficina---->con un calendario
 //-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
@@ -58,7 +67,7 @@ router.post("/",async (req, res, next) => {
     try {
         const order=await Order.create({
             status: req.body.status,
-            total_price: req.body.total_price,
+            total_price: 0,
             home_address: req.body.home_address,
             location: req.body.location,
             province: req.body.province,
@@ -66,10 +75,16 @@ router.post("/",async (req, res, next) => {
             delivery_date: req.body.delivery_date,
             userId: req.body.userId
         })
+        var total = 0;
         req.body.products.forEach(async (e) => {
             await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
+            .then(total = total + (e.quantity * e.unitprice));
         })
-        res.send(order)
+        // Actualizo el total_price en la orden
+        const orderupdate = await Order.findByPk(order.id)
+        orderupdate.dataValues.total_price = total;
+        const saved_order = await orderupdate.save()
+        res.send(saved_order)
  
     //la relacion del calendario pendiente 
     } catch (error) {next(error)    }
@@ -81,21 +96,61 @@ router.post("/",async (req, res, next) => {
 //solo puede modificar el  admin el status o lo que quiera
 // Formato ejemplo del body esperado:
 // {"status": "En preparacion",
-// "total_price": 100000,
 // "province": "Tucuman"
 // }
 
 router.put("/:id",async (req,res,next) => {
+    console.log('update general')
     let changes = req.body
-    console.log(changes);
+    //console.log(changes);
     try {
         const order=await Order.update(changes,  {where:{id:req.params.id}})
-
-        res.send(order);
+   
+         res.send(order);
     } catch (error) {
         next(error)
     }
 })
+
+//////// NUEVO UPDATE GENERAL: BUSCA LA ORDEN, LA MODIFICA  Y VUELVE A GRABARLA
+// todavia no se ocmo hacer esto de actualizar la tabla intermedia order_product
+
+/* router.put("/:id",async (req,res,next) => {
+    console.log('update general')
+    try {
+    const order=await Order.findByPk(req.params.id, {include:[{model: Order_Product}] })
+    let changes = req.body
+    console.log(changes);
+
+    order.status= req.body.status
+   
+    order.home_address= req.body.home_address,
+    order.location= req.body.location,
+    order.province= req.body.province,
+    order.country= req.body.country,
+    order.delivery_date= req.body.delivery_date,
+    order.userId= req.body.userId
+    
+   
+    const saved_order = await order.save()   
+         res.send(saved_order);
+    } catch (error) {
+        next(error)
+    }
+}) */
+
+//////////////////////////// UPDATE STATUS ///////////////////////
+router.put('/:id/:Status', async (req, res) => {
+    console.log('update status')
+    const { id, Status } = req.params;
+    const order = await Order.findByPk(id);
+
+    order.status = Status;
+    order.save()
+    .then(response => res.send(response))
+    .catch(err => console.log("ERROR WHILE CHANGING SSTATUS: ", err));
+})
+
 
 //////////////////////////// DELETE ////////////////////////
 //solo puede deletear el admin
