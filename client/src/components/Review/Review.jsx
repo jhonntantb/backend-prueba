@@ -1,4 +1,4 @@
-import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import React from "react";
 
 export default function Review({ content }) {
   const checked = {
@@ -20,15 +20,15 @@ export default function Review({ content }) {
   };
 
   return (
-    <div id="review">
-      <Card fluid>
-        <CardBody>
-          {starsCreation(content.score)}
-          <CardTitle></CardTitle>
-          <CardSubtitle>{content.date}</CardSubtitle>
-          <CardText>{content.description}</CardText>
-        </CardBody>
-      </Card>
+    <div>
+      <hr />
+      <div className="container mt-5">
+        <div>
+          <div>{starsCreation(content.score)}</div>
+          <div>{content.date}</div>
+          <div>{content.description}</div>
+        </div>
+      </div>
     </div>
   );
 }

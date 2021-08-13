@@ -39,24 +39,40 @@ export default function Product({ match }) {
   };
 
   return product ? (
-    <div className="main-container">
-      <div className="card-container">
-        <Card fluid>
-          <CardBody>
-            <CardTitle className="product-title">{product.title}</CardTitle>
-            <button onClick={handleAddCart}>Añadir al carrito</button>
-            <CardSubtitle>{product.resume}</CardSubtitle>
-          </CardBody>
-        </Card>
-        <div className="productImages">
-          <Carrousel images={product.productimages || []} />
+    <div className="container">
+      <div className="cartas">
+        <div className="container-fluid">
+          <div className="wrapper row box-shadow bg-white">
+            <div className="preview col-md-6">
+              <div className="preview-pic tab-content">
+                <Carrousel images={product.productimages || []} />
+              </div>
+            </div>
+
+            <div className="details col-md-6 text-center">
+              <h3 className="product-title">{product.title}</h3>
+
+              <p className="product-description text-dark">{product.resume}</p>
+
+              <h5 className="text-dark">{product.detail}</h5>
+              <h4 className="price text-dark mt-3">{product.price}$</h4>
+              {/* <div className="productDetails">
+              </div> */}
+              <div className="action">
+                <button
+                  className="add-to-cart btn btn-default"
+                  onClick={handleAddCart}
+                  style={{ marginLeft: "20px" }}
+                >
+                  Añadir al carrito
+                </button>
+              </div>
+            </div>
+            <CreateReview match={match.params.id} />
+            <ShowReviews reviews={product.reviews} />
+          </div>
         </div>
-        {/* <div className="productDetails">
-            </div> */}
       </div>
-      <div>{product.detail}</div>
-      <CreateReview match={match.params.id} />
-      <ShowReviews reviews={product.reviews} />
     </div>
   ) : (
     <div></div>
