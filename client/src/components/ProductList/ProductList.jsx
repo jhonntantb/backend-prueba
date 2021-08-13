@@ -6,6 +6,7 @@ import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import { getAllCategory } from "../../redux/actions/category/index.js";
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
+import { BrowserRouter } from 'react-router-dom';
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -84,72 +85,60 @@ function ProductList() {
     });
   }
 
+  
+ 
   return (
-    <div id="cards" className="card">
-      <label htmlFor="categories">Filter By Categories:</label>
-      <select
-        id="categories"
-        onChange={(e) => {
-          dispatch(SetCategoriesFiltradas(e.target.value));
-        }}
-      >
-        <option value={categoryFiltrada}>{categoryFiltrada}</option>
-        {categoryFiltrada != "Todas" && <option value="Todas">Todas</option>}
 
-        {categorias &&
-          categorias.length > 0 &&
-          categorias.map(
-            (lista) =>
-              lista.name != categoryFiltrada && (
-                <option value={lista.name}>{lista.name}</option>
-              )
+    <div className="d-table-responsive">
+      <div id="tableleft"className="d-table-cell" >
+        <div className="justify-content-start mx-5" >
+        <label htmlFor="categories">Filtrar por categorias</label>
+        <select className="form-select" aria-label=".form-select-lg " id="categories" onChange={(e) => { dispatch(SetCategoriesFiltradas(e.target.value)) }} >
+          <option value={categoryFiltrada}>{categoryFiltrada}</option>
+          {categoryFiltrada != "Todas" && <option value="Todas">Todas</option>}
+
+          {(categorias && categorias.length > 0) && categorias.map(lista =>
+            lista.name != categoryFiltrada &&
+            <option value={lista.name}>{lista.name}</option>
           )}
-      </select>
-      <label>Precio $</label>
-      <input
-        type="text"
-        name="Minimo"
-        id="Minimo"
-        placeholder="Minimo"
-        onChange={(e) => {
-          setMinimo(e.target.value);
-        }}
-      />
-      <input
-        type="text"
-        name="Maximo"
-        id="Maximo"
-        placeholder="Maximo"
-        onChange={(e) => {
-          setMaximo(e.target.value);
-        }}
-      />
-      <label htmlFor="categories">Orden Alfabetico:</label>
-      <select
-        id="categories"
-        onChange={(e) => {
-          setOrden(e.target.value);
-        }}
-      >
-        <option value="A-Z">"A-Z"</option>
-        <option value="Z-A">"Z-A"</option>
-      </select>
-      {lista_filtrada && lista_filtrada.length > 0 ? (
-        lista_filtrada.map((e) => (
-          <div key={e.id} className="list">
-            <CardProduct
-              title={e.title}
-              price={e.price}
-              url={e.productimages[0].image_url}
-              id={e.id}
-            />
-          </div>
-        ))
-      ) : (
-        <h3 className="text-center mt-4">No hay productos</h3>
-      )}
+        </select>
+        <br />
+        <br />
+        <label>Precio </label>
+        <div className="input-group  mb-3">
+        <span class="input-group-text">$</span>
+        <input className="form-control"type="text" name="Minimo" id="Minimo" placeholder="Minimo" onChange={(e) => { setMinimo(e.target.value) }} />
+        </div>
+        <div className="input-group">
+        <span class="input-group-text">$</span>
+        <input className="form-control" type="text" name="Maximo" id="Maximo" placeholder="Maximo" onChange={(e) => { setMaximo(e.target.value) }} />
+        </div>
+        <br />
+        <br />
+        <label htmlFor="categories">Ordenar </label>
+        <br />
+        <select className="form-select" aria-label=".form-select-lg " id="categories" onChange={(e) => { setOrden(e.target.value) }}>
+          <option value="A-Z">"A-Z"</option>
+          <option value="Z-A">"Z-A"</option>
+        </select>
+        </div>
+      </div>
+      <div className="d-table-cell" >
+          {
+            lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e =>
+              <span key={e.id} className="card-deck   mx-1" >
+                <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} />
+              </span>
+            ) : <h3 className="text-center mt-4">No hay productos</h3>}
+      </div>
+      <footer>
+        
+      </footer>
     </div>
-  );
+  )
+
+
+
 }
 
 export default ProductList;

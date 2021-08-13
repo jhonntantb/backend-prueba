@@ -66,11 +66,11 @@ textarea.input-box:focus {
 }
 
 form .form-control::-webkit-input-placeholder {
-    color: #9E9E9E
+    color: #919090
 }
 
 ::-moz-placeholder {
-    color: #9E9E9E !important
+    color:  #919090 !important
 }
 
 input.btn-black {
