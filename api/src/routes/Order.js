@@ -99,7 +99,7 @@ router.post("/",async (req, res, next) => {
 // "province": "Tucuman"
 // }
 
-router.put("/:id",async (req,res,next) => {
+/* router.put("/:id",async (req,res,next) => {
     console.log('update general')
     let changes = req.body
     //console.log(changes);
@@ -110,34 +110,40 @@ router.put("/:id",async (req,res,next) => {
     } catch (error) {
         next(error)
     }
-})
+}) */
 
 //////// NUEVO UPDATE GENERAL: BUSCA LA ORDEN, LA MODIFICA  Y VUELVE A GRABARLA
 // todavia no se ocmo hacer esto de actualizar la tabla intermedia order_product
 
-/* router.put("/:id",async (req,res,next) => {
+router.put("/:id",async (req,res,next) => {
     console.log('update general')
     try {
-    const order=await Order.findByPk(req.params.id, {include:[{model: Order_Product}] })
-    let changes = req.body
-    console.log(changes);
+      // Busco orden a actualizar  
+      const order=await Order.findByPk(req.params.id, {include:[{model: Order_Product}] })
+      
+      // Elimino registros actuales de productos dela orden
+      const resultado  = await Order_Product.destroy({where:{orderId:req.params.id}})
+      // Agrego registros actualizados de productos d ela orden y computo el costo total
+      var total = 0;
+      req.body.products.forEach(async (e) => {
+          await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
+          .then(total = total + (e.quantity * e.unitprice));
+      })
 
-    order.status= req.body.status
-   
-    order.home_address= req.body.home_address,
-    order.location= req.body.location,
-    order.province= req.body.province,
-    order.country= req.body.country,
-    order.delivery_date= req.body.delivery_date,
-    order.userId= req.body.userId
-    
-   
-    const saved_order = await order.save()   
-         res.send(saved_order);
-    } catch (error) {
-        next(error)
-    }
-}) */
+      order.status= req.body.status
+      order.total_price= total
+      order.home_address= req.body.home_address,
+      order.location= req.body.location,
+      order.province= req.body.province,
+      order.country= req.body.country,
+      order.delivery_date= req.body.delivery_date,
+      order.userId= req.body.userId
+      const saved_order = await order.save() 
+
+      res.send(saved_order);
+    } 
+    catch (error) { next(error) }
+})
 
 //////////////////////////// UPDATE STATUS ///////////////////////
 router.put('/:id/:Status', async (req, res) => {
