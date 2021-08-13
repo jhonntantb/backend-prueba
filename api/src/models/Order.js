@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       defaultValue: new Date()
     },
     status: {
-      type: DataTypes.ENUM('shipped', 'cart', 'checkout', 'cancelled','delivered'),
+      type: DataTypes.ENUM('shipped', 'cart', 'checkout', 'approved', 'rejected', 'cancelled','delivered'),
       defaultValue: "cart",
     },
     total_price: {

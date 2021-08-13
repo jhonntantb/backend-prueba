@@ -1,5 +1,5 @@
 const server = require('./src/app');
-const { conn, Product, Category, Office, Productimage, User, Review } = require('./src/db');
+const { conn, Product, Category, Office, Productimage, User, Stock, Review } = require('./src/db');
 const data = require ('./src/datasets/data')
 const dataCategories = require ('./src/datasets/dataCategories')
 const dataOffices = require ('./src/datasets/dataOffices')
@@ -8,7 +8,7 @@ const dataReviews = require ('./src/datasets/dataReviews')
 
 // Syncing all the models at once.
 
-const update = true ;
+const update = false ;
 conn.sync({ force: update }).then(() => {
 
   server.listen(3001, () => {
@@ -25,6 +25,18 @@ conn.sync({ force: update }).then(() => {
            ));
        console.log('Categorias pre-cargadas')
 
+       // Oficinas
+       dataOffices.forEach(async (e) => await Office.create(
+           {name: e.name,
+            codesuc: e.codesuc,
+             address: e.address,
+             phone: e.phone
+           }
+           ));
+      
+
+
+
        // Productos
         data.forEach(async (e) => {product = await Product.create(
           {title: e.title,
@@ -34,38 +46,39 @@ conn.sync({ force: update }).then(() => {
           price: e.price,
               
           })
-          e.image.forEach( async(c) =>
-           await Productimage.create({
-              productId: product.id, 
-              image_url:c
-              }) 
-           ) 
+   
+
+            e.image.forEach( async(c) =>
+             await Productimage.create({
+                productId: product.id, 
+                image_url:c
+                }) 
+             ) 
+
+          
+          
            //console.log('**************product catalog_id: ', product.catalog_id, e.category);
            if(e.category.length>0){
              //console.log('adentro!');
-             e.category.forEach( async(n) => {    
-               //console.log('mas adentro', n); 
-               const categoryRec = await Category.findAll({where: {name: n}})
+             for(let i=0; i<e.category.length; i++)
+             {
+                
+               //console.log('dentro del for', i); 
+               const categoryRec = await Category.findOne({where: {name: e.category[i]}})
                //console.log('Catalog_id: ',product.catalog_id);
-               //console.log(categoryRec[0]);
-               categoryRec[0].dataValues? await product.setCategories(categoryRec[0].dataValues.id) : null ;
+               //console.log('categoryRec: ',categoryRec);
+               categoryRec.dataValues? await product.setCategories(categoryRec.dataValues.id) : null;
                //categoryRec[0].dataValues? console.log('product:',product.catalog_id, ' category: ',categoryRec[0].dataValues.name ) : null;
-             })
-           }
+            
+             }
+            }
+          
 
-        }
-        );
+        });
 
        console.log('Productos pre-cargados')
 
-       // Oficinas
-       dataOffices.forEach(async (e) => await Office.create(
-           {name: e.name,
-             address: e.address,
-             phone: e.phone
-           }
-           ));
-           console.log('Offices pre-cargadas')  
+
 
        // Usuarios
        dataUsers.forEach(async (e) => await User.create(
