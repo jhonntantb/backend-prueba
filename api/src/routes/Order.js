@@ -14,7 +14,11 @@ router.get("/",async (req, res,next) =>{
 
     try {
         //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+<<<<<<< HEAD
         const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })
+=======
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })  
+>>>>>>> develop
         res.send(allOrder)
      } catch (error) {
         next(error)
@@ -52,13 +56,13 @@ router.get("/:id",async (req, res, next) =>{
 // "userId": "046fb71e-14f1-445c-a66a-2e69556ebdad",
 // "products": [
 //     {
-//         "productId":"b346d07c-0a61-40f2-b220-d84b494f7b5c",
+//         "productId":"209c1a8c-ae99-4e88-bb49-c522e14fc3e7",
 //         "quantity": 20,
 //         "unitprice": 200.50
 //     },
 //     {
-//        "productId": "5949ff09-1a77-4b66-87d7-a3d60a27ec9b",
-//        "quantity": 100,
+//        "productId": "49dc4925-dbff-41fe-8d4a-6f2a3808904b ",
+//        "quantity": 10,
 //        "unitprice": 500
 //     }
 // ]

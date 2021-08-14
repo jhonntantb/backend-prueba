@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import {clearUser} from '../../../redux/actions/user/index';
 
 import { withFirebase } from '../../FireBase/context';
-import { LogInUser } from '../../../redux/actions/login/index';
+
 
 function LogOutButton() {
   return (
@@ -18,11 +18,11 @@ function SignOutButtonBase(props) {
   const dispatch = useDispatch();
 
   function clickHandler() {
-    console.log('hiciste click')
+    // console.log('hiciste click')
     try {
       props.firebase.doSignOut();
       // sessionStorage.clear()
-      sessionStorage.setItem("pg_merceria", "guest")
+      localStorage.setItem("pg_merceria", "guest")
       dispatch(clearUser());
       props.history.push('/')
     } catch (error) {
