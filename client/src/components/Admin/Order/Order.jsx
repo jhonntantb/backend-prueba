@@ -33,7 +33,8 @@ function Order() {
             <div><button onClick={e=>handleStatus(e)} value={'checkout'}>Pagado</button></div>
             <div><button onClick={e=>handleStatus(e)} value={'cancelled'}>Cancelado</button></div>
             <div><button onClick={e=>handleStatus(e)} value={'delivered'}>Entregado</button></div>
-            <div><button onClick={e=>handleStatus(e)} value={'apropoved'}>Aprovado</button></div>
+            <div><button onClick={e=>handleStatus(e)} value={'approved'}>Aprovado</button></div>
+            <div><button onClick={e=>handleStatus(e)} value={'rejected'}>Rechazado</button></div>
             </div>
             <p>Las ordenes de todos los usuarios!</p>
             <div>
