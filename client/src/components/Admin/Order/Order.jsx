@@ -1,6 +1,6 @@
 import React,{ useState,useEffect } from 'react'
 import { useSelector, useDispatch} from "react-redux"
-import { Link, useHistory} from "react-router-dom"
+import { Link, NavLink, useHistory} from "react-router-dom"
 import { getAllOrder, getOrder } from '../../../redux/actions/order'
 import CardOrder from './CardOrder'
 
@@ -36,22 +36,37 @@ function Order() {
             <div><button onClick={e=>handleStatus(e)} value={'approved'}>Aprovado</button></div>
             <div><button onClick={e=>handleStatus(e)} value={'rejected'}>Rechazado</button></div>
             </div>
-            <p>Las ordenes de todos los usuarios!</p>
+            <p>Las ordenes de todos los usuarios</p>
             <div>
-                {orderView&&orderView.length>0?orderView.map(e=>
-                <Link to={`/admin/orders/${e.id}`} key={e.id} >
-                <CardOrder 
-                id={e.id} 
-                user={e.user.user_name}
-                email={e.user.email}
-                total_price={e.total_price}
-                status={e.status}
-                date={e.date} 
-                amount={e.products.length} 
-                />
-                </Link>
-                )
-                
+                {orderView&&orderView.length>0?
+                <table>
+                <thead>
+                    <tr>
+                        <th>Orden ID</th>
+                        <th>Usuario nombre</th>
+                        <th>Usuario Email</th>
+                        <th>Precio Total</th>
+                        <th>Estado</th>
+                        <th>Fecha de Pedido</th>
+                        <th># Productos</th>
+                        <th>detalle</th>
+                    </tr>
+                </thead>
+                {orderView.map(e=>
+                    <tbody>
+                        <tr>
+                            <td>{e.id}</td>
+                            <td>{e.user.user_name}</td>
+                            <td>{e.user.email}</td>
+                            <td>{e.total_price}</td>
+                            <td>{e.status}</td>
+                            <td>{e.date}</td>
+                            <td>{e.products.length}</td>
+                            <NavLink  to={`/admin/orders/${e.id}`} ><td>detalles</td></NavLink>
+                            
+                        </tr>
+                    </tbody>)}
+                </table>
                 :null}
             </div>
         </div>
