@@ -1,35 +1,73 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {getUser} from '../../../redux/actions/user/index';
+import {getUser} from '../../redux/actions/user/index';
+import {getOrdersFromUser, updateOrder} from '../../redux/actions/order/index';
 
-function AfterCheckout (props) {
+export default function AfterCheckout (props) {
     const dispatch=useDispatch();
     var storeUser=useSelector(state=>state.userReducer.user);
-
+    var storeOrder=useSelector(state=>state.orderReducer.order);
     var localUserId=localStorage.getItem("pg_merceria");
 
     var [loading, setLoading]=useState(true)
+    
+
+    
+
+    //aqui capturo y filtro para conocer el status de pago de MP
+    var query=props.location.search;
+    console.log('esto es query ' , query)
+    var mp_response_detail = query.split("&")
+    console.log('mp_response : ' , mp_response_detail)
+    var order_status_fromMP = mp_response_detail[3].split('=')[1]
+    console.log('status : ' , order_status_fromMP)
+
+    console.log('storeOrder ' , storeOrder)
 
 
-    var query=props.location.query;
 
 
     useEffect(()=>{
         if(localUserId!=='guest') {
             dispatch(getUser(localUserId))
+            dispatch(getOrdersFromUser(localUserId, 'checkout'))
         }
-        
     },[])
 
     useEffect(()=>{
-        if(storeUser.user.id) {
+        if(storeOrder.length>0 ) {
             setLoading(false)
+
         }
-        
 
-    },[storeUser])
+    },[storeOrder])
 
+    return (<div>
+            {!loading?
+                <div>
+                    
+                    <h3>Gracias por elegirnos {storeUser.user_name}!!!</h3>
+                    <br/>
+                    <br/>
+                    <span>=D</span>
+                    <br/>
+                    <br/>
+                    <span>{`tu orden numero  [ ${storeOrder[0].id} ]  ha sido confirmada!`}</span>
+                    <br/>
+                    <br/>
+                    <span>{`será enviada a: - ${storeOrder[0].home_address}, - ${storeOrder[0].location}`}</span>
+                    <br/>
+                    <br/>
+                    <span>revisa tu casilla de correo {storeUser.email} para seguir el estado de tu envío.</span>
+                    <br/>
+                    <br/>
+                    <span>Esperamos que disfrutes nuestros productos - Araceli Merceria</span>
 
-    
+                
+            </div>
+
+            :<p>loading</p>}
+        </div>)
+
 
 }

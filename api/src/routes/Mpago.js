@@ -50,9 +50,9 @@ router.post('/:userId', async (req, res) => {
                 }
             },    
             back_urls: {
-                success: 'http://localhost:3000/productlist',
-                failure: 'http://localhost:3000/productlist',
-                pending: 'http://localhost:3000/productlist'
+                success: 'http://localhost:3000/after-checkout',
+                failure: 'http://localhost:3000/after-checkout',
+                pending: 'http://localhost:3000/after-checkout'
             },
             auto_return: 'approved',
             statement_descriptor: "PUEDO METER LA ORDEN AQUI?"

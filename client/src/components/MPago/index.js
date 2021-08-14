@@ -6,6 +6,8 @@ function CreateCheckoutButton (userId, products) {
     const dispatch=useDispatch()
     const mpData=useSelector(state=>state.checkoutReducer.MP_data)
 
+    //comentar la siguiente linea cuando este terminado
+    var userid2=localStorage.getItem('pg_merceria')
 
     useEffect(()=>{
         if(mpData!==null) {
@@ -35,8 +37,8 @@ function CreateCheckoutButton (userId, products) {
               quantity: 2
           }
       ]
-      //recordar cambiar products2 por products
-    dispatch(goToCheckout(userId, products2))
+      //recordar cambiar products2 por products y userid
+    dispatch(goToCheckout(userid2, products2))
   }
 
   return (<button id='button-checkout' onClick={()=>checkoutHandler(userId, products)}>Confirmar</button>)

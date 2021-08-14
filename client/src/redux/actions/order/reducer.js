@@ -22,6 +22,8 @@ const orderReducer = (state = initialState, action) => {
         case TYPES.CREATE_ORDER: return state
         case TYPES.UPDATE_ORDER: return state
         case TYPES.DELETE_ORDER: return state
+
+        case TYPES.GET_ORDER_FROM_USER: return {...state, order:action.payload}
         default:                  return state;
     }
 }
