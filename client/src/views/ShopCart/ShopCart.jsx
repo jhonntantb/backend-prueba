@@ -10,6 +10,7 @@ export default function ShopCart(){
     const cart = useSelector(state => state.cartReducer.cart)
     const [total, setTotal] = useState(cart.total)
     const user =  useSelector(state => state.userReducer.user)
+    const createdOrder = useSelector(state => state.orderReducer.order)
     const dbOrder = useSelector(state => state.orderReducer.orders)
     
     useEffect(() => {
@@ -29,12 +30,23 @@ export default function ShopCart(){
                 location: "",
                 province: "",
                 country: "",
-                delivery_date: "00-00-0000",
-                userId: user.id
+                delivery_date: "2021-08-20",
+                userId: user.id,
+                products: cart.map(e => {
+                    return {
+                        productId:e.id,
+                        quantity: e.cant,
+                        unitprice: e.price
+                    }
+                })
             }))
-            dispatch(getAllOrder(user.id, "cart"))
-        } 
+        }
+
     }, [dbOrder])
+
+    useEffect(() => {
+        dispatch(getAllOrder(user.id, "cart"))
+    }, [createdOrder])
 
     return cart.length > 0 ? 
         <div>
@@ -45,6 +57,6 @@ export default function ShopCart(){
             Total: {total}
             <Link to="/cart/order"><button>Comprar</button></Link>
         </div>
-        : 
+        :
         <div>No hay articulos en tu carrito</div>
 }

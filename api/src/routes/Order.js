@@ -11,13 +11,14 @@ router.get("/",async (req, res,next) =>{
     userId ? filtro.userId = userId : null;
     productId ? filtroProd.id = productId: null;
     status ? filtro.status = status : null;
-   
+
     try {
-          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-          res.send(allOrder)
+        //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })
+        res.send(allOrder)
      } catch (error) {
         next(error)
-    
+
 } 
 })
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
@@ -65,7 +66,7 @@ router.get("/:id",async (req, res, next) =>{
 
 router.post("/",async (req, res, next) => {
     try {
-        const order = await Order.create({
+        const order=await Order.create({
             status: req.body.status,
             total_price: 0,
             home_address: req.body.home_address,
@@ -76,20 +77,22 @@ router.post("/",async (req, res, next) => {
             userId: req.body.userId
         })
         var total = 0;
+        var orderPromises = []
         req.body.products.forEach(async (e) => {
-            await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
-            .then(total = total + (e.quantity * e.unitprice));
+             orderPromises.push(order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
+            total = total + (e.quantity * e.unitprice)
+            console.log('esto es TOTAL: ' + total)
         })
         // Actualizo el total_price en la orden
+        await Promise.all(orderPromises)
+        console.log('esto es TOTAL DESPUES DEL BUCLE ' , total)
         const orderupdate = await Order.findByPk(order.id)
-        orderupdate.dataValues.total_price = total;
+        orderupdate.total_price = total;
         const saved_order = await orderupdate.save()
         res.send(saved_order)
  
     //la relacion del calendario pendiente 
     } catch (error) {next(error)    }
-  
-   
 })
 
 
