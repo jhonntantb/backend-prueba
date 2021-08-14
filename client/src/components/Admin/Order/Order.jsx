@@ -38,7 +38,7 @@ function Order() {
             </div>
             <p>Las ordenes de todos los usuarios!</p>
             <div>
-                {orderView?orderView.map(e=>
+                {orderView&&orderView.length>0?orderView.map(e=>
                 <Link to={`/admin/orders/${e.id}`} key={e.id} >
                 <CardOrder 
                 id={e.id} 
