@@ -43,22 +43,28 @@ const Navbar = () => {
 
             {authUser === 'guest' || !authUser ?
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> :
-              <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>}
-            {authUser && authUser !== 'guest' ? <SignOutButton /> : null}
+           
+            <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>
+            
+             }
+            {authUser && authUser !== 'guest' ?    
+            <div className="d-inline-flex">
+            <NavLink activeClassName="text-white" to={ROUTES.CART}>
+              <button >
+                <i class="fa fa-shopping-cart"> </i>
+              </button>
+            </NavLink>
+            <SignOutButton />
+            </div> : null}
           </div>
           <div>
             {/* xd */}
             <div className="d-flex">
-
-
-
-
               {authUser && authUser.includes('admin') ? (
                 // <div>
                 // <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
 
                 // </div>
-
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -79,6 +85,7 @@ const Navbar = () => {
                       </div>
                     </li>
                     <li>
+                  
                       <div>
                         <NavLink activeClassName="text-dark" className="dropdown-item" to='/productcreation'>
                           Agregar Producto
@@ -94,9 +101,7 @@ const Navbar = () => {
 
             </div>
             <div className="d-flex">
-
               <SearchBar />
-
             </div>
 
           </div>

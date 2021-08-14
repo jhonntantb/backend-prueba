@@ -53,11 +53,11 @@ export default function SearchBar() {
       <input
         className="form-control"
         type="text"
-        placeholder="Crochets, Bastidores"
+        placeholder="Ingrese su busqueda..."
         onChange={(e) => handleInputSearch(e)}
       />
 
-      <button className="btn" onClick={(e) => handleClickSearch(e)}>
+      <button className="btn btn-block btn-black rm-border" onClick={(e) => handleClickSearch(e)}>
         Buscar
       </button>
     </div>

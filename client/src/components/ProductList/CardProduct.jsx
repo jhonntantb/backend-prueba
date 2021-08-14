@@ -18,6 +18,7 @@ function CardProduct(props) {
             alert("El producto ya esta agregado al carrito") 
         else {
           localStorage.setItem("cart", JSON.stringify([...cart, prod])) 
+          alert("Producto agregado")
         }  
     } 
     else  {
