@@ -37,7 +37,7 @@ export default function AfterCheckout (props) {
     useEffect(()=>{
         if(storeOrder.length>0 ) {
             setLoading(false)
-
+            
         }
 
     },[storeOrder])
