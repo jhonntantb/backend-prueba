@@ -14,7 +14,7 @@ router.get("/",async (req, res,next) =>{
    
     try {
         //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })  
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product} ]  })  
         res.send(allOrder)
      } catch (error) {
         next(error)
@@ -25,7 +25,7 @@ router.get("/",async (req, res,next) =>{
 router.get("/:id",async (req, res, next) =>{
     try {
      //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
-       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product},{model:User},{model:Product}]})
  
        //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
