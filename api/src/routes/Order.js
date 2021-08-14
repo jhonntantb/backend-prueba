@@ -65,7 +65,7 @@ router.get("/:id",async (req, res, next) =>{
 
 router.post("/",async (req, res, next) => {
     try {
-        const order=await Order.create({
+        const order = await Order.create({
             status: req.body.status,
             total_price: 0,
             home_address: req.body.home_address,

@@ -45,13 +45,9 @@ function App() {
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
-<<<<<<< HEAD
-      <Route exact path={ROUTES.STOCK} component={Stock}/>
-=======
       <Route path="/admin" component={NavAdmin} />
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
       
->>>>>>> develop
     </React.Fragment>
   )
 }

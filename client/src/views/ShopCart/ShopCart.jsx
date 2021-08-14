@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrder, createOrder } from "../../redux/actions/order/index"
@@ -6,8 +7,8 @@ import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts"
 
 export default function ShopCart(){
     const dispatch = useDispatch()
-    const [total, setTotal] = useState(0)
     const cart = useSelector(state => state.cartReducer.cart)
+    const [total, setTotal] = useState(cart.total)
     const user =  useSelector(state => state.userReducer.user)
     const dbOrder = useSelector(state => state.orderReducer.orders)
     
@@ -19,15 +20,21 @@ export default function ShopCart(){
     }, [user])
 
     useEffect(() => {
-        if(dbOrder.lenght <= 0) dispatch(createOrder({
-
-        }))
-
+        if(dbOrder.lenght <= 0)
+        {
+            dispatch(createOrder({
+                status: "cart",
+                total_price: 0,
+                home_address: "",
+                location: "",
+                province: "",
+                country: "",
+                delivery_date: "00-00-0000",
+                userId: user.id
+            }))
+            dispatch(getAllOrder(user.id, "cart"))
+        } 
     }, [dbOrder])
-    
-    const handleOrder = () => {
-        
-    }
 
     return cart.length > 0 ? 
         <div>
@@ -36,7 +43,7 @@ export default function ShopCart(){
             <ShowCartProducts products={cart} setTotal={setTotal}/>}
             
             Total: {total}
-            <button onClick>Comprar</button>
+            <Link to="/cart/order"><button>Comprar</button></Link>
         </div>
         : 
         <div>No hay articulos en tu carrito</div>
