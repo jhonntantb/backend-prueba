@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/",(_req,res,next)=>{
     //incluido el calendario
-    return Office.findAll({include:[{model:Schedule},{model:Stock}]}).then(response=>res.send(response)).catch(err=>next(err))
+    return Office.findAll({order: [['codesuc', 'ASC']],include:[{model:Schedule},{model:Stock}]}).then(response=>res.send(response)).catch(err=>next(err))
 });
 router.post("/",async(req,res,next)=>{
     const newOffice=req.body
@@ -15,6 +15,7 @@ router.post("/",async(req,res,next)=>{
             where:{address:newOffice.address},
             defaults:{
                 name:newOffice.name,
+                codesuc:newOffice.codesuc,
                 address:newOffice.address,
                 phone:newOffice.phone
             }   
