@@ -10,6 +10,11 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
+    codesuc: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

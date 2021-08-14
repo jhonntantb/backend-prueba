@@ -1,22 +1,32 @@
 const router = require('express').Router();
-const { Order, User, Product, Order_Product } = require('../db')
+const { Order, User, Product, Order_Product, Office, Stock } = require('../db')
 
 
-///////////////   GET GENERAL ////////////////////////////////
-router.get("/",async (_req, res,next) =>{
-  console.log('ruta orden');  
+///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
+// Si no viene ingun parametro en el query lista todas las ordenes
+router.get("/",async (req, res,next) =>{
+    const {userId, productId, status} = req.query ;
+    var filtro = {};
+    var filtroProd = {};
+    userId ? filtro.userId = userId : null;
+    productId ? filtroProd.id = productId: null;
+    status ? filtro.status = status : null;
+   
     try {
-        const allOrder=await Order.findAll({include:[{model: User,  attributes: ['user_name'] }, {model: Product, attributes:['catalog_id']} ]  }); 
-        res.send(allOrder)
-    } catch (error) {
+          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+          res.send(allOrder)
+     } catch (error) {
         next(error)
-    }
+    
+} 
 })
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-       const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id']} ] })
-    //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
+     //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
+ 
+       //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
     } catch (error) {
         next(error)
@@ -24,8 +34,7 @@ router.get("/:id",async (req, res, next) =>{
 })
 
 
-// la orden se relaciona con un usuario
-//la orden se relaciona con un o varios productos
+// relacion con oficina (pendiente)
 //la orden se relaciona con una oficina---->con un calendario
 //-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
@@ -58,7 +67,7 @@ router.post("/",async (req, res, next) => {
     try {
         const order=await Order.create({
             status: req.body.status,
-            total_price: req.body.total_price,
+            total_price: 0,
             home_address: req.body.home_address,
             location: req.body.location,
             province: req.body.province,
@@ -66,10 +75,16 @@ router.post("/",async (req, res, next) => {
             delivery_date: req.body.delivery_date,
             userId: req.body.userId
         })
+        var total = 0;
         req.body.products.forEach(async (e) => {
             await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
+            .then(total = total + (e.quantity * e.unitprice));
         })
-        res.send(order)
+        // Actualizo el total_price en la orden
+        const orderupdate = await Order.findByPk(order.id)
+        orderupdate.dataValues.total_price = total;
+        const saved_order = await orderupdate.save()
+        res.send(saved_order)
  
     //la relacion del calendario pendiente 
     } catch (error) {next(error)    }
@@ -77,25 +92,80 @@ router.post("/",async (req, res, next) => {
    
 })
 
-///////////////////////// UPDATE //////////////////////////
-//solo puede modificar el  admin el status o lo que quiera
-// Formato ejemplo del body esperado:
-// {"status": "En preparacion",
-// "total_price": 100000,
-// "province": "Tucuman"
-// }
+
+
+////////  UPDATE GENERAL: BUSCA LA ORDEN, LA MODIFICA  Y VUELVE A GRABARLA
 
 router.put("/:id",async (req,res,next) => {
-    let changes = req.body
-    console.log(changes);
+    console.log('update general')
     try {
-        const order=await Order.update(changes,  {where:{id:req.params.id}})
+      // Busco orden a actualizar  
+      const order=await Order.findByPk(req.params.id, {include:[{model: Order_Product}] })
+      
+      // Elimino registros actuales de productos dela orden
+      const resultado  = await Order_Product.destroy({where:{orderId:req.params.id}})
+      // Agrego registros actualizados de productos d ela orden y computo el costo total
+      var total = 0;
+      req.body.products.forEach(async (e) => {
+          await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
+          .then(total = total + (e.quantity * e.unitprice));
+      })
 
-        res.send(order);
-    } catch (error) {
-        next(error)
-    }
+      order.status= req.body.status
+      order.total_price= total
+      order.home_address= req.body.home_address,
+      order.location= req.body.location,
+      order.province= req.body.province,
+      order.country= req.body.country,
+      order.delivery_date= req.body.delivery_date,
+      order.userId= req.body.userId
+      const saved_order = await order.save() 
+
+      res.send(saved_order);
+    } 
+    catch (error) { next(error) }
 })
+
+//////////////////////////// UPDATE STATUS ///////////////////////
+router.put('/:id/:Status', async (req, res) => {
+    console.log('update status')
+    const { id, Status } = req.params;
+    const order = await Order.findByPk(id);
+    // Busco id de sucursal central codesuc = 0
+    const sucursal = await Office.findOne({where: {codesuc: 0}})
+    var sucid = sucursal.dataValues.id
+    // Valida que sea un cambio de status valido:
+    const statusAnt = order.status
+    const statusNew = Status
+    const statusDupla = statusAnt + "/" + statusNew;
+    const validDuplas = [
+    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled"
+    ];
+
+    if(!validDuplas.includes(statusDupla)) return res.status(300).send('Cambio de status invalido');
+
+    var oper = 'na'
+    statusAnt === "checkout" && statusNew === "approved" ? oper = 'resta' : null ;
+    statusAnt === "approved" && statusNew === "cancelled" ? oper = 'suma' : null ;
+
+    // Si corresponde actualizar el stock:
+    if (oper != 'na') {
+      // Tomo los productos de la orden
+      const products = await order.getOrder_Products({where:{orderId: id}})
+      // Actualizo el stock para cada producto d ela orden restando la cantidad
+      products.map( async e => {
+        const [stock, created] = await Stock.findOrCreate({ defaults:{quantity: 0},where:{productId: e.dataValues.productId, officeId: sucid}})
+        oper === 'resta' ?  stock.quantity = stock.quantity - e.dataValues.quantity : stock.quantity = stock.quantity + e.dataValues.quantity ;
+        await stock.save()
+      })
+    } 
+
+    order.status = Status;
+    order.save()
+    .then(response => res.send(response))
+    .catch(err => console.log("ERROR WHILE CHANGING SSTATUS: ", err));
+})
+
 
 //////////////////////////// DELETE ////////////////////////
 //solo puede deletear el admin

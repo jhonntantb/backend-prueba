@@ -5,25 +5,26 @@ import Carrousel from "../../components/Carrousel/Carrousel";
 import CardProduct from "../../components/ProductList/CardProduct";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "./../../components/Footer/Footer";
-//import './Landing.css'
+import './Landing.css'
+
 
 export const Landing = () => {
   const items = [
     {
       image_url:
-        "https://images.unsplash.com/photo-1549558549-415fe4c37b60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTA2ODZ8MHwxfHNlYXJjaHwxfHxwYWlzYWplc3xlbnwwfHx8fDE2MjgxMTEwMzA&ixlib=rb-1.2.1&q=80&w=1080",
+        "https://images.unsplash.com/photo-1597484662003-7cf93e97447c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80",
       altText: "Slide 1",
       caption: "Slide 1",
     },
     {
       image_url:
-        "https://images.unsplash.com/photo-1578922180039-6c13a4671d82?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTA2ODZ8MHwxfHNlYXJjaHwzfHxwYWlzYWplc3xlbnwwfHx8fDE2MjgxMTEwMzA&ixlib=rb-1.2.1&q=80&w=1080",
+        "https://images.unsplash.com/photo-1597484657134-cfa8511b913b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&w=1080",
       altText: "Slide 2",
       caption: "Slide 2",
     },
     {
       image_url:
-        "https://images.unsplash.com/photo-1569061831972-d1ed3635136e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTA2ODZ8MHwxfHNlYXJjaHw0fHxwYWlzYWplc3xlbnwwfHx8fDE2MjgxMTEwMzA&ixlib=rb-1.2.1&q=80&w=1080",
+        "https://images.unsplash.com/photo-1546957236-5fde4e0b25eb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=1080&w=1080",
       altText: "Slide 3",
       caption: "Slide 3",
     },
@@ -42,27 +43,30 @@ export const Landing = () => {
 
   return (
     <div>
-      <h1>LANDING</h1>
-      <div class="container ">
-        <div class="site-content">
+      <div class="container-fluid ">
           <Carrousel images={items} />
-        </div>
       </div>
-      <div class="container-fluid  ">
-        <div class="row-fluid ">
-          <div class="col-xl-10 col-lg-8 col-md-12 col-sm-12">
+      <div class="container-fluid position-relative">
+        <div class="row row-cols-lg-1 row-cols-md-2 row-cols-sm-2 row-cols-xs-2">
+          <div class="col col-xl-5 col-lg-6 col-md-12 col-sm-12 col-xs-12 position-relative">
             <Newsletter />
-            <div class="cards">
+            </div>
+            <div class="w-500 d-none d-sm-block d-md-block"></div>
+            <div id="cardgroup" class="card-deck col col-lg-6 position-absolute bottom-0 start-50 translate-middle-x">
+              <div className=" col-lg-12 col-md-12 col-sm-12">
+                <h2>Productos Destacados</h2>
               {list.length > 0 &&
                 list4.map((c) => (
+                  console.log("C MAP:",c),
                   <CardProduct
                     url={c.productimages[0].image_url}
                     price={c.price}
                     title={c.title}
+                   
                   />
                 ))}
+                </div>
             </div>
-          </div>
         </div>
       </div>
 
