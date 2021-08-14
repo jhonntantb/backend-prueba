@@ -22,7 +22,9 @@ import Form from './components/Admin/FormDetail/FormCategory';
 import Stock from './components/Admin/Stock/Stock.jsx';
 import UsersAdmin from './components/Admin/Users/index';
 import AboutUs from './components/AboutUs/AboutUs'
+import CreateCheckoutButton from './components/MPago/index';
 import NavAdmin from './components/Admin/NavAdmin/NavAdmin';
+import AfterCheckout from './components/MPago/afterCheckout';
 
 
 
@@ -43,6 +45,8 @@ function App() {
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
+      <Route path='/pagar' component={CreateCheckoutButton}/>
+      <Route path='/after-checkout' component={AfterCheckout}/>
       <Route path="/admin" component={NavAdmin} />
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
       

@@ -29,10 +29,10 @@ export const getAllOrder = () => {
     }
 }
 
-export const getOrdersFromUser = (user_id) => {
+export const getOrdersFromUser = (userId, status) => {
     return async (dispatch) => {
-        const res = await axios.get('http://localhost:3001/order/' + user_id)
-        return dispatch({ type: TYPES.GET_ALL_ORDER, payload: res.data })
+        const res = await axios.get(`http://localhost:3001/order?userId=${userId}&status=${status}`)
+        return dispatch({ type: TYPES.GET_ORDER_FROM_USER, payload: res.data })
     }
 }
 

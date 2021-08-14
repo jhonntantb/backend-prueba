@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order, User, Product, Order_Product } = require('../db')
+const { Order, User, Product, Order_Product, Office, Stock } = require('../db')
 
 
 
@@ -27,8 +27,9 @@ router.get("/",async (req, res,next) =>{
     status ? filtro.status = status : null;
    
     try {
-          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-          res.send(allOrder)
+        //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })  
+        res.send(allOrder)
      } catch (error) {
         next(error)
     
@@ -54,13 +55,13 @@ router.get("/",async (req, res,next) =>{
 // "userId": "046fb71e-14f1-445c-a66a-2e69556ebdad",
 // "products": [
 //     {
-//         "productId":"b346d07c-0a61-40f2-b220-d84b494f7b5c",
+//         "productId":"209c1a8c-ae99-4e88-bb49-c522e14fc3e7",
 //         "quantity": 20,
 //         "unitprice": 200.50
 //     },
 //     {
-//        "productId": "5949ff09-1a77-4b66-87d7-a3d60a27ec9b",
-//        "quantity": 100,
+//        "productId": "49dc4925-dbff-41fe-8d4a-6f2a3808904b ",
+//        "quantity": 10,
 //        "unitprice": 500
 //     }
 // ]
@@ -79,13 +80,17 @@ router.post("/",async (req, res, next) => {
             userId: req.body.userId
         })
         var total = 0;
+        var orderPromises = []
         req.body.products.forEach(async (e) => {
-            await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
-            .then(total = total + (e.quantity * e.unitprice));
+             orderPromises.push(order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
+            total = total + (e.quantity * e.unitprice)
+            console.log('esto es TOTAL: ' + total)
         })
         // Actualizo el total_price en la orden
+        await Promise.all(orderPromises)
+        console.log('esto es TOTAL DESPUES DEL BUCLE ' , total)
         const orderupdate = await Order.findByPk(order.id)
-        orderupdate.dataValues.total_price = total;
+        orderupdate.total_price = total;
         const saved_order = await orderupdate.save()
         res.send(saved_order)
  
@@ -95,58 +100,73 @@ router.post("/",async (req, res, next) => {
    
 })
 
-///////////////////////// UPDATE //////////////////////////
-//solo puede modificar el  admin el status o lo que quiera
-// Formato ejemplo del body esperado:
-// {"status": "En preparacion",
-// "province": "Tucuman"
-// }
+
+
+////////  UPDATE GENERAL: BUSCA LA ORDEN, LA MODIFICA  Y VUELVE A GRABARLA
 
 router.put("/:id",async (req,res,next) => {
     console.log('update general')
-    let changes = req.body
-    //console.log(changes);
     try {
-        const order=await Order.update(changes,  {where:{id:req.params.id}})
-   
-         res.send(order);
-    } catch (error) {
-        next(error)
-    }
+      // Busco orden a actualizar  
+      const order=await Order.findByPk(req.params.id, {include:[{model: Order_Product}] })
+      
+      // Elimino registros actuales de productos dela orden
+      const resultado  = await Order_Product.destroy({where:{orderId:req.params.id}})
+      // Agrego registros actualizados de productos d ela orden y computo el costo total
+      var total = 0;
+      req.body.products.forEach(async (e) => {
+          await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
+          .then(total = total + (e.quantity * e.unitprice));
+      })
+
+      order.status= req.body.status
+      order.total_price= total
+      order.home_address= req.body.home_address,
+      order.location= req.body.location,
+      order.province= req.body.province,
+      order.country= req.body.country,
+      order.delivery_date= req.body.delivery_date,
+      order.userId= req.body.userId
+      const saved_order = await order.save() 
+
+      res.send(saved_order);
+    } 
+    catch (error) { next(error) }
 })
-
-//////// NUEVO UPDATE GENERAL: BUSCA LA ORDEN, LA MODIFICA  Y VUELVE A GRABARLA
-// todavia no se ocmo hacer esto de actualizar la tabla intermedia order_product
-
-/* router.put("/:id",async (req,res,next) => {
-    console.log('update general')
-    try {
-    const order=await Order.findByPk(req.params.id, {include:[{model: Order_Product}] })
-    let changes = req.body
-    console.log(changes);
-
-    order.status= req.body.status
-   
-    order.home_address= req.body.home_address,
-    order.location= req.body.location,
-    order.province= req.body.province,
-    order.country= req.body.country,
-    order.delivery_date= req.body.delivery_date,
-    order.userId= req.body.userId
-    
-   
-    const saved_order = await order.save()   
-         res.send(saved_order);
-    } catch (error) {
-        next(error)
-    }
-}) */
 
 //////////////////////////// UPDATE STATUS ///////////////////////
 router.put('/:id/:Status', async (req, res) => {
     console.log('update status')
     const { id, Status } = req.params;
     const order = await Order.findByPk(id);
+    // Busco id de sucursal central codesuc = 0
+    const sucursal = await Office.findOne({where: {codesuc: 0}})
+    var sucid = sucursal.dataValues.id
+    // Valida que sea un cambio de status valido:
+    const statusAnt = order.status
+    const statusNew = Status
+    const statusDupla = statusAnt + "/" + statusNew;
+    const validDuplas = [
+    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled"
+    ];
+
+    if(!validDuplas.includes(statusDupla)) return res.status(300).send('Cambio de status invalido');
+
+    var oper = 'na'
+    statusAnt === "checkout" && statusNew === "approved" ? oper = 'resta' : null ;
+    statusAnt === "approved" && statusNew === "cancelled" ? oper = 'suma' : null ;
+
+    // Si corresponde actualizar el stock:
+    if (oper != 'na') {
+      // Tomo los productos de la orden
+      const products = await order.getOrder_Products({where:{orderId: id}})
+      // Actualizo el stock para cada producto d ela orden restando la cantidad
+      products.map( async e => {
+        const [stock, created] = await Stock.findOrCreate({ defaults:{quantity: 0},where:{productId: e.dataValues.productId, officeId: sucid}})
+        oper === 'resta' ?  stock.quantity = stock.quantity - e.dataValues.quantity : stock.quantity = stock.quantity + e.dataValues.quantity ;
+        await stock.save()
+      })
+    } 
 
     order.status = Status;
     order.save()
