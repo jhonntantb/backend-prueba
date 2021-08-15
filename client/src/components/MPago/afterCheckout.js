@@ -42,6 +42,7 @@ export default function AfterCheckout (props) {
             if(storeOrder[0].status==='checkout') {
                 dispatch(updateOrderStatus(storeOrder[0].id, "approved"))
                 console.log("cambió el estado de la orden")
+                localStorage.setItem("cart", "[]")
             }
             setLoading(false)
         }

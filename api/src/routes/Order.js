@@ -90,9 +90,11 @@ router.post("/",async (req, res, next) => {
         console.log('esto es TOTAL DESPUES DEL BUCLE ' , total)
         const orderupdate = await Order.findByPk(order.id)
         orderupdate.total_price = total;
-        const saved_order = await orderupdate.save()
-        res.send(saved_order)
- 
+        await orderupdate.save()
+        // const saved_order = await orderupdate.save()
+        // res.send(saved_order)
+        const orderFinal = await Order.findByPk(order.id, {include: [{model: Order_Product}]})
+        res.send(orderFinal)
     //la relacion del calendario pendiente 
     } catch (error) {next(error)    }
 })

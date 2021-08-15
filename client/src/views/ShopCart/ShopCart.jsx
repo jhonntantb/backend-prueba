@@ -14,10 +14,17 @@ export default function ShopCart(){
     const createdOrder = useSelector(state => state.orderReducer.order)
     const dbOrders = useSelector(state => state.orderReducer.orders)
     const history=useHistory();
+    var carritoEnSession = localStorage.getItem("cart");
 
     useEffect(()=> {
         dispatch(getCart())
     },[])
+
+    useEffect(()=>{
+        dispatch(getCart())
+    },[carritoEnSession])
+
+
     
     // useEffect(() => {
     //     if(user.id)
@@ -58,7 +65,7 @@ export default function ShopCart(){
     }, [createdOrder])
 
      function orderCreator(cart) {
-
+        console.log("cart en SHOPCART: " , cart)
 
         dispatch(createOrder({
             status: "cart",
@@ -72,6 +79,7 @@ export default function ShopCart(){
             delivery_date: "2021-08-20",
             userId: user.id,
             products: cart.map(e => {
+                console.log('producto ' , e )
                 return {
                     productId:e.id,
                     quantity: e.cant,
