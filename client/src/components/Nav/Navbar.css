@@ -1,0 +1,15 @@
+#iconcart {
+    color: #ffffff;
+}
+
+#iconcart:hover {
+    color: black;
+}
+
+.btn-black {
+  background-color: #ee8585;
+  color: #ffffff;
+  font-weight: bold;
+  height: 50px;
+  width: 100%;
+}

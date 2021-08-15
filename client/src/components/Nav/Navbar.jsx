@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom'
-import SearchBar from './SearchBar'
+import { NavLink } from 'react-router-dom';
+import SearchBar from './SearchBar';
+import "./Navbar.css";
 
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
@@ -29,28 +30,23 @@ const Navbar = () => {
           data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-
           <div className="navbar-nav me-auto mb-2 mb-lg-0">
             <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
               Articulos
             </NavLink>
-
             {authUser === 'guest' || !authUser ?
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> :
-           
             <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>
-            
              }
             {authUser && authUser !== 'guest' ?    
             <div className="d-inline-flex">
-            <NavLink activeClassName="text-white" to={ROUTES.CART}>
-              <button >
-                <i class="fa fa-shopping-cart"> </i>
+            <NavLink  to={ROUTES.CART}>
+              <button  className="btn btn-block btn-black rm-border" >
+                <i id="iconcart" class="fa fa-shopping-cart black"> </i>
               </button>
             </NavLink>
             <SignOutButton />
@@ -84,7 +80,7 @@ const Navbar = () => {
                       </div>
                     </li>
                     <li>
-                  
+
                       <div>
                         <NavLink activeClassName="text-dark" className="dropdown-item" to='/productcreation'>
                           Agregar Producto
@@ -93,16 +89,9 @@ const Navbar = () => {
                     </li>
                   </ul>
                 </li>
-
               ) : null}
-              
-
-
             </div>
-            <div className="d-flex">
               <SearchBar />
-            </div>
-
           </div>
         </div>
       </div>

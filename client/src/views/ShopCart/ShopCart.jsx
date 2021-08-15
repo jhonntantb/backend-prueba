@@ -11,9 +11,9 @@ export default function ShopCart(){
     const dbOrder = useSelector(state => state.orderReducer.order)
     
     useEffect(() => {
-        if(user.id)
+        /*if(user.id)
             dispatch(getOrder(user.id))
-        else
+        else*/
             setOrder(JSON.parse(localStorage.getItem("cart")))
     }, [user])
 

@@ -57,13 +57,10 @@ export const Landing = () => {
                 <h2>Productos Destacados</h2>
               {list.length > 0 &&
                 list4.map((c) => (
-                  console.log("C MAP:",c),
                   <CardProduct
                     url={c.productimages[0].image_url}
                     price={c.price}
-                    title={c.title}
-                   
-                  />
+                    title={c.title}/>
                 ))}
                 </div>
             </div>
