@@ -6,10 +6,27 @@
     color: black;
 }
 
-.btn-black {
+#buttoncart {
   background-color: #ee8585;
   color: #ffffff;
   font-weight: bold;
   height: 50px;
-  width: 100%;
+  width: 150%;
+}
+
+nav .nav-link:hover {
+    color: rgba(255,255,255,.75);
+}
+
+ .nav-link {
+    color: #b1b0b0;
+}
+
+.mx-3 {
+    margin-right: 3rem !important;
+    margin-left: 1rem !important;
+}
+
+.badge {
+    margin-left:1%;
 }

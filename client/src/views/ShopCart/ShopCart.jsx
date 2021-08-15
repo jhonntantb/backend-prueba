@@ -19,7 +19,7 @@ export default function ShopCart(){
 
     return order ? 
         <div>
-            {dbOrder ? <ShowCartProducts products={[ ...order, ...dbOrder]} setTotal={setTotal}/>
+            {dbOrder ? <ShowCartProducts products={[ ...order]} setTotal={setTotal}/>
             : <ShowCartProducts products={order} setTotal={setTotal}/>}
             
             Total: {total}
