@@ -1,3 +1,6 @@
+//Cart
+export const GET_CART = "get_cart"
+
 //Login
 export const LOG_IN_USER = "log_in_user"
 
@@ -32,6 +35,7 @@ export const CREATE_ORDER = "create_order"
 export const UPDATE_ORDER = "update_order" 
 export const DELETE_ORDER= "get_order"
 export const GET_ORDER_FROM_USER = "get_order_from_user"
+export const UPDATE_ORDER_STATUS = "update_order_status"
 
 //Stock
 export const GET_ALL_STOCK = "get_all_stock"
