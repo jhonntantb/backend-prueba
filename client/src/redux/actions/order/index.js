@@ -15,6 +15,13 @@ export const updateOrder = (params) => {
     }
 }
 
+export const updateOrderStatus = (orderId, Status) => {
+    return async (dispatch) => {
+        const res = await axios.put(`http://localhost:3001/order/${orderId}/${Status}`)
+        return dispatch({ type: TYPES.UPDATE_ORDER_STATUS, payload: res.data })
+    }
+}
+
 export const getOrder = (id) => {
     return async (dispatch) => {
         const res = await axios.get('http://localhost:3001/order/' + id)
@@ -22,9 +29,21 @@ export const getOrder = (id) => {
     }
 }
 
-export const getAllOrder = () => {
+export const getAllOrder = (userId = null, status = null, productId = null) => {
+    
+    if(!userId && !status && !productId)
+        var dir = 'http://localhost:3001/order'
+    else
+    {
+        var dir = 'http://localhost:3001/order?'
+        userId && (dir += ("userId=" + userId + "&"))
+        status && (dir += ("status=" + status + "&"))
+        productId && (dir += ("status=" + productId + "&"))
+    }
+        
+
     return async (dispatch) => {
-        const res = await axios.get('http://localhost:3001/order')
+        const res = await axios.get(dir)
         return dispatch({ type: TYPES.GET_ALL_ORDER, payload: res.data })
     }
 }
