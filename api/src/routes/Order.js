@@ -13,8 +13,9 @@ router.get("/",async (req, res,next) =>{
     status ? filtro.status = status : null;
    
     try {
-          const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-          res.send(allOrder)
+        //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product} ]  })  
+        res.send(allOrder)
      } catch (error) {
         next(error)
     
@@ -24,7 +25,7 @@ router.get("/",async (req, res,next) =>{
 router.get("/:id",async (req, res, next) =>{
     try {
      //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
-       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product},{model:User},{model:Product}]})
  
        //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
@@ -51,13 +52,13 @@ router.get("/:id",async (req, res, next) =>{
 // "userId": "046fb71e-14f1-445c-a66a-2e69556ebdad",
 // "products": [
 //     {
-//         "productId":"b346d07c-0a61-40f2-b220-d84b494f7b5c",
+//         "productId":"209c1a8c-ae99-4e88-bb49-c522e14fc3e7",
 //         "quantity": 20,
 //         "unitprice": 200.50
 //     },
 //     {
-//        "productId": "5949ff09-1a77-4b66-87d7-a3d60a27ec9b",
-//        "quantity": 100,
+//        "productId": "49dc4925-dbff-41fe-8d4a-6f2a3808904b ",
+//        "quantity": 10,
 //        "unitprice": 500
 //     }
 // ]
@@ -76,13 +77,17 @@ router.post("/",async (req, res, next) => {
             userId: req.body.userId
         })
         var total = 0;
+        var orderPromises = []
         req.body.products.forEach(async (e) => {
-            await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
-            .then(total = total + (e.quantity * e.unitprice));
+             orderPromises.push(order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
+            total = total + (e.quantity * e.unitprice)
+            console.log('esto es TOTAL: ' + total)
         })
         // Actualizo el total_price en la orden
+        await Promise.all(orderPromises)
+        console.log('esto es TOTAL DESPUES DEL BUCLE ' , total)
         const orderupdate = await Order.findByPk(order.id)
-        orderupdate.dataValues.total_price = total;
+        orderupdate.total_price = total;
         const saved_order = await orderupdate.save()
         res.send(saved_order)
  

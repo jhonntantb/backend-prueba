@@ -10,7 +10,8 @@ const Bundle=require("./Boundle")
 const User=require("./User");
 const Schedule = require("./Schudule");
 const Stock =require("./Stock");
-const Order =require("./Order")
+const Order =require("./Order");
+const Mpago = require("./Mpago");
 
 const router = Router();
 
@@ -24,5 +25,6 @@ router.use("/user",User)
 router.use("/schedule",Schedule)
 router.use("/stock",Stock)
 router.use("/order",Order)
+router.use("/checkout", Mpago)
 
 module.exports = router;

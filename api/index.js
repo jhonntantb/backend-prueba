@@ -198,7 +198,7 @@ conn.sync({ force: update }).then(() => {
 
        
        
-   }
+  }
   });
 });
 
