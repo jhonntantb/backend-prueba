@@ -38,7 +38,9 @@ export default function CartProduct({content, addPrice}){
                 Cant:
                 <input id="cartProductCantValue" type="number" min="1" max="10000" onChange={e => setCant(e.target.value)} value={cant}/>
             </div>
-            <Button onClick={handleRemove} close/>
+            <Button onClick={handleRemove} close/> 
         </ListGroupItem>
     )
 }
+
+//cambiar el boton de x por "quitar del carrito"

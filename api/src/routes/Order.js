@@ -14,11 +14,7 @@ router.get("/",async (req, res,next) =>{
 
     try {
         //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-<<<<<<< HEAD
-        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })
-=======
         const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })  
->>>>>>> develop
         res.send(allOrder)
      } catch (error) {
         next(error)
@@ -72,13 +68,15 @@ router.post("/",async (req, res, next) => {
     try {
         const order=await Order.create({
             status: req.body.status,
-            total_price: 0,
+            total_price: req.body.total_price,
             home_address: req.body.home_address,
             location: req.body.location,
             province: req.body.province,
             country: req.body.country,
             delivery_date: req.body.delivery_date,
-            userId: req.body.userId
+            userId: req.body.userId,
+            postal_code: req.body.postal_code,
+            phone_numer: req.body.phone_numer
         })
         var total = 0;
         var orderPromises = []
@@ -113,10 +111,12 @@ router.put("/:id",async (req,res,next) => {
       const resultado  = await Order_Product.destroy({where:{orderId:req.params.id}})
       // Agrego registros actualizados de productos d ela orden y computo el costo total
       var total = 0;
+      var promisesAux = []
       req.body.products.forEach(async (e) => {
-          await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
-          .then(total = total + (e.quantity * e.unitprice));
+          promisesAux.push( order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
+          total = total + (e.quantity * e.unitprice);
       })
+      await Promise.all(promisesAux)
 
       order.status= req.body.status
       order.total_price= total
@@ -126,6 +126,7 @@ router.put("/:id",async (req,res,next) => {
       order.country= req.body.country,
       order.delivery_date= req.body.delivery_date,
       order.userId= req.body.userId
+      order.postal_code=req.body.postal_code
       const saved_order = await order.save() 
 
       res.send(saved_order);

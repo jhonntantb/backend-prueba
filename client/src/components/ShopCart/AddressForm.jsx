@@ -39,11 +39,11 @@ export default function AddresForm({setAddress}){
         if(cod == ""){alert("Codigo postal requerido"); return}
         if(telephone == ""){alert("Agregue un telefono"); return}
         const address = {
-            prov: selectProv,
-            loc: selectLoc,
-            street: direccion,
-            cod: cod,
-            telephone: telephone
+            province: selectProv,
+            location: selectLoc,
+            home_address: direccion,
+            postal_code: cod,
+            phone_number: telephone
         }
         setAddress(address)
     }

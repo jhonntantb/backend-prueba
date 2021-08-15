@@ -44,6 +44,8 @@ const Navbar = () => {
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> :
               <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>}
             {authUser && authUser !== 'guest' ? <SignOutButton /> : null}
+            <br/>
+             <NavLink activeClassName="text-white" className="nav-link" to={'/cart'}>Carrito</NavLink>
           </div>
           <div>
             {/* xd */}

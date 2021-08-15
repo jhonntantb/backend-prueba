@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllOrder, updateOrder } from "../../redux/actions/order/index"
 import AddressFrom from "../../components/ShopCart/AddressForm"
 import CartReceipt from "../../components/ShopCart/CartReceipt"
+import CreateCheckoutButton from '../../components/MPago/index';
 
 export default function CartForm(){
     const dispatch = useDispatch()
@@ -10,9 +11,9 @@ export default function CartForm(){
     const order = useSelector(state => state.orderReducer.orders)
     const user = useSelector(state => state.userReducer.user)
     
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [user])
+    // }, [user])
 
     useEffect(() => {
         updateOrder()
@@ -29,9 +30,9 @@ export default function CartForm(){
             :
             <div>
                 <CartReceipt/>
-                <button>Pagar</button>
+                <CreateCheckoutButton/>
             </div>
-            }  
+            }   
         </div>
     )
 } 

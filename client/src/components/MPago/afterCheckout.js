@@ -43,7 +43,7 @@ export default function AfterCheckout (props) {
                 dispatch(updateOrderStatus(storeOrder[0].id, "approved"))
                 console.log("cambió el estado de la orden")
             }
-            
+            setLoading(false)
         }
 
     },[storeOrder])
