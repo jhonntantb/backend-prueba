@@ -15,7 +15,7 @@ function Stock() {
     const [stock,setStock]=useState([])//en que viene para la tabla
     const [product,setProduct]=useState([])//lo que vamos enviar para modificar
     const [checked,setChecked]=useState([])
-    const [prueba,setPrueba]=useState("")
+    const [idOffice,setIdOffice]=useState("")
     
     useEffect(() => {
         dispatch(getAllOffice())
@@ -24,10 +24,17 @@ function Stock() {
 
     const offices= useSelector(state =>state.officeReducer.offices)
     const productsAll= useSelector(state =>state.productReducer.products)
-    const handleClick=(e,id)=>{
-        setPrueba(id)
+
+    useEffect(() => {
+        setStock([])
+        setProduct([])
+        setChecked([])
+        setIdOffice([])
+    }, [productsAll])
+    const handleClickOffice=(e,id)=>{
         e.preventDefault()
-        setStock(productsAll.filter(e=>e.stocks[0].officeId===id))
+        setIdOffice(id)
+        setCurrentPage(1)
     }
 
     const selectProduct=(e,id)=>{
@@ -60,18 +67,67 @@ function Stock() {
         setChecked([])
         setProduct([])
         dispatch(getAllProduct())
-        dispatch(getAllOffice())
-        setStock([])
-        
+        setIdOffice("")
+        push("/admin")    
+    }
+    useEffect(() => {
+        setStock(productsAll.filter(e=>e.stocks[0].officeId===idOffice))
+    }, [idOffice])
+
+    
+    //-------------------------Paginado de Tablas------------------//
+    const [currentPage,setCurrentPage]=useState(1);
+    const [rows,setRows]=useState(10);//modificamos esto si queremos mostrar mas filas
+    const [pageNumberLimit,setPageNumberLimit]=useState(5);
+    const [maxPageNumberLimit,setMaxPageNumberLimit]=useState(5);
+    const [minPageNumberLmit,setMinPageNumberLmit]=useState(0);
+    const handleClick=(event)=>{
+        setCurrentPage(Number(event.target.id))
+    }
+    const handleNextbtn=()=>{
+        setCurrentPage(currentPage+1)
+        if(currentPage+1>maxPageNumberLimit){
+            setMaxPageNumberLimit(maxPageNumberLimit+pageNumberLimit);
+            setMinPageNumberLmit(minPageNumberLmit+pageNumberLimit)
+        }
+    }
+    const handlePrevbtn=()=>{
+        setCurrentPage(currentPage-1)
+        if((currentPage-1)%pageNumberLimit===0){
+            setMaxPageNumberLimit(maxPageNumberLimit-pageNumberLimit);
+            setMinPageNumberLmit(minPageNumberLmit-pageNumberLimit)
+        }
     }
 
+    const pages=[];
+    for(let i=1; i<=Math.ceil(stock.length/rows);i++){
+        pages.push(i)
+    }
+    const indexOfLastItem=currentPage*rows;
+    const indexOfFirstItem=indexOfLastItem-rows;
+    const currentItems= stock.slice(indexOfFirstItem,indexOfLastItem);
+    const renderPageNumbers=pages.map(number=>{
+        if(number<maxPageNumberLimit+1&&number
+            >minPageNumberLmit){
+        return (
+            <li key={number} id={number} 
+            onClick={handleClick} 
+            className={currentPage===number?"activo":null}>
+            {number}
+            </li>
+        )}else{
+            return null;
+        }
+    })
+    //-------------------------------------------------------------------------
     return (
         <div>
            <br/>
+           <h3>Agregar Stock a Oficinas por Productos</h3>
             <div>
                 {offices&&offices.length>0?offices.map(office=>
                 <div key={office.id}>
-                    <button onClick={e=>handleClick(e,office.id)} >{office.name}</button>
+                    <button onClick={e=>handleClickOffice(e,office.id)} >{office.name}</button>
                 </div>)
                 :<p>No hay oficinas</p>}
             </div>
@@ -87,7 +143,7 @@ function Stock() {
                     </tr>
                 </thead>
                     <tbody>
-                {stock&&stock.length>0?stock.map( e =>
+                {currentItems&&currentItems.length>0?currentItems.map( e =>
                     <tr>
                         <td>
                         <input className='checkbox' 
@@ -102,12 +158,26 @@ function Stock() {
                         <td>{e.stocks[0].quantity}</td>  
                         <td id={e.id}>
                             <input id={e.stocks[0].id} type="number"
+                            value={!checked.includes(e.id)?"":null}
                         onChange={event=>handleStockchange(event)} 
                         disabled={!checked.includes(e.id)}/>
                         </td> 
                     </tr>
                     ):null
                 }
+                <ul className="pageNumbers">
+                    <li>
+                        <button onClick={handlePrevbtn} 
+                        disabled={currentPage===pages[0]?true:false}
+                        >prev</button>
+                    </li>
+                {renderPageNumbers}
+                <li>
+                        <button onClick={handleNextbtn}
+                        disabled={currentPage===pages[pages.length-1]?true:false}
+                        >next</button>
+                    </li>
+                </ul>
                 {stock&&stock.length>0?<button onClick={e=>handleChanges(e)}>Enviar cambios</button>:null}
                     </tbody>
 

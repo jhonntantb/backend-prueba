@@ -2,7 +2,9 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { getAllOrder } from "../../../redux/actions/order/index"
-import * as ROUTES from '../../../routes';
+import { getAllOffice } from '../../../redux/actions/office'
+import { getAllProduct } from '../../../redux/actions/product'
+import * as ROUTES from "../../../routes"
 
 function NavAdmin() {
     const dispatch = useDispatch()
@@ -19,7 +21,7 @@ function NavAdmin() {
          <NavLink activeClassName="text-dark" className="dropdown-item"  to="/">Home</NavLink>
         </li>
         <li class="nav-item">
-         <NavLink activeClassName="text-dark" className="dropdown-item"  to="/admin/stock">stocks</NavLink>
+          <a class="nav-link" href="#"><NavLink to="/admin/stock" onClick={e=>{dispatch(getAllOffice);dispatch(getAllProduct)}} >stocks</NavLink></a>
         </li>
         <li class="nav-item">
           <NavLink activeClassName="text-dark" className="dropdown-item"  to="/admin/orders" onClick={e=>dispatch(getAllOrder())} >Ordenes</NavLink>
