@@ -1,21 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom'
-import SearchBar from './SearchBar'
+import { NavLink } from 'react-router-dom';
+import SearchBar from './SearchBar';
+import "./Navbar.css";
 
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
 import { getAllProduct } from '../../redux/actions/product';
+import {ShowCartCant} from './ShowCartCant';
+
 
 const Navbar = () => {
   const dispatch = useDispatch();
   var authUser = localStorage.getItem("pg_merceria")
+  
+  var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
 
+  useEffect(() => {
+    
+  }, [cart])
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to={authUser==='guest'?"/":'/home'}>
+        <NavLink className="navbar-brand" to={authUser === 'guest' ? "/" : '/home'}>
           <img width="150rem" style=
             {{
               borderRadius: '50px',
@@ -29,78 +37,58 @@ const Navbar = () => {
           data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-          <div className="navbar-nav me-auto mb-2 mb-lg-0">
-            <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
-              Articulos
-            </NavLink>
-
-            {authUser === 'guest' || !authUser ?
-              <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink> :
-              <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>Mi Cuenta</NavLink>}
-            {authUser && authUser !== 'guest' ? <SignOutButton /> : null}
-            <br/>
-             <NavLink activeClassName="text-white" className="nav-link" to={'/cart'}>Carrito</NavLink>
-          </div>
-          <div>
-            {/* xd */}
-            <div className="d-flex">
-
-
-
-
+        <form className="d-flex ml-10 ">
+          <SearchBar />
+        </form>
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <ul className="navbar-nav ml-10  ">
+          <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+                Contactanos
+              </NavLink>
+            </li>
+          <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+                Acerca de Nosotros
+              </NavLink>
+            </li>
+            <li className="nav-item active mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+                Productos
+              </NavLink>
+            </li>
+          <ul className="navbar-nav mx-3">
               {authUser && authUser.includes('admin') ? (
-                // <div>
-                // <NavLink activeClassName="text-white" className="nav-link" to={ROUTES.ACCOUNT}>My Account</NavLink>
-
-                // </div>
-
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Admin
-                  </a>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                      <div>
-                        <NavLink activeClassName="text-dark" className="dropdown-item" to={ROUTES.FORM}>
-                          Agregar Categoria
-                        </NavLink>
-                      </div>
-                    </li>
-                    <li>
-                      <div>
-                        <NavLink activeClassName="text-dark" className="dropdown-item" to='/productcreation'>
-                          Agregar Producto
-                        </NavLink>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-
+                <li className="nav-item">  <NavLink activeClassName="text-white" className="nav-link" to={"/admin"}>Admin</NavLink></li>
               ) : null}
-              
-
-
-            </div>
-            <div className="d-flex">
-
-              <SearchBar />
-
-            </div>
-
-          </div>
+            </ul>
+          {authUser === 'guest' || !authUser ?
+            <li className="nav-item mx-3"><NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink></li> :
+            <li className="nav-item dropdown mx-3">
+              <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">Mi Cuenta</NavLink>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href={ROUTES.ACCOUNT}>Seguridad</a></li>
+                <li><a class="dropdown-item" href="#">Mis Datos</a></li>
+                <li><a class="dropdown-item" href="#">Compras</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" ><SignOutButton /></a></li>
+              </ul>
+            </li>}
+          {authUser && authUser !== 'guest' ?
+            <ul className="navbar-nav mx-3">
+              <li className="nav-item">
+                <NavLink to={ROUTES.CART}>
+                  <button id="buttoncart" className="btn btn-block btn-black rm-border" >
+                    <i id="iconcart" class="fa fa-shopping-cart black"> </i>
+                    <span class="badge bg-secondary ">{ShowCartCant()} </span>
+                  </button>
+                </NavLink>
+              </li>
+            </ul> : null}
+            </ul>
         </div>
       </div>
     </nav>

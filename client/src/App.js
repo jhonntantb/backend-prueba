@@ -17,7 +17,6 @@ import PasswordForgetPage from './components/Authentication/PasswordForget';
 import PasswordChangePage from './components/Authentication/PasswordChange';
 import ProductList from './components/ProductList/ProductList';
 import Navbar from './components/Nav/Navbar';
-import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import Stock from './components/Admin/Stock/Stock.jsx';
 import UsersAdmin from './components/Admin/Users/index';

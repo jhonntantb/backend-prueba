@@ -2,6 +2,20 @@ const router = require('express').Router();
 const { Order, User, Product, Order_Product, Office, Stock } = require('../db')
 
 
+
+//////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
+router.get("/:id",async (req, res, next) =>{
+    try {
+     //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
+ 
+       //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
+        res.send(order)
+    } catch (error) {
+        next(error)
+    }
+})
+
 ///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
 // Si no viene ingun parametro en el query lista todas las ordenes
 router.get("/",async (req, res,next) =>{
