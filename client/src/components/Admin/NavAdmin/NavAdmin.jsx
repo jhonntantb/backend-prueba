@@ -1,7 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { getAllOrder } from "../../../redux/actions/order/index"
+import { getAllOffice } from '../../../redux/actions/office'
+import { getAllProduct } from '../../../redux/actions/product'
 
 function NavAdmin() {
+    const dispatch = useDispatch()
     return (
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -15,10 +20,10 @@ function NavAdmin() {
           <a class="nav-link active" aria-current="page" href="#"><NavLink to="/">Home</NavLink></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><NavLink to="/admin/stock">stocks</NavLink></a>
+          <a class="nav-link" href="#"><NavLink to="/admin/stock" onClick={e=>{dispatch(getAllOffice);dispatch(getAllProduct)}} >stocks</NavLink></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Ordenes</a>
+          <a class="nav-link" href="#"><NavLink to="/admin/orders" onClick={e=>dispatch(getAllOrder())} >Ordenes</NavLink></a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Review</a>

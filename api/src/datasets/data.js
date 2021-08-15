@@ -13,7 +13,7 @@ const data = [
   detail: "RECIEN INGRESADOS Y AL MEJOR PRECIO - NO LO DUDES!!",
   price: 1700,
   image: ["https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp","https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp"],
-  category: ["Agujas","Cintas"],
+  category: [],
   stock: 1000
 }
 ,

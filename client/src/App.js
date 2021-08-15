@@ -25,6 +25,8 @@ import AboutUs from './components/AboutUs/AboutUs'
 import CartForm from './views/CartForm/CartForm';
 import CreateCheckoutButton from './components/MPago/index';
 import NavAdmin from './components/Admin/NavAdmin/NavAdmin';
+import Order from './components/Admin/Order/Order';
+import OrderDetail from './components/Admin/Order/OrderDetail';
 import AfterCheckout from './components/MPago/afterCheckout';
 import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
 
@@ -52,7 +54,8 @@ function App() {
       <Route path='/after-checkout-reject' component={AfterCheckoutRejected}/>
       <Route path="/admin" component={NavAdmin} />
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
-      
+      <Route exact path="/admin/orders" component={Order}/>
+      <Route path="/admin/orders/:id"exact component={OrderDetail}/>  
     </React.Fragment>
   )
 }
