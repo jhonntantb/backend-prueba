@@ -8,11 +8,11 @@ const dataCategories = [
       }
       ,
       {
-        name: "Cintas"
+        name: "Bastidores"
       }
       ,
       {
-        name: "Costura y Bordado"
+        name: "Otras"
       }
       ,
     
