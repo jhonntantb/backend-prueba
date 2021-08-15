@@ -1,3 +1,6 @@
+//Cart
+export const GET_CART = "get_cart"
+
 //Login
 export const LOG_IN_USER = "log_in_user"
 

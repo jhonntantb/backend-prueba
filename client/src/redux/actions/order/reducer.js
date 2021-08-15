@@ -19,7 +19,10 @@ const orderReducer = (state = initialState, action) => {
             ...state,
             order:action.payload
         }
-        case TYPES.CREATE_ORDER: return state
+        case TYPES.CREATE_ORDER: return {
+            ...state,
+            order: action.payload
+        }
         case TYPES.UPDATE_ORDER: return state
         case TYPES.DELETE_ORDER: return state
 

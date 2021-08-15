@@ -22,6 +22,7 @@ import Form from './components/Admin/FormDetail/FormCategory';
 import Stock from './components/Admin/Stock/Stock.jsx';
 import UsersAdmin from './components/Admin/Users/index';
 import AboutUs from './components/AboutUs/AboutUs'
+import CartForm from './views/CartForm/CartForm';
 import CreateCheckoutButton from './components/MPago/index';
 import NavAdmin from './components/Admin/NavAdmin/NavAdmin';
 import AfterCheckout from './components/MPago/afterCheckout';
@@ -41,7 +42,8 @@ function App() {
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
-      <Route path={ROUTES.CART} component={ShopCart} />
+      <Route exact path={ROUTES.CART} component={ShopCart} />
+      <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>

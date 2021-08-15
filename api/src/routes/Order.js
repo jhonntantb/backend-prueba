@@ -11,14 +11,18 @@ router.get("/",async (req, res,next) =>{
     userId ? filtro.userId = userId : null;
     productId ? filtroProd.id = productId: null;
     status ? filtro.status = status : null;
-   
+
     try {
         //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+<<<<<<< HEAD
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })
+=======
         const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })  
+>>>>>>> develop
         res.send(allOrder)
      } catch (error) {
         next(error)
-    
+
 } 
 })
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
@@ -93,8 +97,6 @@ router.post("/",async (req, res, next) => {
  
     //la relacion del calendario pendiente 
     } catch (error) {next(error)    }
-  
-   
 })
 
 
