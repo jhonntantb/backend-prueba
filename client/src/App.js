@@ -25,7 +25,7 @@ import AboutUs from './components/AboutUs/AboutUs'
 import CreateCheckoutButton from './components/MPago/index';
 import NavAdmin from './components/Admin/NavAdmin/NavAdmin';
 import AfterCheckout from './components/MPago/afterCheckout';
-
+import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
 
 
 function App() {
@@ -47,6 +47,7 @@ function App() {
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
       <Route path='/pagar' component={CreateCheckoutButton}/>
       <Route path='/after-checkout' component={AfterCheckout}/>
+      <Route path='/after-checkout-reject' component={AfterCheckoutRejected}/>
       <Route path="/admin" component={NavAdmin} />
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
       
