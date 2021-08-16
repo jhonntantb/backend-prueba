@@ -78,8 +78,8 @@ const Navbar = () => {
               <li className="nav-item">
                 <NavLink to={ROUTES.CART}>
                   <button id="buttoncart" className="btn btn-block btn-black rm-border" >
-                    <i id="iconcart" class="fa fa-shopping-cart black"> </i>
-                    <span class="badge bg-secondary ">{ShowCartCant()} </span>
+                    <i style={{fontSize: "25px"}} id="iconcart" class="fa fa-shopping-cart black"> </i>
+                    <span style={{fontSize: "18px"}} class="badge bg ">{ShowCartCant()} </span>
                   </button>
                 </NavLink>
               </li>

@@ -66,7 +66,7 @@ export default function Product({ match }) {
 
               <h5 className="text-dark">{product.detail}</h5>
               <h4 className="price text-dark mt-3">Articulo:{product.catalog_id}</h4>
-              <h4 className="price text-dark mt-3">Stock:{product.stocks[0].quantity ?product.stocks[0].quantity :product.stock} unidades</h4>
+              <h4 className="price text-dark mt-3">Stock:{product.stocks.length > 0 ? product.stocks[0].quantity :(product.stock ? product.stock : "0")} unidades</h4>
               {/* <div className="productDetails">
               </div> */}
               <div className="action">
