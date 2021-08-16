@@ -16,7 +16,7 @@ function ProductList() {
   var categoryFiltrada = useSelector(
     (state) => state.categoryReducer.categoryFiltrada
   );
-
+  const [stock,setStock]=useState([])//en que viene para la tabla
   const [Minimo, setMinimo] = useState("");
   const [Maximo, setMaximo] = useState("");
   const [orden, setOrden] = useState("A-Z");
@@ -84,12 +84,56 @@ function ProductList() {
       return 0;
     });
   }
+      //-------------------------Paginado de Tablas------------------//
+      const [currentPage,setCurrentPage]=useState(1);
+      const [rows,setRows]=useState(10);//modificamos esto si queremos mostrar mas filas
+      const [pageNumberLimit,setPageNumberLimit]=useState(5);
+      const [maxPageNumberLimit,setMaxPageNumberLimit]=useState(5);
+      const [minPageNumberLmit,setMinPageNumberLmit]=useState(0);
+      const handleClick=(event)=>{
+          setCurrentPage(Number(event.target.id))
+      }
+      const handleNextbtn=()=>{
+          setCurrentPage(currentPage+1)
+          if(currentPage+1>maxPageNumberLimit){
+              setMaxPageNumberLimit(maxPageNumberLimit+pageNumberLimit);
+              setMinPageNumberLmit(minPageNumberLmit+pageNumberLimit)
+          }
+      }
+      const handlePrevbtn=()=>{
+          setCurrentPage(currentPage-1)
+          if((currentPage-1)%pageNumberLimit===0){
+              setMaxPageNumberLimit(maxPageNumberLimit-pageNumberLimit);
+              setMinPageNumberLmit(minPageNumberLmit-pageNumberLimit)
+          }
+      }
+  
+      const pages=[];
+      for(let i=1; i<=Math.ceil(stock.length/rows);i++){
+          pages.push(i)
+      }
+      const indexOfLastItem=currentPage*rows;
+      const indexOfFirstItem=indexOfLastItem-rows;
+      const currentItems= stock.slice(indexOfFirstItem,indexOfLastItem);
+      const renderPageNumbers=pages.map(number=>{
+          if(number<maxPageNumberLimit+1&&number
+              >minPageNumberLmit){
+          return (
+              <li key={number} id={number} 
+              onClick={handleClick} 
+              className={currentPage===number?"activo":null}>
+              {number}
+              </li>
+          )}else{
+              return null;
+          }
+      })
 
   
  
   return (
-
-    <div className="d-table-responsive">
+     <div className="container-fluid">
+    <div className="d-table">
       <div id="tableleft"className="d-table-cell" >
         <div className="justify-content-start mx-5" >
         <label htmlFor="categories">Filtrar por categorias</label>
@@ -126,14 +170,27 @@ function ProductList() {
       <div className="d-table-cell" >
           {
             lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e =>
-              <span key={e.id} className="card-deck   mx-1" >
+              <span key={e.id} className="card-deck   mx-2" >
                 <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} />
               </span>
             ) : <h3 className="text-center mt-4">No hay productos</h3>}
       </div>
-      <footer>
-        
-      </footer>
+      </div>
+      <ul className="pageNumbers">
+                    <li>
+                        <button onClick={handlePrevbtn} 
+                        disabled={currentPage===pages[0]?true:false}
+                        >prev</button>
+                    </li>
+                {renderPageNumbers}
+                <li>
+                        <button onClick={handleNextbtn}
+                        disabled={currentPage===pages[pages.length-1]?true:false}
+                        >next</button>
+                    </li>
+                </ul>
+  
+    
     </div>
   )
 

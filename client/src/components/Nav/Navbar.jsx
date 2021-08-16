@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to={authUser === 'guest' ? "/" : '/home'}>
+        <NavLink className="navbar-brand" to={authUser === 'guest' ? "/" : '/'}>
           <img width="150rem" style=
             {{
               borderRadius: '50px',
