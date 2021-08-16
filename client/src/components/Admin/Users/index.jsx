@@ -53,7 +53,6 @@ export default function UsersAdmin(props) {
   useEffect(() => {}, [storeUsers]);
 
   return storeUsers.length > 0 ? (
-    
     <div className="container">
       <h1 className="text-center mt-4">Control de usuarios</h1>
       {/* {console.log('storeUsers[0].id: ' + storeUsers[0].id)}
@@ -81,38 +80,39 @@ export default function UsersAdmin(props) {
           setChanged={setChanged}
         />
       </div>
-
-      <table className="table mt-4 table-hover">
-        <thead class="thead-warning">
-          <tr>
-            <th>Email</th>
-            <th>Usuario</th>
-            <th>Estado</th>
-            <th>Administrador</th>
-            <th>check</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {storeUsers.map((u) => (
-            <tr key={u.id}>
-              <td>{u.email}</td>
-              <td>{u.last_name + " " + u.first_name}</td>
-              <td>{u.active ? "Habilitado" : "Inhabilitado"}</td>
-              <td>{u.isAdmin ? "Si" : "No"}</td>
-              <td>
-                <input
-                  className="checkbox"
-                  type="checkbox"
-                  value={u.id}
-                  onChange={(e) => selectUser(e)}
-                  defaultChecked={false}
-                ></input>
-              </td>
+      <div className=" mt-4">
+        <table className="table-responsive">
+          <thead class="thead-warning">
+            <tr>
+              <th>Email</th>
+              <th>Usuario</th>
+              <th>Estado</th>
+              <th>Administrador</th>
+              <th>check</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {storeUsers.map((u) => (
+              <tr key={u.id}>
+                <td>{u.email}</td>
+                <td>{u.last_name + " " + u.first_name}</td>
+                <td>{u.active ? "Habilitado" : "Inhabilitado"}</td>
+                <td>{u.isAdmin ? "Si" : "No"}</td>
+                <td>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    value={u.id}
+                    onChange={(e) => selectUser(e)}
+                    defaultChecked={false}
+                  ></input>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   ) : (
     <p className="text-dark text-center mt-4">Loading...</p>

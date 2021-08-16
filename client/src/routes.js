@@ -9,12 +9,17 @@ export const CREATE_PRODUCT = '/product/form';
 export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const PRODUCTS = '/productlist';
+
+
 export const ADMIN = '/admin';
 export const STOCK = '/admin/stock'
 export const FORM = 'admin/form';
-export const ORDER ='/orders';
+export const ORDER ='/admin/orders';
+export const PRODUCT_CREATION = '/admin/productcreation'
+
 export const MANAGE_USERS ='/admin/manage-users';
 export const PASSWORD_CHANGE = '/pw-change';
 export const PRODDETAIL = '/productdetail';
 export const ABOUT ='/about';
+
 
