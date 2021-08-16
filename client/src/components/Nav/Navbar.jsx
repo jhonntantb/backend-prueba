@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to={authUser === 'guest' ? "/" : '/home'}>
+        <NavLink className="navbar-brand" to={authUser === 'guest' ? "/" : '/'}>
           <img width="150rem" style=
             {{
               borderRadius: '50px',
@@ -78,8 +78,8 @@ const Navbar = () => {
               <li className="nav-item">
                 <NavLink to={ROUTES.CART}>
                   <button id="buttoncart" className="btn btn-block btn-black rm-border" >
-                    <i id="iconcart" class="fa fa-shopping-cart black"> </i>
-                    <span class="badge bg-secondary ">{ShowCartCant()} </span>
+                    <i style={{fontSize: "25px"}} id="iconcart" class="fa fa-shopping-cart black"> </i>
+                    <span style={{fontSize: "18px"}} class="badge bg ">{ShowCartCant()} </span>
                   </button>
                 </NavLink>
               </li>

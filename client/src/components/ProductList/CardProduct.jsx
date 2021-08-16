@@ -40,21 +40,17 @@ function CardProduct(props) {
   return (
         <div class="card" >
           <div class="text-center p-4">
-            {" "}
             <img id="main-image" src={props.url} width="300" />
           </div>
           <div class="about text-center">
-            <NavLink to={`/product/${props.id}`}>
-              <a href="#">
+            <NavLink style={{ textDecoration: 'none', color: "black"}} to={`/product/${props.id}`}>
                 <h6>{props.title}</h6>
-              </a>
             </NavLink>
             <span>${props.price}</span>
            {props.stock > 0 && <h6>Stock Disponible </h6> }
           </div>
-          <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center h-100">
-            {" "}
-            <button class="btn btn-dark text-uppercase " disabled={add} onClick={handleAddCart}>Add to cart</button>
+          <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
+            <button class="btn btn-dark text-uppercase " disabled={add} onClick={handleAddCart}>Añadir al carro</button>
             <div class="add">
               <span class="product_fav">
                 <i class="fa fa-heart-o"></i>
