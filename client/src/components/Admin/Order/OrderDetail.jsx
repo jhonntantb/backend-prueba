@@ -1,9 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import { useSelector, useDispatch} from "react-redux"
+import { useHistory } from 'react-router-dom'
 import { getOrder } from '../../../redux/actions/order'
+import { updateOrderStatus} from "../../../redux/actions/order/index"
 
 function OrderDetail(props) {
     const id=props.match.params.id
+    const {push}=useHistory()
     const dispatch=useDispatch()
     const [modifi,setmodifi]=useState(false)
     const [status,setStatus]=useState("")
@@ -22,12 +25,13 @@ function OrderDetail(props) {
     useEffect(()=>{
     },[detailOrder])
     const handleStatusClick=(e)=>{
-        dispatch(id,)
+        dispatch(updateOrderStatus(id,status))
+        push("/admin")
     }
     const handleStatusChange=(e)=>{
         setStatus(e.target.value)
     }
-    console.log("detalle",detailOrder)
+    
     return (
         <div>
             <br />

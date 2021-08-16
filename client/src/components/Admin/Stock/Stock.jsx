@@ -71,7 +71,7 @@ function Stock() {
         push("/admin")    
     }
     useEffect(() => {
-        setStock(productsAll.filter(e=>e.stocks[0].officeId===idOffice))
+        idOffice.length>0&&setStock(productsAll.filter(e=>e.stocks[0].officeId===idOffice))
     }, [idOffice])
 
     

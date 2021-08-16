@@ -16,3 +16,8 @@ export const PASSWORD_CHANGE = '/pw-change';
 export const PRODDETAIL = '/productdetail';
 export const MANAGE_USERS ='/manage-users';
 export const ABOUT ='/about';
+export const USER_SHOP="/user/compras";
+export const ADMIN_ORDER_DETAIL="/admin/orders/:id";
+export const ADMIN_ORDERS= "/admin/orders";
+export const NAV_ADMIN="admin"
+
