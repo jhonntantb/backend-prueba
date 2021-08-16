@@ -5,6 +5,7 @@ import { getReview } from "../../redux/actions/review/index";
 import ShowReviews from "../../components/ShowReviews/ShowReviews";
 import CreateReview from "../../components/Review/CreateReview";
 import Carrousel from "../../components/Carrousel/Carrousel";
+import { NavLink } from 'react-router-dom';
 import { Card, CardBody, CardSubtitle, CardTitle, CardText } from "reactstrap";
 import "./Product.css";
 
@@ -41,9 +42,7 @@ export default function Product({ match }) {
       else localStorage.setItem("cart", JSON.stringify([...cart, prod]));
     } else localStorage.setItem("cart", JSON.stringify([prod]));
   };
-  console.log("acaaaa")
-  console.log(match)
-  console.log(product)
+  
   return !Loading ? (
     <div className="container">
       <div className="cartas">
@@ -73,6 +72,11 @@ export default function Product({ match }) {
                 >
                   Añadir al carrito
                 </button>
+
+                <NavLink to={`/productupdate/${product.id}`}>
+                 {'Modificar producto'}
+                </NavLink>
+ 
               </div>
             </div>
             <CreateReview match={match.params.id} />
