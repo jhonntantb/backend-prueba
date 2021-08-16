@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCart } from "../../redux/actions/cart/index"
 
 export  const ShowCartCant = () => {
-
-    let cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
-    console.log("CART: ",cart.length)
-    return (
-        cart.length
-    )
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.cartReducer.cart)
+    const user =  useSelector(state => state.userReducer.user)
+    
+    useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
+    
+    return cart.length
 }
 
 

@@ -7,9 +7,9 @@ export default function AddresForm({setAddress}){
     const user = useSelector(state => state.userReducer.user)
     const [provincias, setProvincias] = useState([])
     const [localidades, setLocalidades] = useState([])
-    const [selectProv, setSelectProv] = useState("")
-    const [selectLoc, setSelectLoc] = useState("")
-    const [direccion, setDireccion] = useState("")
+    const [selectProv, setSelectProv] = useState(user.province)
+    const [selectLoc, setSelectLoc] = useState(user.location)
+    const [direccion, setDireccion] = useState(user.address)
     const [cod, setCod] = useState("")
     const [telephone, setTelephone] = useState("")
 
@@ -54,14 +54,14 @@ export default function AddresForm({setAddress}){
             <Form>
                 <FormGroup>
                     <Label>Provincia</Label>
-                    <Input onChange={handleChange} type="select" name="prov" id="orderCity">
+                    <Input onChange={handleChange} type="select" value={selectProv} name="prov" id="orderCity">
                         <option value="">--Seleccionar--</option>
                         {provincias.map(e => <option>{e.nombre}</option>)}
                     </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label>Ciudad</Label>
-                    <Input onChange={handleChange} type="select" name="city" id="orderCity">
+                    <Input onChange={handleChange} type="select" value={selectLoc} name="city" id="orderCity">
                         <option value="">--Seleccionar--</option>
                         {localidades.map(e => <option>{e.nombre}</option>)}
                     </Input>
