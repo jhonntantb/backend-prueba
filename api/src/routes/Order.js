@@ -90,18 +90,17 @@ router.post("/",async (req, res, next) => {
             delivery_date: req.body.delivery_date,
             userId: req.body.userId,
             postal_code: req.body.postal_code,
-            phone_numer: req.body.phone_numer
+            phone_number: req.body.phone_number
         })
         var total = 0;
         var orderPromises = []
         req.body.products.forEach(async (e) => {
              orderPromises.push(order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
             total = total + (e.quantity * e.unitprice)
-            console.log('esto es TOTAL: ' + total)
+            
         })
         // Actualizo el total_price en la orden
         await Promise.all(orderPromises)
-        console.log('esto es TOTAL DESPUES DEL BUCLE ' , total)
         const orderupdate = await Order.findByPk(order.id)
         orderupdate.total_price = total;
         await orderupdate.save()
@@ -142,6 +141,7 @@ router.put("/:id",async (req,res,next) => {
       order.country= req.body.country,
       order.delivery_date= req.body.delivery_date,
       order.userId= req.body.userId
+      order.phone_number= req.body.phone_number
       order.postal_code=req.body.postal_code
       const saved_order = await order.save() 
 

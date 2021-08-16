@@ -63,7 +63,7 @@ conn.sync({ force: update }).then(() => {
        // Productos
        if(CONNECT === 'CLOUD' && update === true){
      
-         for(let i=1010; i<1051; i++) {
+         for(let i=1001; i<1051; i++) {
           Product.create(
             {
               catalog_id: i,    

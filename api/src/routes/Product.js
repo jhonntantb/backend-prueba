@@ -38,7 +38,7 @@ router.get("/:idProducto", async function (req, res, next) {
 
 ///////////    POST PRODUCT    ///////////
 router.post("/", async function (req, res, next) {
-
+  
   try {
     console.log(req.body)
     const [product, created] = await Product.findOrCreate({
@@ -61,7 +61,7 @@ router.post("/", async function (req, res, next) {
       })
       await Stock.create({
         productId: product.id,
-        officeId: req.body.office_id,
+        officeId: req.body.office,
         quantity: req.body.quantity,
       })
 
@@ -87,11 +87,11 @@ router.post("/", async function (req, res, next) {
 })
 
 ///////////    UPDATE PRODUCT    ///////////
-router.put("/:id", async function (req, res, next) {
-
+router.put("/", async function (req, res, next) {
+console.log('update product body: ', req.body)
   try {
    
-    const product = await Product.update({where: {id: req.params.id}},
+    const product = await Product.update({where: {id: req.body.id}},
       {
        title: req.body.title,
        catalog_id: req.body.catalog_id,
@@ -110,7 +110,7 @@ router.put("/:id", async function (req, res, next) {
       })
       await Stock.create({
         productId: product.id,
-        officeId: req.body.office_id,
+        officeId: req.body.office,
         quantity: req.body.quantity,
       })
 
