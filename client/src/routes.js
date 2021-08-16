@@ -16,3 +16,4 @@ export const PASSWORD_CHANGE = '/pw-change';
 export const PRODDETAIL = '/productdetail';
 export const MANAGE_USERS ='/manage-users';
 export const ABOUT ='/about';
+export const PRODUCT_CREATION = '/admin/product-creation'

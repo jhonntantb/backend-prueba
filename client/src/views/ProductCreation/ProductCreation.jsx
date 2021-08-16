@@ -4,8 +4,12 @@ import { getAllCategory } from '../../redux/actions/category';
 import {createProduct, getAllProduct} from '../../redux/actions/product';
 import {getAllOffice} from '../../redux/actions/office';
 import ReactFirebaseFileUpload from '../../components/FileUploader/FileUploader';
+import NotFound from '../NotFound/NotFound';
 
 const ProductCreation = (props) => {
+
+    var admin = localStorage.getItem("admin")
+
     const dispatch=useDispatch();
 
     const storeCategories = useSelector(state=>state.categoryReducer.categories)
@@ -148,7 +152,7 @@ const ProductCreation = (props) => {
 
     
     // onSubmit={(e)=>handleSubmit(e)}
-    return (
+    return admin!=="null"?(
         <div className="container">
             <h1 className="text-center mt-3">Creación de productos</h1>
             <form >
@@ -256,7 +260,7 @@ const ProductCreation = (props) => {
             </form>
 
         </div>
-    )
+    ):null;
 }
 
 export default ProductCreation;

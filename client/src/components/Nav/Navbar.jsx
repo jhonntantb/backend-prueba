@@ -8,13 +8,22 @@ import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
 import { getAllProduct } from '../../redux/actions/product';
 import {ShowCartCant} from './ShowCartCant';
+import CheckUser from '../Authentication/CheckUser/CheckUser';
 
 
 const Navbar = () => {
+
+  // CheckUser();
+
   const dispatch = useDispatch();
   var authUser = localStorage.getItem("pg_merceria")
   var admin = localStorage.getItem("admin")
   
+ 
+
+  
+
+
   var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
 
   useEffect(() => {

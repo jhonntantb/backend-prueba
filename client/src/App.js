@@ -46,7 +46,7 @@ function App() {
       <Route exact path={ROUTES.CART} component={ShopCart} />
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path={ROUTES.FORM} component={Form} />
-      <Route path='/productcreation' component={ProductCreation} />
+      <Route path={ROUTES.PRODUCT_CREATION} component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
       <Route path='/pagar' component={CreateCheckoutButton}/>
       <Route path='/after-checkout' component={AfterCheckout}/>

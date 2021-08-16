@@ -1,10 +1,10 @@
+import { useHistory } from "react-router"
 
-
-export default function NotFound (props) {
-    
+export default function NotFound () {
+     var history=useHistory();
 
     function handleClick() {
-        props.history.push('/')
+        history.push('/')
     }
     return (
         <div className='not-found'>
@@ -15,7 +15,7 @@ export default function NotFound (props) {
             {/* <Link to='/Home' style={{ textDecoration: 'none' }}> */}
             <button className='btn-1'
             onClick={handleClick}
-            >Try Again!</button>
+            >Volver al Inicio!</button>
             {/* </Link> */}
             
         </div>

@@ -3,12 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { withFirebase } from '../../FireBase';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../routes'
+import NotFound from '../../../views/NotFound/NotFound';
 
-const  PasswordChangePage = () => (
-   <div>
+const  PasswordChangePage = () => {
+
+  const authUser= localStorage.getItem("pg_merceria");
+
+   return authUser!=='guest'?(<div>
     <PasswordChangeForm/>
-  </div>
-)
+  </div>):<NotFound/>;
+}
+
 
 const INITIAL_STATE = {
   passwordOne: '',

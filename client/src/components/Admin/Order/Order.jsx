@@ -5,7 +5,9 @@ import { getAllOrder, getOrder } from '../../../redux/actions/order'
 import CardOrder from './CardOrder'
 import "./PaginationTable.css"
 
+
 function Order() {
+    var admin = localStorage.getItem("admin")
     const dispatch= useDispatch()
     const [orderView,setOrderView]=useState([])
     const [status,setStatus]=useState("")
@@ -71,7 +73,7 @@ function Order() {
     })
 
 
-    return (
+    return admin!=="null"?(
         <div>
             <br />
             <br />
@@ -133,7 +135,7 @@ function Order() {
                 
             </div>
         </div>
-    )
+    ): null;
 }
 
 export default Order

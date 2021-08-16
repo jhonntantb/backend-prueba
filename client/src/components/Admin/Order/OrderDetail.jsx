@@ -3,6 +3,7 @@ import { useSelector, useDispatch} from "react-redux"
 import { getOrder } from '../../../redux/actions/order'
 
 function OrderDetail(props) {
+    var admin = localStorage.getItem("admin")
     const id=props.match.params.id
     const dispatch=useDispatch()
     const [modifi,setmodifi]=useState(false)
@@ -28,7 +29,7 @@ function OrderDetail(props) {
         setStatus(e.target.value)
     }
     console.log("detalle",detailOrder)
-    return (
+    return admin!=='null'?(
         <div>
             <br />
             <h3>Detalle del Producto</h3>
@@ -143,7 +144,7 @@ function OrderDetail(props) {
             </div>
             
         </div>
-    )
+    ):null;
 }
 
 export default OrderDetail

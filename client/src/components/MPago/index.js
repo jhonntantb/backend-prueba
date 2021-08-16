@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import {updateOrderStatus} from '../../redux/actions/order/index';
 
 function CreateCheckoutButton ({userId, products}) {
+  const authUser= localStorage.getItem("pg_merceria");
+
     const dispatch=useDispatch()
     const mpData=useSelector(state=>state.checkoutReducer.MP_data)
 

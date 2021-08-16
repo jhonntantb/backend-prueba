@@ -2,7 +2,7 @@ import {getUser} from '../../../redux/actions/user/index';
 import { useSelector, useDispatch } from 'react-redux';
 import {useState, useEffect} from 'react';
 
-function CheckUser () {
+export default function CheckUser () {
 
     const dispatch=useDispatch();
 
@@ -13,11 +13,15 @@ function CheckUser () {
     var localUser = localStorage.getItem("pg_merceria")
     var localAdmin = localStorage.getItem("admin")
 
+    let aux =[]
+    aux.push(localUser)
+    aux.push(localAdmin)
+
     if(localUser!=="guest") {
             if(storeUser.id===undefined) {
                 dispatch(getUser(localUser))
             }
-    }
+    }else{setUserLoaded(true)}
 
     useEffect(()=>{
         if(storeUser.id!==undefined) {
@@ -26,6 +30,6 @@ function CheckUser () {
 
     },[storeUser])
 
-    if(userLoaded) return [localUser, localAdmin];
+    if(userLoaded) return aux;
     
 }

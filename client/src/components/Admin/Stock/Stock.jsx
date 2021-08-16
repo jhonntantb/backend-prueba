@@ -9,6 +9,7 @@ import "./Table.css"
 
 
 function Stock() {
+    var admin = localStorage.getItem("admin")
     const dispatch=useDispatch()
     const {push} =useHistory()
 
@@ -120,7 +121,7 @@ function Stock() {
         }
     })
     //-------------------------------------------------------------------------
-    return (
+    return admin!=='null'?(
         <div>
            <br/>
            <h3>Agregar Stock a Oficinas por Productos</h3>
@@ -185,7 +186,7 @@ function Stock() {
                 </table>
             </div>
         </div>
-    )
+    ):null;
 }
 
 export default Stock
