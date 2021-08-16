@@ -11,7 +11,7 @@ const dataReviews = require ('./src/datasets/dataReviews')
 console.log('Connect: ', CONNECT)
 
 // Para la base local poner en true para recarga productos ejemplo o false para no recargar
-var update = true ;
+var update = false ;
 
 // Si se va a usar la base de la cloud, el update debe estar en false para que no se pierda la info que vamos ingresando.
 // Por favor no cambiar !
@@ -63,7 +63,7 @@ conn.sync({ force: update }).then(() => {
        // Productos
        if(CONNECT === 'CLOUD' && update === true){
      
-         for(let i=1010; i<1051; i++) {
+         for(let i=1001; i<1051; i++) {
           Product.create(
             {
               catalog_id: i,    

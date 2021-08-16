@@ -14,11 +14,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   var authUser = localStorage.getItem("pg_merceria")
   
-  var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
-
-  useEffect(() => {
-    
-  }, [cart])
+  //var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
