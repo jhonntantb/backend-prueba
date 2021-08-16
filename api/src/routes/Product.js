@@ -87,11 +87,11 @@ router.post("/", async function (req, res, next) {
 })
 
 ///////////    UPDATE PRODUCT    ///////////
-router.put("/:id", async function (req, res, next) {
-
+router.put("/", async function (req, res, next) {
+console.log('update product body: ', req.body)
   try {
    
-    const product = await Product.update({where: {id: req.params.id}},
+    const product = await Product.update({where: {id: req.body.id}},
       {
        title: req.body.title,
        catalog_id: req.body.catalog_id,
