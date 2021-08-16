@@ -41,6 +41,7 @@ function Form() {
         //agujas eliminar-->botton 
         //botton agregar categorias
         <div>
+             
             <div>
             {category.length >0 ?category.map((c) => (
                 <span className="" >

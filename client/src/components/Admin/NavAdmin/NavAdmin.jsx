@@ -17,23 +17,24 @@ function NavAdmin() {
                 </button>
             <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav  pt-4,5 mb-lg-0">
+          <h3 className="mx-3">/</h3>
         <li class="nav-item">
-         <NavLink activeClassName="text-dark" className="dropdown-item"  to="/">Home</NavLink>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><NavLink to="/admin/stock" onClick={e=>{dispatch(getAllOffice);dispatch(getAllProduct)}} >stocks</NavLink></a>
+          <NavLink activeClassName="text-dark" className="dropdown-item" to="/admin/stock" onClick={e=>{dispatch(getAllOffice);dispatch(getAllProduct)}} >stocks</NavLink>
         </li>
         <li class="nav-item">
           <NavLink activeClassName="text-dark" className="dropdown-item"  to="/admin/orders" onClick={e=>dispatch(getAllOrder())} >Ordenes</NavLink>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Review</a>
+         <NavLink activeClassName="text-dark" className="dropdown-item" to="#" >Review</NavLink>
         </li>
         <li className="nav-item">
         <NavLink activeClassName="text-dark" className="dropdown-item" to={ROUTES.FORM}> Agregar Categoria </NavLink> 
         </li>
         <li className="nav-item">
         <NavLink activeClassName="text-dark" className="dropdown-item" to="/productcreation"> Agregar Producto </NavLink> 
+        </li>
+        <li className="nav-item">
+        <NavLink activeClassName="text-dark" className="dropdown-item" to={ROUTES.MANAGE_USERS}> Administrar Usuarios </NavLink> 
         </li>
       </ul>
     </div>

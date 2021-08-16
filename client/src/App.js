@@ -45,15 +45,15 @@ function App() {
       <Route path={ROUTES.PRODUCT} component={Product} />
       <Route exact path={ROUTES.CART} component={ShopCart} />
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
-      <Route path={ROUTES.FORM} component={Form} />
-      <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
       <Route path='/pagar' component={CreateCheckoutButton}/>
       <Route path='/after-checkout' component={AfterCheckout}/>
       <Route path='/after-checkout-reject' component={AfterCheckoutRejected}/>
-      <Route path="/admin" component={NavAdmin} />
+      <Route  path={ROUTES.ADMIN} component={NavAdmin} />
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
-      <Route exact path="/admin/orders" component={Order}/>
+      <Route exact path={ROUTES.ORDER} component={Order}/>
+      <Route exact path={ROUTES.FORM} component={Form} />
+      <Route exact path='/admin/productcreation' component={ProductCreation} />
       <Route path="/admin/orders/:id"exact component={OrderDetail}/>  
     </React.Fragment>
   )

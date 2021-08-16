@@ -20,7 +20,7 @@ export default function UsersAdmin(props) {
 
   const storeUsers = useSelector((state) => state.userReducer.users);
 
-  console.log("usersSelected tiene " + usersSelected.length + " elementos");
+  //console.log("usersSelected tiene " + usersSelected.length + " elementos");
 
   function selectUser(e) {
     var userId = e.target.value;
@@ -53,6 +53,7 @@ export default function UsersAdmin(props) {
   useEffect(() => {}, [storeUsers]);
 
   return storeUsers.length > 0 ? (
+    
     <div className="container">
       <h1 className="text-center mt-4">Control de usuarios</h1>
       {/* {console.log('storeUsers[0].id: ' + storeUsers[0].id)}

@@ -4,6 +4,7 @@ import { getAllCategory } from '../../redux/actions/category';
 import {createProduct, getAllProduct} from '../../redux/actions/product';
 import {getAllOffice} from '../../redux/actions/office';
 import ReactFirebaseFileUpload from '../../components/FileUploader/FileUploader';
+import * as ROUTES from "../../routes"
 
 const ProductCreation = (props) => {
     const dispatch=useDispatch();
@@ -150,6 +151,12 @@ const ProductCreation = (props) => {
     // onSubmit={(e)=>handleSubmit(e)}
     return (
         <div className="container">
+               <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href={ROUTES.ADMIN}>Admin</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Stock</li>
+                </ol>
+            </nav>
             <h1 className="text-center mt-3">Creación de productos</h1>
             <form >
                 <p>Order: 123</p>

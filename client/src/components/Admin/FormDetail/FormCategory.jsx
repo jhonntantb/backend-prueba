@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCategory, deleteCategory, postCategory } from "../../../redux/actions/category/index"
+import * as ROUTES from "../../../routes"
 
 
 //CREAR RUTA DELETE PARA CATEGORIES
@@ -45,6 +46,12 @@ function Form() {
         //agujas eliminar-->botton 
         //botton agregar categorias
         <div className="container">
+                <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href={ROUTES.ADMIN}>Admin</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+                </ol>
+            </nav>
             <h2 className="text-center mt-3">Agregar Categoría</h2>
             <div className="row">
                 <div className="col-6">

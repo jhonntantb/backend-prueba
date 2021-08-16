@@ -3,6 +3,7 @@ import { useSelector, useDispatch} from "react-redux"
 import { Link, NavLink, useHistory} from "react-router-dom"
 import { getAllOrder, getOrder } from '../../../redux/actions/order'
 import CardOrder from './CardOrder'
+import * as ROUTES from "../../../routes"
 import "./PaginationTable.css"
 
 function Order() {
@@ -74,6 +75,12 @@ function Order() {
     return (
         <div>
             <br />
+            <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href={ROUTES.ADMIN}>Admin</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Order</li>
+                </ol>
+            </nav>
             <br />
             <div>
             <div><button onClick={e=>handleStatus(e)} value={'shipped'} >Enviada</button></div>
