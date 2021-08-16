@@ -6,11 +6,14 @@ import ShowReviews from "../../components/ShowReviews/ShowReviews";
 import CreateReview from "../../components/Review/CreateReview";
 import Carrousel from "../../components/Carrousel/Carrousel";
 import { Card, CardBody, CardSubtitle, CardTitle, CardText } from "reactstrap";
+import { getCart } from "../../redux/actions/cart/index"
 import "./Product.css";
 
 export default function Product({ match }) {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productReducer.product);
+  const cart = useSelector(state => state.cartReducer.cart);
+  const user =  useSelector(state => state.userReducer.user)
   const reviews = useSelector((state) => state.reviews);
 
   useEffect(() => {
@@ -19,10 +22,10 @@ export default function Product({ match }) {
 
   useEffect(() => {
     dispatch(getProduct(match.params.id));
+    user.id ? dispatch(getCart(user.id)) : dispatch(getCart())
   }, []);
 
   const handleAddCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
     const prod = {
       id: product.id,
       title: product.title,
@@ -36,6 +39,8 @@ export default function Product({ match }) {
         alert("El producto ya esta agregado al carrito");
       else localStorage.setItem("cart", JSON.stringify([...cart, prod]));
     } else localStorage.setItem("cart", JSON.stringify([prod]));
+
+    user.id ? dispatch(getCart(user.id)) : dispatch(getCart())
   };
 
   return product ? (
