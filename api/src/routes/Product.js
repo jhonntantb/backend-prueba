@@ -38,7 +38,7 @@ router.get("/:idProducto", async function (req, res, next) {
 
 ///////////    POST PRODUCT    ///////////
 router.post("/", async function (req, res, next) {
-
+  
   try {
     console.log(req.body)
     const [product, created] = await Product.findOrCreate({
@@ -61,7 +61,7 @@ router.post("/", async function (req, res, next) {
       })
       await Stock.create({
         productId: product.id,
-        officeId: req.body.office_id,
+        officeId: req.body.office,
         quantity: req.body.quantity,
       })
 
@@ -87,30 +87,31 @@ router.post("/", async function (req, res, next) {
 })
 
 ///////////    UPDATE PRODUCT    ///////////
-router.put("/:id", async function (req, res, next) {
-
+router.put("/", async function (req, res, next) {
   try {
    
-    const product = await Product.update({where: {id: req.params.id}},
+    const product = await Product.update(
       {
        title: req.body.title,
        catalog_id: req.body.catalog_id,
        resume: req.body.resume,
        detail: req.body.detail,
        price: req.body.price 
-      }
+      },
+      {where: {id: req.body.id}
+    }
      )
 
-    if (!product) {
-      return res.status(400).json("No existe producto")
-    }
-
+   //  if (product !== [ 1 ]) {
+   //   return res.status(400).json("No existe producto")
+   // }
+    const productupdated = await Product.findByPk(req.body.id)
     req.body.category.map(async (c) => {
-        await product.setCategories(c);
+        await productupdated.setCategories(c);
       })
       await Stock.create({
-        productId: product.id,
-        officeId: req.body.office_id,
+        productId: productupdated.dataValues.id,
+        officeId: req.body.office,
         quantity: req.body.quantity,
       })
 
@@ -119,7 +120,7 @@ router.put("/:id", async function (req, res, next) {
         try {
           for (let i = 0; i < req.body.image.length; i++) {
             await Productimage.create({
-              productId: product.id,
+              productId: productupdated.dataValues.id,
               image_url: req.body.image[i]
             })
           }
