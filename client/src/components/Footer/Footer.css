@@ -10,9 +10,7 @@ body {
 .row {
     --bs-gutter-x:0; 
 }
-ul {
- padding:1%;
-}
+
 
 li {
  list-style:none

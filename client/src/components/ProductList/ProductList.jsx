@@ -34,11 +34,11 @@ function ProductList() {
       })
     );
   } else lista_filtrada = list;
-  console.log(list);
-  console.log("CATEGORY" + categoryFiltrada);
-  console.log("lISTA_FILTRADA" + lista_filtrada);
-  console.log(Minimo);
-  console.log(Maximo);
+  //console.log(list);
+  //console.log("CATEGORY" + categoryFiltrada);
+  //console.log("lISTA_FILTRADA" + lista_filtrada);
+  //console.log(Minimo);
+ // console.log(Maximo);
 
   if (Minimo != "" && Maximo != "") {
     lista_filtrada = lista_filtrada.filter((val) => {
@@ -117,7 +117,7 @@ function ProductList() {
         <br />
         <label htmlFor="categories">Ordenar </label>
         <br />
-        <select className="form-select" aria-label=".form-select-lg " id="categories" onChange={(e) => { setOrden(e.target.value) }}>
+        <select className="form-select"  id="categories" onChange={(e) => { setOrden(e.target.value) }}>
           <option value="A-Z">"A-Z"</option>
           <option value="Z-A">"Z-A"</option>
         </select>

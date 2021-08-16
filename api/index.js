@@ -1,5 +1,6 @@
 const server = require('./src/app');
 const { conn, Product, Category, Office, Productimage, User, Stock, Review } = require('./src/db');
+const {DB_USER, DB_PASSWORD, DB_HOST, ELEPHANT_CONNECT, CONNECT} = process.env;
 const data = require ('./src/datasets/data')
 const dataCategories = require ('./src/datasets/dataCategories')
 const dataOffices = require ('./src/datasets/dataOffices')
@@ -7,8 +8,14 @@ const dataUsers = require ('./src/datasets/dataUsers')
 const dataReviews = require ('./src/datasets/dataReviews')
 
 // Syncing all the models at once.
+console.log('Connect: ', CONNECT)
 
-const update = false ;
+// Para la base local poner en true para recarga productos ejemplo o false para no recargar
+const update = true ;
+
+// Si se va a usar la base de la cloud, el update debe estar en false para que no se pierda la info que vamos ingresando.
+// Por favor no cambiar !
+CONNECT === 'CLOUD' ? update = false : null ;
 conn.sync({ force: update }).then(() => {
 
   server.listen(3001, () => {
@@ -34,10 +41,29 @@ conn.sync({ force: update }).then(() => {
            }
            ));
       
-
+           console.log('Oficinas pre-cargadas')
 
 
        // Productos
+       if(CONNECT === 'CLOUD' && update === true){
+         for(let i=1001; i<1051; i++) {
+          Product.create(
+            {
+              catalog_id: i,    
+            }
+          )
+          .then(res => {
+            Productimage.create({
+              productId: res.id,
+              image_url: "https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp"
+            })
+
+          })
+         }
+       }
+       else
+       {
+
         data.forEach(async (e) => {product = await Product.create(
           {title: e.title,
           catalog_id: e.catalog_id,
@@ -47,22 +73,18 @@ conn.sync({ force: update }).then(() => {
               
           })
    
-
             e.image.forEach( async(c) =>
              await Productimage.create({
                 productId: product.id, 
                 image_url:c
                 }) 
              ) 
-
-          
           
            //console.log('**************product catalog_id: ', product.catalog_id, e.category);
            if(e.category.length>0){
              //console.log('adentro!');
              for(let i=0; i<e.category.length; i++)
              {
-                
                //console.log('dentro del for', i); 
                const categoryRec = await Category.findOne({where: {name: e.category[i]}})
                //console.log('Catalog_id: ',product.catalog_id);
@@ -72,10 +94,10 @@ conn.sync({ force: update }).then(() => {
             
              }
             }
-          
-
+  
         });
-
+        
+      }
        console.log('Productos pre-cargados')
 
 
@@ -176,7 +198,7 @@ conn.sync({ force: update }).then(() => {
 
        
        
-   }
+  }
   });
 });
 
