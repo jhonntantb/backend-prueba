@@ -7,6 +7,7 @@ import Home from './views/Home/Home';
 import ShopCart from './views/ShopCart/ShopCart';
 import Product from './views/Product/Product';
 import ProductCreation from './views/ProductCreation/ProductCreation';
+import ProductUpdate from './views/ProductCreation/ProductUpdate';
 import Landing from './views/Landing/Landing';
 
 //components
@@ -47,6 +48,7 @@ function App() {
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
+      <Route path='/productupdate/:id' component={ProductUpdate} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
       <Route path='/pagar' component={CreateCheckoutButton}/>
       <Route path='/after-checkout' component={AfterCheckout}/>
