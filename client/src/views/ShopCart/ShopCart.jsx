@@ -75,7 +75,7 @@ export default function ShopCart(){
             province: user.province,
             country: user.country,
             postal_code: 1111,
-            phone_numer: 0,
+            phone_number: 0,
             delivery_date: "2021-08-20",
             userId: user.id,
             products: cart.map(e => {

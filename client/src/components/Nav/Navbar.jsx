@@ -13,6 +13,7 @@ import {ShowCartCant} from './ShowCartCant';
 const Navbar = () => {
   const dispatch = useDispatch();
   var authUser = localStorage.getItem("pg_merceria")
+  var admin = localStorage.getItem("admin")
   
   var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
 
@@ -61,7 +62,7 @@ const Navbar = () => {
               </NavLink>
             </li>
           <ul className="navbar-nav mx-3">
-              {authUser && authUser.includes('admin') ? (
+              {authUser && admin!="null" ? (
                 <li className="nav-item">  <NavLink activeClassName="text-white" className="nav-link" to={"/admin"}>Admin</NavLink></li>
               ) : null}
             </ul>
@@ -77,7 +78,6 @@ const Navbar = () => {
                 <li><a class="dropdown-item" ><SignOutButton /></a></li>
               </ul>
             </li>}
-          {authUser && authUser !== 'guest' ?
             <ul className="navbar-nav mx-3">
               <li className="nav-item">
                 <NavLink to={ROUTES.CART}>
@@ -87,7 +87,7 @@ const Navbar = () => {
                   </button>
                 </NavLink>
               </li>
-            </ul> : null}
+            </ul> 
             </ul>
         </div>
       </div>

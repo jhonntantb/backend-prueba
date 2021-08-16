@@ -80,12 +80,14 @@ const GoogleBase = (props) => {
               if(storeUser.active===true) {
                 //verifica si es admin
                 if(storeUser.isAdmin===true) {
-                  localStorage.setItem("pg_merceria" , ('admin-'+storeUser.id))
+                  localStorage.setItem("pg_merceria" , (storeUser.id))
+                  localStorage.setItem("admin" , storeUser.email)
                   history.push(ROUTES.HOME);
                 }else {
     
                   //setea el id del usuario al sessionStorage
                   localStorage.setItem("pg_merceria", storeUser.id)
+                  localStorage.setItem("admin" , null)
                   history.push(ROUTES.HOME);
     
                 }

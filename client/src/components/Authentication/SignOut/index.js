@@ -23,6 +23,7 @@ function SignOutButtonBase(props) {
       props.firebase.doSignOut();
       // sessionStorage.clear()
       localStorage.setItem("pg_merceria", "guest")
+      localStorage.setItem("admin", null)
       dispatch(clearUser());
       props.history.push('/')
     } catch (error) {
