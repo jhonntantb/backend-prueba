@@ -35,7 +35,7 @@ const Carrousel = (props) => {
     const items = props.images
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
-    console.log("queremos saber que es" , props)
+    //console.log("queremos saber que es" , props)
     const next = () => {
         if (animating) return;
         const nextIndex = activeIndex === props.images.length - 1 ? 0 : activeIndex + 1;

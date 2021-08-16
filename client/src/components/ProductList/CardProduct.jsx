@@ -1,8 +1,12 @@
-import React from "react";
+import React,{useState} from "react";
 import { NavLink } from "react-router-dom";
+//import {} from "../../redux/actions/"
 import "./CardProduct.css";
 
 function CardProduct(props) {
+
+  const [add,setAdd] = useState(false)
+
   const handleAddCart = () => {
     const cart = JSON.parse(localStorage.getItem("cart"));
     const prod = {
@@ -18,11 +22,11 @@ function CardProduct(props) {
             alert("El producto ya esta agregado al carrito") 
         else {
           localStorage.setItem("cart", JSON.stringify([...cart, prod])) 
+          setAdd (true)
         }  
     } 
     else  {
        localStorage.setItem("cart", JSON.stringify([prod]))
-        alert("Producto agregado")
     }
   }
 
@@ -43,7 +47,7 @@ function CardProduct(props) {
           </div>
           <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center h-100">
             {" "}
-            <button class="btn btn-dark text-uppercase " onClick={handleAddCart}>Add to cart</button>
+            <button class="btn btn-dark text-uppercase " disabled={add} onClick={handleAddCart}>Add to cart</button>
             <div class="add">
               <span class="product_fav">
                 <i class="fa fa-heart-o"></i>

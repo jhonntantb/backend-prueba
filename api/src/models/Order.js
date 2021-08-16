@@ -23,6 +23,14 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: 0,
     },
+    phone_number : {
+      type:DataTypes.BIGINT,
+      allowNull: true
+    },
+    postal_code: {
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
     home_address: {
       type: DataTypes.STRING,
       allowNull: false,

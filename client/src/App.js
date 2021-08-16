@@ -17,17 +17,17 @@ import PasswordForgetPage from './components/Authentication/PasswordForget';
 import PasswordChangePage from './components/Authentication/PasswordChange';
 import ProductList from './components/ProductList/ProductList';
 import Navbar from './components/Nav/Navbar';
-import Newsletter from './components/Newsletter/Newsletter';
 import Form from './components/Admin/FormDetail/FormCategory';
 import Stock from './components/Admin/Stock/Stock.jsx';
 import UsersAdmin from './components/Admin/Users/index';
 import AboutUs from './components/AboutUs/AboutUs'
+import CartForm from './views/CartForm/CartForm';
 import CreateCheckoutButton from './components/MPago/index';
 import NavAdmin from './components/Admin/NavAdmin/NavAdmin';
 import Order from './components/Admin/Order/Order';
 import OrderDetail from './components/Admin/Order/OrderDetail';
 import AfterCheckout from './components/MPago/afterCheckout';
-
+import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
 
 
 function App() {
@@ -43,12 +43,14 @@ function App() {
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
-      <Route path={ROUTES.CART} component={ShopCart} />
+      <Route exact path={ROUTES.CART} component={ShopCart} />
+      <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path={ROUTES.FORM} component={Form} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
       <Route path='/pagar' component={CreateCheckoutButton}/>
       <Route path='/after-checkout' component={AfterCheckout}/>
+      <Route path='/after-checkout-reject' component={AfterCheckoutRejected}/>
       <Route path="/admin" component={NavAdmin} />
       <Route exact path= {ROUTES.STOCK} component={Stock}/>
       <Route exact path="/admin/orders" component={Order}/>

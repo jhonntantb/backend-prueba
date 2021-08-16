@@ -1,11 +1,13 @@
 import {goToCheckout} from '../../redux/actions/checkout/index';
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
+import {updateOrderStatus} from '../../redux/actions/order/index';
 
-function CreateCheckoutButton (userId, products) {
+function CreateCheckoutButton ({userId, products}) {
     const dispatch=useDispatch()
     const mpData=useSelector(state=>state.checkoutReducer.MP_data)
 
+    const  storeOrder = useSelector(state=>state.orderReducer.order)
     //comentar la siguiente linea cuando este terminado
     var userid2=localStorage.getItem('pg_merceria')
 
@@ -29,16 +31,20 @@ function CreateCheckoutButton (userId, products) {
   
 
   function checkoutHandler (userId, products) {
-      var products2= [
-          {
-              title: 'ojotas',
-              price: 150,
-              discount: 0,
-              quantity: 2
-          }
-      ]
+ console.log("esto es products en el handler" , products)
+
+    var productsOk = products.map(p=> {
+        return {
+            title: p.productId,
+            price: p.unitprice,
+            discount: 0,
+            quantity: p.quantity
+        }
+     })
+    dispatch(updateOrderStatus(storeOrder.id, "checkout"))      
+      
       //recordar cambiar products2 por products y userid
-    dispatch(goToCheckout(userid2, products2))
+    dispatch(goToCheckout(userid2, productsOk)) 
   }
 
   return (<button id='button-checkout' onClick={()=>checkoutHandler(userId, products)}>Confirmar</button>)

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {getUser} from '../../redux/actions/user/index';
 import {getOrdersFromUser, updateOrderStatus} from '../../redux/actions/order/index';
 
-export default function AfterCheckout (props) {
+export default function AfterCheckoutRejected (props) {
     const dispatch=useDispatch();
     var storeUser=useSelector(state=>state.userReducer.user);
     var storeOrder=useSelector(state=>state.orderReducer.order);
@@ -34,15 +34,12 @@ export default function AfterCheckout (props) {
         }
     },[])
 
-    
-
     useEffect(()=>{
         if(storeOrder.length>0 ) {
             
             if(storeOrder[0].status==='checkout') {
-                dispatch(updateOrderStatus(storeOrder[0].id, "approved"))
+                dispatch(updateOrderStatus(storeOrder[0].id, "cart"))
                 console.log("cambió el estado de la orden")
-                localStorage.setItem("cart", "[]")
             }
             setLoading(false)
         }
@@ -51,32 +48,29 @@ export default function AfterCheckout (props) {
 
     const redirectHandler = (e) => {
         e.preventDefault()
-        props.history.push('/account')
+        props.history.push('/cart')
     }
 
     return (<div>
             {!loading?
                 <div>
                     
-                    <h3>Gracias por elegirnos {storeUser.user_name}!!!</h3>
+                    <h3>Lo sentimos {storeUser.user_name}!!!</h3>
                     <br/>
                     <br/>
-                    <span>=D</span>
+                    <span>=/</span>
                     <br/>
                     <br/>
-                    <span>{`tu orden numero  [ ${storeOrder[0].id} ]  ha sido confirmada!`}</span>
+                    <span>{`tu orden numero  [ ${storeOrder[0].id} ]  no pudo ser confirmada...`}</span>
                     <br/>
                     <br/>
-                    <span>{`será enviada a: - ${storeOrder[0].home_address}, - ${storeOrder[0].location}`}</span>
-                    <br/>
-                    <br/>
-                    <span>revisa tu casilla de correo {storeUser.email} para seguir el estado de tu envío.</span>
-                    <br/>
-                    <br/>
-                    <span>Esperamos que disfrutes nuestros productos - Araceli Merceria</span>
-                    <br/>
-                    <button onClick={redirectHandler}>Ir a mi Cuenta</button>
-                
+                    
+                    <span>Por favor, vuelve a intentarlo o ponte en contacto con el administrador</span>
+                    <div>
+                        <button onClick={redirectHandler}>Volver a intentar</button>
+                    </div>
+                    
+
             </div>
 
             :<p>loading</p>}
