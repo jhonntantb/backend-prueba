@@ -1,16 +1,9 @@
-#buttonorder {
+#buttonform {
   color: #fff;
   background-color: #212529;
   border-color: #212529;
-  width: 60%;
+  width: 20%;
   height: 50px;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-}
-
-#tableright {
-  width: 20rem;
-}
-.btn-dark {
-  width: 200px;
 }

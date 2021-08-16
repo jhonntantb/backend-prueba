@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { updateUser, getAllUser } from "../../../redux/actions/user/index";
+import "./ButtonUsers.css";
 
 export default function BannAdminUser(props) {
   const dispatch = useDispatch();
@@ -22,10 +23,7 @@ export default function BannAdminUser(props) {
 
   return (
     <div>
-      <button
-        className="btn btn btn-danger"
-        onClick={(e) => toogleActive(e, users)}
-      >
+      <button id="buttonusers" onClick={(e) => toogleActive(e, users)}>
         Habilitar/Inhabilitar Usuarios
       </button>
     </div>

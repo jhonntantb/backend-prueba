@@ -53,35 +53,38 @@ export default function UsersAdmin(props) {
   useEffect(() => {}, [storeUsers]);
 
   return storeUsers.length > 0 ? (
-    <div className="container">
+    <div className="table-responsive">
       <h1 className="text-center mt-4">Control de usuarios</h1>
-      {/* {console.log('storeUsers[0].id: ' + storeUsers[0].id)}
+      <div className="table">
+        {/* {console.log('storeUsers[0].id: ' + storeUsers[0].id)}
             {console.log('USERSELECTED: ' + usersSelected[0])} */}
-      <div className="mt-3">
-        <SetAdminUser
-          users={usersSelected}
-          changed={changed}
-          setChanged={setChanged}
-        />
-      </div>
+        <div id="tableleft" className="d-table-cell">
+          <div className="mt-3">
+            <SetAdminUser
+              users={usersSelected}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          </div>
 
-      <div className="mt-3">
-        <BannAdminUser
-          users={usersSelected}
-          changed={changed}
-          setChanged={setChanged}
-        />
-      </div>
+          <div className="mt-3">
+            <BannAdminUser
+              users={usersSelected}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          </div>
 
-      <div className="mt-3">
-        <ForcePasswordResetButton
-          users={usersSelected}
-          changed={changed}
-          setChanged={setChanged}
-        />
-      </div>
-      <div className=" mt-4">
-        <table className="table-responsive">
+          <div className="mt-3">
+            <ForcePasswordResetButton
+              users={usersSelected}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          </div>
+        </div>
+
+        <table id="tableright" className="d-table-cell">
           <thead class="thead-warning">
             <tr>
               <th>Email</th>

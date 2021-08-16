@@ -13,7 +13,7 @@ export const PRODUCTS = '/productlist';
 
 export const ADMIN = '/admin';
 export const STOCK = '/admin/stock'
-export const FORM = 'admin/form';
+export const FORM = '/admin/form';
 export const ORDER ='/admin/orders';
 export const PRODUCT_CREATION = '/admin/productcreation'
 

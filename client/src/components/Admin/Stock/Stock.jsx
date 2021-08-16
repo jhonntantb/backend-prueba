@@ -167,7 +167,10 @@ function Stock() {
             )}
           </div>
 
-          <table id="tableright" className="d-table-cell">
+          <table
+            id="tableright"
+            className="d-table-cell justify-content-center"
+          >
             <h3 className="text-center">Stock</h3>
 
             <thead>
@@ -218,7 +221,7 @@ function Stock() {
         </table>
       </div>
 
-      <nav aria-label="Page navigation example" className="pageNumbers">
+      {/* <nav aria-label="Page navigation example" className="pageNumbers">
         <ul className="pagination justify-content-center">
           <li className="page-item">
             <button
@@ -238,7 +241,7 @@ function Stock() {
             </button>
           </li>
         </ul>
-      </nav>
+      </nav> */}
     </div>
   );
 }

@@ -77,116 +77,121 @@ function Order() {
 
   return (
     <div>
-      <br />
-      {/* <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
+      <div>
+        <br />
+        {/* <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href={ROUTES.ADMIN}>Admin</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Order</li>
                 </ol>
             </nav> */}
-      <br />
-      <div className="d-table-cell">
-        <h3 className="mx-4"> Estados</h3>
-        <div id="buttoncategory" className="mx-2 my-2">
-          <button
-            id="buttonstock"
-            onClick={(e) => handleStatus(e)}
-            value={"shipped"}
-          >
-            Enviada
-          </button>
-        </div>
-        <div id="buttoncategory" className="mx-2 my-2">
-          <button
-            id="buttonstock"
-            onClick={(e) => handleStatus(e)}
-            value={"cart"}
-          >
-            Carro
-          </button>
-        </div>
-        <div id="buttoncategory" className="mx-2 my-2">
-          <button
-            id="buttonstock"
-            onClick={(e) => handleStatus(e)}
-            value={"checkout"}
-          >
-            Pagado
-          </button>
-        </div>
-        <div id="buttoncategory" className="mx-2 my-2">
-          <button
-            id="buttonstock"
-            onClick={(e) => handleStatus(e)}
-            value={"cancelled"}
-          >
-            Cancelado
-          </button>
-        </div>
-        <div id="buttoncategory" className="mx-2 my-2">
-          <button
-            id="buttonstock"
-            onClick={(e) => handleStatus(e)}
-            value={"delivered"}
-          >
-            Entregado
-          </button>
-        </div>
-        <div id="buttoncategory" className="mx-2 my-2">
-          <button
-            id="buttonstock"
-            onClick={(e) => handleStatus(e)}
-            value={"approved"}
-          >
-            Aprovado
-          </button>
-        </div>
-        <div id="buttoncategory" className="mx-2 my-2">
-          <button
-            id="buttonstock"
-            onClick={(e) => handleStatus(e)}
-            value={"rejected"}
-          >
-            Rechazado
-          </button>
-        </div>
-      </div>
-      <div>
-        {orderView && orderView.length > 0 ? (
-          <table id="tableright" className="d-table-cell">
-            <h3 className="text-center">Ordenes de los usuarios</h3>
-            <thead className="table-responsive">
-              <tr>
-                <th>Orden ID</th>
-                <th>Usuario nombre</th>
-                <th>Usuario Email</th>
-                <th>Precio Total</th>
-                <th>Estado</th>
-                <th>Fecha de Pedido</th>
-                <th># Productos</th>
-                <th>detalle</th>
-              </tr>
-            </thead>
-            {currentItems.map((e) => (
-              <tbody>
-                <tr>
-                  <td>{e.id}</td>
-                  <td>{e.user.user_name}</td>
-                  <td>{e.user.email}</td>
-                  <td>{e.total_price}</td>
-                  <td>{e.status}</td>
-                  <td>{e.date}</td>
-                  <td>{e.products.length}</td>
-                  <NavLink to={`/admin/orders/${e.id}`}>
-                    <td>detalles</td>
-                  </NavLink>
-                </tr>
-              </tbody>
-            ))}
-          </table>
-        ) : null}
         <br />
-        <ul className="pageNumbers">
+        <div className="d-table">
+          <div id="tableleft" className="d-table-cell">
+            <h3 className="mx-4"> Estados</h3>
+            <div id="buttoncategory" className="mx-2 my-2">
+              <button
+                id="buttonorder"
+                onClick={(e) => handleStatus(e)}
+                value={"shipped"}
+              >
+                Enviada
+              </button>
+            </div>
+            <div id="buttoncategory" className="mx-2 my-2">
+              <button
+                id="buttonorder"
+                onClick={(e) => handleStatus(e)}
+                value={"cart"}
+              >
+                Carro
+              </button>
+            </div>
+            <div id="buttoncategory" className="mx-2 my-2">
+              <button
+                id="buttonorder"
+                onClick={(e) => handleStatus(e)}
+                value={"checkout"}
+              >
+                Pagado
+              </button>
+            </div>
+            <div id="buttoncategory" className="mx-2 my-2">
+              <button
+                id="buttonorder"
+                onClick={(e) => handleStatus(e)}
+                value={"cancelled"}
+              >
+                Cancelado
+              </button>
+            </div>
+            <div id="buttoncategory" className="mx-2 my-2">
+              <button
+                id="buttonorder"
+                onClick={(e) => handleStatus(e)}
+                value={"delivered"}
+              >
+                Entregado
+              </button>
+            </div>
+            <div id="buttoncategory" className="mx-2 my-2">
+              <button
+                id="buttonorder"
+                onClick={(e) => handleStatus(e)}
+                value={"approved"}
+              >
+                Aprovado
+              </button>
+            </div>
+            <div id="buttoncategory" className="mx-2 my-2">
+              <button
+                id="buttonorder"
+                onClick={(e) => handleStatus(e)}
+                value={"rejected"}
+              >
+                Rechazado
+              </button>
+            </div>
+          </div>
+          <div>
+            {orderView && orderView.length > 0 ? (
+              <table id="tableright" className="d-table-cell">
+                <h3 className="text-center">Ordenes de los usuarios</h3>
+                <thead className="table-responsive">
+                  <tr>
+                    <th>Orden ID</th>
+                    <th>Usuario nombre</th>
+                    <th>Usuario Email</th>
+                    <th>Precio Total</th>
+                    <th>Estado</th>
+                    <th>Fecha de Pedido</th>
+                    <th># Productos</th>
+                    <th>detalle</th>
+                  </tr>
+                </thead>
+                {currentItems.map((e) => (
+                  <tbody>
+                    <tr>
+                      <td>{e.id}</td>
+                      <td>{e.user.user_name}</td>
+                      <td>{e.user.email}</td>
+                      <td>{e.total_price}</td>
+                      <td>{e.status}</td>
+                      <td>{e.date}</td>
+                      <td>{e.products.length}</td>
+                      <NavLink to={`/admin/orders/${e.id}`}>
+                        <td className="text-dark">detalles</td>
+                      </NavLink>
+                    </tr>
+                  </tbody>
+                ))}
+              </table>
+            ) : null}
+          </div>
+        </div>
+        <br />
+
+        {/* <ul className="pageNumbers">
           <li>
             <button
               onClick={handlePrevbtn}
@@ -204,7 +209,7 @@ function Order() {
               next
             </button>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
