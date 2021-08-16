@@ -1,0 +1,20 @@
+#tableright {
+  width: 20rem;
+}
+
+#buttonstock { 
+        color: #fff;
+        background-color: #212529;
+        border-color: #212529;
+        width: 50%;
+        height: 50px;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+}
+
+
+
+.btn-dark {
+    width: 200px;
+}
+

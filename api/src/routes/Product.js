@@ -38,7 +38,7 @@ router.get("/:idProducto", async function (req, res, next) {
 
 ///////////    POST PRODUCT    ///////////
 router.post("/", async function (req, res, next) {
-
+  
   try {
     console.log(req.body)
     const [product, created] = await Product.findOrCreate({
@@ -61,7 +61,7 @@ router.post("/", async function (req, res, next) {
       })
       await Stock.create({
         productId: product.id,
-        officeId: req.body.office_id,
+        officeId: req.body.office,
         quantity: req.body.quantity,
       })
 
@@ -85,6 +85,57 @@ router.post("/", async function (req, res, next) {
   }
   catch (error) { next(error) };
 })
+
+///////////    UPDATE PRODUCT    ///////////
+router.put("/", async function (req, res, next) {
+  try {
+   
+    const product = await Product.update(
+      {
+       title: req.body.title,
+       catalog_id: req.body.catalog_id,
+       resume: req.body.resume,
+       detail: req.body.detail,
+       price: req.body.price 
+      },
+      {where: {id: req.body.id}
+    }
+     )
+
+   //  if (product !== [ 1 ]) {
+   //   return res.status(400).json("No existe producto")
+   // }
+    const productupdated = await Product.findByPk(req.body.id)
+    req.body.category.map(async (c) => {
+        await productupdated.setCategories(c);
+      })
+      await Stock.create({
+        productId: productupdated.dataValues.id,
+        officeId: req.body.office,
+        quantity: req.body.quantity,
+      })
+
+      if (req.body.image.length > 0) {
+
+        try {
+          for (let i = 0; i < req.body.image.length; i++) {
+            await Productimage.create({
+              productId: productupdated.dataValues.id,
+              image_url: req.body.image[i]
+            })
+          }
+
+        } catch (err) { next(err) }
+
+      }
+
+      res.status(200).json(product)
+    
+
+  }
+  catch (error) { next(error) };
+})
+
 
 ///////////    DELETE PRODUCT    ///////////
 // En general solo para usar via postman para borrar por mantenimiento

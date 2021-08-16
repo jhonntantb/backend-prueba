@@ -46,7 +46,7 @@ const GoogleBase = (props) => {
                     email: credentials.additionalUserInfo.profile.email,
                     first_name: credentials.additionalUserInfo.profile.given_name,
                     last_name: credentials.additionalUserInfo.profile.family_name,
-                    user_name: 'no especificado',
+                    user_name: 'fede',
                     address: 'no especificado',
                     province: 'no especificado',
                     location: 'no especificado',
