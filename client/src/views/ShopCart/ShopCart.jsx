@@ -16,39 +16,6 @@ export default function ShopCart(){
 
     useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
 
-    //useEffect(() => user.id && dispatch(getAllOrder(user.id, "cart")), [cart])
-
-    // useEffect(() => {
-    //     if(user.id)
-    //     {
-    //         if(!order)
-    //             dispatch(createOrder({
-    //                 status: "cart",
-    //                 total_price: total,
-    //                 home_address: user.address,
-    //                 location: user.location,
-    //                 province: user.province,
-    //                 country: user.country,
-    //                 postal_code: 1111,
-    //                 phone_numer: 0,
-    //                 delivery_date: "2021-08-20",
-    //                 userId: user.id,
-    //                 products: cart.map(e => {
-    //                     console.log('producto ' , e )
-    //                     return {
-    //                         productId:e.id,
-    //                         quantity: e.cant,
-    //                         unitprice: e.price
-    //                     }
-    //                 })
-    //             }))
-    //         else
-    //             dispatch(updateOrder(order.id, {...order, products: cart}))
-    //     }
-    // }, [order])
-
-    //const handleConfirmar = () => history.push("/cart/order")
-
     return cart.length > 0 ? 
         <div>
             <ShowCartProducts products={cart} setTotal={setTotal}/>
