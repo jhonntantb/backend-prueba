@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import "./CardProduct.css";
 
 function CardProduct(props) {
+  console.log(props)
+  console.log("aca")
 
   const [add,setAdd] = useState(false)
 
@@ -44,6 +46,7 @@ function CardProduct(props) {
               </a>
             </NavLink>
             <span>${props.price}</span>
+           {props.stock > 0 && <h6>Stock Disponible </h6> }
           </div>
           <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center h-100">
             {" "}
