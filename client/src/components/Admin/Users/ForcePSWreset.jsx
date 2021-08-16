@@ -2,6 +2,7 @@ import { withFirebase } from "../../FireBase";
 import * as ROUTES from "../../../routes";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./ButtonUsers.css";
 
 const ForcePasswordResetButton = (props) => (
   <div>
@@ -46,10 +47,7 @@ function ForcePasswordResetBase(props) {
 
   return (
     <div>
-      <button
-        className="btn btn-warning"
-        onClick={(e) => handlePasswordReset(e, users)}
-      >
+      <button id="buttonusers" onClick={(e) => handlePasswordReset(e, users)}>
         Forzar Reset de Contraseña
       </button>
     </div>
