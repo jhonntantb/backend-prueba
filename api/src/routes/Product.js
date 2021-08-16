@@ -86,6 +86,56 @@ router.post("/", async function (req, res, next) {
   catch (error) { next(error) };
 })
 
+///////////    UPDATE PRODUCT    ///////////
+router.put("/", async function (req, res, next) {
+console.log('update product body: ', req.body)
+  try {
+   
+    const product = await Product.update({where: {id: req.body.id}},
+      {
+       title: req.body.title,
+       catalog_id: req.body.catalog_id,
+       resume: req.body.resume,
+       detail: req.body.detail,
+       price: req.body.price 
+      }
+     )
+
+    if (!product) {
+      return res.status(400).json("No existe producto")
+    }
+
+    req.body.category.map(async (c) => {
+        await product.setCategories(c);
+      })
+      await Stock.create({
+        productId: product.id,
+        officeId: req.body.office_id,
+        quantity: req.body.quantity,
+      })
+
+      if (req.body.image.length > 0) {
+
+        try {
+          for (let i = 0; i < req.body.image.length; i++) {
+            await Productimage.create({
+              productId: product.id,
+              image_url: req.body.image[i]
+            })
+          }
+
+        } catch (err) { next(err) }
+
+      }
+
+      res.status(200).json(product)
+    
+
+  }
+  catch (error) { next(error) };
+})
+
+
 ///////////    DELETE PRODUCT    ///////////
 // En general solo para usar via postman para borrar por mantenimiento
 //

@@ -11,7 +11,7 @@ const dataReviews = require ('./src/datasets/dataReviews')
 console.log('Connect: ', CONNECT)
 
 // Para la base local poner en true para recarga productos ejemplo o false para no recargar
-const update = true ;
+var update = false ;
 
 // Si se va a usar la base de la cloud, el update debe estar en false para que no se pierda la info que vamos ingresando.
 // Por favor no cambiar !
@@ -43,9 +43,26 @@ conn.sync({ force: update }).then(() => {
       
            console.log('Oficinas pre-cargadas')
 
+      // Usuarios
+       dataUsers.forEach(async (e) => await User.create(
+         { user_name: e.user_name,
+           first_name: e.first_name,
+           last_name: e.last_name,
+           email: e.email,
+           isAdmin: e.isAdmin,
+           active: e.active,
+           address: e.address,
+           location: e.location,
+           province: e.province,
+           country: e.country,
+         }
+         ));
+         console.log('Users pre-cargados')  
+      }
 
        // Productos
        if(CONNECT === 'CLOUD' && update === true){
+     
          for(let i=1001; i<1051; i++) {
           Product.create(
             {
@@ -60,10 +77,12 @@ conn.sync({ force: update }).then(() => {
 
           })
          }
+         console.log('Productos pre-cargados en cloud')
        }
        else
        {
-
+       if(update === true && CONNECT === 'LOCAL')
+       { 
         data.forEach(async (e) => {product = await Product.create(
           {title: e.title,
           catalog_id: e.catalog_id,
@@ -96,31 +115,33 @@ conn.sync({ force: update }).then(() => {
             }
   
         });
-        
+         console.log('Productos pre-cargados')
       }
-       console.log('Productos pre-cargados')
+      
+      }  
+ // Caso por unica vez para cloud, para cargar el stock de todos los productos en sucursal cero.
+/*  if(CONNECT === 'CLOUD') {
+   var sucid = "9CC773AA-940F-4850-A2DB-250E1ECE5F40"
+   var prodid = [];
+   Product.findAll({attributes: ['id']  })
+  .then((res) => {
+   for(let i=0; i<res.length; i++){
+   prodid.push(res[i].dataValues.id)
+   }
+   console.log(prodid);
+   for(let i=0; i<prodid.length; i++){
+     Stock.create({
+       productId: prodid[i],
+       officeId: sucid,
+       quantity: 1000
+     })
+     .then(res => console.log(res.dataValues))
+   }
+ })
+ } */
 
-
-
-       // Usuarios
-       dataUsers.forEach(async (e) => await User.create(
-         { user_name: e.user_name,
-           first_name: e.first_name,
-           last_name: e.last_name,
-           email: e.email,
-           isAdmin: e.isAdmin,
-           active: e.active,
-           address: e.address,
-           location: e.location,
-           province: e.province,
-           country: e.country,
-          
-         }
-         ));
-         console.log('Users pre-cargados')  
-        
-      //  Reviews  (Todavia no se como pre-cargar las reviews. Las promesas no funcionan con el forEach)
-////////////////////////////////////////////////////////////
+      
+     //  Reviews  (Todavia no se como pre-cargar las reviews. Las promesas no funcionan con el forEach)
      /*  for(let i=0; i<dataReviews.length; i++){
         console.log('Review ',dataReviews[i]);
         const product = Product.findOne({where: {catalog_id: dataReviews[i].catalog_id}})
@@ -194,11 +215,6 @@ conn.sync({ force: update }).then(() => {
  
 ////////////////////////////////////////////////////////////////////////////////////  
 
-         
-
-       
-       
-  }
   });
 });
 
