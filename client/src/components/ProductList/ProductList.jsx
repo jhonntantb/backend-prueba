@@ -85,7 +85,7 @@ function ProductList() {
     });
   }
 
-  
+  console.log(lista_filtrada)
  
   return (
 
@@ -127,7 +127,7 @@ function ProductList() {
           {
             lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e =>
               <span key={e.id} className="card-deck   mx-1" >
-                <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} />
+                <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} stock={e.stocks[0].quantity} />
               </span>
             ) : <h3 className="text-center mt-4">No hay productos</h3>}
       </div>

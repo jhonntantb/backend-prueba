@@ -13,6 +13,7 @@ export default function Product({ match }) {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productReducer.product);
   const reviews = useSelector((state) => state.reviews);
+  const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(getReview(match.params.id));
@@ -21,6 +22,9 @@ export default function Product({ match }) {
   useEffect(() => {
     dispatch(getProduct(match.params.id));
   }, []);
+  useEffect(() => {
+   if(product.id != undefined) setLoading(false)
+  }, [product]);
 
   const handleAddCart = () => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -38,9 +42,8 @@ export default function Product({ match }) {
       else localStorage.setItem("cart", JSON.stringify([...cart, prod]));
     } else localStorage.setItem("cart", JSON.stringify([prod]));
   };
-
- 
-  return product ? (
+  
+  return !Loading ? (
     <div className="container">
       <div className="cartas">
         <div className="container-fluid">
@@ -57,7 +60,8 @@ export default function Product({ match }) {
               <p className="product-description text-dark">{product.resume}</p>
 
               <h5 className="text-dark">{product.detail}</h5>
-              <h4 className="price text-dark mt-3">{product.price}$</h4>
+              <h4 className="price text-dark mt-3">Articulo:{product.catalog_id}</h4>
+              <h4 className="price text-dark mt-3">Stock:{product.stocks[0].quantity ?product.stocks[0].quantity :product.stock} unidades</h4>
               {/* <div className="productDetails">
               </div> */}
               <div className="action">
