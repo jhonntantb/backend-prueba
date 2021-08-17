@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { updateUser, getAllUser } from "../../../redux/actions/user/index";
+import "./ButtonUsers.css";
 
 export default function SetAdminUser(props) {
   const dispatch = useDispatch();
@@ -22,10 +23,7 @@ export default function SetAdminUser(props) {
 
   return (
     <div>
-      <button
-        className="btn btn-primary"
-        onClick={(e) => toogleAdmin(e, users)}
-      >
+      <button id="buttonusers" onClick={(e) => toogleAdmin(e, users)}>
         Otorgar / Quitar Permisos de Administrador
       </button>
     </div>

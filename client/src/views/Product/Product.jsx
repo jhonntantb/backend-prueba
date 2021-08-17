@@ -11,6 +11,7 @@ import { getCart } from "../../redux/actions/cart/index"
 import "./Product.css";
 
 export default function Product({ match }) {
+  const admin = localStorage.getItem("admin")
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productReducer.product);
   const cart = useSelector(state => state.cartReducer.cart);
@@ -66,7 +67,7 @@ export default function Product({ match }) {
 
               <h5 className="text-dark">{product.detail}</h5>
               <h4 className="price text-dark mt-3">Articulo:{product.catalog_id}</h4>
-              <h4 className="price text-dark mt-3">Stock:{product.stocks[0].quantity ?product.stocks[0].quantity :product.stock} unidades</h4>
+              <h4 className="price text-dark mt-3">Stock:{product.stocks.length > 0 ? product.stocks[0].quantity :(product.stock ? product.stock : "0")} unidades</h4>
               {/* <div className="productDetails">
               </div> */}
               <div className="action">
@@ -78,9 +79,9 @@ export default function Product({ match }) {
                   Añadir al carrito
                 </button>
 
-                <NavLink to={`/productupdate/${product.id}`}>
+                {admin!=='null'?<NavLink to={`/productupdate/${product.id}`}>
                  {'Modificar producto'}
-                </NavLink>
+                </NavLink>:null}
  
               </div>
             </div>
