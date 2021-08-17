@@ -22,7 +22,7 @@ function Shopping() {
         <div>
             <br />
             <br />
-            <h3>Pedidos Realizados</h3>
+            <h3 className='text-center'>Pedidos Realizados</h3>
             {orders&&orders.length>0?orders.map(e=>
             <CardOrder status={e.status} products={e.products} total_price={e.total_price} />
             ): <p>Aún no tiene Pedidos</p> }

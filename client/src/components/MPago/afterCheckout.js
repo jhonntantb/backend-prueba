@@ -56,12 +56,9 @@ export default function AfterCheckout (props) {
 
     return (<div>
             {!loading?
-                <div>
+                <div className='text-center'>
                     
                     <h3>Gracias por elegirnos {storeUser.user_name}!!!</h3>
-                    <br/>
-                    <br/>
-                    <span>=D</span>
                     <br/>
                     <br/>
                     <span>{`tu orden numero  [ ${storeOrder[0].id} ]  ha sido confirmada!`}</span>

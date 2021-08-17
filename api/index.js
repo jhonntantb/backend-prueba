@@ -61,64 +61,64 @@ conn.sync({ force: update }).then(() => {
       }
 
        // Productos
-       if(CONNECT === 'CLOUD' && update === true){
+      //  if(CONNECT === 'CLOUD' && update === true){
      
-         for(let i=1001; i<1051; i++) {
-          Product.create(
-            {
-              catalog_id: i,    
-            }
-          )
-          .then(res => {
-            Productimage.create({
-              productId: res.id,
-              image_url: "https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp"
-            })
+      //    for(let i=1001; i<1051; i++) {
+      //     Product.create(
+      //       {
+      //         catalog_id: i,    
+      //       }
+      //     )
+      //     .then(res => {
+      //       Productimage.create({
+      //         productId: res.id,
+      //         image_url: "https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp"
+      //       })
 
-          })
-         }
-         console.log('Productos pre-cargados en cloud')
-       }
-       else
-       {
-       if(update === true && CONNECT === 'LOCAL')
-       { 
-        data.forEach(async (e) => {product = await Product.create(
-          {title: e.title,
-          catalog_id: e.catalog_id,
-          resume: e.resume,
-          detail: e.detail ,
-          price: e.price,
+      //     })
+      //    }
+      //    console.log('Productos pre-cargados en cloud')
+      //  }
+      //  else
+      //  {
+      //  if(update === true && CONNECT === 'LOCAL')
+      //  { 
+      //   data.forEach(async (e) => {product = await Product.create(
+      //     {title: e.title,
+      //     catalog_id: e.catalog_id,
+      //     resume: e.resume,
+      //     detail: e.detail ,
+      //     price: e.price,
               
-          })
+      //     })
    
-            e.image.forEach( async(c) =>
-             await Productimage.create({
-                productId: product.id, 
-                image_url:c
-                }) 
-             ) 
+      //       e.image.forEach( async(c) =>
+      //        await Productimage.create({
+      //           productId: product.id, 
+      //           image_url:c
+      //           }) 
+      //        ) 
           
-           //console.log('**************product catalog_id: ', product.catalog_id, e.category);
-           if(e.category.length>0){
-             //console.log('adentro!');
-             for(let i=0; i<e.category.length; i++)
-             {
-               //console.log('dentro del for', i); 
-               const categoryRec = await Category.findOne({where: {name: e.category[i]}})
-               //console.log('Catalog_id: ',product.catalog_id);
-               //console.log('categoryRec: ',categoryRec);
-               categoryRec.dataValues? await product.setCategories(categoryRec.dataValues.id) : null;
-               //categoryRec[0].dataValues? console.log('product:',product.catalog_id, ' category: ',categoryRec[0].dataValues.name ) : null;
+      //      //console.log('**************product catalog_id: ', product.catalog_id, e.category);
+      //      if(e.category.length>0){
+      //        //console.log('adentro!');
+      //        for(let i=0; i<e.category.length; i++)
+      //        {
+      //          //console.log('dentro del for', i); 
+      //          const categoryRec = await Category.findOne({where: {name: e.category[i]}})
+      //          //console.log('Catalog_id: ',product.catalog_id);
+      //          //console.log('categoryRec: ',categoryRec);
+      //          categoryRec.dataValues? await product.setCategories(categoryRec.dataValues.id) : null;
+      //          //categoryRec[0].dataValues? console.log('product:',product.catalog_id, ' category: ',categoryRec[0].dataValues.name ) : null;
             
-             }
-            }
+      //        }
+      //       }
   
-        });
-         console.log('Productos pre-cargados')
-      }
+      //   });
+      //    console.log('Productos pre-cargados')
+      // }
       
-      }  
+      // }  
  // Caso por unica vez para cloud, para cargar el stock de todos los productos en sucursal cero.
 /*  if(CONNECT === 'CLOUD') {
    var sucid = "9CC773AA-940F-4850-A2DB-250E1ECE5F40"
