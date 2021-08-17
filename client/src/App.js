@@ -29,6 +29,7 @@ import Order from './components/Admin/Order/Order';
 import OrderDetail from './components/Admin/Order/OrderDetail';
 import AfterCheckout from './components/MPago/afterCheckout';
 import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
+import Shopping from './components/UserShop/Shopping';
 
 
 function App() {
@@ -59,7 +60,8 @@ function App() {
       <Route  exact path={ROUTES.ORDER} component={Order}/>
       <Route exact path={ROUTES.FORM} component={Form} />
       <Route exact path={ROUTES.PRODUCT_CREATION} component={ProductCreation} />
-      <Route exact path="/admin/orders/:id" component={OrderDetail}/>  
+      <Route exact path="/admin/orders/:id" component={OrderDetail}/>
+      <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>  
     </React.Fragment>
   )
 }
