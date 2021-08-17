@@ -20,7 +20,7 @@ export default function UsersAdmin(props) {
 
   const storeUsers = useSelector((state) => state.userReducer.users);
 
-  console.log("usersSelected tiene " + usersSelected.length + " elementos");
+  //console.log("usersSelected tiene " + usersSelected.length + " elementos");
 
   function selectUser(e) {
     var userId = e.target.value;
@@ -53,65 +53,69 @@ export default function UsersAdmin(props) {
   useEffect(() => {}, [storeUsers]);
 
   return storeUsers.length > 0 ? (
-    <div className="container">
+    <div className="table-responsive">
       <h1 className="text-center mt-4">Control de usuarios</h1>
-      {/* {console.log('storeUsers[0].id: ' + storeUsers[0].id)}
+      <div className="table">
+        {/* {console.log('storeUsers[0].id: ' + storeUsers[0].id)}
             {console.log('USERSELECTED: ' + usersSelected[0])} */}
-      <div className="mt-3">
-        <SetAdminUser
-          users={usersSelected}
-          changed={changed}
-          setChanged={setChanged}
-        />
-      </div>
+        <div id="tableleft" className="d-table-cell">
+          <div className="mt-3">
+            <SetAdminUser
+              users={usersSelected}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          </div>
 
-      <div className="mt-3">
-        <BannAdminUser
-          users={usersSelected}
-          changed={changed}
-          setChanged={setChanged}
-        />
-      </div>
+          <div className="mt-3">
+            <BannAdminUser
+              users={usersSelected}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          </div>
 
-      <div className="mt-3">
-        <ForcePasswordResetButton
-          users={usersSelected}
-          changed={changed}
-          setChanged={setChanged}
-        />
-      </div>
+          <div className="mt-3">
+            <ForcePasswordResetButton
+              users={usersSelected}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          </div>
+        </div>
 
-      <table className="table mt-4 table-hover">
-        <thead class="thead-warning">
-          <tr>
-            <th>Email</th>
-            <th>Usuario</th>
-            <th>Estado</th>
-            <th>Administrador</th>
-            <th>check</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {storeUsers.map((u) => (
-            <tr key={u.id}>
-              <td>{u.email}</td>
-              <td>{u.last_name + " " + u.first_name}</td>
-              <td>{u.active ? "Habilitado" : "Inhabilitado"}</td>
-              <td>{u.isAdmin ? "Si" : "No"}</td>
-              <td>
-                <input
-                  className="checkbox"
-                  type="checkbox"
-                  value={u.id}
-                  onChange={(e) => selectUser(e)}
-                  defaultChecked={false}
-                ></input>
-              </td>
+        <table id="tableright" className="d-table-cell">
+          <thead class="thead-warning">
+            <tr>
+              <th>Email</th>
+              <th>Usuario</th>
+              <th>Estado</th>
+              <th>Administrador</th>
+              <th>check</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {storeUsers.map((u) => (
+              <tr key={u.id}>
+                <td>{u.email}</td>
+                <td>{u.last_name + " " + u.first_name}</td>
+                <td>{u.active ? "Habilitado" : "Inhabilitado"}</td>
+                <td>{u.isAdmin ? "Si" : "No"}</td>
+                <td>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    value={u.id}
+                    onChange={(e) => selectUser(e)}
+                    defaultChecked={false}
+                  ></input>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   ) : (
     <p className="text-dark text-center mt-4">Loading...</p>

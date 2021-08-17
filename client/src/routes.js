@@ -1,23 +1,27 @@
 export const LANDING = '/';
 export const SIGN_UP = '/signup';
 export const SIGN_IN = '/signin';
-export const FORM = '/form';
 export const HOME = '/home';
 export const CART = '/cart'
 export const CART_ORDER = '/cart/order'
 export const PRODUCT = '/product/:id';
 export const CREATE_PRODUCT = '/product/form';
 export const ACCOUNT = '/account';
-export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
 export const PRODUCTS = '/productlist';
+export const USER_SHOP="/user/compras";
+
+
+export const ADMIN = '/admin';
 export const STOCK = '/admin/stock'
+export const FORM = '/admin/form';
+export const ORDER ='/admin/orders';
+export const PRODUCT_CREATION = '/admin/productcreation'
+export const ADMIN_ORDER_DETAIL="/admin/orders/:id";
+
+export const MANAGE_USERS ='/admin/manage-users';
 export const PASSWORD_CHANGE = '/pw-change';
 export const PRODDETAIL = '/productdetail';
-export const MANAGE_USERS ='/manage-users';
 export const ABOUT ='/about';
-export const USER_SHOP="/user/compras";
-export const ADMIN_ORDER_DETAIL="/admin/orders/:id";
-export const ADMIN_ORDERS= "/admin/orders";
-export const NAV_ADMIN="admin"
+
 
