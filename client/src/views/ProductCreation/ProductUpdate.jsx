@@ -8,7 +8,7 @@ import ReactFirebaseFileUpload from '../../components/FileUploader/FileUploader'
 function ProductUpdate(props)  {
   const prodId = props.match.params.id ;    
   const product = useSelector((state) => state.productReducer.product);
-  console.log(product);
+  //console.log(product);
 
   const dispatch=useDispatch();
 
@@ -41,6 +41,7 @@ function ProductUpdate(props)  {
 
 
    const [addProduct, setaddProduct] = useState(local_initial_state)
+   // setInputCategories(product.categories)
 
    const handleSubmit = (e) => {
     e.preventDefault()
@@ -51,7 +52,7 @@ function ProductUpdate(props)  {
         addProduct.price !== '' &&
         addProduct.catalog_id !== null &&
         addProduct.image.length > 0 &&
-        addProduct.quantity >0 &&
+        addProduct.quantity >=0 &&
         addProduct.office !== '') {
             
             dispatch(updateProduct(addProduct))
@@ -117,7 +118,7 @@ function selectOffice (e) {
 }
 
 function renderOffices () {
-    console.log('store offices tiene : ' , Object.keys(storeOffices))
+    //console.log('store offices tiene : ' , Object.keys(storeOffices))
     return (
         <div> Sucursal
             {<select onChange={e=>selectOffice(e)}>
