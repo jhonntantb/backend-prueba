@@ -11,6 +11,7 @@ import { getCart } from "../../redux/actions/cart/index"
 import "./Product.css";
 
 export default function Product({ match }) {
+  const admin = localStorage.getItem("admin")
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productReducer.product);
   const cart = useSelector(state => state.cartReducer.cart);
@@ -78,9 +79,9 @@ export default function Product({ match }) {
                   Añadir al carrito
                 </button>
 
-                <NavLink to={`/productupdate/${product.id}`}>
+                {admin!=='null'?<NavLink to={`/productupdate/${product.id}`}>
                  {'Modificar producto'}
-                </NavLink>
+                </NavLink>:null}
  
               </div>
             </div>

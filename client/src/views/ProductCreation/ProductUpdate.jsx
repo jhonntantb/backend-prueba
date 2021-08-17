@@ -6,6 +6,8 @@ import {getAllOffice} from '../../redux/actions/office';
 import ReactFirebaseFileUpload from '../../components/FileUploader/FileUploader';
 
 function ProductUpdate(props)  {
+    const admin = localStorage.getItem("admin")
+
   const prodId = props.match.params.id ;    
   const product = useSelector((state) => state.productReducer.product);
   console.log(product);
@@ -158,7 +160,7 @@ useEffect(()=>{
     
 },[storeOffices])
 
-    return (
+    return admin!=='null'?(
         <div className="container">
             <h1 className="text-center mt-3">Modificación de productos</h1>
             <form >
@@ -266,7 +268,7 @@ useEffect(()=>{
             </form>
 
         </div>
-    )
+    ):null;
 
 }
 

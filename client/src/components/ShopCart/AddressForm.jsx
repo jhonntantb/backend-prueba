@@ -2,6 +2,7 @@ import { Form, Label, Input, FormText, FormGroup } from "reactstrap";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
+// import "./AddressForm.css"
 
 export default function AddresForm({setAddress}){
     const user = useSelector(state => state.userReducer.user)
@@ -51,7 +52,7 @@ export default function AddresForm({setAddress}){
     return (
         provincias ? 
         <div>
-            <Form>
+            <Form className='form-center'>
                 <FormGroup>
                     <Label>Provincia</Label>
                     <Input onChange={handleChange} type="select" value={selectProv} name="prov" id="orderCity">
@@ -79,7 +80,9 @@ export default function AddresForm({setAddress}){
                     <Label>Numero de Telefono</Label>
                     <Input onChange={handleChange} type="text" value={telephone} name="telephone" maxLength="10" id="orderPhone"/>
                 </FormGroup>
-                <button onClick={handleSubmit}>Confirmar</button>
+                <button onClick={handleSubmit}
+                className="btn btn-block btn-black rm-border"
+                >Confirmar dirección de envio</button>
             </Form>
         </div>
         :

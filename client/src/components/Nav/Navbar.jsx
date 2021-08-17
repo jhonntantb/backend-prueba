@@ -8,11 +8,20 @@ import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
 import { getAllProduct } from '../../redux/actions/product';
 import {ShowCartCant} from './ShowCartCant';
+import CheckUser from '../Authentication/CheckUser/CheckUser';
+import { getAllOrder } from '../../redux/actions/order';
 
 
 const Navbar = () => {
+
+  // CheckUser();
+
   const dispatch = useDispatch();
   var authUser = localStorage.getItem("pg_merceria")
+  var admin = localStorage.getItem("admin")
+  
+ 
+
   
   //var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
 
@@ -41,7 +50,7 @@ const Navbar = () => {
         </form>
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
           <ul className="navbar-nav ml-10  ">
-          {/*<li className="nav-item mx-3">
+          {/* <li className="nav-item mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Contactanos
               </NavLink>
@@ -50,30 +59,29 @@ const Navbar = () => {
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Acerca de Nosotros
               </NavLink>
-            </li>*/}
+            </li> */}
             <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Productos
               </NavLink>
             </li>
           <ul className="navbar-nav mx-3">
-              {authUser && authUser.includes('admin') ? (
+              {authUser && admin!="null" ? (
                 <li className="nav-item">  <NavLink activeClassName="text-white" className="nav-link" to={"/admin"}>Admin</NavLink></li>
               ) : null}
             </ul>
-          {authUser === 'guest' || !authUser ?
+          {authUser === 'guest' ?
             <li className="nav-item mx-3"><NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink></li> :
             <li className="nav-item dropdown mx-3">
               <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">Mi Cuenta</NavLink>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href={ROUTES.ACCOUNT}>Seguridad</a></li>
-                <li><a class="dropdown-item" href="#">Mis Datos</a></li>
-                <li><a class="dropdown-item" href="#">Compras</a></li>
+                {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
+                <li> <NavLink class="dropdown-item" to="/user/compras" onClick={e=>dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" ><SignOutButton /></a></li>
               </ul>
             </li>}
-          {authUser && authUser !== 'guest' ?
             <ul className="navbar-nav mx-3">
               <li className="nav-item">
                 <NavLink to={ROUTES.CART}>
@@ -83,7 +91,7 @@ const Navbar = () => {
                   </button>
                 </NavLink>
               </li>
-            </ul> : null}
+            </ul> 
             </ul>
         </div>
       </div>

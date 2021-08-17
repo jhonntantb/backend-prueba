@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, DATEONLY } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define('order', {
@@ -49,6 +49,7 @@ module.exports = (sequelize) => {
     },
     delivery_date: {
       type: DataTypes.DATE,
+      defaultValue: new Date(),  
       allowNull: false,
     },
   });

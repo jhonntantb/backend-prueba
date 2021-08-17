@@ -67,7 +67,10 @@ export default function AfterCheckoutRejected (props) {
                     
                     <span>Por favor, vuelve a intentarlo o ponte en contacto con el administrador</span>
                     <div>
-                        <button onClick={redirectHandler}>Volver a intentar</button>
+                        <button 
+                            onClick={redirectHandler}
+                            className='btn btn-block btn-black rm-border'
+                             >Volver a intentar</button>
                     </div>
                     
 
