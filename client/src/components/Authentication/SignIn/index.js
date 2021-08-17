@@ -79,12 +79,12 @@ function SignInFormBase(props) {
             if(user.isAdmin===true) {
               localStorage.setItem("pg_merceria" , (user.id))
               localStorage.setItem("admin" , user.email)
-              props.history.push(ROUTES.HOME);
+              props.history.push("/");
             }else {
 
               //setea el id del usuario al sessionStorage
               localStorage.setItem("pg_merceria", user.id)
-              props.history.push(ROUTES.HOME);
+              props.history.push("/");
 
             }
             dispatch(LogInUser(user.email))

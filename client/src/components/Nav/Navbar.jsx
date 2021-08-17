@@ -10,17 +10,20 @@ import { getAllProduct } from '../../redux/actions/product';
 import {ShowCartCant} from './ShowCartCant';
 import CheckUser from '../Authentication/CheckUser/CheckUser';
 import { getAllOrder } from '../../redux/actions/order';
-
+import { useHistory } from 'react-router';
 
 const Navbar = () => {
 
   // CheckUser();
-
+  const history = useHistory()
   const dispatch = useDispatch();
   var authUser = localStorage.getItem("pg_merceria")
   var admin = localStorage.getItem("admin")
   
- 
+ useEffect(()=>{
+  // if(authUser==='guest') history.push('/')
+  
+  },[authUser])
 
   
   //var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];

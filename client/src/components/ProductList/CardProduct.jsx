@@ -51,11 +51,11 @@ function CardProduct(props) {
           </div>
           <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
             <button class="btn btn-dark text-uppercase " disabled={add} onClick={handleAddCart}>Añadir al carro</button>
-            <div class="add">
+            {/* <div class="add">
               <span class="product_fav">
                 <i class="fa fa-heart-o"></i>
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
   );

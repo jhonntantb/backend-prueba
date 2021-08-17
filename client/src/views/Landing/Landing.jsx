@@ -58,6 +58,7 @@ export const Landing = () => {
               {list.length > 0 &&
                 list4.map((c) => (
                   <CardProduct
+                    id={c.id}
                     url={c.productimages[0].image_url}
                     price={c.price}
                     title={c.title}/>
