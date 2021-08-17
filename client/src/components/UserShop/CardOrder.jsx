@@ -27,7 +27,6 @@ console.log(product)
                 {
                     product.length>0?<img src={product.productimages[0].image_url} alt="Not Fount" />:null
                 }
-                <img src={props.img} alt="No Encontrado" />
             </div>
             <br />
             <div>
