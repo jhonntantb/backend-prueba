@@ -191,7 +191,7 @@ function Order() {
         </div>
         <br />
 
-        {/* <ul className="pageNumbers">
+        { <ul className="pageNumbers">
           <li>
             <button
               onClick={handlePrevbtn}
@@ -209,7 +209,7 @@ function Order() {
               next
             </button>
           </li>
-        </ul> */}
+        </ul> }
       </div>
     </div>
   );
