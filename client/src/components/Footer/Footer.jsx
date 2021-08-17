@@ -46,28 +46,24 @@ const Footer = () => {
                   <ul>
                     <li>
                       {" "}
-                      <big>
+                      <a href ="https://wa.link/l28b79">
                         <span>
-                          <i
-                            id="fa1"
-                            class="fa fa-whatsapp"
-                            aria-hidden="true"
-                          ></i>
+                          <i id="fa1" class="fa fa-whatsapp" aria-hidden="true"></i>
                         </span>{" "}
                         +54 381 ***-****{" "}
-                      </big>
+                      </a>
                     </li>
                     <br />
                     <li>
                       {" "}
                       <big>
-                        <span>
+                        <a>
                           <i
                             id="fa1"
                             class="fa fa-phone"
                             aria-hidden="true"
                           ></i>
-                        </span>{" "}
+                        </a>{" "}
                         0381 ***-****{" "}
                       </big>
                     </li>

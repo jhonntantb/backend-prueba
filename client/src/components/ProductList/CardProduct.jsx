@@ -40,7 +40,7 @@ function CardProduct(props) {
   return (
         <div class="card" >
           <div class="text-center p-4">
-            <img id="main-image" src={props.url} width="300" />
+            <img id="main-image" src={props.url}  />
           </div>
           <div class="about text-center">
             <NavLink style={{ textDecoration: 'none', color: "black"}} to={`/product/${props.id}`}>

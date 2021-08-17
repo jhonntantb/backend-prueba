@@ -40,8 +40,8 @@ export const Landing = () => {
   list4.push(list[1], list[2], list[3], list[4]);
 
   //console.log("LIST: ",list5)
-  console.log("acaaaa")
-  console.log(list)
+  //console.log("acaaaa")
+  //console.log(list)
   return (
     <div>
       <div class="container-fluid ">
