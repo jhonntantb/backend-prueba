@@ -33,6 +33,7 @@ router.post("/",async (req,res,next) => {
 // desde en front se enviara un array[{id:iddelstock,quantity:new quantity}]
 router.put("/",async (req,res,next) => {
     const stocks=req.body.stocks
+    //console.log("stocks",stocks)
     try {
         for(let i=0;i<stocks.length; i++){
             await Stock.update({quantity:stocks[i].quantity},{where:{id:stocks[i].id}})

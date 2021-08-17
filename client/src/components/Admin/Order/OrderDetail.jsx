@@ -133,7 +133,7 @@ function OrderDetail(props) {
             <datalist id="status">
                 <option value={"shipped"}>Enviada</option>
                 <option value="cart">Carro</option>
-                <option value="'checkout">Pagado</option>
+                <option value="checkout">Pagado</option>
                 <option value="cancelled">Cancelado</option>
                 <option value="delivered">Entregado</option>
             </datalist>
