@@ -70,13 +70,13 @@ const Navbar = () => {
                 <li className="nav-item">  <NavLink activeClassName="text-white" className="nav-link" to={"/admin"}>Admin</NavLink></li>
               ) : null}
             </ul>
-          {authUser === 'guest' || !authUser ?
+          {authUser === 'guest' ?
             <li className="nav-item mx-3"><NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink></li> :
             <li className="nav-item dropdown mx-3">
               <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">Mi Cuenta</NavLink>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href={ROUTES.ACCOUNT}>Seguridad</a></li>
-                <li><a class="dropdown-item" href="#">Mis Datos</a></li>
+                {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
                 <li> <NavLink class="dropdown-item" to="/user/compras" onClick={e=>dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" ><SignOutButton /></a></li>

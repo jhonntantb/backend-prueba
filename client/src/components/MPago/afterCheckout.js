@@ -51,7 +51,7 @@ export default function AfterCheckout (props) {
 
     const redirectHandler = (e) => {
         e.preventDefault()
-        props.history.push('/account')
+        props.history.push('/user/compras')
     }
 
     return (<div>

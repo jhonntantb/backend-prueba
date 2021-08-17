@@ -54,7 +54,7 @@ function NavAdmin() {
                 Ordenes
               </NavLink>
             </li>
-            <li class="nav-item">
+            {/* <li class="nav-item">
               <NavLink
                 activeClassName="text-dark"
                 className="dropdown-item"
@@ -62,7 +62,7 @@ function NavAdmin() {
               >
                 Review
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item">
               <NavLink
                 activeClassName="text-dark"

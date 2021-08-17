@@ -12,12 +12,20 @@ function CreateCheckoutButton ({products, direction}) {
 
   const [abble, setAbble] =useState(true)
   
-  const productsOk = products.map(p=> {
+  const productsToMP = products.map(p=> {
     return {
         title: p.id,
         price: p.price,
         discount: 0,
         quantity: p.cant
+    }
+  })
+
+  const productsToDB = products.map(p=> {
+    return {
+      productId: p.id,
+      unitprice: Number(p.price),
+      quantity: Number(p.cant)
     }
   })
 
@@ -91,7 +99,7 @@ function CreateCheckoutButton ({products, direction}) {
 
       dispatch(createOrder({
       status: "checkout",
-      total_price: total,
+      // total_price: total,
       home_address: direction.home_address,
       location: direction.location,
       province: direction.province,
@@ -100,10 +108,10 @@ function CreateCheckoutButton ({products, direction}) {
       phone_number: direction.phone_number,
       // delivery_date: "",
       userId: user.id,
-      products: productsOk
+      products: productsToDB
     }))
 
-    dispatch(goToCheckout(user.id, productsOk))
+    dispatch(goToCheckout(user.id, productsToMP))
 
     setAbble(false)
 
