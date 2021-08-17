@@ -77,7 +77,8 @@ function SignInFormBase(props) {
           if(user.active===true) {
             //verifica si es admin
             if(user.isAdmin===true) {
-              localStorage.setItem("pg_merceria" , ('admin-'+user.id))
+              localStorage.setItem("pg_merceria" , (user.id))
+              localStorage.setItem("admin" , user.email)
               props.history.push(ROUTES.HOME);
             }else {
 

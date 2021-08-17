@@ -5,6 +5,7 @@ import { getOrder } from '../../../redux/actions/order'
 import { updateOrderStatus} from "../../../redux/actions/order/index"
 
 function OrderDetail(props) {
+    var admin = localStorage.getItem("admin")
     const id=props.match.params.id
     const {push}=useHistory()
     const dispatch=useDispatch()
@@ -31,8 +32,8 @@ function OrderDetail(props) {
     const handleStatusChange=(e)=>{
         setStatus(e.target.value)
     }
-    
-    return (
+    console.log("detalle",detailOrder)
+    return admin!=='null'?(
         <div>
             <br />
             <h3>Detalle del Producto</h3>
@@ -147,7 +148,7 @@ function OrderDetail(props) {
             </div>
             
         </div>
-    )
+    ):null;
 }
 
 export default OrderDetail

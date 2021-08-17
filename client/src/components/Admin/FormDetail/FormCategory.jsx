@@ -10,6 +10,7 @@ import "./ButtonForm.css";
 
 //CREAR RUTA DELETE PARA CATEGORIES
 function Form() {
+  var admin = localStorage.getItem("admin")
   const dispatch = useDispatch();
   const [category, setCategory] = useState([]);
   const [newCategory, setNewCategory] = useState("");
@@ -44,7 +45,7 @@ function Form() {
     setNewCategory(e.target.value);
   };
 
-  return (
+  return admin!='null'?(
     //agujas eliminar-->botton
     //botton agregar categorias
     <div className="container">
@@ -108,7 +109,7 @@ function Form() {
         </div>
       </div>
     </div>
-  );
+  ):null;
 }
 
 export default Form;

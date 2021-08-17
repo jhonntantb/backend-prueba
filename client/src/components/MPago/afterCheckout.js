@@ -51,7 +51,7 @@ export default function AfterCheckout (props) {
 
     const redirectHandler = (e) => {
         e.preventDefault()
-        props.history.push('/account')
+        props.history.push('/user/compras')
     }
 
     return (<div>
@@ -75,7 +75,9 @@ export default function AfterCheckout (props) {
                     <br/>
                     <span>Esperamos que disfrutes nuestros productos - Araceli Merceria</span>
                     <br/>
-                    <button onClick={redirectHandler}>Ir a mi Cuenta</button>
+                    <button onClick={redirectHandler}
+                    className='btn btn-block btn-black rm-border'
+                    >Ir a mi Cuenta</button>
                 
             </div>
 

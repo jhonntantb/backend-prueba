@@ -6,8 +6,12 @@ import { getAllOffice } from "../../redux/actions/office";
 import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader";
 import * as ROUTES from "../../routes";
 import "./ProductCreation.css";
+import NotFound from "../NotFound/NotFound";
 
 const ProductCreation = (props) => {
+
+  const admin = localStorage.getItem("admin")
+
   const dispatch = useDispatch();
 
   const storeCategories = useSelector(
@@ -140,7 +144,7 @@ const ProductCreation = (props) => {
   }, [storeOffices]);
 
   // onSubmit={(e)=>handleSubmit(e)}
-  return (
+  return admin!=='null'?(
     <div className="container">
       {/* <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -245,7 +249,7 @@ const ProductCreation = (props) => {
         </button>
       </form>
     </div>
-  );
+  ):<NotFound/>;
 };
 
 export default ProductCreation;

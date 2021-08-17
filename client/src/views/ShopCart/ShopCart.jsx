@@ -5,8 +5,11 @@ import { getAllOrder, createOrder,updateOrder } from "../../redux/actions/order/
 import { getCart } from "../../redux/actions/cart/index";
 import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts";
 import { useHistory } from "react-router-dom";
+import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
 
 export default function ShopCart() {
+
+    CheckUser();
     const dispatch = useDispatch()
     const [total, setTotal] = useState(0)
     const cart = useSelector(state => state.cartReducer.cart)
@@ -29,8 +32,8 @@ export default function ShopCart() {
         <h2 class="h6 px-4 py-3 bg-secondary text-center">Total</h2>
         <div class="h3 font-weight-semibold text-center py-3">$ {total}</div>
 
-        <h3 class="h6 pt-4 font-weight-semibold"><span class="badge badge-success mr-2">Note</span>Comentarios Adicionales</h3>
-        <textarea class="form-control mb-3" id="order-comments" rows="5"></textarea>
+        {/* <h3 class="h6 pt-4 font-weight-semibold"><span class="badge badge-success mr-2">Note</span>Comentarios Adicionales</h3>
+        <textarea class="form-control mb-3" id="order-comments" rows="5"></textarea> */}
         </div>
       </div>
         
@@ -39,7 +42,7 @@ export default function ShopCart() {
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card mr-2 ">
           <rect x="1" y="4" width="20" height="16" rx="2" ry="2"></rect>
           <line x1="1" y1="10" x2="20" y2="10"></line>
-        </svg>Confirmar Pedido</button>
+        </svg>Iniciar Pedido</button>
         </Link>
      </div>
     

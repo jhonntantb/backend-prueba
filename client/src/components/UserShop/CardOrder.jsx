@@ -7,9 +7,9 @@ import "./CardOrder.css"
 function CardOrder(props) {
 const dispatch = useDispatch()
 
-useEffect(() => {
-    dispatch(getProduct(props.products[0].id))
-}, [])
+// useEffect(() => {
+//     dispatch(getProduct(props.products[0].id))
+// }, [])
 
 const product = useSelector(state => state.productReducer.product)
 var color="";
@@ -24,9 +24,9 @@ console.log(product)
     return (
         <div className="cardUserOrder">
             <div>
-                {
+                {/* {
                     product.length>0?<img src={product.productimages[0].image_url} alt="Not Fount" />:null
-                }
+                } */}
             </div>
             <br />
             <div>
