@@ -8,7 +8,7 @@ function Shopping() {
     const dispatch = useDispatch()
     const userid=localStorage.getItem('pg_merceria')
     
-    console.log("este es el usuaario",userid)
+    //console.log("este es el usuaario",userid)
     useEffect(() => {
         // get orders de un usuario????
         dispatch(getAllOrder(userid))
@@ -22,10 +22,10 @@ function Shopping() {
         <div>
             <br />
             <br />
-            <h3>Pedidos Realizados</h3>
+            <h3 className="text-center">Pedidos Realizados</h3>
             {orders&&orders.length>0?orders.map(e=>
             <CardOrder status={e.status} products={e.products} total_price={e.total_price} />
-            ): <p>Aún no tiene Pedidos</p> }
+            ): <p className="text-center">Aún no tiene Pedidos</p> }
         </div>
     )
 }
