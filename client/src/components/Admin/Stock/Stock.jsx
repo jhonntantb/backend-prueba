@@ -9,6 +9,7 @@ import "./Stock.css";
 import "./Table.css";
 
 function Stock() {
+  var admin = localStorage.getItem("admin")
   const dispatch = useDispatch();
   const { push } = useHistory();
 
@@ -129,7 +130,7 @@ function Stock() {
     }
   });
   //-------------------------------------------------------------------------
-  return (
+  return admin!='null'?(
     <div>
       {/* <nav
         className="navbar justify-content-start mx-3"
@@ -243,7 +244,7 @@ function Stock() {
         </ul>
       </nav> */}
     </div>
-  );
+  ):null;
 }
 
 export default Stock;

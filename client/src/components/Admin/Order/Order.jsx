@@ -9,6 +9,7 @@ import "./Order.css";
 
 
 function Order() {
+  var admin = localStorage.getItem("admin")
   const dispatch = useDispatch();
   const [orderView, setOrderView] = useState([]);
   const [status, setStatus] = useState("");
@@ -76,7 +77,7 @@ function Order() {
     }
   });
 
-  return (
+  return admin!=='null'?(
     <div>
       <div>
         <br />
@@ -213,7 +214,7 @@ function Order() {
         </ul> */}
       </div>
     </div>
-  );
+  ):null;
 }
 
 export default Order;

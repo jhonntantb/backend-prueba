@@ -9,11 +9,12 @@ export default function NotFound () {
     return (
         <div className='not-found'>
             <img
+                className='not-found'
                 src='https://sabuss.com/404.png'
                 alt='404 - No se encontró la Página solicitada'
             />
             {/* <Link to='/Home' style={{ textDecoration: 'none' }}> */}
-            <button className='btn-1'
+            <button className="btn btn-block btn-black rm-border"
             onClick={handleClick}
             >Volver al Inicio!</button>
             {/* </Link> */}

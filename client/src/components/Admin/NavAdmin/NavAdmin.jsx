@@ -5,10 +5,15 @@ import { getAllOrder } from "../../../redux/actions/order/index";
 import { getAllOffice } from "../../../redux/actions/office";
 import { getAllProduct } from "../../../redux/actions/product";
 import * as ROUTES from "../../../routes";
+import NotFound from "../../../views/NotFound/NotFound";
 
 function NavAdmin() {
   const dispatch = useDispatch();
-  return (
+
+  const admin = localStorage.getItem("admin")
+
+
+  return admin!=='null'?(
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-text">Tareas</span>
@@ -92,7 +97,7 @@ function NavAdmin() {
         </div>
       </div>
     </nav>
-  );
+  ): <NotFound/>
 }
 
 export default NavAdmin;

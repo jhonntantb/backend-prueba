@@ -13,23 +13,24 @@ export default function CheckUser () {
     var localUser = localStorage.getItem("pg_merceria")
     var localAdmin = localStorage.getItem("admin")
 
-    let aux =[]
-    aux.push(localUser)
-    aux.push(localAdmin)
+    // let aux =[]
+    // aux.push(localUser)
+    // aux.push(localAdmin)
 
     if(localUser!=="guest") {
             if(storeUser.id===undefined) {
                 dispatch(getUser(localUser))
             }
-    }else{setUserLoaded(true)}
+    }
 
-    useEffect(()=>{
-        if(storeUser.id!==undefined) {
-            setUserLoaded(true)
-        }
+    // useEffect(()=>{
+    //     if(storeUser.id!==undefined) {
+    //         setUserLoaded(true)
+    //     }
 
-    },[storeUser])
+    // },[storeUser])
 
-    if(userLoaded) return aux;
+    // if(userLoaded) return aux;
     
+    return
 }
