@@ -57,10 +57,20 @@ class Firebase {
 
     doSignOut = () => this.auth.signOut();
 
-    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+    doPasswordReset = email => {
+        
+        try {
+            this.auth.sendPasswordResetEmail(email);
+            console.log("se envio el mail a la casilla de correo")
+        } catch (err) {alert(err)}
+    }
 
-    doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
+    doPasswordUpdate = password =>{
+        try {
+            this.auth.currentUser.updatePassword(password);
+            alert("se actualizó la contraseña")
+        } catch (err){alert(err)}
+    }
 
 }
 

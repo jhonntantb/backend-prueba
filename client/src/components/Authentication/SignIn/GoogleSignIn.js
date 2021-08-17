@@ -26,7 +26,7 @@ const GoogleBase = (props) => {
     const dispatch = useDispatch();
     const storeUser = useSelector(state=>state.userReducer.user);
 
-  console.log('props: ' , props)
+  // console.log('props: ' , props)
     function handleGoogle(e) {
 
         // console.log('Firebase: ')

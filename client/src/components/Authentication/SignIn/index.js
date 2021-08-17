@@ -41,8 +41,9 @@ function SignInFormBase(props) {
         .doSignInWithEmailAndPassword(email, password)
         .then((userCredentials) => {
           // console.log('userCredentials tiene: ' + Object.keys(userCredentials))
-          // console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
-          
+          console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
+          console.log('userCredentials.user.uid' , userCredentials.user.uid)
+
           dispatch(getUser(userCredentials.user.uid))
 
           
@@ -52,6 +53,7 @@ function SignInFormBase(props) {
         })
         .catch(error => {
           setState({ error });
+          alert(error.message)
         });
     
       
@@ -98,6 +100,7 @@ function SignInFormBase(props) {
 
     } else {
       //si user es guest, setea la session a guest
+      alert("Ocurrió un error inesperado, contacte al administrador")
       localStorage.setItem("pg_merceria", 'guest')
       // dispatch(clearUser())
     }
