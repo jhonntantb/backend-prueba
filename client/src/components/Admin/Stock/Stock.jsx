@@ -77,9 +77,9 @@ function Stock() {
     setIdOffice("");
     push("/admin");
   };
-  /*useEffect(() => {
-        setStock(productsAll.filter(e=>e.stocks[0].officeId===idOffice))
-    }, [idOffice])*/
+  useEffect(() => {
+        idOffice.length>0&&setStock(productsAll.filter(e=>e.stocks[0].officeId===idOffice))
+    }, [idOffice])
 
   //-------------------------Paginado de Tablas------------------//
   const [currentPage, setCurrentPage] = useState(1);
@@ -211,17 +211,13 @@ function Stock() {
                     </tr>
                   ))
                 : null}
-              {stock && stock.length > 0 ? (
-                <button onClick={(e) => handleChanges(e)}>
-                  Enviar cambios
-                </button>
-              ) : null}
+              
             </tbody>
           </table>
         </table>
       </div>
 
-      {/* <nav aria-label="Page navigation example" className="pageNumbers">
+      { <nav aria-label="Page navigation example" className="pageNumbers">
         <ul className="pagination justify-content-center">
           <li className="page-item">
             <button
@@ -241,7 +237,12 @@ function Stock() {
             </button>
           </li>
         </ul>
-      </nav> */}
+      </nav> }
+      {stock && stock.length > 0 ? (
+                <button onClick={(e) => handleChanges(e)}>
+                  Enviar cambios
+                </button>
+              ) : null}
     </div>
   );
 }

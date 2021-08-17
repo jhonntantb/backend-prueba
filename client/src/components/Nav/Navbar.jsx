@@ -9,6 +9,7 @@ import * as ROUTES from '../../routes';
 import { getAllProduct } from '../../redux/actions/product';
 import {ShowCartCant} from './ShowCartCant';
 import CheckUser from '../Authentication/CheckUser/CheckUser';
+import { getAllOrder } from '../../redux/actions/order';
 
 
 const Navbar = () => {
@@ -76,7 +77,7 @@ const Navbar = () => {
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href={ROUTES.ACCOUNT}>Seguridad</a></li>
                 <li><a class="dropdown-item" href="#">Mis Datos</a></li>
-                <li><a class="dropdown-item" href="#">Compras</a></li>
+                <li> <NavLink class="dropdown-item" to="/user/compras" onClick={e=>dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" ><SignOutButton /></a></li>
               </ul>
