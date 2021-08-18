@@ -166,7 +166,7 @@ const ProductCreation = (props) => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Resumen del Producto</label>
+          <label className="form-label">Características del Producto</label>
           <input
             name="resume"
             value={addProduct.resume}
