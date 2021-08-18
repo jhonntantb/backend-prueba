@@ -6,7 +6,14 @@ import ShowReviews from "../../components/ShowReviews/ShowReviews";
 import CreateReview from "../../components/Review/CreateReview";
 import Carrousel from "../../components/Carrousel/Carrousel";
 import { NavLink } from "react-router-dom";
-import { Card, CardBody, CardSubtitle, CardTitle, CardText } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardSubtitle,
+  CardTitle,
+  CardText,
+  Button,
+} from "reactstrap";
 import { getCart } from "../../redux/actions/cart/index";
 import "./Product.css";
 
@@ -92,7 +99,9 @@ export default function Product({ match }) {
 
                 {admin !== "null" ? (
                   <NavLink to={`/productupdate/${product.id}`}>
-                    {"Modificar producto"}
+                    <button className="btn btn-default mt-2 boton-modificar">
+                      Modificar producto
+                    </button>
                   </NavLink>
                 ) : null}
               </div>

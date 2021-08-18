@@ -7,10 +7,10 @@ import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader"
 import * as ROUTES from "../../routes";
 import "./ProductCreation.css";
 import NotFound from "../NotFound/NotFound";
+import Swal from "sweetalert2";
 
 const ProductCreation = (props) => {
-
-  const admin = localStorage.getItem("admin")
+  const admin = localStorage.getItem("admin");
 
   const dispatch = useDispatch();
 
@@ -36,9 +36,19 @@ const ProductCreation = (props) => {
   };
 
   const [addProduct, setaddProduct] = useState(local_initial_state);
+  const handleAlert = () => {
+    Swal.fire({
+      icon: "success",
+      title: "¡Enhorabuena!",
+      text: "El producto se creó correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleAlert();
 
     if (
       addProduct.title != "" &&
@@ -144,7 +154,7 @@ const ProductCreation = (props) => {
   }, [storeOffices]);
 
   // onSubmit={(e)=>handleSubmit(e)}
-  return admin!=='null'?(
+  return admin !== "null" ? (
     <div className="container">
       {/* <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -175,14 +185,15 @@ const ProductCreation = (props) => {
             autoComplete="off"
           />
         </div>
-        <div className="form-floating">
+        <div className="mb-3">
+          <label className="form-label">Detalle</label>
           <textarea
             name="detail"
             className="form-control"
             value={addProduct.detail}
             onChange={handleChange}
-            id="floatingTextarea"
             autoComplete="off"
+            rows="7"
           />
           <label htmlFor="floatingTextarea">Detalle</label>
         </div>
@@ -249,7 +260,9 @@ const ProductCreation = (props) => {
         </button>
       </form>
     </div>
-  ):<NotFound/>;
+  ) : (
+    <NotFound />
+  );
 };
 
 export default ProductCreation;
