@@ -9,7 +9,7 @@ import { compose } from 'recompose';
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 
-import { createUser } from '../../../redux/actions/user/index';
+import { createUser, clearUser } from '../../../redux/actions/user/index';
 
 import './index.css';
 
@@ -57,15 +57,18 @@ function SignUpFormBase(props) {
         address: street + ' - ' + number,
         province: province,
         location: city,
-        country: country
+        country: country,
+        active: false
       }
       dispatch(createUser(userOk))
 
-      if (authUser !== undefined) {
+      if (authUser.user.uid !== undefined) {
         setState({ ...initial_state })
         alert("verifica tu correo electronico para continuar con el proceso")
+        dispatch(clearUser())
         props.history.push(ROUTES.LANDING)
-
+      }else {
+        throw new Error("Se produjo un Error, por favor contactar al administrador")
       }
 
     } catch (error) {

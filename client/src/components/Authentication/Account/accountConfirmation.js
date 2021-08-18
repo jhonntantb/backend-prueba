@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { getUser } from "../../../redux/actions/user";
+import { getUser, updateUser } from "../../../redux/actions/user";
 
 
 export default function AccountConfirmation (props) {
@@ -9,6 +9,13 @@ export default function AccountConfirmation (props) {
     var search = props.location.search
     
     var id = search.split("&")[1].split("=")[1];
+
+    var activateUser = [
+        {id: id, 
+        changes: {active: true}}
+    ]
+        
+    
 
     dispatch(getUser(id))
 

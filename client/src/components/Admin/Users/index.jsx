@@ -34,6 +34,9 @@ export default function UsersAdmin(props) {
     }
   }
 
+  // if(storeUsers.length===0) {dispatch(getAllUser());}
+  dispatch(getAllUser())
+
   useEffect(() => {
     dispatch(getAllUser());
   }, []);
