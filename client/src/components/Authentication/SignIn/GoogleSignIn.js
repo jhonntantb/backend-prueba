@@ -6,13 +6,12 @@ import {getGoogleUser, clearUser, getUser} from '../../../redux/actions/user/ind
 import {LogInUser} from '../../../redux/actions/login/index';
 import * as ROUTES from '../../../routes';
 import { useHistory } from 'react-router-dom';
-
+import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
 
 const GoogleButton = (props) => {
+    
+  const history=useHistory();
 
-  
-
-    const history=useHistory();
     return (<div className='google-btn'>
         <RenderButton props={props} history={history}/>
     </div>)
@@ -26,7 +25,7 @@ const GoogleBase = (props) => {
     const dispatch = useDispatch();
     const storeUser = useSelector(state=>state.userReducer.user);
 
-  console.log('props: ' , props)
+  // console.log('props: ' , props)
     function handleGoogle(e) {
 
         // console.log('Firebase: ')
@@ -47,17 +46,19 @@ const GoogleBase = (props) => {
                     first_name: credentials.additionalUserInfo.profile.given_name,
                     last_name: credentials.additionalUserInfo.profile.family_name,
                     user_name: credentials.additionalUserInfo.profile.given_name + credentials.additionalUserInfo.profile.family_name,
+
                     address: 'no especificado',
                     province: 'no especificado',
                     location: 'no especificado',
                     country: 'no especificado'
+
                 }
                 //voy a tener que implementar una action especifica para esto =(
                     
                     dispatch(getGoogleUser(user))
                     setUserOk(user)
             })
-            .catch(err=>console.log(err))
+            .catch(err=>alert(err.message))
     }
 
     useEffect(()=>{
@@ -94,8 +95,9 @@ const GoogleBase = (props) => {
                 dispatch(LogInUser(storeUser.email))
               }else {
                 //si esta inactivo arroja un mensaje
+                dispatch(sendEmailConfirmation(storeUser))
                 dispatch(clearUser())
-                alert('El usuario ha sido inhabilitado por el administrador')
+                alert('El usuario esta inhabilitado, verifique su casilla de correo para continuar con el proceso o contacte al adminsitrador')
                 history.push('/')
                 
               }
@@ -109,12 +111,7 @@ const GoogleBase = (props) => {
       },[storeUser])
 
     return (
-    // <div>
-    // <button onClick={(e) =>handleGoogle(e)}>
-    //     iniciar sesion con Google
-    // </button>
-
-    // </div>)
+    
     <div className="container text-center">
   <a
     className="btn btn-outline-dark"
@@ -130,7 +127,7 @@ const GoogleBase = (props) => {
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
       
     />
-    Login with Google
+    Ingresar con Google
   </a>
 </div>
 
