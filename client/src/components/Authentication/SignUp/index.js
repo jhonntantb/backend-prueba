@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { compose } from 'recompose';
 
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 
-import { createUser } from '../../../redux/actions/user/index';
+import { createUser, clearUser } from '../../../redux/actions/user/index';
+import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
 
 import './index.css';
 
@@ -33,9 +34,9 @@ const initial_state = {
 
 function SignUpFormBase(props) {
 
-
+  const storeUser = useSelector(state=>state.userReducer.user)
   const dispatch = useDispatch();
-
+  
 
   var [state, setState] = useState(initial_state)
 
@@ -57,14 +58,18 @@ function SignUpFormBase(props) {
         address: street + ' - ' + number,
         province: province,
         location: city,
-        country: country
+        country: country,
+        active: false
       }
       dispatch(createUser(userOk))
 
-      if (authUser !== undefined) {
+      if (authUser.user.uid !== undefined) {
         setState({ ...initial_state })
-        props.history.push(ROUTES.SIGN_IN)
-
+        // alert("verifica tu correo electronico para continuar con el proceso")
+        // dispatch(clearUser())
+        // props.history.push(ROUTES.LANDING)
+      }else {
+        throw new Error("Se produjo un Error, por favor contactar al administrador")
       }
 
     } catch (error) {
@@ -108,6 +113,14 @@ function SignUpFormBase(props) {
       email === '' ||
       user_name === '');
 
+  useEffect(()=>{
+    if(typeof storeUser === 'object') {
+      alert("verifica tu correo electronico para continuar con el proceso")
+        dispatch(sendEmailConfirmation(storeUser))
+        dispatch(clearUser())
+        props.history.push(ROUTES.LANDING)
+    }
+  },[storeUser])    
 
 
   return (

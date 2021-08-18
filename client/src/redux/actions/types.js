@@ -71,3 +71,9 @@ export const DELETE_OFFICE = "get_office"
 //Checkout
 
 export const GO_TO_CHECKOUT = "go_to_checkout"
+
+//Mailing
+
+export const ACCOUNT_CONFIRMATION_EMAIL = "send_confirmation_email"
+export const ORDER_STATUS_EMAIL = "order_status_email"
+export const LOW_STOCK_EMAIL = "low_stock-email"
