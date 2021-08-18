@@ -52,14 +52,14 @@ function SignInFormBase(props) {
           
         })
         .catch(error => {
-          setState({ error });
+          setState({ ...state, error:error });
           alert(error)
         });
     
       
     
 
-    // event.preventDefault();
+    event.preventDefault();
   };
 
   const onChange = event => {

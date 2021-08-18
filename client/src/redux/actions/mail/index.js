@@ -16,7 +16,7 @@ export const sendOrderStatusEmail = (user, order) => {
     }
 }
 
-export const sendOrderStatusEmail = (productId) => {
+export const sendLowStockEmail = (productId) => {
     
      return async (dispatch) => {
          const res = await axios.put('http://localhost:3001/mail/stock', productId)

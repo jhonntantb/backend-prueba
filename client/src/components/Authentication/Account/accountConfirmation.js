@@ -17,7 +17,7 @@ export default function AccountConfirmation (props) {
         
     
 
-    dispatch(getUser(id))
+    dispatch(updateUser(activateUser))
 
     localStorage.setItem("pg_merceria", id)
 

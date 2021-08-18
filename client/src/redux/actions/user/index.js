@@ -46,12 +46,15 @@ export const clearUser = () => {
 
 export const getGoogleUser = (user) => {
     return async (dispatch) => {
-        const res = await axios.get('http://localhost:3001/user/' + user.id)
-        if(res.data.email) {
-            return dispatch({type: TYPES.GET_USER, payload: res.data})
-        }else {
+        try { const res = await axios.get('http://localhost:3001/user/' + user.id)
+        console.log("googlereducer - respuesta del back: " ,res.data)
+        if(res.data.email!==undefined) return dispatch({type: TYPES.GET_USER, payload: res.data})
+        } catch(err) {
+            console.log("entre al else en google reducer")
             const userNew = await axios.post('http://localhost:3001/user', user)
+            console.log("y esta es la respuesta del back al intentar crear usuario: " , userNew.data)
             return dispatch({ type: TYPES.CREATE_USER, payload: userNew.data })
         }
-    }
+    }    
+    
 }
