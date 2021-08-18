@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "../../redux/actions/category";
-import { createProduct, getAllProduct } from "../../redux/actions/product";
+import { createProduct, getProduct, getAllProduct, resetProduct } from "../../redux/actions/product";
 import { getAllOffice } from "../../redux/actions/office";
 import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader";
 import * as ROUTES from "../../routes";
@@ -18,6 +18,7 @@ const ProductCreation = (props) => {
     (state) => state.categoryReducer.categories
   );
   const storeOffices = useSelector((state) => state.officeReducer.offices);
+  const product = useSelector((state) => state.productReducer.product);
 
   const [inputCategories, setInputCategories] = useState([]);
   const [inputOffice, setInputOffice] = useState([]);
@@ -36,10 +37,27 @@ const ProductCreation = (props) => {
   };
 
   const [addProduct, setaddProduct] = useState(local_initial_state);
+  const [catalog, setCatalog] = useState(0);
+
+  useEffect(() => {
+   dispatch(resetProduct());
+  },[]);
+  
+ // useEffect(() => {
+ // if(product.length>0){alert('Numero de catalogo ya existe')}
+ // }, [product]);
+
+  useEffect(() => {
+      dispatch(getProduct(addProduct.catalog_id));
+  }, [catalog]);
+  
+  
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setCatalog(addProduct.catalog_id);
+    
     if (
       addProduct.title != "" &&
       addProduct.resume !== "" &&
@@ -48,13 +66,19 @@ const ProductCreation = (props) => {
       addProduct.catalog_id !== null &&
       addProduct.image.length > 0 &&
       addProduct.quantity > 0 &&
-      addProduct.office !== ""
+      addProduct.office !== "" &&
+      product.length === 0
     ) {
       dispatch(createProduct(addProduct));
       dispatch(getAllProduct());
       props.history.push("/productlist");
     } else {
-      throw alert("TODOS LOS CAMPOS SON OBLIGATORIOS");
+       if(product.length !== 0) {
+        throw alert("NUMERO DE CATALOGO YA EXISTE");
+        }
+       else {
+        throw alert("FALTA INGRESAR CAMPOS OBLIGATORIOS");
+       } 
     }
   };
 
