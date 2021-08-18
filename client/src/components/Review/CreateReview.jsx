@@ -18,7 +18,7 @@ export default function CreateReview({ match }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (values.description.length < 1)
-      alert("La descripcion no puede estar vacio");
+      alert("La descripcion no puede estar vacia");
     else if (parseInt(values.score) < 1 || parseInt(values.score) > 5)
       alert("El Valor de score esta fuera del permitido");
     else {
@@ -73,8 +73,32 @@ export default function CreateReview({ match }) {
         />
       </form>
       {send == "true" && (
-        <div class="alert alert-success col-sm-5 mt-3" role="alert">
-          Perfecto! el formulario se envió correctamente
+        <div className="modal" tabIndex={-1}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Muchas gracias!</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                />
+              </div>
+              <div className="modal-body">
+                <p>Su review se a enviado con exito.</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
