@@ -23,8 +23,9 @@ conn.sync({ force: update }).then(() => {
 
  // ************  POR FAVOR NO COMENTAR ****************** //   
 
- // **************  PRECARGA DE DATOS A BASE DE DATOS **********************************   
-     if(update) {
+ // **************  PRECARGA DE DATOS A BASE DE DATOS **********************************  
+ // Solo se realiza para la base local y si el update esta en true. 
+     if(update && CONNECT === 'LOCAL') {
        // Categorias
        dataCategories.forEach(async (e) => await Category.create(
            {name: e.name,
@@ -43,7 +44,7 @@ conn.sync({ force: update }).then(() => {
       
            console.log('Oficinas pre-cargadas')
 
-      // Usuarios
+       // Usuarios
        dataUsers.forEach(async (e) => await User.create(
          { user_name: e.user_name,
            first_name: e.first_name,
@@ -58,163 +59,41 @@ conn.sync({ force: update }).then(() => {
          }
          ));
          console.log('Users pre-cargados')  
-      }
-
-      //  Productos
-       if(CONNECT === 'CLOUD' && update === true){
-     
-         for(let i=1001; i<1051; i++) {
-          Product.create(
-            {
-              catalog_id: i,    
-            }
-          )
-          .then(res => {
-            Productimage.create({
-              productId: res.id,
-              image_url: "https://http2.mlstatic.com/D_Q_NP_2X_909631-MLA46779834800_072021-R.webp"
-            })
-
-          })
-         }
-         console.log('Productos pre-cargados en cloud')
-       }
-       else
-       {
-       if(update === true && CONNECT === 'LOCAL')
-       { 
-        data.forEach(async (e) => {product = await Product.create(
-          {title: e.title,
-          catalog_id: e.catalog_id,
-          resume: e.resume,
-          detail: e.detail ,
-          price: e.price,
-              
-          })
+      
+       // Productos
+         data.forEach(async (e) => {product = await Product.create(
+           {title: e.title,
+           catalog_id: e.catalog_id,
+           resume: e.resume,
+           detail: e.detail ,
+           price: e.price,
+             
+           })
    
-            e.image.forEach( async(c) =>
-             await Productimage.create({
-                productId: product.id, 
-                image_url:c
-                }) 
-             ) 
+             e.image.forEach( async(c) =>
+              await Productimage.create({
+                 productId: product.id, 
+                 image_url:c
+                 }) 
+              ) 
           
-           //console.log('**************product catalog_id: ', product.catalog_id, e.category);
-           if(e.category.length>0){
-             //console.log('adentro!');
-             for(let i=0; i<e.category.length; i++)
-             {
-               //console.log('dentro del for', i); 
-               const categoryRec = await Category.findOne({where: {name: e.category[i]}})
-               //console.log('Catalog_id: ',product.catalog_id);
-               //console.log('categoryRec: ',categoryRec);
-               categoryRec.dataValues? await product.setCategories(categoryRec.dataValues.id) : null;
-               //categoryRec[0].dataValues? console.log('product:',product.catalog_id, ' category: ',categoryRec[0].dataValues.name ) : null;
-            
-             }
-            }
-  
-        });
-         console.log('Productos pre-cargados')
-      }
-      
-      }  
- // Caso por unica vez para cloud, para cargar el stock de todos los productos en sucursal cero.
-/*  if(CONNECT === 'CLOUD') {
-   var sucid = "9CC773AA-940F-4850-A2DB-250E1ECE5F40"
-   var prodid = [];
-   Product.findAll({attributes: ['id']  })
-  .then((res) => {
-   for(let i=0; i<res.length; i++){
-   prodid.push(res[i].dataValues.id)
-   }
-   console.log(prodid);
-   for(let i=0; i<prodid.length; i++){
-     Stock.create({
-       productId: prodid[i],
-       officeId: sucid,
-       quantity: 1000
-     })
-     .then(res => console.log(res.dataValues))
-   }
- })
- } */
-
-      
-     //  Reviews  (Todavia no se como pre-cargar las reviews. Las promesas no funcionan con el forEach)
-     /*  for(let i=0; i<dataReviews.length; i++){
-        console.log('Review ',dataReviews[i]);
-        const product = Product.findOne({where: {catalog_id: dataReviews[i].catalog_id}})
-        
-        const user =  User.findOne({where: {user_name: dataReviews[i].user_name}})
-       
-        Promise.all([product, user]).then((res) => {
-          console.log(res);         
-          if(res[0] && res[1]) {
-            dataReviews.create(
-          { date: dataReviews[i].date,
-            score: dataReviews[i].score,
-            description: dataReviews[i].description,
-            productId: res[0].dataValues.id,
-            userId: res[1].dataValues.id,
+            //console.log('**************product catalog_id: ', product.catalog_id, e.category);
+            if(e.category.length>0){
+              //console.log('adentro!');
+              for(let i=0; i<e.category.length; i++)
+              {
+                //console.log('dentro del for', i); 
+                const categoryRec = await Category.findOne({where: {name: e.category[i]}})
+                //console.log('Catalog_id: ',product.catalog_id);
+                //console.log('categoryRec: ',categoryRec);
+                categoryRec.dataValues? await product.setCategories(categoryRec.dataValues.id) : null;
+                //categoryRec[0].dataValues? console.log('product:',product.catalog_id, ' category: ',categoryRec[0].dataValues.name ) : null;
+              }
+            };
           })
-         } 
-         } )
-      } */
-///////////////////////////////////////////////////////////
+          console.log('Productos pre-cargados')
+      }  
+      ///////// FIN PRECARGA BASE DE DATOS LOCAL ////////////////
 
-/*       const datos =  
-       dataReviews.map((e) => {
-         return new Promise(async (resolve, reject) => 
-         {
-         console.log('Review ',e);
-         const product =  await Product.findOne({where: {catalog_id: e.catalog_id}})
-         console.log('Product: ',product);
-         const user =  await User.findOne({where: {user_name: e.user_name}})
-         console.log('User: ',user.dataValues);
-         if(product && user) {
-            await Review.create(
-            { date: e.date,
-              score: e.score,
-              description: e.description,
-              productId: product.dataValues.id,
-              userId: user.dataValues.id,
-            })
-         }  
-       }) 
-        }
-         )
-         Promise.all(datos)
-         .then((res) => console.log('Reviews recargados'))
-         .catch(err => console.log(err))  */
-
-///////////////////////////////////////////////////////////////////////////
-
-  
-  
-/*   const creaReview = async function(e)
-   {
-     console.log('Review: ',e)
-     const product =  await Product.findAll({where: {catalog_id: e.catalog_id}})
-     console.log('Product: ',product);
-     const user =  await User.findOne({where: {user_name: e.user_name}})
-     console.log('User: ',user.dataValues);
-     if(product && product.length > 0 && user) {
-        await Review.create(
-        { date: e.date,
-          score: e.score,
-          description: e.description,
-          productId: product.dataValues.id,
-          userId: user.dataValues.id,
-        })
-     } 
-   }
-   creaReview(dataReviews[0])
-   console.log('Reviews pre-cargados')  */
-
- 
-////////////////////////////////////////////////////////////////////////////////////  
-
-  });
-});
-
+    })   // Cierra el server.listen
+})  // Cierra el conn.sync
