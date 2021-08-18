@@ -72,6 +72,27 @@ class Firebase {
         } catch (err){alert(err)}
     }
 
+    doSendSignInLinkToEmail(email) {
+
+        var actionCodeSettings  = { 
+                        url: 'http://localhost:3000/twoSteps',
+                        handleCodeInApp: true    }
+
+        this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+            .then(() => {
+        alert("revisa tu casilla de correo para continuar")
+        window.localStorage.setItem('emailForSignIn', email);
+        console.log("FIREBASE: SUCCES")
+        // ...
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+            console.log("ERROR: " , errorMessage)
+        });
+    }
+
 }
 
 export default Firebase;

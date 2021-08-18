@@ -53,13 +53,13 @@ function SignInFormBase(props) {
         })
         .catch(error => {
           setState({ error });
-          alert(error.message)
+          alert(error)
         });
     
       
     
 
-    event.preventDefault();
+    // event.preventDefault();
   };
 
   const onChange = event => {
@@ -100,7 +100,7 @@ function SignInFormBase(props) {
 
     } else {
       //si user es guest, setea la session a guest
-      alert("Ocurrió un error inesperado, contacte al administrador")
+      // alert("Ocurrió un error inesperado, contacte al administrador")
       localStorage.setItem("pg_merceria", 'guest')
       // dispatch(clearUser())
     }

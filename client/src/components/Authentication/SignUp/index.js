@@ -63,7 +63,8 @@ function SignUpFormBase(props) {
 
       if (authUser !== undefined) {
         setState({ ...initial_state })
-        props.history.push(ROUTES.SIGN_IN)
+        alert("verifica tu correo electronico para continuar con el proceso")
+        props.history.push(ROUTES.LANDING)
 
       }
 

@@ -87,6 +87,7 @@ export default function UsersAdmin(props) {
         <table id="tableright" className="d-table-cell">
           <thead class="thead-warning">
             <tr>
+              <th>UID</th>
               <th>Email</th>
               <th>Usuario</th>
               <th>Estado</th>
@@ -98,6 +99,7 @@ export default function UsersAdmin(props) {
           <tbody>
             {storeUsers.map((u) => (
               <tr key={u.id}>
+                <td>{`${u.id}`}</td>
                 <td>{u.email}</td>
                 <td>{u.last_name + " " + u.first_name}</td>
                 <td>{u.active ? "Habilitado" : "Inhabilitado"}</td>

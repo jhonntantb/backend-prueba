@@ -57,7 +57,7 @@ const GoogleBase = (props) => {
                     dispatch(getGoogleUser(user))
                     setUserOk(user)
             })
-            .catch(err=>console.log(err))
+            .catch(err=>alert(err.message))
     }
 
     useEffect(()=>{
