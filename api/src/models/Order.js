@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, DATEONLY } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define('order', {
@@ -7,17 +7,29 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true
     },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: new Date()
     },
     status: {
-      type: DataTypes.ENUM('Entregado', 'En espera', 'En preparacion'),
+      type: DataTypes.ENUM('shipped', 'cart', 'checkout', 'approved', 'rejected', 'cancelled','delivered'),
+      defaultValue: "cart",
     },
     total_price: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      defaultValue: 0,
+    },
+    phone_number : {
+      type:DataTypes.BIGINT,
+      allowNull: true
+    },
+    postal_code: {
+      type:DataTypes.INTEGER,
+      allowNull:false
     },
     home_address: {
       type: DataTypes.STRING,
@@ -35,8 +47,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    delivery_time: {
+    delivery_date: {
       type: DataTypes.DATE,
+      defaultValue: new Date(),  
       allowNull: false,
     },
   });

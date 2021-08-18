@@ -1,0 +1,23 @@
+/* #cardgroup {
+    margin-top: 20%;
+    margin-bottom: 5%; 
+    margin-left: 5%;
+    align-content: space-around;
+    
+} */
+
+#cardgroup {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 5%; 
+    margin-left: 5%;
+    
+    
+}
+
+/*.col-md-12 {
+    justify-content:end ;
+}*/
+

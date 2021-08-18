@@ -10,6 +10,11 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
+    codesuc: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -20,7 +25,7 @@ module.exports = (sequelize) => {
       unique: true,
     },
     phone: {
-      type: DataTypes.STRING,
+      type: DataTypes.BIGINT,
       allowNull: false,
     },
   });

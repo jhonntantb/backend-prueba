@@ -24,8 +24,7 @@ export const getAllProduct = (search='') => {
         return dispatch({ type: TYPES.GET_ALL_PRODUCT, payload: res.data })
     }
 }
-// const res = await axios.get('http://localhost:3001/product')
-// const res = await axios.get(`http://localhost:3001/product?name=${search}`)
+
 
 export const updateProduct = (params) => {
     return async  (dispatch) => {
@@ -41,3 +40,9 @@ export const deleteProduct = (params) => {
         return dispatch({ type: TYPES.DELETE_PRODUCT, payload: res.data })
     }
 }
+export const getProductCategory = (categoryId) => {
+    return   (dispatch) => {
+        return dispatch({ type: TYPES.PRODUCT_CATEGORY, payload: categoryId })
+    }
+}
+

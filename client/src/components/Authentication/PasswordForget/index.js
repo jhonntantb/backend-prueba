@@ -2,12 +2,15 @@ import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import NotFound from '../../../views/NotFound/NotFound';
 
-const PasswordForgetPage = () => (
-  <div>
-    <PasswordForgetForm />
-  </div>
-);
+const PasswordForgetPage = () => {
+  const authUser= localStorage.getItem("pg_merceria");
+  
+  return authUser!=='guest'?(<div>
+            <PasswordForgetForm />
+          </div>):<NotFound/>
+};
 
 const INITIAL_STATE = {
   email: '',
@@ -77,9 +80,9 @@ function PasswordForgetFormBase(props) {
 }
 
 const PasswordForgetLink = () => (
-  <p>
-    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
-  </p>
+  
+    <Link  className="text-dark" to={ROUTES.PASSWORD_FORGET}>Olvide mi contraseña</Link>
+  
 );
 
 export default PasswordForgetPage;

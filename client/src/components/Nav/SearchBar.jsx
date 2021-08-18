@@ -1,48 +1,65 @@
-import React,{useState} from 'react'
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getProduct} from "../../redux/actions/product/index.js";
-
-
-
-/*const SearchBar = () => {
-    const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
-
-    const dispatch = useDispatch() 
-
-
-    return (
-      <input 
-       style={BarStyling}
-       key="random1"
-       value={keyword}
-       placeholder={"Agujas.."}
-       onChange={(e) => setKeyword(e.target.value)}
-       autoComplete="off"
-      />
-    );
-  }
-
-export default SearchBar*/
+import { useHistory } from "react-router-dom";
+import { getAllProduct } from "../../redux/actions/product/index.js";
+import { getProduct } from "../../redux/actions/product/index.js";
+import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
+import "./SearchBar.css";
 
 export default function SearchBar() {
-  const dispatch = useDispatch();
-  const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
-  const [name,setName] = useState("")
+  const [name, setName] = useState("");
 
-  const handleInputChange = (event) => {
-      event.preventDefault();
-      setName(event.target.value);
+  const dispatch = useDispatch();
+  const { push } = useHistory();
+ 
+
+  const handleInputSearch = (e) => {
+    e.preventDefault();
+    setName(e.target.value);
   };
-  
-  const handleClick= (event) => {
-      event.preventDefault();
-      dispatch(getProduct(name))
+  const handleClickSearch = (e) => {
+    e.preventDefault();
+    if (name.trim().length > 0) {
+      dispatch(getAllProduct(name));
+      setName("");
+      dispatch(SetCategoriesFiltradas("Todas"))
+      push("/productlist");
+    }
   };
 
   return (
-      <div className="divSearch">
-          <input style={BarStyling} className="inputsearch" type="text" placeholder="Buscar... " onChange={(e) => handleInputChange(e)} />
-          <button className="buttonsearch" onClick={(e) => handleClick(e)}>Buscar</button>
-      </div>
+    // <div className="search">
+    //   <input
+    //     className="form-control"
+    //     type="text"
+    //     placeholder="Crochets, Bastidores"
+    //     onChange={(e) => handleInputSearch(e)}
+    //   />
+    //   <button className="btn btn-block" onClick={(e) => handleClickSearch(e)}>
+    //     Buscar
+    //   </button>
+    // </div>
+    // <div className="search">
+    //   " "
+    //   <input
+    //     type="text"
+    //     className="form-control"
+    //     placeholder="Have a question? Ask Now"
+    //   />
+    //   <button className="btn btn-primary">Search</button>
+    // </div>
+
+    <div className="search">
+      <input
+        className="form-control"
+        type="text"
+        placeholder="Ingrese su busqueda..."
+        onChange={(e) => handleInputSearch(e)}
+      />
+
+      <button className="btn btn-block btn-black rm-border" onClick={(e) => handleClickSearch(e)}>
+        Buscar
+      </button>
+    </div>
   );
 }
