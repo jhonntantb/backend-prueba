@@ -50,7 +50,7 @@ export const getGoogleUser = (user) => {
         console.log("googlereducer - respuesta del back: " ,res.data)
         if(res.data.email!==undefined) return dispatch({type: TYPES.GET_USER, payload: res.data})
         } catch(err) {
-            console.log("entre al else en google reducer")
+            console.log("No encontro el usuario en la DB")
             const userNew = await axios.post('http://localhost:3001/user', user)
             console.log("y esta es la respuesta del back al intentar crear usuario: " , userNew.data)
             return dispatch({ type: TYPES.CREATE_USER, payload: userNew.data })
