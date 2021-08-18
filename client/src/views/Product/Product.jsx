@@ -69,10 +69,8 @@ export default function Product({ match }) {
 
             <div className="details col-md-6 text-center">
               <h3 className="product-title">{product.title}</h3>
-
-              <p className="product-description text-dark">{product.resume}</p>
-
               <h5 className="text-dark">{product.detail}</h5>
+
               <h4 className="price text-dark mt-3">
                 Articulo:{product.catalog_id}
               </h4>
@@ -86,6 +84,12 @@ export default function Product({ match }) {
                 unidades
               </h4>
               <h3 className="text-dark mt-3">${product.price}</h3>
+
+              <p className="product-description text-dark">{product.resume}</p>
+          
+              <h4 className="price text-dark mt-3">Articulo:{product.catalog_id}</h4>
+              <h4 className="price text-dark mt-3">Stock:{product.stocks.length > 0 ? product.stocks[0].quantity :(product.stock ? product.stock : "0")} unidades</h4>
+
               {/* <div className="productDetails">
               </div> */}
               <div className="action">
