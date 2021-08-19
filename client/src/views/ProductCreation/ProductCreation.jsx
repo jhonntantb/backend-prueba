@@ -93,6 +93,7 @@ const ProductCreation = (props) => {
         throw alert("FALTA INGRESAR CAMPOS OBLIGATORIOS");
       }
     }
+    handleAlert();
   };
 
   const handleChange = (e) => {
