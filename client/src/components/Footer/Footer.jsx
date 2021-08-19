@@ -69,7 +69,7 @@ const Footer = () => {
                             aria-hidden="true"
                           ></i>
                         </span>
-                        <a href="aracelimerceria@gmail.com">****@gmail.com</a>
+                        <a href="mailto:aracelimerceria@gmail.com">****@gmail.com</a>
                       </big>
                     </li>
                     <br />

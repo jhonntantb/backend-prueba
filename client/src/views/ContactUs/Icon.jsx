@@ -1,9 +1,10 @@
 
 import L from "leaflet"
+import Icon from "./Iconos/Icon.svg"
 
-const icon = L.icon({
-    iconUrl: require ('./Iconos/Icon.svg'),
-    iconRetinaUrl: require ('./Iconos/Icon.svg'),
+const iconLocation = L.icon({
+    iconUrl: Icon,
+    iconRetinaUrl: Icon,
     iconAnchor: null,
     shadowUrl: null,
     shadowSize: null,
@@ -12,4 +13,4 @@ const icon = L.icon({
     
 })
 
-export default icon;
+export default iconLocation;

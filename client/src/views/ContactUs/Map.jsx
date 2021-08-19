@@ -43,7 +43,7 @@ export const Map = () => {
                   <i id="facont" class="fa fa-envelope" aria-hidden="true"></i>
                   <span className="content">
                     <div className="adress-label">Email:</div>
-                    <a id="aemail" href="">aracelimerceria@gmail.com</a>
+                    <a id="aemail" href="mailto:aracelimerceria@gmail.com">aracelimerceria@gmail.com</a>
                   </span>
                 </span>
               </div>
