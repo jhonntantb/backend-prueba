@@ -57,10 +57,41 @@ class Firebase {
 
     doSignOut = () => this.auth.signOut();
 
-    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+    doPasswordReset = email => {
+        
+        try {
+            this.auth.sendPasswordResetEmail(email);
+            console.log("se envio el mail a la casilla de correo")
+        } catch (err) {alert(err)}
+    }
 
-    doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
+    doPasswordUpdate = password =>{
+        try {
+            this.auth.currentUser.updatePassword(password);
+            alert("se actualizó la contraseña")
+        } catch (err){alert(err)}
+    }
+
+    doSendSignInLinkToEmail(email) {
+
+        var actionCodeSettings  = { 
+                        url: 'http://localhost:3000/twoSteps',
+                        handleCodeInApp: true    }
+
+        this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+            .then(() => {
+        alert("revisa tu casilla de correo para continuar")
+        window.localStorage.setItem('emailForSignIn', email);
+        console.log("FIREBASE: SUCCES")
+        // ...
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+            console.log("ERROR: " , errorMessage)
+        });
+    }
 
 }
 

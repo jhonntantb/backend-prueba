@@ -46,3 +46,9 @@ export const getProductCategory = (categoryId) => {
     }
 }
 
+export const resetProduct = () => {
+    return {
+    type: TYPES.RESET_PRODUCT
+    }
+  };
+
