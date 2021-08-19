@@ -45,35 +45,26 @@ const Footer = () => {
                   <h4 class="footer-widget-title">Contactanos</h4>
                   <ul>
                     <li>
-                      {" "}
-                      <a href ="https://wa.link/l28b79">
+                      <a href="https://wa.link/l28b79">
                         <span>
                           <i id="fa1" class="fa fa-whatsapp" aria-hidden="true"></i>
-                        </span>{" "}
-                        +54 381 ***-****{" "}
+                        </span>
+                        +54 381 ***-****
                       </a>
                     </li>
                     <br />
                     <li>
-                      {" "}
                       <big>
-                        <a>
-                          <i
-                            id="fa1"
-                            class="fa fa-phone"
-                            aria-hidden="true"
-                          ></i>
-                        </a>{" "}
-                        0381 ***-****{" "}
+                        <span><i id="fa2" class="fa fa-phone"aria-hidden="true"></i></span>
+                        0381 ***-****
                       </big>
                     </li>
                     <br />
                     <li>
                       <big>
-                        {" "}
                         <span>
                           <i
-                            id="fa1"
+                            id="fa3"
                             class="fa fa-envelope"
                             aria-hidden="true"
                           ></i>
@@ -84,14 +75,9 @@ const Footer = () => {
                     <br />
                     <li>
                       <big>
-                        {" "}
                         <span>
-                          <i
-                            id="fa1"
-                            class="fa fa-map-marker"
-                            aria-hidden="true"
-                          ></i>
-                        </span>
+                          <i id="fa4"class="fa fa-map-marker" aria-hidden="true"></i>
+                       </span>
                         DIRECCION:{" "}
                       </big>
                       <br />

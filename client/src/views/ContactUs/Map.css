@@ -1,5 +1,162 @@
 
 .leaflet-container {
-    width: 60vw;
-    height: 25vw;
+    width: 100%;
+    height: 30vw;
+}
+
+.page-title {
+    margin-bottom: 30px;
+    background: #f0f0f0;
+    padding: 23px 0;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    vertical-align: top;
+    text-align: center;
+    margin-top: 3%;
+}
+
+.submitbut{
+    background: transparent;
+    border: none;
+    color: #ee8ea1;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+#input1 {
+    
+border: 1px solid #e5e5e5;
+border-top-width: 1px;
+border-right-width: 1px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+padding: 0px 0px 8px;
+border-width: 0 0 1px 0;
+background-image: -webkit-linear-gradient(hsla(0,0%,100%,0), hsla(0,0%,100%,0));
+}
+
+
+
+.formcont {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 30px 0;
+}
+
+
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+    width: 100%;
+    min-height: 150px;
+    resize: both;
+    border: 1px solid #e5e5e5;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    padding: 0px 0px 8px;
+    border-width: 0 0 1px 0;
+}
+
+.lead {
+    display: inline-block;
+    width: 45%;
+    padding: 0 40px 0 0;
+    margin-bottom: 20px;
+}
+
+.adress.container {
+    animation: wpb_rtl .7s 1 cubic-bezier(.175,.885,.32,1.275);
+    clear: both;
+margin: 20px 0 0 0;
+overflow: hidden;
+float: left;
+}
+
+.adress-text {
+    width: 100%;
+padding: 15px 0;
+float: left;
+font-weight: normal;
+line-height: 26px;
+color: #808080;
+    
+}
+
+.adress-text-inner {
+    margin: 0;
+overflow: hidden;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.adress-text-inner:hover .icon i {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transition: all 0.3s ease 0s;
+    -webkit-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    -ms-transition: all 0.3s ease 0s;
+    color: #ee8ea1;
+}
+
+.icon {
+float: left;
+padding: 4px 0 0;
+text-align: center;
+border: none;
+background: transparent;   
+}
+
+#facont{
+    color: #f3bac4;
+    width: 35px;
+    display: inline-block;
+    font: normal normal normal 25px/1 FontAwesome;
+    text-rendering: auto;
+}
+
+.content {
+    padding: 0 40px 0 15px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.adress-label {
+    display: none;
+    color: #808080;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#aemail {
+    color: #808080;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#aemail:hover {
+    text-decoration: none;
+color: #EE8EA1;
+opacity: 0.5;
+outline: 0;
+}
+
+#cwhats {
+    color: #808080;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#cwhats:hover {
+    text-decoration: none;
+color: #EE8EA1;
+opacity: 0.5;
+outline: 0;
 }
