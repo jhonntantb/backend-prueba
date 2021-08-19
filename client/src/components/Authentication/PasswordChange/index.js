@@ -9,9 +9,9 @@ const  PasswordChangePage = () => {
 
   const authUser= localStorage.getItem("pg_merceria");
 
-   return authUser!=='guest'?(<div>
+   return (<div>
     <PasswordChangeForm/>
-  </div>):<NotFound/>;
+  </div>)
 }
 
 

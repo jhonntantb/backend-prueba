@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
     },
     user_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     first_name: {
@@ -41,7 +41,7 @@ module.exports = (sequelize) => {
     },
     active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: false,
       allowNull: false,
     },
     address: {
