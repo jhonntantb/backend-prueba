@@ -6,7 +6,7 @@ import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import { getAllCategory } from "../../redux/actions/category/index.js";
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
-import { BrowserRouter } from 'react-router-dom';
+
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -129,7 +129,7 @@ function ProductList() {
           }
       })
 
-  console.log(lista_filtrada)
+  // console.log(lista_filtrada)
  
   return (
      <div className="container-fluid">
@@ -170,7 +170,7 @@ function ProductList() {
       <div className="d-table-cell" >
           {
             lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e => {
-              console.log("E.STOCKS :" , e)
+              // console.log("E.STOCKS :" , e)
               return (<span key={e.id} className="card-deck   mx-1" >
                 <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} stock={e.stocks.length > 0 ?  e.stocks[0].quantity : undefined} />
               </span>)}

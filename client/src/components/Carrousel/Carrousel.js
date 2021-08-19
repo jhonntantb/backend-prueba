@@ -52,18 +52,21 @@ const Carrousel = (props) => {
         if (animating) return;
         setActiveIndex(newIndex);
     }
-
+    var key=0;
     const slides = items.map((item) => {
         // console.log(item.image_url)
+        key++;
         return (
 
-            <CarouselItem class="container"
+            <CarouselItem 
+                key={key}
+                class="container"
                 onExiting={() => setAnimating(true)}
                 onExited={() => setAnimating(false)}
                 key={item.id}
             >
                 <img class="carrusel" src={item.image_url} alt={item.altText} width="100%" height="500" />
-                <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+                <CarouselCaption key={key*10} captionText={item.caption} captionHeader={item.caption} />
 
             </CarouselItem>
 

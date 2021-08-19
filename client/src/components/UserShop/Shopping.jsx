@@ -7,6 +7,8 @@ import CardOrder from './CardOrder'
 function Shopping() {
     const dispatch = useDispatch()
     const userid=localStorage.getItem('pg_merceria')
+    const [orderView,setOrderView]=useState([])//lo que vamos a renderizar
+    const [history,setHistory]=useState(true) 
     
     //console.log("este es el usuaario",userid)
     useEffect(() => {
@@ -15,17 +17,37 @@ function Shopping() {
     }, [])
     const orders=useSelector(state=>state.orderReducer.orders)
     useEffect(() => {
-        //orders.length>0&&dispatch(getProduct(orders.products[0].id))
+        orders.length&&setOrderView(orders.filter(e=>e.status!=="delivered"))
+
     }, [orders])
     console.log(orders.products)
+    //primero se muestra los productos que no tienen status  delivered luego pasa a history
+    //historial 
+    const showHistory=(event)=>{
+        event.preventDefault();
+        setOrderView(orders.filter(e=>e.status==="delivered"))
+        setHistory(false)
+    }
+    const ShowShoopInProcess=(event)=>{
+        event.preventDefault()
+        setOrderView(orders.filter(e=>e.status!=="delivered"))
+        setHistory(true)
+    }
     return (
         <div>
             <br />
             <br />
-            <h3 className='text-center'>Pedidos Realizados</h3>
-            {orders&&orders.length>0?orders.map(e=>
-            <CardOrder status={e.status} products={e.products} total_price={e.total_price} />
-            ): <p className="text-center">Aún no tiene Pedidos</p> }
+            <div>
+                <button onClick={e=>showHistory(e)}>Historial de Compras</button>
+                <button onClick={e=>ShowShoopInProcess(e)}>Seguimiento de Pedido</button>
+            </div>
+            <br />
+            <br />
+            {(history===true)?<h3 className='text-center'>Seguimiento de Pedidos</h3>:
+            <h3 className='text-center'>Historial de Compras</h3>}
+            {orderView&&orderView.length>0?orderView.map(e=>
+            <CardOrder id={e.id} status={e.status} products={e.products} total_price={e.total_price} />
+            ): <p>Aún no tiene Pedidos</p> }
         </div>
     )
 }

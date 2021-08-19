@@ -9,8 +9,10 @@ router.get("/:id", async  (req,res,next) => {
     console.log('id? ' + id)
     try {
         var user= await User.findByPk(id)
-
-        res.send(user)
+        console.log("ESTO ES USER despues de buscar en la DB: " , user)
+        if(user) {res.send(user)}
+        else{throw  Error("no se encontró el usuario")}
+        
 
     } catch (err) {next(err)}
 })

@@ -11,6 +11,7 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const PRODUCTS = '/productlist';
 export const USER_SHOP="/user/compras";
 export const CONTACT_US='/contactus'
+export const USER_ORDER_DETAIL="/user/compras/:id"
 
 
 export const ADMIN = '/admin';

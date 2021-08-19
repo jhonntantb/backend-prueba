@@ -31,6 +31,9 @@ import OrderDetail from './components/Admin/Order/OrderDetail';
 import AfterCheckout from './components/MPago/afterCheckout';
 import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
 import Shopping from './components/UserShop/Shopping';
+import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
+import twoStepsAuthPage from './components/Authentication/SignUp/twoSteps';
+import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
 
 
 function App() {
@@ -62,7 +65,10 @@ function App() {
       <Route exact path={ROUTES.FORM} component={Form} />
       <Route exact path={ROUTES.PRODUCT_CREATION} component={ProductCreation} />
       <Route exact path="/admin/orders/:id" component={OrderDetail}/>
-      <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>  
+      <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>
+      <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
+      <Route path='/twoStepsInit' component={twoStepsAuthPage}/>
+      <Route path='/AccountConfirmation' component={AccountConfirmation}/>
     </React.Fragment>
   )
 }
