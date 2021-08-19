@@ -1,32 +1,22 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrder, createOrder,updateOrder } from "../../redux/actions/order/index";
 import { getCart } from "../../redux/actions/cart/index";
 import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts";
-import { useHistory } from "react-router-dom";
 import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
 
 export default function ShopCart() {
+  CheckUser();
+  const dispatch = useDispatch()
+  const [total, setTotal] = useState(0)
+  const cart = useSelector(state => state.cartReducer.cart)
+  const user =  useSelector(state => state.userReducer.user)
 
-    CheckUser();
-    const dispatch = useDispatch()
-    const [total, setTotal] = useState(0)
-    const cart = useSelector(state => state.cartReducer.cart)
-    const order = useSelector(state => state.orderReducer.orders)
-    const user =  useSelector(state => state.userReducer.user)
-    const history = useHistory();
-
-
-    useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
-
-
-
-
+  useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
 
   return cart.length > 0 ? (
     <div>
-        <ShowCartProducts products={[...cart]} setTotal={setTotal} />
+        <ShowCartProducts products={cart} setTotal={setTotal} />
       <div className="row justify-content-center">
       <div class="col align-self-center col-lg-6">
         <h2 class="h6 px-4 py-3 bg-secondary text-center">Total</h2>
@@ -45,7 +35,6 @@ export default function ShopCart() {
         </svg>Iniciar Pedido</button>
         </Link>
      </div>
-    
   ) : (
     <div className="text-center text-dark mt-5">
       <h3 className="text-center ">No hay articulos en tu carrito</h3>
