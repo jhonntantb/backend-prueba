@@ -7,17 +7,14 @@
 } */
 
 #cardgroup {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    align-content: center;
-    margin-bottom: 5%; 
-    margin-left: 5%;
-    
-    
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  margin-bottom: 5%;
+  margin-left: 5%;
 }
 
 /*.col-md-12 {
     justify-content:end ;
 }*/
-

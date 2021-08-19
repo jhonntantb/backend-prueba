@@ -148,6 +148,20 @@ img {
   -webkit-transition: background 0.3s ease;
   transition: background 0.3s ease;
 }
+
+.boton-modificar {
+  background-color: #212529;
+  padding: 1.2em 1.5em;
+  border: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 15px;
+}
+
+.boton-modificar:hover {
+  color: #fff;
+}
 .add-to-cart:hover,
 .like:hover {
   background: #f3b2b2;

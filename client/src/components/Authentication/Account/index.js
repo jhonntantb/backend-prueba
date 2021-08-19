@@ -14,9 +14,6 @@ function AccountPage() {
       <h1>Account Page</h1>
       <ul>
         <li>
-          <PasswordForgetLink />
-        </li>
-        <li>
           <NavLink className="text-dark" to={ROUTES.PASSWORD_CHANGE} >Cambiar mi Contraseña</NavLink>
         </li>
       </ul>

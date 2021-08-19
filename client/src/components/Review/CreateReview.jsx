@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { createReview } from "../../redux/actions/review/index";
 import ReviewSeparator from "./ReviewSeparator";
+import Swal from "sweetalert2";
 
 export default function CreateReview({ match }) {
   const dispatch = useDispatch();
@@ -16,9 +17,15 @@ export default function CreateReview({ match }) {
   });
   const [send, setsend] = useState("False");
   function handleSubmit(e) {
+    const mostrarAlerta = () => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El campo no puede quedar vacio!",
+      });
+    };
     e.preventDefault();
-    if (values.description.length < 1)
-      alert("La descripcion no puede estar vacio");
+    if (values.description.length < 1) mostrarAlerta();
     else if (parseInt(values.score) < 1 || parseInt(values.score) > 5)
       alert("El Valor de score esta fuera del permitido");
     else {
@@ -28,17 +35,27 @@ export default function CreateReview({ match }) {
     }
   }
 
+  const alertSucces = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Muchas gracias",
+      text: "Tu review se a enviado correctamente!",
+      showConfirmButton: false,
+      timer: 1400,
+    });
+  };
+
   return (
     <div className="container mt-5">
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="form-group mt-5">
-          <label for="email" class="col-sm-2 control-label mt-5">
-            <p className="text-dark">Dejanos tu review!</p>
+          <label for="email" class="col-sm-3 control-label mt-5">
+            <h3 className="text-dark">Dejanos tu review!</h3>
           </label>
           <div className="col-sm-5">
             <textarea
               className="form-control"
-              rows="5"
+              rows="6"
               onChange={(e) => {
                 setValues({ ...values, description: e.target.value });
               }}
@@ -72,11 +89,7 @@ export default function CreateReview({ match }) {
           value="Enviar"
         />
       </form>
-      {send == "true" && (
-        <div class="alert alert-success col-sm-5 mt-3" role="alert">
-          Perfecto! el formulario se envió correctamente
-        </div>
-      )}
+      {send == "true" && alertSucces()}
 
       <ReviewSeparator />
     </div>
