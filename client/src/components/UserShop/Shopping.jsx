@@ -23,13 +23,13 @@ function Shopping() {
     console.log(orders.products)
     //primero se muestra los productos que no tienen status  delivered luego pasa a history
     //historial 
-    const showHistory=(e)=>{
-        e.preventDefault();
+    const showHistory=(event)=>{
+        event.preventDefault();
         setOrderView(orders.filter(e=>e.status==="delivered"))
         setHistory(false)
     }
-    const ShowShoopInProcess=(e)=>{
-        e.preventDefault()
+    const ShowShoopInProcess=(event)=>{
+        event.preventDefault()
         setOrderView(orders.filter(e=>e.status!=="delivered"))
         setHistory(true)
     }

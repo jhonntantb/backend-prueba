@@ -65,8 +65,7 @@ function App() {
       <Route exact path={ROUTES.PRODUCT_CREATION} component={ProductCreation} />
       <Route exact path="/admin/orders/:id" component={OrderDetail}/>
       <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>
-      <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>  
-      <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>  
+      <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
       <Route path='/twoStepsInit' component={twoStepsAuthPage}/>
       <Route path='/AccountConfirmation' component={AccountConfirmation}/>
     </React.Fragment>

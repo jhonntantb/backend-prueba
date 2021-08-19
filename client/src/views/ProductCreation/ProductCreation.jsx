@@ -48,11 +48,6 @@ const ProductCreation = (props) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleAlert();
-
-
   const [catalog, setCatalog] = useState(0);
 
   useEffect(() => {
@@ -97,6 +92,7 @@ const ProductCreation = (props) => {
         throw alert("FALTA INGRESAR CAMPOS OBLIGATORIOS");
        } 
     }
+    handleAlert();
   };
 
   const handleChange = (e) => {
