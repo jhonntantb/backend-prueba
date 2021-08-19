@@ -87,20 +87,22 @@ export default function CartProduct({ content, addPrice }) {
                   value={cant}
                   style={{ fontSize: "18px", fontWeight: "bold" }}
                 />
-                <div className="mt-3">
+                {/* <div className="mt-3">
                   <button
                     className="btn btn-outline-dark btnmore"
+                    value={cant}
                     onClick={handleSum}
                   >
                     +
                   </button>
                   <button
                     className="btn btn-outline-dark btnless"
+                    value={cant}
                     onClick={handleRes}
                   >
                     -
                   </button>
-                </div>
+                </div> */}
               </div>
               <button
                 class="btn btn-outline-danger btn-sm btn-block mb-2"
