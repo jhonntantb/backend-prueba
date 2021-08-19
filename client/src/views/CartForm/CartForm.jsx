@@ -17,20 +17,6 @@ export default function CartForm(){
         dispatch(getCart())
     }, [address])
 
-    // return (
-    //     <div>
-    //         {!address ? 
-    //         <AddressFrom setAddress={setAddress}/>
-    //         :
-    //         <div>
-    //             <CartReceipt/>
-    //             <br/>
-    //             <CreateCheckoutButton products={cart}/>
-    //         </div>
-    //         }   
-    //     </div>
-    // )
-
     return (
         <div>
             <div>
@@ -38,7 +24,7 @@ export default function CartForm(){
                 <br/>
                 <AddressFrom setAddress={setAddress}/>
                 <br/>
-                {address&&<CreateCheckoutButton products={cart} direction={address}/>}
+                {address && <CreateCheckoutButton products={cart} direction={address}/>}
             </div>
                
         </div>

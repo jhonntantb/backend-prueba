@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../redux/actions/cart/index";
 import { NavLink } from "react-router-dom";
-//import {} from "../../redux/actions/"
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
 function CardProduct(props) {
   const dispatch = useDispatch();
-  const [add, setAdd] = useState(false);
-  const cart = useSelector((state) => state.cartReducer.cart);
-  const user = useSelector((state) => state.userReducer.user);
-
+  const cart = useSelector(state => state.cartReducer.cart);
+  const user =  useSelector(state => state.userReducer.user)
+  const [add,setAdd] = useState(cart.find(prod => props.id == prod.id) ? true : false)
+  
   useEffect(
     () => (user.id ? dispatch(getCart(user.id)) : dispatch(getCart())),
     []

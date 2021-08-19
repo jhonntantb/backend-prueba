@@ -36,9 +36,12 @@ router.get("/", async function (req, res, next) {
 })
 
 router.get("/:idProducto", async function (req, res, next) {
-
-  const product_id = req.params.idProducto;
-  //console.log(product_id);
+  let product_id = req.params.idProducto;
+  // Si no viene nada en esta ruta (nulo) lo pone en cero, si no se rompe.
+  if(product_id === "null") product_id = 0;
+  
+  // Si el largo de product_id es mayor a 10 lo considera un UUID y busca por pk
+  // Si es menor lo considera un catalog id y busca por catalog id 
   if(product_id.length > 10){
    try {
      const product = await Product.findByPk(product_id, { include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
@@ -50,7 +53,7 @@ router.get("/:idProducto", async function (req, res, next) {
   else
   {
     try {
-      const product = await Product.findAll({where: { catalog_id: product_id }, include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
+      const product = await Product.findAll({where: { catalog_id: product_id  }, include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
       if (product) { return res.status(200).json(product) }
       else { res.status(400) }
     }
