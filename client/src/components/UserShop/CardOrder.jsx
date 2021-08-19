@@ -1,33 +1,25 @@
-import React,{ useEffect } from 'react'
+import React,{ useEffect, useState } from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { getProduct } from '../../redux/actions/product'
 import "./CardOrder.css"
 
 function CardOrder(props) {
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const [disabled,setDisabled]=useState(false)
 
-// useEffect(() => {
-//     dispatch(getProduct(props.products[0].id))
-// }, [])
+    var color="";
+    if(props.status==="approved") color="green" ; 
+    if(props.status==="rejected") color="red" ; 
+    if(props.status==="shipped") color="orange"  ;
+    if(props.status==="delivered") color="blue"; 
+    if(props.status==="cart") color="yellow" ;
+    if(props.status==="checkout") color="brown" ;
+    if(props.status==="cancelled") color="red" ;
 
-const product = useSelector(state => state.productReducer.product)
-var color="";
-if(props.status==="approved") color="green"
-if(props.status==="rejected") color="red"
-if(props.status==="shipped") color="orange"
-if(props.status==="delivered") color="blue"
-if(props.status==="cart") color="yellow"
-if(props.status==="checkout") color="brown"
-console.log(product)
+    
 
     return (
         <div className="cardUserOrder">
-            <div>
-                {/* {
-                    product.length>0?<img src={product.productimages[0].image_url} alt="Not Fount" />:null
-                } */}
-            </div>
             <br />
             <div>
                 <p>Estado: <span style={{color:color,fontSize: "20px"}}>{props.status}</span></p>
@@ -37,9 +29,11 @@ console.log(product)
                 </ul>
                 <p>Precio Total: {props.total_price}</p>
             </div>
-            {/* <div>
-                <NavLink>Ver Compra</NavLink>
-            </div> */}
+            <div>
+                <div>
+                <NavLink to={"/user/compras/" + props.id}><button>Ver Compras</button></NavLink>
+                </div>
+            </div>
               
         </div>
     )
