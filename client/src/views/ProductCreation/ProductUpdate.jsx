@@ -252,7 +252,6 @@ function ProductUpdate(props) {
             })
           : null}
         <button
-          disabled={storeImages.length > 0 ? false : true}
           className="buttonupdate"
           onClick={(e) => {
             handleSubmit(e);

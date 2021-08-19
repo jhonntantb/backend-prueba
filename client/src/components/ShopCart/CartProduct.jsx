@@ -90,12 +90,14 @@ export default function CartProduct({ content, addPrice }) {
                 <div className="mt-3">
                   <button
                     className="btn btn-outline-dark btnmore"
+                    value={cant}
                     onClick={handleSum}
                   >
                     +
                   </button>
                   <button
                     className="btn btn-outline-dark btnless"
+                    value={cant}
                     onClick={handleRes}
                   >
                     -

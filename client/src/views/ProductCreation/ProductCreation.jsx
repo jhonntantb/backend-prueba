@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "../../redux/actions/category";
-import { createProduct, getProduct, getAllProduct, resetProduct } from "../../redux/actions/product";
+import {
+  createProduct,
+  getProduct,
+  getAllProduct,
+  resetProduct,
+} from "../../redux/actions/product";
 import { getAllOffice } from "../../redux/actions/office";
 import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader";
 import * as ROUTES from "../../routes";
@@ -51,24 +56,21 @@ const ProductCreation = (props) => {
   const [catalog, setCatalog] = useState(0);
 
   useEffect(() => {
-   dispatch(resetProduct());
-  },[]);
-  
- // useEffect(() => {
- // if(product.length>0){alert('Numero de catalogo ya existe')}
- // }, [product]);
+    dispatch(resetProduct());
+  }, []);
+
+  // useEffect(() => {
+  // if(product.length>0){alert('Numero de catalogo ya existe')}
+  // }, [product]);
 
   useEffect(() => {
-      dispatch(getProduct(addProduct.catalog_id));
+    dispatch(getProduct(addProduct.catalog_id));
   }, [catalog]);
-  
-  
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setCatalog(addProduct.catalog_id);
-    
+    handleAlert();
 
     if (
       addProduct.title != "" &&
@@ -85,12 +87,11 @@ const ProductCreation = (props) => {
       dispatch(getAllProduct());
       props.history.push("/productlist");
     } else {
-       if(product.length !== 0) {
+      if (product.length !== 0) {
         throw alert("NUMERO DE CATALOGO YA EXISTE");
-        }
-       else {
+      } else {
         throw alert("FALTA INGRESAR CAMPOS OBLIGATORIOS");
-       } 
+      }
     }
     handleAlert();
   };
