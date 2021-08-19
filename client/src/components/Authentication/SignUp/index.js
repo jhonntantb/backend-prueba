@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { compose } from 'recompose';
-
+import { createUser, clearUser} from '../../../redux/actions/user/index';
+import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
+import {validateUserName, validateUserEmail} from "./errorsControl"
+import { callCity,callCountries, callRegion } from './locationCall';
 
-import { createUser, clearUser } from '../../../redux/actions/user/index';
-import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
 
 import './index.css';
 
@@ -35,10 +34,13 @@ const initial_state = {
 function SignUpFormBase(props) {
 
   const storeUser = useSelector(state=>state.userReducer.user)
+  const storePrevUser = useSelector(state=>state.userReducer.previousUser)
   const dispatch = useDispatch();
   
 
   var [state, setState] = useState(initial_state)
+  var [userError, setUserError] = useState(false)
+  var [emailError, setEmailError] = useState(false)
 
   const onSubmitHandler = async (e) => {
 
@@ -59,50 +61,56 @@ function SignUpFormBase(props) {
         country: country,
         active: false
       }
-      dispatch(createUser(userOk))
+      
 
       if (authUser.user.uid !== undefined) {
+        dispatch(createUser(userOk))
         setState({ ...initial_state })
-        // alert("verifica tu correo electronico para continuar con el proceso")
-        // dispatch(clearUser())
-        // props.history.push(ROUTES.LANDING)
       }else {
         throw new Error("Se produjo un Error, por favor contactar al administrador")
       }
 
     } catch (error) {
 
-      console.log('ESTE ES EL ERROR: ' + error.message)
-      setState({
-        ...state,
-        error: error
-      })
-
+      setState({...state, error: error})
     }
-
   }
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = async (e) => {
     e.preventDefault();
     setState({
       ...state,
       [e.target.name]: e.target.value
     })
+
+    if(e.target.name==="user_name") {
+
+      if(e.target.value.length>3) {
+        var validated = await validateUserName(e.target.value)
+         setUserError(validated)
+
+      }else{setUserError(false)}
+    }
+
+    if(e.target.name==="email") {
+
+      if(e.target.value.includes("@")&&e.target.value.includes(".com")) {
+        var validated = await validateUserEmail(e.target.value)
+         setEmailError(validated)
+  
+
+      }else{
+
+        if(e.target.value.length>0) {
+          setEmailError(true)
+        }else{setEmailError(false)}
+          
+        }
+    }
+    
   }
 
-  const {
-    user_name,
-    first_name,
-    last_name,
-    email,
-    passwordOne,
-    passwordTwo,
-    country,
-    province,
-    city,
-    street,
-    number,
-    error,
+  const { user_name,first_name,last_name,email,passwordOne,passwordTwo,country,province,city,street,number,error,
   } = state;
 
   const isInvalid =
@@ -112,7 +120,7 @@ function SignUpFormBase(props) {
       user_name === '');
 
   useEffect(()=>{
-    if(typeof storeUser === 'object') {
+    if(storeUser.email === email) {
       alert("verifica tu correo electronico para continuar con el proceso")
         dispatch(sendEmailConfirmation(storeUser))
         dispatch(clearUser())
@@ -120,23 +128,33 @@ function SignUpFormBase(props) {
     }
   },[storeUser])    
 
+  
+
 
   return (
     <div className="container mt-5">
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Sign Up</h3>
+            <h3 className="mb-4 text-center fs-1">Registrarse</h3>
             <form className='user-main mb-3' onSubmit={onSubmitHandler}>
               <div className="mb-3">
+                <label
+                hidden={user_name.length>3||user_name.length===0}
+                className="username-error"
+                >El Nombre de usuario debe contar con al menos 4 caracteres</label>
                 <input
                   name="user_name"
                   value={user_name}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="User Name"
+                  placeholder="Nombre de Usuario"
                   className="form-control"
                 />
+                <label
+                hidden={!(userError)}
+                className="password-cont"
+                >El nombre de usuario ya esta en uso</label>
               </div>
               <div className="mb-3">
                 <input
@@ -144,7 +162,7 @@ function SignUpFormBase(props) {
                   value={first_name}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="First Name"
+                  placeholder="Nombre"
                   className="form-control"
                 />
               </div>
@@ -154,17 +172,21 @@ function SignUpFormBase(props) {
                   value={last_name}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="Last Name"
+                  placeholder="Apellido"
                   className="form-control"
                 />
               </div>
               <div className="mb-3">
+                <label
+                className="password-cont"
+                hidden={!emailError}
+                >El email no tiene el formato adecuado o ya se encuentra registrado</label>
                 <input
                   name="email"
                   value={email}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="Email Address"
+                  placeholder="Email"
                   className="form-control"
                 />
               </div>
@@ -174,7 +196,7 @@ function SignUpFormBase(props) {
                   value={passwordOne}
                   onChange={onChangeHandler}
                   type="password"
-                  placeholder="Password"
+                  placeholder="Contraseña"
                   className="form-control"
                 />
               </div>
@@ -184,9 +206,13 @@ function SignUpFormBase(props) {
                   value={passwordTwo}
                   onChange={onChangeHandler}
                   type="password"
-                  placeholder="Confirm Password"
+                  placeholder="Confirmar Contraseña"
                   className="form-control"
                 />
+                <label 
+                hidden={passwordOne===passwordTwo}
+                className='password-cont'
+                >{`las contraseñas deben coincidir`}</label>
               </div>
               <div className="mb-3">
                 <input
@@ -197,6 +223,7 @@ function SignUpFormBase(props) {
                   placeholder="Pais"
                   className="form-control"
                 />
+                  
               </div>
               <div className="mb-3">
                 <input
@@ -250,9 +277,7 @@ function SignUpFormBase(props) {
         </div>
       </div>
     </div>
-
   )
-
 }
 
 const SignUpLink = () => {
