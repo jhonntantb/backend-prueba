@@ -87,7 +87,7 @@ export default function CartProduct({ content, addPrice }) {
                   value={cant}
                   style={{ fontSize: "18px", fontWeight: "bold" }}
                 />
-                {/* <div className="mt-3">
+                <div className="mt-3">
                   <button
                     className="btn btn-outline-dark btnmore"
                     value={cant}
@@ -102,7 +102,7 @@ export default function CartProduct({ content, addPrice }) {
                   >
                     -
                   </button>
-                </div> */}
+                </div>
               </div>
               <button
                 class="btn btn-outline-danger btn-sm btn-block mb-2"
