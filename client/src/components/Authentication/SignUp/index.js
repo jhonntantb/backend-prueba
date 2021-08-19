@@ -43,8 +43,6 @@ function SignUpFormBase(props) {
   const onSubmitHandler = async (e) => {
 
     const { user_name, first_name, last_name, email, passwordOne, province, city, street, number, country } = state;
-
-
     e.preventDefault();
 
     try {
