@@ -9,6 +9,7 @@ import Product from './views/Product/Product';
 import ProductCreation from './views/ProductCreation/ProductCreation';
 import ProductUpdate from './views/ProductCreation/ProductUpdate';
 import Landing from './views/Landing/Landing';
+import ContactUs from './views/ContactUs/Map';
 
 //components
 import SignUpPage from './components/Authentication/SignUp/index';
@@ -30,6 +31,8 @@ import OrderDetail from './components/Admin/Order/OrderDetail';
 import AfterCheckout from './components/MPago/afterCheckout';
 import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
 import Shopping from './components/UserShop/Shopping';
+import Wishlist from './views/Wishlist/Whislist';
+import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
 import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
 
 
@@ -49,7 +52,7 @@ function App() {
       <Route exact path={ROUTES.CART} component={ShopCart} />
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path='/productupdate/:id' component={ProductUpdate} />
-      
+      <Route path={ROUTES.CONTACT_US} component={ContactUs} />
       <Route path='/pagar' component={CreateCheckoutButton}/>
       <Route path='/after-checkout' component={AfterCheckout}/>
       <Route path='/after-checkout-reject' component={AfterCheckoutRejected}/>
@@ -60,8 +63,10 @@ function App() {
       <Route  exact path={ROUTES.ORDER} component={Order}/>
       <Route exact path={ROUTES.FORM} component={Form} />
       <Route exact path={ROUTES.PRODUCT_CREATION} component={ProductCreation} />
+      <Route exact path={ROUTES.WISHLIST} component={Wishlist} />
       <Route exact path="/admin/orders/:id" component={OrderDetail}/>
-      <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>  
+      <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>
+      <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
       <Route path='/AccountConfirmation' component={AccountConfirmation}/>
     </React.Fragment>
   )
