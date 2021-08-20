@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { getUser, updateUser } from "../../../redux/actions/user";
+import { updateUser } from "../../../redux/actions/user";
 import Swal from 'sweetalert2'
 
 
@@ -26,14 +26,8 @@ export default function AccountConfirmation(props) {
   localStorage.setItem("pg_merceria", id)
 
 
-  function cartRedirect(e) {
-    props.history.push("/cart")
-  }
-
-  function accountRedirect(e) {
-    props.history.push("/account")
-  }
-  const show = () => {
+ 
+  function  show () {
     Swal.fire({
       title: '¡Gracias por registrarte!',
       showDenyButton: true,
@@ -44,7 +38,6 @@ export default function AccountConfirmation(props) {
       denyButtonColor: "#212529 ",
       confirmButtonText: `Comprar`,
       denyButtonText: `Mi cuenta`,
-      allowOutsideClick: true,
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.href = "/productlist";

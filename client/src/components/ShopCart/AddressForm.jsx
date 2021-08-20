@@ -2,7 +2,7 @@ import { Form, Label, Input, FormText, FormGroup } from "reactstrap";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import "./AddressForm.css"
+ import "./AddressForm.css"
 
 export default function AddresForm({setAddress}){
     const user = useSelector(state => state.userReducer.user)
@@ -58,13 +58,13 @@ export default function AddresForm({setAddress}){
     return (
         provincias ? 
         <div>
-            <Form className='form-center'>
+            <Form className='container'>
 
                <FormGroup>
                     <Label>Direccion</Label>
                     <Input onChange={handleChange} type="text" value={direccion} name="address" id="orderAddress"/>
                 </FormGroup>
-
+                 <br />
                 <FormGroup>
                     <Label>Provincia</Label>
                     {selectProv ?
@@ -79,7 +79,7 @@ export default function AddresForm({setAddress}){
                       </Input>
                     }
                 </FormGroup>
-                   
+                   <br />
                 <FormGroup>
                     <Label>Ciudad</Label>
                     {selectLoc ?
@@ -94,26 +94,26 @@ export default function AddresForm({setAddress}){
                       </Input>
                     }
                 </FormGroup>
-
+                  <br />
  
                 <FormGroup>
                     <Label>Codigo Postal</Label>
                     <Input onChange={handleChange} type="text" value={cod} name="cod" maxLength="4" id="orderPostalCod"/>
                     <FormText>ej. 1706</FormText>
                 </FormGroup>
-
+                 <br />
                 <FormGroup>
                     <Label>Pais</Label>
                     <Input onChange={handleChange} type="text" value={pais} name="pais"  id="orderCountry"/>
                 </FormGroup>
-
+                 <br />
                 <FormGroup>
                     <Label>Numero de Telefono</Label>
                     <Input onChange={handleChange} type="text" value={telephone} name="telephone" maxLength="10" id="orderPhone"/>
                 </FormGroup>
-
-                <button onClick={handleSubmit}
-                className="btn btn-block btn-black rm-border"
+                 <br />
+                <button id="buttonorder"onClick={handleSubmit}
+                className="btn btn-block  rm-border my-5"
                 >Confirmar dirección de envio</button>
             </Form>
         </div>
