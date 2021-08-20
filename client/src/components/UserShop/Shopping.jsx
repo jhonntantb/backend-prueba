@@ -22,15 +22,11 @@ function Shopping() {
       setOrderView(orders.filter((e) => e.status !== "delivered"));
   }, []);
   console.log("este es el usuaario", userid);
-  useEffect(() => {
-    // get orders de un usuario????
-    dispatch(getAllOrder(userid));
-  }, []);
-  const orders = useSelector((state) => state.orderReducer.orders);
-  useEffect(() => {
-    orders.length &&
-      setOrderView(orders.filter((e) => e.status !== "delivered"));
-  }, [orders]);
+
+  // useEffect(() => {
+  //   orders.length &&
+  //     setOrderView(orders.filter((e) => e.status !== "delivered"));
+  // }, [orders]);
   console.log(orders.products);
   //primero se muestra los productos que no tienen status  delivered luego pasa a history
   //historial
