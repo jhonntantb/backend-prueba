@@ -13,8 +13,8 @@ export default function CartProduct({ content, addPrice, removePrice }) {
   useEffect(() => {
     setLocalPrice(content.price * cant);
     var arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
-
     localStorage.setItem("cart", JSON.stringify(arr));
+    dispatch(getCart());
   }, [cant]);
 
   useEffect(
@@ -41,12 +41,13 @@ export default function CartProduct({ content, addPrice, removePrice }) {
       }
     });
   };
+  
   const handleSum = () => {
     setCant(cant + 1);
   };
 
   const handleRes = () => {
-    setCant(cant - 1);
+    setCant(cant == 1 ? cant : cant - 1);
   };
 
   return (
@@ -87,14 +88,12 @@ export default function CartProduct({ content, addPrice, removePrice }) {
                 <div className="mt-3">
                   <button
                     className="btn btn-outline-dark btnmore"
-                    value={cant}
                     onClick={handleSum}
                   >
                     +
                   </button>
                   <button
                     className="btn btn-outline-dark btnless"
-                    value={cant}
                     onClick={handleRes}
                   >
                     -

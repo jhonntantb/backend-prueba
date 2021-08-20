@@ -26,7 +26,6 @@ export default function CartForm(){
                 <br/>
                 {address && <CreateCheckoutButton products={cart} direction={address}/>}
             </div>
-               
         </div>
     )
 } 
