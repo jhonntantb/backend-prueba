@@ -2,31 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../redux/actions/cart/index";
 import { NavLink } from "react-router-dom";
-<<<<<<< HEAD
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
 //import {} from "../../redux/actions/"
 import "./CardProduct.css";
 import { getWishlist } from "../../redux/actions/wishlist/index";
 import { getAllProduct } from "../../redux/actions/product";
-=======
 import "./CardProduct.css";
 import Swal from "sweetalert2";
->>>>>>> develop
 
 function CardProduct(props) {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cartReducer.cart);
-<<<<<<< HEAD
   const user =  useSelector(state => state.userReducer.user);
   const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
-  console.log(wishlist)
   const[Fav,addFav] = useState(false)
-  const[add,setAdd] = useState(false)
-
   useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [])
-=======
-  const user =  useSelector(state => state.userReducer.user)
   const [add,setAdd] = useState(cart.find(prod => props.id == prod.id) ? true : false)
   
   useEffect(
@@ -42,7 +33,6 @@ function CardProduct(props) {
       timer: 1500,
     });
   };
->>>>>>> develop
 
   useEffect(()=>{
     if(typeof wishlist.find != undefined &&typeof wishlist.find == "function"&&typeof wishlist.map == "function" ){
@@ -159,9 +149,9 @@ const handleSubmit = (e) => {
             </div>
           </div>
         </div>
-            </div>
-      </div>
-    </div>
+    //         </div>
+    //   </div>
+    // </div>
   );
 }
 

@@ -70,6 +70,7 @@ function ProductList() {
     });
   }
   if (Minimo == "" && Maximo == "" && orden == "A-Z") {
+    if(lista_filtrada)
     lista_filtrada.sort(function (a, b) {
       if (a.title < b.title) {
         return -1;
@@ -178,7 +179,7 @@ function ProductList() {
       <div className="d-table-cell" >
           {
             lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e => {
-              // console.log("E.STOCKS :" , e)
+               console.log( e)
               return (<span key={e.id} className="card-deck   mx-1" >
                 <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} stock={e.stocks.length > 0 ?  e.stocks[0].quantity : undefined} />
               </span>)}
