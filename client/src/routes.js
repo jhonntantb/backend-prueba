@@ -10,6 +10,7 @@ export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const PRODUCTS = '/productlist';
 export const USER_SHOP="/user/compras";
+export const CONTACT_US='/contactus'
 export const USER_ORDER_DETAIL="/user/compras/:id"
 
 
@@ -24,5 +25,6 @@ export const MANAGE_USERS ='/admin/manage-users';
 export const PASSWORD_CHANGE = '/pw-change';
 export const PRODDETAIL = '/productdetail';
 export const ABOUT ='/about';
+export const WISHLIST ='/wishlist';
 
 

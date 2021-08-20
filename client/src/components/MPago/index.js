@@ -63,7 +63,7 @@ function CreateCheckoutButton ({products, direction}) {
   }, [mpData])
   
   return (
-    <div id='button-checkout'></div>
+    <div className="btn" id='button-checkout'></div>
   )
 }
 
