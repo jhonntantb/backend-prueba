@@ -23,5 +23,6 @@ export const MANAGE_USERS ='/admin/manage-users';
 export const PASSWORD_CHANGE = '/pw-change';
 export const PRODDETAIL = '/productdetail';
 export const ABOUT ='/about';
+export const WISHLIST ='/wishlist';
 
 

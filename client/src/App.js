@@ -30,6 +30,7 @@ import OrderDetail from './components/Admin/Order/OrderDetail';
 import AfterCheckout from './components/MPago/afterCheckout';
 import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
 import Shopping from './components/UserShop/Shopping';
+import Wishlist from './views/Wishlist/Whislist';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
       <Route  exact path={ROUTES.ORDER} component={Order}/>
       <Route exact path={ROUTES.FORM} component={Form} />
       <Route exact path={ROUTES.PRODUCT_CREATION} component={ProductCreation} />
+      <Route exact path={ROUTES.WISHLIST} component={Wishlist} />
       <Route exact path="/admin/orders/:id" component={OrderDetail}/>
       <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>  
     </React.Fragment>

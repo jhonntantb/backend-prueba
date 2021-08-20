@@ -37,12 +37,13 @@ export const Landing = () => {
   }, []);
 
   let list4 = [];
-  list4.push(list[1], list[2], list[3], list[4]);
+  
 
   //console.log("LIST: ",list5)
   console.log("acaaaa")
   console.log(list)
-  return (
+  list4.push(list[0], list[1], list[2], list[3]);
+   return (
     <div>
       <div class="container-fluid ">
           <Carrousel images={items} />
@@ -55,7 +56,7 @@ export const Landing = () => {
             <div id="cardgroup" class="card-deck col col-lg-6  bottom-0 start-50 translate-middle-x">
               <div className=" col-lg-12 col-md-12 col-sm-12">
                 <h2>Productos Destacados</h2>
-              {list.length > 0 &&
+              {list.length > 2 &&
                 list4.map((c) => (
                   <CardProduct
                     id={c.id}

@@ -66,6 +66,11 @@ export const CREATE_OFFICE = "create_office"
 export const UPDATE_OFFICE = "update_office" 
 export const DELETE_OFFICE = "get_office"
 
+//Wishlist
+export const GET_ALL_WISHLIST = "get_all_wishlist"
+export const CREATE_WISHLIST = "create_wishlist"  
+export const DELETE_WISHLIST = "get_wishlist"
+
 //Checkout
 
 export const GO_TO_CHECKOUT = "go_to_checkout"

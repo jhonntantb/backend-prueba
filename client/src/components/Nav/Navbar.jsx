@@ -51,6 +51,12 @@ const Navbar = () => {
         <form className="d-flex ml-10 ">
           <SearchBar />
         </form>
+        {authUser !== 'guest' ?
+        <li className="nav-item active mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/wishlist"  >
+                Wishlist
+              </NavLink>
+            </li>:null}
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
           <ul className="navbar-nav ml-10  ">
           {/* <li className="nav-item mx-3">

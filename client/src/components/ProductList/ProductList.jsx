@@ -7,12 +7,16 @@ import { getAllCategory } from "../../redux/actions/category/index.js";
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
 import { BrowserRouter } from 'react-router-dom';
+import Wishlist from "../../views/Wishlist/Whislist.jsx";
+import { getWishlist } from "../../redux/actions/wishlist/index.js";
+
 
 function ProductList() {
   const dispatch = useDispatch();
 
   const list = useSelector((state) => state.productReducer.products);
   const categorias = useSelector((state) => state.categoryReducer.categories);
+  const id = useSelector((state) => state.userReducer.user.id);
   var categoryFiltrada = useSelector(
     (state) => state.categoryReducer.categoryFiltrada
   );
@@ -24,6 +28,7 @@ function ProductList() {
   useEffect(() => {
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
+    dispatch(getWishlist(id))
   }, []);
 
   var lista_filtrada = [];
@@ -191,12 +196,11 @@ function ProductList() {
                     </li>
                 </ul>
   
-    
+             
     </div>
   )
 
-
-
+ 
 }
 
 export default ProductList;

@@ -2,17 +2,30 @@ import React,{useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../redux/actions/cart/index"
 import { NavLink } from "react-router-dom";
+import { deleteWishlist } from "../../redux/actions/wishlist/index";
+import { createWishlist } from "../../redux/actions/wishlist/index";
 //import {} from "../../redux/actions/"
 import "./CardProduct.css";
+import { getWishlist } from "../../redux/actions/wishlist/index";
+import { getAllProduct } from "../../redux/actions/product";
 
 function CardProduct(props) {
   const dispatch = useDispatch();
-  const [add,setAdd] = useState(false)
   const cart = useSelector(state => state.cartReducer.cart);
-  const user =  useSelector(state => state.userReducer.user)
+  const user =  useSelector(state => state.userReducer.user);
+  const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
+  console.log(wishlist)
+  const[Fav,addFav] = useState(false)
+  const[add,setAdd] = useState(false)
 
   useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [])
 
+  useEffect(()=>{
+    if(typeof wishlist.find != undefined &&typeof wishlist.find == "function"&&typeof wishlist.map == "function" ){
+      if( wishlist.find(wish => wish.productId == props.id))addFav(true); else addFav(false) ;}
+    
+  
+  },[wishlist])
   const handleAddCart = () => {
     const prod = {
       id: props.id,
@@ -36,7 +49,40 @@ function CardProduct(props) {
 
     user.id ? dispatch(getCart(user.id)) : dispatch(getCart())
   }
-
+const handleSubmit = (e) => {
+  console.log(typeof(e.target.value))
+  if(e.target.value == "true" )  {
+    console.log("aca a punto de entrar al dispatch para deletearlo")
+    if(user.id != undefined && props.id != undefined)
+    {
+       dispatch(deleteWishlist({userId:user.id,productId:props.id})).then(()=> {
+        if(document.getElementById("wishlist") !=undefined ){
+          console.log("magia de jacobo");
+          console.log(document.getElementById("wishlist"))
+          dispatch(getWishlist(user.id))
+        }
+       })
+        addFav(false)  
+        
+          
+    }       
+                          }
+  
+  if(e.target.value == "false"){
+    console.log("aca a punto de entrar al dispatch para crearlo")
+    if(user.id != undefined && props.id != undefined)
+    {
+      dispatch(createWishlist({productId:props.id,userId:user.id, })).then(()=>{
+        if(document.getElementById("wishlist") !=undefined )
+        dispatch(getWishlist(user.id))
+      })
+      addFav(true)
+      
+    }
+   
+  }
+ 
+}
   return (
         <div class="card" >
           <div class="text-center p-4">
@@ -51,11 +97,15 @@ function CardProduct(props) {
           </div>
           <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
             <button class="btn btn-dark text-uppercase " disabled={add} onClick={handleAddCart}>Añadir al carro</button>
-            {/* <div class="add">
+            <div class="add">
               <span class="product_fav">
-                <i class="fa fa-heart-o"></i>
+                { 
+                  <button class={Fav===true ? "fa fa-heart":"fa fa-heart-o"} value={Fav} onClick={handleSubmit} ></button>  
+                  
+                  }
+              
               </span>
-            </div> */}
+            </div>
           </div>
         </div>
   );
