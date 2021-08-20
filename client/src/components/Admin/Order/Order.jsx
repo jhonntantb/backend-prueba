@@ -7,9 +7,8 @@ import * as ROUTES from "../../../routes";
 import "./PaginationTable.css";
 import "./Order.css";
 
-
 function Order() {
-  var admin = localStorage.getItem("admin")
+  var admin = localStorage.getItem("admin");
   const dispatch = useDispatch();
   const [orderView, setOrderView] = useState([]);
   const [status, setStatus] = useState("");
@@ -77,7 +76,7 @@ function Order() {
     }
   });
 
-  return admin!=='null'?(
+  return admin !== "null" ? (
     <div>
       <div>
         <br />
@@ -193,28 +192,32 @@ function Order() {
         </div>
         <br />
 
-        { <ul className="pageNumbers">
-          <li>
-            <button
-              onClick={handlePrevbtn}
-              disabled={currentPage === pages[0] ? true : false}
-            >
-              prev
-            </button>
-          </li>
-          {renderPageNumbers}
-          <li>
-            <button
-              onClick={handleNextbtn}
-              disabled={currentPage === pages[pages.length - 1] ? true : false}
-            >
-              next
-            </button>
-          </li>
-        </ul> }
+        {
+          <ul className="pageNumbers">
+            <li>
+              <button
+                onClick={handlePrevbtn}
+                disabled={currentPage === pages[0] ? true : false}
+              >
+                prev
+              </button>
+            </li>
+            {renderPageNumbers}
+            <li>
+              <button
+                onClick={handleNextbtn}
+                disabled={
+                  currentPage === pages[pages.length - 1] ? true : false
+                }
+              >
+                next
+              </button>
+            </li>
+          </ul>
+        }
       </div>
     </div>
-  ):null;
+  ) : null;
 }
 
 export default Order;

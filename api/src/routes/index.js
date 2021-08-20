@@ -13,6 +13,7 @@ const Stock =require("./Stock");
 const Order =require("./Order");
 const Mpago = require("./Mpago");
 const Wishlist = require("./Wishlist");
+const Mail = require("./Mailing");
 
 const router = Router();
 
@@ -28,5 +29,6 @@ router.use("/stock",Stock)
 router.use("/order",Order)
 router.use("/checkout", Mpago)
 router.use("/wishlist",Wishlist)
+router.use("/mail", Mail)
 
 module.exports = router;
