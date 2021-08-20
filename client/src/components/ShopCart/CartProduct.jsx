@@ -1,15 +1,11 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ListGroupItem } from "reactstrap";
-import "./CartProduct.css";
-import { Button } from "reactstrap";
 import { getCart } from "../../redux/actions/cart";
+import "./CartProduct.css";
 import Swal from "sweetalert2";
 
-export default function CartProduct({ content, addPrice }) {
+export default function CartProduct({ content, addPrice, removePrice }) {
   const dispatch = useDispatch();
-  //console.log("ADDPRICE: ",addPrice)
   const [cant, setCant] = useState(content.cant);
   const [localPrice, setLocalPrice] = useState(content.price);
   const cart = useSelector((state) => state.cartReducer.cart);
@@ -25,7 +21,7 @@ export default function CartProduct({ content, addPrice }) {
     () => addPrice({ id: content.id, value: localPrice }),
     [localPrice]
   );
-
+  
   const removeAlert = () => {
     Swal.fire({
       title: "Estas Seguro?",
@@ -38,6 +34,7 @@ export default function CartProduct({ content, addPrice }) {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
+        removePrice(content.id)
         var arr = cart.filter((e) => e.id != content.id);
         localStorage.setItem("cart", JSON.stringify(arr));
         dispatch(getCart());
@@ -90,12 +87,14 @@ export default function CartProduct({ content, addPrice }) {
                 <div className="mt-3">
                   <button
                     className="btn btn-outline-dark btnmore"
+                    value={cant}
                     onClick={handleSum}
                   >
                     +
                   </button>
                   <button
                     className="btn btn-outline-dark btnless"
+                    value={cant}
                     onClick={handleRes}
                   >
                     -
@@ -194,5 +193,3 @@ export default function CartProduct({ content, addPrice }) {
     </div>
   );
 }
-
-//cambiar el boton de x por "quitar del carrito"
