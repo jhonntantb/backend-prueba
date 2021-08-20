@@ -9,3 +9,13 @@
     flex-direction: column;
     width: 100%
 }
+
+.password-cont {
+    color: red;
+    font-size: smaller;
+    
+}
+
+.username-error {
+    font-size: smaller;
+}

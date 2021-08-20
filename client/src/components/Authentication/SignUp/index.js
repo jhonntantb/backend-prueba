@@ -1,21 +1,16 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { compose } from 'recompose';
-
+import { createUser, clearUser} from '../../../redux/actions/user/index';
+import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
-
-import { createUser, clearUser } from '../../../redux/actions/user/index';
-import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
-
+import {validateUserName, validateUserEmail} from "./errorsControl"
+import { callCity,callCountries, callRegion } from './locationCall';
+import { Input } from 'reactstrap';
 import './index.css';
-
-
-
 
 const SignUpPage = () => (
   <div>
@@ -32,19 +27,23 @@ const initial_state = {
   error: null
 };
 
-function SignUpFormBase(props) {
+ function SignUpFormBase(props) {
 
   const storeUser = useSelector(state=>state.userReducer.user)
   const dispatch = useDispatch();
+  const [countries, setCountries] = useState([]);
+  const [region , setRegion] =useState([])
+  const [apiCity, setApiCity] = useState([])
   
 
   var [state, setState] = useState(initial_state)
+  var [loading, setLoading] =useState(true)
+  var [userError, setUserError] = useState(false)
+  var [emailError, setEmailError] = useState(false)
 
   const onSubmitHandler = async (e) => {
 
     const { user_name, first_name, last_name, email, passwordOne, province, city, street, number, country } = state;
-
-
     e.preventDefault();
 
     try {
@@ -61,50 +60,58 @@ function SignUpFormBase(props) {
         country: country,
         active: false
       }
-      dispatch(createUser(userOk))
+      
 
       if (authUser.user.uid !== undefined) {
+        dispatch(createUser(userOk))
         setState({ ...initial_state })
-        // alert("verifica tu correo electronico para continuar con el proceso")
-        // dispatch(clearUser())
-        // props.history.push(ROUTES.LANDING)
       }else {
         throw new Error("Se produjo un Error, por favor contactar al administrador")
       }
 
     } catch (error) {
 
-      console.log('ESTE ES EL ERROR: ' + error.message)
-      setState({
-        ...state,
-        error: error
-      })
-
+      setState({...state, error: error})
     }
-
   }
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = async (e) => {
+    console.log("cambiando la opcion: ", e.target.name)
+    console.log("que tiene el valor: ", e.target.value)
     e.preventDefault();
     setState({
       ...state,
       [e.target.name]: e.target.value
     })
+
+    if(e.target.name==="user_name") {
+
+      if(e.target.value.length>3) {
+        var validated = await validateUserName(e.target.value)
+         setUserError(validated)
+
+      }else{setUserError(false)}
+    }
+
+    if(e.target.name==="email") {
+
+      if(e.target.value.includes("@")&&e.target.value.includes(".com")) {
+        var validated = await validateUserEmail(e.target.value)
+         setEmailError(validated)
+  
+
+      }else{
+
+        if(e.target.value.length>0) {
+          setEmailError(true)
+        }else{setEmailError(false)}
+          
+        }
+    }
+    
   }
 
-  const {
-    user_name,
-    first_name,
-    last_name,
-    email,
-    passwordOne,
-    passwordTwo,
-    country,
-    province,
-    city,
-    street,
-    number,
-    error,
+  const { user_name,first_name,last_name,email,passwordOne,passwordTwo,country,province,city,street,number,error,
   } = state;
 
   const isInvalid =
@@ -114,7 +121,7 @@ function SignUpFormBase(props) {
       user_name === '');
 
   useEffect(()=>{
-    if(typeof storeUser === 'object') {
+    if(storeUser.email) {
       alert("verifica tu correo electronico para continuar con el proceso")
         dispatch(sendEmailConfirmation(storeUser))
         dispatch(clearUser())
@@ -122,21 +129,62 @@ function SignUpFormBase(props) {
     }
   },[storeUser])    
 
+  useEffect(async()=>{
+    var countriesLoaded = await callCountries()
+    // console.log("countriesLoaded tiene:" , Object.keys(countriesLoaded))
+    console.log("countriesLoaded tiene:" , countriesLoaded)
+    console.log("es array? " , Array.isArray(countriesLoaded))
+   setCountries(countriesLoaded)    
+    
+  },[])
 
-  return (
+  useEffect(()=>{
+    if(countries.length>0) {console.log("se cargaron los paises");
+    setLoading(false)}
+    
+  },[countries])
+
+  useEffect( async ()=>{
+    if(state.country) {
+      // console.log("state.contry: " , state.country)
+      var loadedRegion = await callRegion(state.country.split(",")[1])
+      // console.log("loadedRegion tiene " , loadedRegion)
+      setRegion(loadedRegion)
+    }
+
+  },[state.country])
+
+  useEffect(async()=>{
+    if(state.province) {
+      var loadedCity = await callCity(state.province, state.country)
+      console.log("loadedCity: " , loadedCity)
+      setApiCity(loadedCity)
+    }
+  },[state.province])
+
+
+  return !loading?(
     <div className="container mt-5">
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Sign Up</h3>
+            <h3 className="mb-4 text-center fs-1">Registrarse</h3>
             <form className='user-main mb-3' onSubmit={onSubmitHandler}>
+                <label
+                hidden={user_name.length>3||user_name.length===0}
+                className="username-error"
+                >El Nombre de usuario debe contar con al menos 4 caracteres</label>
+                <label
+                hidden={!(userError)}
+                className="password-cont"
+                >El nombre de usuario ya esta en uso</label>
               <div className="mb-3">
                 <input
                   name="user_name"
                   value={user_name}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="User Name"
+                  placeholder="Nombre de Usuario"
                   className="form-control"
                 />
               </div>
@@ -146,7 +194,7 @@ function SignUpFormBase(props) {
                   value={first_name}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="First Name"
+                  placeholder="Nombre"
                   className="form-control"
                 />
               </div>
@@ -156,17 +204,21 @@ function SignUpFormBase(props) {
                   value={last_name}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="Last Name"
+                  placeholder="Apellido"
                   className="form-control"
                 />
               </div>
+                <label
+                className="password-cont"
+                hidden={!emailError}
+                >El email no tiene el formato adecuado o ya se encuentra registrado</label>
               <div className="mb-3">
                 <input
                   name="email"
                   value={email}
                   onChange={onChangeHandler}
                   type="text"
-                  placeholder="Email Address"
+                  placeholder="Email"
                   className="form-control"
                 />
               </div>
@@ -176,49 +228,63 @@ function SignUpFormBase(props) {
                   value={passwordOne}
                   onChange={onChangeHandler}
                   type="password"
-                  placeholder="Password"
+                  placeholder="Contraseña"
                   className="form-control"
                 />
               </div>
+                <label 
+                hidden={passwordOne===passwordTwo}
+                className='password-cont'
+                >las contraseñas deben coincidir</label>
               <div className="mb-3">
                 <input
                   name="passwordTwo"
                   value={passwordTwo}
                   onChange={onChangeHandler}
                   type="password"
-                  placeholder="Confirm Password"
+                  placeholder="Confirmar Contraseña"
                   className="form-control"
                 />
               </div>
               <div className="mb-3">
-                <input
+                <select
                   name="country"
                   value={country}
                   onChange={onChangeHandler}
-                  type="text"
+                  // type="select"
                   placeholder="Pais"
                   className="form-control"
-                />
+                > 
+                <option key={"inicial"} value='seleccionar'>--Seleccionar--</option>
+                {countries.map(c=><option key={c.code} value={[c.name, c.code]}>{c.name}</option>)}
+                </select>
+                  
               </div>
               <div className="mb-3">
-                <input
+                <Input
                   name="province"
                   value={province}
                   onChange={onChangeHandler}
-                  type="text"
+                  type="select"
                   placeholder="provincia"
                   className="form-control"
-                />
+                >
+                  <option key='region' value='seleccionarRegion'>--Seleccionar--</option>
+                  {region.map((r, index)=><option key={r.region + index} value={r.region}>{r.region.replace("Province", "")}</option>)}
+                </Input>
               </div>
               <div className="mb-3">
-                <input
+                <Input
                   name="city"
                   value={city}
                   onChange={onChangeHandler}
-                  type="text"
+                  type="select"
                   placeholder="ciudad"
                   className="form-control"
-                />
+                >
+                 <option key='city' value='seleccionarCiudad'>--Seleccionar--</option> 
+                 {apiCity.map((c, index)=><option key={index} value={c.city}>{c.city}</option>)}
+                </Input>
               </div>
               <div className="mb-3">
                 <input
@@ -242,7 +308,7 @@ function SignUpFormBase(props) {
               </div>
 
               <div className="d-grip gap-2 mb-3 text-center">
-                <button className="btn btn-dark btn-lg border-0 rounded-0" disabled={isInvalid} type="submit">Sign Up</button>
+                <button className="btn btn-dark btn-lg border-0 rounded-0" disabled={isInvalid||userError||emailError} type="submit">Sign Up</button>
               </div>
 
               {error && <p className='text-danger text-center'>{error.message}</p>}
@@ -252,9 +318,7 @@ function SignUpFormBase(props) {
         </div>
       </div>
     </div>
-
-  )
-
+  ) : (<p>loading...</p>);
 }
 
 const SignUpLink = () => {
