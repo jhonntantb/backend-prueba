@@ -7,12 +7,17 @@ import { getAllCategory } from "../../redux/actions/category/index.js";
 import { getCart } from "../../redux/actions/cart/index"
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
+import { BrowserRouter } from 'react-router-dom';
+import Wishlist from "../../views/Wishlist/Whislist.jsx";
+import { getWishlist } from "../../redux/actions/wishlist/index.js";
+
 
 function ProductList() {
   const dispatch = useDispatch();
 
   const list = useSelector((state) => state.productReducer.products);
   const categorias = useSelector((state) => state.categoryReducer.categories);
+  const id = useSelector((state) => state.userReducer.user.id);
   const user =  useSelector(state => state.userReducer.user)
   var categoryFiltrada = useSelector(
     (state) => state.categoryReducer.categoryFiltrada
@@ -25,6 +30,7 @@ function ProductList() {
   useEffect(() => {
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
+    dispatch(getWishlist(id))
     user.id ? dispatch(getCart(user.id)) : dispatch(getCart())
   }, []);
 
@@ -64,6 +70,7 @@ function ProductList() {
     });
   }
   if (Minimo == "" && Maximo == "" && orden == "A-Z") {
+    if(lista_filtrada)
     lista_filtrada.sort(function (a, b) {
       if (a.title < b.title) {
         return -1;
@@ -172,7 +179,7 @@ function ProductList() {
       <div className="d-table-cell" >
           {
             lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e => {
-              // console.log("E.STOCKS :" , e)
+               console.log( e)
               return (<span key={e.id} className="card-deck   mx-1" >
                 <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} stock={e.stocks.length > 0 ?  e.stocks[0].quantity : undefined} />
               </span>)}
@@ -193,12 +200,11 @@ function ProductList() {
                     </li>
                 </ul>
   
-    
+             
     </div>
   )
 
-
-
+ 
 }
 
 export default ProductList;

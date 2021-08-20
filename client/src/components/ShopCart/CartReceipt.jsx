@@ -15,19 +15,19 @@ export default function CartReceipt() {
 
     return (
         <div>
-            <Table>
+            <Table className="container-fluid my-3">
                 <tr>
                     <th>#</th>
-                    <th>Product</th>
-                    <th>Individual Price</th>
-                    <th>Cant</th>
-                    <th>Price</th>
+                    <th>Producto</th>
+                    <th>Precio Individual</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
                 </tr>
                 <tbody>
                 {cart.map((e, i) => {
                     return (
                     <tr>
-                        <th scope="row">{i + 1}</th>
+                        <th className="text-dark">{i + 1}</th>
                         <td>{e.title}</td>
                         <td>{e.price}</td>
                         <td>{e.cant}</td>
@@ -37,7 +37,7 @@ export default function CartReceipt() {
                 })}
                 </tbody>
             </Table>
-            Total: {total}
+            <h4 className="text-end mx-5 ">Total: {total}</h4>
         </div>
     )
 } 
