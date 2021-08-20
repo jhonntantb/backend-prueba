@@ -1,31 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {getUser} from '../../redux/actions/user/index';
-import {getOrdersFromUser, updateOrderStatus} from '../../redux/actions/order/index';
+import { getUser } from '../../redux/actions/user/index';
+import { getOrdersFromUser, updateOrderStatus } from '../../redux/actions/order/index';
 
 export default function AfterCheckout (props) {
-    const dispatch=useDispatch();
-    var storeUser=useSelector(state=>state.userReducer.user);
-    var storeOrder=useSelector(state=>state.orderReducer.order);
-    var localUserId=localStorage.getItem("pg_merceria");
-
-    var [loading, setLoading]=useState(true)
-    
-
-    
+    const dispatch = useDispatch();
+    const storeUser = useSelector(state=>state.userReducer.user);
+    const storeOrder = useSelector(state=>state.orderReducer.order);
+    const localUserId = localStorage.getItem("pg_merceria")
+    const [loading, setLoading] = useState(true)
 
     //aqui capturo y filtro para conocer el status de pago de MP
-    var query=props.location.search;
+    var query = props.location.search;
     console.log('esto es query ' , query)
     var mp_response_detail = query.split("&")
     console.log('mp_response : ' , mp_response_detail)
     var order_status_fromMP = mp_response_detail[3].split('=')[1]
     console.log('status : ' , order_status_fromMP)
-
     console.log('storeOrder ' , storeOrder)
-
-
-
 
     useEffect(()=>{
         if(localUserId!=='guest') {
@@ -33,8 +25,6 @@ export default function AfterCheckout (props) {
             dispatch(getOrdersFromUser(localUserId, 'checkout'))
         }
     },[])
-
-    
 
     useEffect(()=>{
         if(storeOrder.length>0 ) {
@@ -57,7 +47,6 @@ export default function AfterCheckout (props) {
     return (<div>
             {!loading?
                 <div className='text-center'>
-                    
                     <h3>Gracias por elegirnos {storeUser.user_name}!!!</h3>
                     <br/>
                     <br/>
@@ -72,12 +61,8 @@ export default function AfterCheckout (props) {
                     <br/>
                     <span>Esperamos que disfrutes nuestros productos - Araceli Merceria</span>
                     <br/>
-                    <button onClick={redirectHandler}
-                    className='btn btn-block btn-black rm-border'
-                    >Ir a mi Cuenta</button>
-                
+                    <button onClick={redirectHandler}className='btn btn-block btn-black rm-border'>Ir a mi Cuenta</button>
             </div>
-
             :<p>loading</p>}
         </div>)
 
