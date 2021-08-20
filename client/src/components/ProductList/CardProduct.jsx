@@ -4,10 +4,8 @@ import { getCart } from "../../redux/actions/cart/index";
 import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
-//import {} from "../../redux/actions/"
-import "./CardProduct.css";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { getAllProduct } from "../../redux/actions/product";
+import { getAllOrder, updateOrder, createOrder, deleteOrder } from "../../redux/actions/order/index"
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
@@ -15,16 +13,12 @@ function CardProduct(props) {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cartReducer.cart);
   const user =  useSelector(state => state.userReducer.user);
-  const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
+  const order = useSelector(state => state.orderReducer.orders)
+  const wishlist = useSelector(state => state.wishlistReducer.wishlist);
   const[Fav,addFav] = useState(false)
-  useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [])
   const [add,setAdd] = useState(cart.find(prod => props.id == prod.id) ? true : false)
   
-  useEffect(
-    () => (user.id ? dispatch(getCart(user.id)) : dispatch(getCart())),
-    []
-  );
-  const handleAdd = () => {
+  const sweetAlert = () => {
     Swal.fire({
       icon: "success",
       title: "¡Enhorabuena!",
@@ -42,60 +36,106 @@ function CardProduct(props) {
   },[wishlist])
   const handleAddCart = () => {
     const prod = {
-      id: props.id,
-      title: props.title,
-      price: props.price,
-      cant: 1,
-      img: props.url,
-    };
-
-    if (cart) {
-      if (cart.find((e) => e.id == prod.id))
-        alert("El producto ya esta agregado al carrito");
-      else {
-        localStorage.setItem("cart", JSON.stringify([...cart, prod]));
-        setAdd(true);
-      }
-    } else {
-      localStorage.setItem("cart", JSON.stringify([prod]));
+      productId: props.id,
+      unitprice: Number(props.price),
+      quantity: Number(props.cant)
     }
 
-    user.id ? dispatch(getCart(user.id)) : dispatch(getCart())
-  }
-const handleSubmit = (e) => {
-  console.log(typeof(e.target.value))
-  if(e.target.value == "true" )  {
-    console.log("aca a punto de entrar al dispatch para deletearlo")
-    if(user.id != undefined && props.id != undefined)
+    if(user.id)
     {
-       dispatch(deleteWishlist({userId:user.id,productId:props.id})).then(()=> {
-        if(document.getElementById("wishlist") !=undefined ){
-          console.log("magia de jacobo");
-          console.log(document.getElementById("wishlist"))
-          dispatch(getWishlist(user.id))
+      if(order.length > 0)
+      {
+        if(order[0].products.find(e => e.id == prod.id))
+          alert("El producto ya esta agregado al carrito");
+        else
+        {
+          updateOrder(order[0].id, {...order[0], products: [...order[0].products, prod]})
+          setAdd(true);
+          sweetAlert();
         }
-       })
-        addFav(false)  
-        
-          
-    }       
-                          }
-  
-  if(e.target.value == "false"){
-    console.log("aca a punto de entrar al dispatch para crearlo")
-    if(user.id != undefined && props.id != undefined)
-    {
-      dispatch(createWishlist({productId:props.id,userId:user.id, })).then(()=>{
-        if(document.getElementById("wishlist") !=undefined )
-        dispatch(getWishlist(user.id))
-      })
-      addFav(true)
-      
+      }
+      else
+      {
+        dispatch(createOrder({
+          status: "cart",
+          home_address: "",
+          location: "",
+          total_price: 0,
+          province: "",
+          country: "Argentina",
+          postal_code: "0000",
+          phone_number: "0000000000",
+          userId: user.id,
+          products: [prod]
+        }))
+
+        setAdd(true);
+        sweetAlert();
+      }
     }
-   
+    else
+    {
+      if(cart) 
+      {
+        if(cart.find(e => e.id == prod.id))
+          alert("El producto ya esta agregado al carrito");
+        else 
+        {
+          localStorage.setItem("cart", JSON.stringify([...cart, prod]));
+          setAdd(true);
+          sweetAlert();
+        }
+      } 
+      else 
+      {
+        localStorage.setItem("cart", JSON.stringify([prod]));
+        setAdd(true);
+        sweetAlert();
+      }
+    }
+
+    //order.forEach(e => dispatch(deleteOrder(e.id)))
+
+    if(user.id)
+    {
+      dispatch(getCart(user.id))
+      dispatch(getAllOrder(user.id, "cart"))
+    }
+    else
+      dispatch(getCart())
   }
- 
-}
+
+  const handleSubmit = (e) => {
+    console.log(typeof(e.target.value))
+    if(e.target.value == "true" )  {
+      console.log("aca a punto de entrar al dispatch para deletearlo")
+
+      if(user.id != undefined && props.id != undefined)
+      {
+        dispatch(deleteWishlist({userId:user.id,productId:props.id})).then(()=> {
+          if(document.getElementById("wishlist") !=undefined ){
+            console.log("magia de jacobo");
+            console.log(document.getElementById("wishlist"))
+            dispatch(getWishlist(user.id))
+          }
+        })
+
+        addFav(false)
+      }       
+    }
+  
+    if(e.target.value == "false"){
+      console.log("aca a punto de entrar al dispatch para crearlo")
+      if(user.id != undefined && props.id != undefined)
+      {
+        dispatch(createWishlist({productId:props.id,userId:user.id, })).then(()=>{
+          if(document.getElementById("wishlist") !=undefined )
+          dispatch(getWishlist(user.id))
+        })
+        addFav(true)
+      }
+    }
+  }
   // return (
   //       <div class="card" >
   //         <div class="text-center p-4">
@@ -114,7 +154,8 @@ const handleSubmit = (e) => {
   //   user.id ? dispatch(getCart(user.id)) : dispatch(getCart());
   //   handleAdd();
   // };
-
+  console.log("order")
+  console.log(order)
   return (
     <div class="card">
       <div class="text-center p-4">

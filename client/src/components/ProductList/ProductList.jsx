@@ -5,6 +5,7 @@ import { getAllProduct } from "../../redux/actions/product/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import { getAllCategory } from "../../redux/actions/category/index.js";
 import { getCart } from "../../redux/actions/cart/index"
+import { getAllOrder } from "../../redux/actions/order/index"
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
 import { BrowserRouter } from 'react-router-dom';
@@ -31,7 +32,13 @@ function ProductList() {
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
     dispatch(getWishlist(id))
-    user.id ? dispatch(getCart(user.id)) : dispatch(getCart())
+    if(user.id)
+    {
+      dispatch(getCart(user.id))
+      dispatch(getAllOrder(user.id, "cart"))
+    }
+    else
+      dispatch(getCart())
   }, []);
 
   var lista_filtrada = [];

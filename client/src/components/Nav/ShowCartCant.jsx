@@ -9,7 +9,7 @@ export  const ShowCartCant = () => {
     
     useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
     
-    return cart.length
+    return cart ? cart.length : 0
 }
 
 

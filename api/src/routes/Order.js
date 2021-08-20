@@ -195,7 +195,7 @@ router.put('/:id/:Status', async (req, res) => {
 //solo puede deletear el admin
 router.delete("/:id",async (req, res) => {
     try {
-        await Order.destroy({where:{id:req.params.id}})
+        await Order.destroy({where:{id: req.params.id}})
         res.sendStatus(200)
     } catch (error) {
         next(error)
