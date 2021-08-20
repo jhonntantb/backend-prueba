@@ -9,6 +9,7 @@ import Product from './views/Product/Product';
 import ProductCreation from './views/ProductCreation/ProductCreation';
 import ProductUpdate from './views/ProductCreation/ProductUpdate';
 import Landing from './views/Landing/Landing';
+import ContactUs from './views/ContactUs/Map';
 
 //components
 import SignUpPage from './components/Authentication/SignUp/index';
@@ -53,7 +54,7 @@ function App() {
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path='/productcreation' component={ProductCreation} />
       <Route path='/productupdate/:id' component={ProductUpdate} />
-      
+      <Route path={ROUTES.CONTACT_US} component={ContactUs} />
       <Route path='/pagar' component={CreateCheckoutButton}/>
       <Route path='/after-checkout' component={AfterCheckout}/>
       <Route path='/after-checkout-reject' component={AfterCheckoutRejected}/>

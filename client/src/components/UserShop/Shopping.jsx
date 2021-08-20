@@ -10,7 +10,7 @@ function Shopping() {
     const [orderView,setOrderView]=useState([])//lo que vamos a renderizar
     const [history,setHistory]=useState(true) 
     
-    console.log("este es el usuaario",userid)
+    //console.log("este es el usuaario",userid)
     useEffect(() => {
         // get orders de un usuario????
         dispatch(getAllOrder(userid))
