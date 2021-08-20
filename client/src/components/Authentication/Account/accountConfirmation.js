@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { getUser, updateUser } from "../../../redux/actions/user";
+import { useEffect } from "react";
 
 
 export default function AccountConfirmation (props) {
@@ -14,12 +15,16 @@ export default function AccountConfirmation (props) {
         {id: id, 
         changes: {active: true}}
     ]
-        
+    
+    useEffect(()=>{
+        dispatch(updateUser(activateUser))
+        localStorage.setItem("pg_merceria", id)
+        dispatch(getUser(id))
+
+    },[])
     
 
-    dispatch(updateUser(activateUser))
 
-    localStorage.setItem("pg_merceria", id)
 
     
     function cartRedirect (e) {
