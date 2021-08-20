@@ -8,6 +8,7 @@ import { withFirebase } from '../../FireBase/context';
 
 
 function LogOutButton() {
+  
   return (
     <SignOutButton />
   )
@@ -16,13 +17,15 @@ function LogOutButton() {
 
 function SignOutButtonBase(props) {
   const dispatch = useDispatch();
+  
 
   function clickHandler() {
-    // console.log('hiciste click')
+    
     try {
       props.firebase.doSignOut();
-      // sessionStorage.clear()
+      
       localStorage.setItem("pg_merceria", "guest")
+      
       localStorage.setItem("admin", null)
       dispatch(clearUser());
       props.history.push('/')
