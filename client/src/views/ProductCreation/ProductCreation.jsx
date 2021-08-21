@@ -9,7 +9,6 @@ import {
 } from "../../redux/actions/product";
 import { getAllOffice } from "../../redux/actions/office";
 import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader";
-import * as ROUTES from "../../routes";
 import "./ProductCreation.css";
 import NotFound from "../NotFound/NotFound";
 import Swal from "sweetalert2";
@@ -70,7 +69,7 @@ const ProductCreation = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCatalog(addProduct.catalog_id);
-    handleAlert();
+    
 
     if (
       addProduct.title != "" &&
@@ -85,15 +84,20 @@ const ProductCreation = (props) => {
     ) {
       dispatch(createProduct(addProduct));
       dispatch(getAllProduct());
-      props.history.push("/productlist");
+      //props.history.push("/productlist");
+      handleAlert();
     } else {
       if (product.length !== 0) {
         throw alert("NUMERO DE CATALOGO YA EXISTE");
       } else {
-        throw alert("FALTA INGRESAR CAMPOS OBLIGATORIOS");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Debe completar todos los campos',
+        })
       }
     }
-    handleAlert();
+   
   };
 
   const handleChange = (e) => {
@@ -118,11 +122,12 @@ const ProductCreation = (props) => {
   function renderCategories() {
     return (
       <div>
-        {" "}
-        Categorias
+       <span className="fs-5">Categorias</span> 
+       <br />
         {storeCategories.map((c, i) => {
           return (
-            <div>
+            <div className="fs-6">
+              <br />
               <input
                 type="checkbox"
                 id={i}
@@ -148,10 +153,9 @@ const ProductCreation = (props) => {
     // console.log("store offices tiene : ", Object.keys(storeOffices));
     return (
       <div>
-        {" "}
-        Sucursal
+        <span className="fs-5 mr-2">Sucursal</span>
         {
-          <select onChange={(e) => selectOffice(e)}>
+          <select className=" mx-5 " onChange={(e) => selectOffice(e)}>
             {storeOffices.map((o, i) => (
               <option value={o.id}>{o.name}</option>
             ))}
@@ -223,7 +227,6 @@ const ProductCreation = (props) => {
             autoComplete="off"
             rows="7"
           />
-          <label htmlFor="floatingTextarea">Detalle</label>
         </div>
 
         <div className="mb-3">
@@ -248,10 +251,11 @@ const ProductCreation = (props) => {
             name="catalog_id"
             value={addProduct.catalog_id}
             onChange={handleChange}
-            className="form-control"
-            placeholder="1000"
+            class="form-control"
             autoComplete="off"
+            required
           />
+          <div class="invalid-feedback">Se debe completar el campo</div>
         </div>
         <div className="mb-3">
           <label className="form-label">cantidad</label>
@@ -267,6 +271,7 @@ const ProductCreation = (props) => {
           />
         </div>
         {renderOffices()}
+        <br />
         {renderCategories()}
         <ReactFirebaseFileUpload
           storeImages={storeImages}

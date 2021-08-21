@@ -22,7 +22,7 @@ export default function CartForm(){
             <div>
                 <CartReceipt/>
                 <AddressFrom setAddress={setAddress}/>
-                <div className="container">
+                <div className="container ">
                 {address && <CreateCheckoutButton products={cart} direction={address}/>}
                 </div>
             </div>
