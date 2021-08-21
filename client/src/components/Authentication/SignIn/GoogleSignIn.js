@@ -45,12 +45,7 @@ const GoogleBase = (props) => {
                     email: credentials.additionalUserInfo.profile.email,
                     first_name: credentials.additionalUserInfo.profile.given_name,
                     last_name: credentials.additionalUserInfo.profile.family_name,
-                    user_name: credentials.additionalUserInfo.profile.given_name + credentials.additionalUserInfo.profile.family_name,
-                    address: 'no especificado',
-                    province: 'no especificado',
-                    location: 'no especificado',
-                    country: 'no especificado'
-
+                    user_name: credentials.additionalUserInfo.profile.email.split("@")[0],
                 }
                 //voy a tener que implementar una action especifica para esto =(
                     

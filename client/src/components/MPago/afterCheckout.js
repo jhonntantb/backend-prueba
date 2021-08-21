@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUser } from '../../redux/actions/user/index';
 import { getOrdersFromUser, updateOrderStatus } from '../../redux/actions/order/index';
+import  Swal  from 'sweetalert2';
+
+
 
 export default function AfterCheckout (props) {
     const dispatch = useDispatch();
@@ -12,12 +15,9 @@ export default function AfterCheckout (props) {
 
     //aqui capturo y filtro para conocer el status de pago de MP
     var query = props.location.search;
-    console.log('esto es query ' , query)
     var mp_response_detail = query.split("&")
-    console.log('mp_response : ' , mp_response_detail)
     var order_status_fromMP = mp_response_detail[3].split('=')[1]
-    console.log('status : ' , order_status_fromMP)
-    console.log('storeOrder ' , storeOrder)
+    
 
     useEffect(()=>{
         if(localUserId!=='guest') {
@@ -39,31 +39,40 @@ export default function AfterCheckout (props) {
 
     },[storeOrder])
 
-    const redirectHandler = (e) => {
-        e.preventDefault()
-        props.history.push('/user/compras')
+ 
+
+    const alerterror = () => {
+        let nom = storeUser.user_name;
+        let email = storeUser.email
+        //let dir = storeOrder[0].home_address;
+        //let dir2 = storeOrder[0].location;
+        Swal.fire({
+            icon: 'success',
+            title: 'Gracias por elegirnos ' + nom,
+            confirmButtonText: 'Ok',
+            confirmButtonColor: "#212529",
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+               Swal.fire({
+                text: 'tu orden fue confirmada será enviada a: + dir  + dir2, revisa tu casilla de correo ' 
+                + email + ' para seguir el estado de tu envío',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: "#212529",
+                allowOutsideClick: false
+               }).then((result) => {
+                if (result.isConfirmed) {
+                     window.location.href = '/'
+                }
+               })
+            }
+        })
     }
 
     return (<div>
-            {!loading?
-                <div className='text-center'>
-                    <h3>Gracias por elegirnos {storeUser.user_name}!!!</h3>
-                    <br/>
-                    <br/>
-                    <span>{`tu orden numero  [ ${storeOrder[0].id} ]  ha sido confirmada!`}</span>
-                    <br/>
-                    <br/>
-                    <span>{`será enviada a: - ${storeOrder[0].home_address}, - ${storeOrder[0].location}`}</span>
-                    <br/>
-                    <br/>
-                    <span>revisa tu casilla de correo {storeUser.email} para seguir el estado de tu envío.</span>
-                    <br/>
-                    <br/>
-                    <span>Esperamos que disfrutes nuestros productos - Araceli Merceria</span>
-                    <br/>
-                    <button onClick={redirectHandler}className='btn btn-block btn-black rm-border'>Ir a mi Cuenta</button>
-            </div>
-            :<p>loading</p>}
+            {loading?
+              <div>{alerterror()}</div>
+            :<p>loading</p>}   
         </div>)
 
 

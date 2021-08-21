@@ -79,6 +79,42 @@ router.delete("/:id",async (req,res,next)=>{
     }
 })
 
+router.get("/username/:user_name", async (req, res, next)=> {
+    const {user_name} = req.params
+
+    try {
+        let userPre = await User.findOne({where:{user_name: user_name}})
+        console.log("esto es userPre", userPre)
+        if(userPre.id) {
+            return res.send(userPre)
+        }else {
+            throw new Error(false)
+        }
+        
+    } catch(err) {
+        console.log("no se encontro el usuario")
+        return res.send(false)
+    }
+})
+
+router.get("/useremail/:email", async (req, res, next)=> {
+    const {email} = req.params
+
+    try {
+
+        let userPre = await User.findOne({where:{email: email}})
+    
+        if(userPre.id) {
+            res.send(userPre)
+        }else {
+            throw new Error(false)
+        }
+
+    } catch(err) {
+        console.log("no se encontro el email")
+        return res.send(false)
+    }
+})
 
 
 module.exports = router;
