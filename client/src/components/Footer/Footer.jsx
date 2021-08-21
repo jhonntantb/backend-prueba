@@ -45,57 +45,39 @@ const Footer = () => {
                   <h4 class="footer-widget-title">Contactanos</h4>
                   <ul>
                     <li>
-                      {" "}
-                      <big>
+                      <a href="https://wa.link/l28b79">
                         <span>
-                          <i
-                            id="fa1"
-                            class="fa fa-whatsapp"
-                            aria-hidden="true"
-                          ></i>
-                        </span>{" "}
-                        +54 381 ***-****{" "}
-                      </big>
+                          <i id="fa1" class="fa fa-whatsapp" aria-hidden="true"></i>
+                        </span>
+                        +54 381 ***-****
+                      </a>
                     </li>
                     <br />
                     <li>
-                      {" "}
                       <big>
-                        <span>
-                          <i
-                            id="fa1"
-                            class="fa fa-phone"
-                            aria-hidden="true"
-                          ></i>
-                        </span>{" "}
-                        0381 ***-****{" "}
+                        <span><i id="fa2" class="fa fa-phone"aria-hidden="true"></i></span>
+                        0381 ***-****
                       </big>
                     </li>
                     <br />
                     <li>
                       <big>
-                        {" "}
                         <span>
                           <i
-                            id="fa1"
+                            id="fa3"
                             class="fa fa-envelope"
                             aria-hidden="true"
                           ></i>
                         </span>
-                        <a href="aracelimerceria@gmail.com">****@gmail.com</a>
+                        <a href="mailto:aracelimerceria@gmail.com">****@gmail.com</a>
                       </big>
                     </li>
                     <br />
                     <li>
                       <big>
-                        {" "}
                         <span>
-                          <i
-                            id="fa1"
-                            class="fa fa-map-marker"
-                            aria-hidden="true"
-                          ></i>
-                        </span>
+                          <i id="fa4"class="fa fa-map-marker" aria-hidden="true"></i>
+                       </span>
                         DIRECCION:{" "}
                       </big>
                       <br />

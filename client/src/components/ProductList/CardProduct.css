@@ -1,6 +1,6 @@
 
 
-.card {
+/* .card {
     display: inline-flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -9,6 +9,17 @@
     padding: 1%;
     width: 25%;
     margin-top: 5%;
+} */
+
+.card {
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border: 1px solid rgba(0,0,0,.125);
+  margin: 2%;
+  padding: 1%;
+  width:30vw;
+  
 }
 
 .thumbnail {
@@ -68,4 +79,9 @@
 
 .product_fav:hover i {
   color: #fff;
+}
+
+#main-image {
+  max-width: fit-content;
+  max-height: fit-content;
 }

@@ -19,6 +19,9 @@ const productReducer = (state = initialState, action) => {
             ...state,
             product:action.payload   
         }
+        case TYPES.RESET_PRODUCT: return{
+            product: []
+        }
         case TYPES.CREATE_PRODUCT: return state
         case TYPES.UPDATE_PRODUCT: return state
         case TYPES.DELETE_PRODUCT: return state

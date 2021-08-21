@@ -9,8 +9,10 @@ router.get("/:id", async  (req,res,next) => {
     console.log('id? ' + id)
     try {
         var user= await User.findByPk(id)
-
-        res.send(user)
+        console.log("ESTO ES USER despues de buscar en la DB: " , user)
+        if(user) {res.send(user)}
+        else{throw  Error("no se encontró el usuario")}
+        
 
     } catch (err) {next(err)}
 })
@@ -67,12 +69,12 @@ router.put("/",async (req,res,next)=>{
     //solo el admi puede modificar su active
     return res.send(allUsers)
 })
-router.delete("/",async (req,res,next)=>{
-    const id=req.body;
+router.delete("/:id",async (req,res,next)=>{
+    const id=req.params.id;
     try {
         const deleteUser=await User.destroy({where:{id:id}})
-        res.send(deleteUser)
-        console.log(deleteUser)//para saber que manda
+        deleteUser === 1 ?  res.status(200).send('Usuario eliminado') :  res.status(400).send('No existe usuario')
+        // console.log(deleteUser)//para saber que manda
     } catch (error) {
         next(error)
     }

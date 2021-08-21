@@ -41,8 +41,9 @@ function SignInFormBase(props) {
         .doSignInWithEmailAndPassword(email, password)
         .then((userCredentials) => {
           // console.log('userCredentials tiene: ' + Object.keys(userCredentials))
-          // console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
-          
+          console.log('userCredentials.user tiene: ' + Object.keys(userCredentials.user))
+          console.log('userCredentials.user.uid' , userCredentials.user.uid)
+
           dispatch(getUser(userCredentials.user.uid))
 
           
@@ -51,7 +52,8 @@ function SignInFormBase(props) {
           
         })
         .catch(error => {
-          setState({ error });
+          setState({ ...state, error:error });
+          alert(error)
         });
     
       
@@ -77,13 +79,14 @@ function SignInFormBase(props) {
           if(user.active===true) {
             //verifica si es admin
             if(user.isAdmin===true) {
-              localStorage.setItem("pg_merceria" , ('admin-'+user.id))
-              props.history.push(ROUTES.HOME);
+              localStorage.setItem("pg_merceria" , (user.id))
+              localStorage.setItem("admin" , user.email)
+              props.history.push("/");
             }else {
 
               //setea el id del usuario al sessionStorage
               localStorage.setItem("pg_merceria", user.id)
-              props.history.push(ROUTES.HOME);
+              props.history.push("/");
 
             }
             dispatch(LogInUser(user.email))
@@ -97,6 +100,7 @@ function SignInFormBase(props) {
 
     } else {
       //si user es guest, setea la session a guest
+      // alert("Ocurrió un error inesperado, contacte al administrador")
       localStorage.setItem("pg_merceria", 'guest')
       // dispatch(clearUser())
     }

@@ -10,9 +10,7 @@ body {
 .row {
     --bs-gutter-x:0; 
 }
-ul {
- padding:1%;
-}
+
 
 li {
  list-style:none
@@ -20,18 +18,17 @@ li {
 
 a{
     text-decoration: none;
+    color:#d0d4f3
 }
 
 a:focus,a:hover {
+ outline:0;
  text-decoration:none;
  -webkit-transition:.3s ease;
  -o-transition:.3s ease;
  transition:.3s ease
 }
 
-a:focus {
- outline:0
-}
 
 img {
  max-width:100%
@@ -45,42 +42,19 @@ p {
 }
 
 h4 {
- font-family:Rubik,sans-serif;
  margin:0;
  font-weight:400;
  padding:0;
  color:#969eb1
 }
 
-a {
- color:#d0d4f3
-}
+
 
 .no-padding {
  padding:0!important
 }
 
-.go_top {
- line-height:40px;
- cursor:pointer;
- width:40px;
- background:#5867dd;
- color:#fff;
- position:fixed;
- -webkit-box-shadow:0 4px 4px rgba(0,0,0,.1);
- box-shadow:0 4px 4px rgba(0,0,0,.1);
- -webkit-border-radius:50%;
- border-radius:50%;
- right:-webkit-calc((100% - 1140px)/ 2);
- right:calc((100% - 1140px)/ 2);
- z-index:111;
- bottom:80px;
- text-align:center
-}
 
-.go_top span {
- display:inline-block
-}
 
 .footer-big {
  padding: 2% 
@@ -129,9 +103,10 @@ a {
  font-size:26px
 }
 
-#fa1 {
-    padding-right: 15px
+#fa1,#fa1:hover {
+    padding-right: 15px;
 }
+
 
 .mini-footer {
  background:#192027;
@@ -179,9 +154,9 @@ a {
  padding-right:12px
 }
 
-.widget-about .contact-details li a {
+/*.widget-about .contact-details li a {
  color:#5867dd
-}
+}*/
 
 @media (max-width:991px) {
  .footer-menu {

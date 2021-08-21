@@ -1,37 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllOrder, updateOrder } from "../../redux/actions/order/index"
 import AddressFrom from "../../components/ShopCart/AddressForm"
 import CartReceipt from "../../components/ShopCart/CartReceipt"
+import CreateCheckoutButton from '../../components/MPago/index';
+import { getCart } from "../../redux/actions/cart";
+import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
 
 export default function CartForm(){
+    CheckUser();
+
     const dispatch = useDispatch()
     const [address, setAddress] = useState("")
-    const order = useSelector(state => state.orderReducer.orders)
-    const user = useSelector(state => state.userReducer.user)
-    
-    useEffect(() => {
-
-    }, [user])
+    const cart = useSelector(state => state.cartReducer.cart)
 
     useEffect(() => {
-        updateOrder()
-    }, [order])
-
-    useEffect(() => {
-        dispatch(getAllOrder(user.dispatch, "cart"))
+        dispatch(getCart())
     }, [address])
 
     return (
         <div>
-            {!address ? 
-            <AddressFrom setAddress={setAddress}/>
-            :
             <div>
                 <CartReceipt/>
-                <button>Pagar</button>
+                <AddressFrom setAddress={setAddress}/>
+                <div className="container">
+                {address && <CreateCheckoutButton products={cart} direction={address}/>}
+                </div>
             </div>
-            }  
         </div>
     )
 } 

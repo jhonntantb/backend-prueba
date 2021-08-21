@@ -11,6 +11,8 @@ export const CREATE_PRODUCT = "create_product"
 export const UPDATE_PRODUCT = "update_product" 
 export const DELETE_PRODUCT = "get_product"
 export const PRODUCT_CATEGORY="product_by_category"
+export const RESET_PRODUCT = "reset_product"
+
 
 //User
 export const GET_ALL_USER = "get_all_user"
@@ -35,6 +37,7 @@ export const CREATE_ORDER = "create_order"
 export const UPDATE_ORDER = "update_order" 
 export const DELETE_ORDER= "get_order"
 export const GET_ORDER_FROM_USER = "get_order_from_user"
+export const UPDATE_ORDER_STATUS = "update_order_status"
 
 //Stock
 export const GET_ALL_STOCK = "get_all_stock"
@@ -65,6 +68,17 @@ export const CREATE_OFFICE = "create_office"
 export const UPDATE_OFFICE = "update_office" 
 export const DELETE_OFFICE = "get_office"
 
+//Wishlist
+export const GET_ALL_WISHLIST = "get_all_wishlist"
+export const CREATE_WISHLIST = "create_wishlist"  
+export const DELETE_WISHLIST = "get_wishlist"
+
 //Checkout
 
 export const GO_TO_CHECKOUT = "go_to_checkout"
+
+//Mailing
+
+export const ACCOUNT_CONFIRMATION_EMAIL = "send_confirmation_email"
+export const ORDER_STATUS_EMAIL = "order_status_email"
+export const LOW_STOCK_EMAIL = "low_stock-email"

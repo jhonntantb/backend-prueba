@@ -2,6 +2,20 @@ const router = require('express').Router();
 const { Order, User, Product, Order_Product, Office, Stock } = require('../db')
 
 
+
+//////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
+// router.get("/:id",async (req, res, next) =>{
+//     try {
+//      //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
+//        const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
+ 
+//        //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
+//         res.send(order)
+//     } catch (error) {
+//         next(error)
+//     }
+// })
+
 ///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
 // Si no viene ingun parametro en el query lista todas las ordenes
 router.get("/",async (req, res,next) =>{
@@ -14,7 +28,11 @@ router.get("/",async (req, res,next) =>{
 
     try {
         //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
+<<<<<<< HEAD
         const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })  
+=======
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product} ]  })  
+>>>>>>> 45a24325e503e0c01829ba711e6d1f24cf026ccc
         res.send(allOrder)
      } catch (error) {
         next(error)
@@ -25,7 +43,7 @@ router.get("/",async (req, res,next) =>{
 router.get("/:id",async (req, res, next) =>{
     try {
      //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
-       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product},{model:User},{model:Product}]})
  
        //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
         res.send(order)
@@ -68,29 +86,32 @@ router.post("/",async (req, res, next) => {
     try {
         const order=await Order.create({
             status: req.body.status,
-            total_price: 0,
+            total_price: req.body.total_price,
             home_address: req.body.home_address,
             location: req.body.location,
             province: req.body.province,
             country: req.body.country,
             delivery_date: req.body.delivery_date,
-            userId: req.body.userId
+            userId: req.body.userId,
+            postal_code: req.body.postal_code,
+            phone_number: req.body.phone_number
         })
         var total = 0;
         var orderPromises = []
         req.body.products.forEach(async (e) => {
              orderPromises.push(order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
             total = total + (e.quantity * e.unitprice)
-            console.log('esto es TOTAL: ' + total)
+            
         })
         // Actualizo el total_price en la orden
         await Promise.all(orderPromises)
-        console.log('esto es TOTAL DESPUES DEL BUCLE ' , total)
         const orderupdate = await Order.findByPk(order.id)
         orderupdate.total_price = total;
-        const saved_order = await orderupdate.save()
-        res.send(saved_order)
- 
+        await orderupdate.save()
+        // const saved_order = await orderupdate.save()
+        // res.send(saved_order)
+        const orderFinal = await Order.findByPk(order.id, {include: [{model: Order_Product}]})
+        res.send(orderFinal)
     //la relacion del calendario pendiente 
     } catch (error) {next(error)    }
 })
@@ -109,10 +130,12 @@ router.put("/:id",async (req,res,next) => {
       const resultado  = await Order_Product.destroy({where:{orderId:req.params.id}})
       // Agrego registros actualizados de productos d ela orden y computo el costo total
       var total = 0;
+      var promisesAux = []
       req.body.products.forEach(async (e) => {
-          await order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}})
-          .then(total = total + (e.quantity * e.unitprice));
+          promisesAux.push( order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
+          total = total + (e.quantity * e.unitprice);
       })
+      await Promise.all(promisesAux)
 
       order.status= req.body.status
       order.total_price= total
@@ -122,6 +145,8 @@ router.put("/:id",async (req,res,next) => {
       order.country= req.body.country,
       order.delivery_date= req.body.delivery_date,
       order.userId= req.body.userId
+      order.phone_number= req.body.phone_number
+      order.postal_code=req.body.postal_code
       const saved_order = await order.save() 
 
       res.send(saved_order);
@@ -142,7 +167,7 @@ router.put('/:id/:Status', async (req, res) => {
     const statusNew = Status
     const statusDupla = statusAnt + "/" + statusNew;
     const validDuplas = [
-    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled"
+    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled","shipped/delivered","approved/cancelled"
     ];
 
     if(!validDuplas.includes(statusDupla)) return res.status(300).send('Cambio de status invalido');
@@ -174,7 +199,7 @@ router.put('/:id/:Status', async (req, res) => {
 //solo puede deletear el admin
 router.delete("/:id",async (req, res) => {
     try {
-        await Order.destroy({where:{id:req.params.id}})
+        await Order.destroy({where:{id: req.params.id}})
         res.sendStatus(200)
     } catch (error) {
         next(error)

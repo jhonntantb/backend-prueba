@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import firebase from "firebase";
 // import 'firebase/<PACKAGE>'; 
 import { useEffect } from 'react';
+import './FileUploaderButton.css'
 
 
 
@@ -83,8 +84,8 @@ const ReactFirebaseFileUpload = ({ storeImages, setStoreImages }) => {
             <progress value={progress} max="100" />
             <br />
             <br />
-            <input className="btn btn-" type="file" multiple onChange={handleChange2} />
-            <button className="btn btn-info" onClick={(e) => handleUpload(e)}>Upload</button>
+            <input className="btn btn-" type="file" multiple onChange={handleChange2}/>
+            <button id="buttonupload" onClick={(e) => handleUpload(e)}>Upload</button>
             <br />
             {/* {urls.length>0?urls.map((url, i) => (
                 <div key={i}>

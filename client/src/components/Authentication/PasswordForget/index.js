@@ -2,12 +2,16 @@ import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import NotFound from '../../../views/NotFound/NotFound';
+import { useHistory } from 'react-router';
 
-const PasswordForgetPage = () => (
-  <div>
-    <PasswordForgetForm />
-  </div>
-);
+const PasswordForgetPage = () => {
+  const authUser= localStorage.getItem("pg_merceria");
+  
+  return (<div>
+            <PasswordForgetForm />
+          </div>)
+};
 
 const INITIAL_STATE = {
   email: '',
@@ -16,6 +20,7 @@ const INITIAL_STATE = {
 
 function PasswordForgetFormBase(props) {
   const [state, setState] = useState(INITIAL_STATE)
+  var history=useHistory();
 
 
   const onSubmit = event => {
@@ -29,7 +34,8 @@ function PasswordForgetFormBase(props) {
       .catch(error => {
         setState({ error });
       });
-
+      alert("verifica tu casilla de correo para continuar")
+      history.push('/')
     event.preventDefault();
   };
 

@@ -8,10 +8,17 @@ export const createOrder = (order) => {
     }
 }
 
-export const updateOrder = (params) => {
+export const updateOrder = (id, body) => {
     return async (dispatch) => {
-        const res = await axios.put('http://localhost:3001/order', params)
+        const res = await axios.put('http://localhost:3001/order/' + id, body)
         return dispatch({ type: TYPES.UPDATE_ORDER, payload: res.data })
+    }
+}
+
+export const updateOrderStatus = (orderId, Status) => {
+    return async (dispatch) => {
+        const res = await axios.put(`http://localhost:3001/order/${orderId}/${Status}`)
+        return dispatch({ type: TYPES.UPDATE_ORDER_STATUS, payload: res.data })
     }
 }
 
@@ -33,7 +40,6 @@ export const getAllOrder = (userId = null, status = null, productId = null) => {
         status && (dir += ("status=" + status + "&"))
         productId && (dir += ("status=" + productId + "&"))
     }
-        
 
     return async (dispatch) => {
         const res = await axios.get(dir)
@@ -48,9 +54,9 @@ export const getOrdersFromUser = (userId, status) => {
     }
 }
 
-export const deleteOrder = (params) => {
+export const deleteOrder = (id) => {
     return async (dispatch) => {
-        const res = await axios.delete('http://localhost:3001/order', params)
+        const res = await axios.delete('http://localhost:3001/order/' + id)
         return dispatch({ type: TYPES.DELETE_ORDER, payload: res.data })
     }
 }
