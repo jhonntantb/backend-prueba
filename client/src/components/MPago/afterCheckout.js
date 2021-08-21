@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUser } from '../../redux/actions/user/index';
-import { getOrdersFromUser, updateOrderStatus } from '../../redux/actions/order/index';
+import { getOrdersFromUser, updateOrderStatus, clearOrder } from '../../redux/actions/order/index';
 import { sendOrderStatusEmail } from '../../redux/actions/mail/index';
 import  Swal  from 'sweetalert2';
 
@@ -33,7 +33,12 @@ export default function AfterCheckout (props) {
             if(storeOrder[0].status==='checkout') {
                 dispatch(updateOrderStatus(storeOrder[0].id, "approved"))
                 console.log("cambió el estado de la orden")
-                dispatch(sendOrderStatusEmail(storeUser.id,storeOrder[0].id))
+                setTimeout(function (){
+
+                    dispatch(sendOrderStatusEmail(storeUser.id,storeOrder[0].id))
+                    dispatch(clearOrder())
+                    
+                }, 1000)
                 
             }
             setLoading(false)
