@@ -25,9 +25,12 @@ export default function AfterCheckoutRejected(props) {
         }
     }, [])
 
-    useEffect(() => {
-        if (storeOrder.length > 0) {
-            if (storeOrder[0].status === 'checkout') {
+    useEffect(()=>{
+        if(storeOrder.length>0 ) {
+
+            
+            
+            if(storeOrder[0].status==='checkout') {
                 dispatch(updateOrderStatus(storeOrder[0].id, "cart"))
             }
             setLoading(false)

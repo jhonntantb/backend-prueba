@@ -15,6 +15,8 @@ export default function CartProduct({ content, addPrice, removePrice }) {
     var arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
 
     localStorage.setItem("cart", JSON.stringify(arr));
+    //agrego dispatch y actualizo el store
+    dispatch(getCart())
   }, [cant]);
 
   useEffect(

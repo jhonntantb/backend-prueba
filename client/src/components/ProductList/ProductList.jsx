@@ -140,7 +140,7 @@ function ProductList() {
 
   // console.log(lista_filtrada)
  
-  return (
+  return list.length>0?(
      <div className="container-fluid">
     <div className="d-table">
       <div id="tableleft"className="d-table-cell" >
@@ -202,7 +202,7 @@ function ProductList() {
   
              
     </div>
-  )
+  ):<p>...Loading</p>
 
  
 }

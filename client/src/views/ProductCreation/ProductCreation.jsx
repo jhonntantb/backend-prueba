@@ -135,7 +135,8 @@ const ProductCreation = (props) => {
                 value={c.id}
                 onChange={(e) => selectCategory(e)}
               />
-              <label className="mx-2" for={i}>{c.name}</label>
+              <label key={i}>{c.name}</label>
+              <br />
             </div>
           );
         })}
@@ -149,7 +150,7 @@ const ProductCreation = (props) => {
   }
 
   function renderOffices() {
-    console.log("store offices tiene : ", Object.keys(storeOffices));
+    // console.log("store offices tiene : ", Object.keys(storeOffices));
     return (
       <div>
         <span className="fs-5 mr-2">Sucursal</span>
@@ -276,12 +277,12 @@ const ProductCreation = (props) => {
           storeImages={storeImages}
           setStoreImages={setStoreImages}
         />
-        {storeImages.length > 0
+        {/* {storeImages.length > 0
           ? storeImages.forEach((url) => {
               return <p>{url}</p>;
             })
-          : null}
-        <button className="my-5 position-relative top-50 start-50 translate-middle"
+          : null} */}
+        <button
           disabled={storeImages.length > 0 ? false : true}
           id="buttonproduct"
           onClick={(e) => {
