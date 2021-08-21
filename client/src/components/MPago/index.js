@@ -2,6 +2,7 @@ import { goToCheckout } from '../../redux/actions/checkout/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { createOrder, getAllOrder } from '../../redux/actions/order/index';
+import "./index.css"
 
 function CreateCheckoutButton ({products, direction}) {
   const dispatch = useDispatch()
@@ -63,7 +64,7 @@ function CreateCheckoutButton ({products, direction}) {
   }, [mpData])
   
   return (
-    <div className="btn" id='button-checkout'></div>
+    <div className="btn btn-block rm-border" id='button-checkout'></div>
   )
 }
 
