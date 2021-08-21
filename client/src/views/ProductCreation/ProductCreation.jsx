@@ -130,7 +130,7 @@ const ProductCreation = (props) => {
                 value={c.id}
                 onChange={(e) => selectCategory(e)}
               />
-              <label for={i}>{c.name}</label>
+              <label key={i}>{c.name}</label>
               <br />
             </div>
           );
@@ -145,7 +145,7 @@ const ProductCreation = (props) => {
   }
 
   function renderOffices() {
-    console.log("store offices tiene : ", Object.keys(storeOffices));
+    // console.log("store offices tiene : ", Object.keys(storeOffices));
     return (
       <div>
         {" "}
@@ -272,11 +272,11 @@ const ProductCreation = (props) => {
           storeImages={storeImages}
           setStoreImages={setStoreImages}
         />
-        {storeImages.length > 0
+        {/* {storeImages.length > 0
           ? storeImages.forEach((url) => {
               return <p>{url}</p>;
             })
-          : null}
+          : null} */}
         <button
           disabled={storeImages.length > 0 ? false : true}
           id="buttonproduct"
