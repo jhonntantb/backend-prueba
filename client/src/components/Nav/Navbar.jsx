@@ -12,6 +12,7 @@ import CheckUser from '../Authentication/CheckUser/CheckUser';
 import { getAllOrder } from '../../redux/actions/order';
 import { useHistory } from 'react-router';
 
+
 const Navbar = () => {
 
   // const [authUser, setAuthUser] = useState(localStorage.getItem("pg_merceria"))
@@ -54,24 +55,26 @@ const Navbar = () => {
         <form className="d-flex ml-10 ">
           <SearchBar />
         </form>
-        {authUser !== 'guest' ?
+       
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <ul className="navbar-nav ml-10  ">
+         
+           <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/contactus" >
+                Contactanos
+              </NavLink>
+            </li>
+          <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+                Acerca de 
+              </NavLink>
+            </li> 
+            {authUser !== 'guest' ?
         <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/wishlist"  >
                 Wishlist
               </NavLink>
             </li>:null}
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-          <ul className="navbar-nav ml-10  ">
-           <li className="nav-item mx-3">
-              <NavLink activeClassName="text-white" className="nav-link" to="/contactus" onClick={() => dispatch(getAllProduct())} >
-                Contactanos
-              </NavLink>
-            </li>
-         {/* <li className="nav-item mx-3">
-              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
-                Acerca de Nosotros
-              </NavLink>
-            </li> */}
             <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Productos
