@@ -32,6 +32,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
       cancelButtonColor: "#212529",
       confirmButtonText: "Si, Borrar!",
       cancelButtonText: "Cancelar",
+      allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
         removePrice(content.id)

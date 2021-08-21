@@ -112,8 +112,8 @@ export default function AddresForm({setAddress}){
                     <Input onChange={handleChange} type="text" value={telephone} name="telephone" maxLength="10" id="orderPhone"/>
                 </FormGroup>
                  <br />
-                <button id="buttonorder"onClick={handleSubmit}
-                className="btn btn-block  rm-border my-5"
+                <button id="buttonorder" onClick={handleSubmit}
+                className="btn btn-block rm-border my-5"
                 >Confirmar dirección de envio</button>
             </Form>
         </div>
