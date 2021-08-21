@@ -28,11 +28,7 @@ router.get("/",async (req, res,next) =>{
 
     try {
         //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-<<<<<<< HEAD
-        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product } ]  })  
-=======
         const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product} ]  })  
->>>>>>> 45a24325e503e0c01829ba711e6d1f24cf026ccc
         res.send(allOrder)
      } catch (error) {
         next(error)

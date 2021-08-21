@@ -11,13 +11,22 @@ import Swal from "sweetalert2";
 
 function CardProduct(props) {
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cartReducer.cart);
-  const user =  useSelector(state => state.userReducer.user);
-  const order = useSelector(state => state.orderReducer.orders)
-  const wishlist = useSelector(state => state.wishlistReducer.wishlist);
-  const[Fav,addFav] = useState(false)
-  const [add,setAdd] = useState(cart.find(prod => props.id == prod.id) ? true : false)
-  
+  const cart = useSelector((state) => state.cartReducer.cart);
+  const user = useSelector((state) => state.userReducer.user);
+  const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
+  const [Fav, addFav] = useState(false);
+  useEffect(
+    () => (user.id ? dispatch(getCart(user.id)) : dispatch(getCart())),
+    []
+  );
+  const [add, setAdd] = useState(
+    cart.find((prod) => props.id == prod.id) ? true : false
+  );
+
+  useEffect(
+    () => (user.id ? dispatch(getCart(user.id)) : dispatch(getCart())),
+    []
+  );
   const sweetAlert = () => {
     Swal.fire({
       icon: "success",
@@ -28,12 +37,16 @@ function CardProduct(props) {
     });
   };
 
-  useEffect(()=>{
-    if(typeof wishlist.find != undefined &&typeof wishlist.find == "function"&&typeof wishlist.map == "function" ){
-      if( wishlist.find(wish => wish.productId == props.id))addFav(true); else addFav(false) ;}
-    
-  
-  },[wishlist])
+  useEffect(() => {
+    if (
+      typeof wishlist.find != undefined &&
+      typeof wishlist.find == "function" &&
+      typeof wishlist.map == "function"
+    ) {
+      if (wishlist.find((wish) => wish.productId == props.id)) addFav(true);
+      else addFav(false);
+    }
+  }, [wishlist]);
   const handleAddCart = () => {
     const prod = {
       productId: props.id,
@@ -180,16 +193,18 @@ function CardProduct(props) {
           Añadir al carro
         </button>
         <div class="add">
-              <span class="product_fav">
-                { 
-                  <button class={Fav===true ? "fa fa-heart":"fa fa-heart-o"} value={Fav} onClick={handleSubmit} ></button>  
-                  
-                  }
-              
-              </span>
-            </div>
-          </div>
+          <span class="product_fav">
+            {
+              <button
+                class={Fav === true ? "fa fa-heart" : "fa fa-heart-o"}
+                value={Fav}
+                onClick={handleSubmit}
+              ></button>
+            }
+          </span>
         </div>
+      </div>
+    </div>
     //         </div>
     //   </div>
     // </div>

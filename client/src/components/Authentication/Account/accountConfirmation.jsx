@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { updateUser } from "../../../redux/actions/user";
+import { useEffect } from "react";
+import { updateUser, getUser } from "../../../redux/actions/user";
 import Swal from 'sweetalert2'
 
 
@@ -20,10 +21,12 @@ export default function AccountConfirmation(props) {
   ]
 
 
+  useEffect(()=>{
+    dispatch(updateUser(activateUser))
+    localStorage.setItem("pg_merceria", id)
+    dispatch(getUser(id))
 
-  dispatch(updateUser(activateUser))
-
-  localStorage.setItem("pg_merceria", id)
+},[])
 
 
  
