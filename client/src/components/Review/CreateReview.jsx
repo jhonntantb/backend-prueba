@@ -4,6 +4,7 @@ import React from "react";
 import { createReview } from "../../redux/actions/review/index";
 import ReviewSeparator from "./ReviewSeparator";
 import Swal from "sweetalert2";
+import { FaStar } from "react-icons/fa";
 
 export default function CreateReview({ match }) {
   const dispatch = useDispatch();
@@ -34,6 +35,28 @@ export default function CreateReview({ match }) {
       setsend("true");
     }
   }
+
+  // const stars = Array(5).fill(0);
+  // const [currentValue, setCurrentValue] = useState(0);
+  // const [hoverValue, setHoverValue] = useState(undefined);
+
+  // const colors = {
+  //   orange: "FFBA5A",
+  //   grey: "a9a9a9",
+  // };
+
+  // const handleClick = (value) => {
+  //   setCurrentValue(value);
+
+  // };
+
+  // const handleMouseOver = (value) => {
+  //   setHoverValue(value);
+  // };
+
+  // const handleMouseleave = () => {
+  //   setHoverValue(undefined);
+  // };
 
   const alertSucces = () => {
     Swal.fire({
@@ -67,6 +90,32 @@ export default function CreateReview({ match }) {
             <label className="mt-2" htmlFor="score">
               Selecciona una puntuación{" "}
             </label>
+            {/* <div>
+              {stars.map((_, index) => {
+                return (
+                  <FaStar
+                    key={index}
+                    id="score"
+                    size={28}
+                    style={{
+                      marginRight: 10,
+                      cursor: "pointer",
+                    }}
+                    color={
+                      (hoverValue || currentValue) > index
+                        ? colors.orange
+                        : colors.grey
+                    }
+                    onClick={() => handleClick(index + 1)}
+                    onMouseOver={() => handleMouseOver(index + 1)}
+                    onMouseLeave={handleMouseleave}
+                    onChange={(value) => {
+                      setValues({ ...values, score: value });
+                    }}
+                  />
+                );
+              })}
+            </div> */}
             <select
               id="score"
               style={{ marginLeft: "5px" }}
