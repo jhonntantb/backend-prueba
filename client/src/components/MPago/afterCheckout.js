@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUser } from '../../redux/actions/user/index';
-import { getOrdersFromUser, updateOrderStatus } from '../../redux/actions/order/index';
+import { getOrdersFromUser, updateOrderStatus, clearOrder } from '../../redux/actions/order/index';
+import { sendOrderStatusEmail } from '../../redux/actions/mail/index';
 import  Swal  from 'sweetalert2';
 
 
@@ -20,7 +21,7 @@ export default function AfterCheckout (props) {
     
 
     useEffect(()=>{
-        if(localUserId!=='guest') {
+        if(localUserId!='guest') {
             dispatch(getUser(localUserId))
             dispatch(getOrdersFromUser(localUserId, 'checkout'))
         }
@@ -32,9 +33,17 @@ export default function AfterCheckout (props) {
             if(storeOrder[0].status==='checkout') {
                 dispatch(updateOrderStatus(storeOrder[0].id, "approved"))
                 console.log("cambió el estado de la orden")
-                localStorage.setItem("cart", "[]")
+                setTimeout(function (){
+
+                    dispatch(sendOrderStatusEmail(storeUser.id,storeOrder[0].id))
+                    dispatch(clearOrder())
+                    
+                }, 1000)
+                
             }
             setLoading(false)
+            alerterror()
+            localStorage.setItem("cart", "[]")
         }
 
     },[storeOrder])
@@ -44,8 +53,8 @@ export default function AfterCheckout (props) {
     const alerterror = () => {
         let nom = storeUser.user_name;
         let email = storeUser.email
-        //let dir = storeOrder[0].home_address;
-        //let dir2 = storeOrder[0].location;
+        let dir = storeOrder[0].home_address;
+        let dir2 = storeOrder[0].location;
         Swal.fire({
             icon: 'success',
             title: 'Gracias por elegirnos ' + nom,
@@ -55,14 +64,14 @@ export default function AfterCheckout (props) {
         }).then((result) => {
             if (result.isConfirmed) {
                Swal.fire({
-                text: 'tu orden fue confirmada será enviada a: + dir  + dir2, revisa tu casilla de correo ' 
-                + email + ' para seguir el estado de tu envío',
+                text: "tu orden fue confirmada será enviada a: "+ dir + " - " + dir2 + " - revisa tu casilla de correo " 
+                + email + " para seguir el estado de tu envío",
                 confirmButtonText: 'Ok',
                 confirmButtonColor: "#212529",
                 allowOutsideClick: false
                }).then((result) => {
                 if (result.isConfirmed) {
-                     window.location.href = '/'
+                     props.history.push('/'); 
                 }
                })
             }
@@ -71,7 +80,7 @@ export default function AfterCheckout (props) {
 
     return (<div>
             {loading?
-              <div>{alerterror()}</div>
+              <div>{}</div>
             :<p>loading</p>}   
         </div>)
 
