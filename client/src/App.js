@@ -35,6 +35,7 @@ import Wishlist from './views/Wishlist/Whislist';
 import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
 import twoStepsAuthPage from './components/Authentication/SignUp/twoSteps';
 import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
+import Index from './components/UserProfile';
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
       <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
       <Route path='/twoStepsInit' component={twoStepsAuthPage}/>
       <Route path='/AccountConfirmation' component={AccountConfirmation}/>
+      <Route path='/user/mydata' component={Index} />
     </React.Fragment>
   )
 }
