@@ -26,5 +26,6 @@ export const PASSWORD_CHANGE = '/pw-change';
 export const PRODDETAIL = '/productdetail';
 export const ABOUT ='/about';
 export const WISHLIST ='/wishlist';
+export const USER_DATA='/user/mydata'
 
 
