@@ -34,6 +34,7 @@ import Shopping from './components/UserShop/Shopping';
 import Wishlist from './views/Wishlist/Whislist';
 import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
 import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
+import Index from './components/UserProfile';
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
       <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>
       <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
       <Route path='/AccountConfirmation' component={AccountConfirmation}/>
+      <Route path={ROUTES.USER_DATA} component={Index} />
     </React.Fragment>
   )
 }
