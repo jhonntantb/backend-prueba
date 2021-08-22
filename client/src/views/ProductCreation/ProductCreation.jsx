@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useHistory} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "../../redux/actions/category";
 import {
@@ -17,12 +18,14 @@ const ProductCreation = (props) => {
   const admin = localStorage.getItem("admin");
 
   const dispatch = useDispatch();
+  const { push } = useHistory() ;
 
   const storeCategories = useSelector(
     (state) => state.categoryReducer.categories
   );
   const storeOffices = useSelector((state) => state.officeReducer.offices);
   const product = useSelector((state) => state.productReducer.product);
+  const products = useSelector((state) => state.productReducer.products);
 
   const [inputCategories, setInputCategories] = useState([]);
   const [inputOffice, setInputOffice] = useState([]);
@@ -47,32 +50,39 @@ const ProductCreation = (props) => {
       icon: "success",
       title: "¡Enhorabuena!",
       text: "El producto se creó correctamente",
-      showConfirmButton: false,
-      timer: 1500,
+      showConfirmButton: true,
+      
     });
   };
 
-  const [catalog, setCatalog] = useState(0);
+  
 
   useEffect(() => {
-    dispatch(resetProduct());
+   // dispatch(resetProduct());
+    dispatch(getAllProduct());
   }, []);
 
   // useEffect(() => {
   // if(product.length>0){alert('Numero de catalogo ya existe')}
   // }, [product]);
 
-  useEffect(() => {
-    dispatch(getProduct(addProduct.catalog_id));
-  }, [catalog]);
+ // useEffect(() => {
+ //   dispatch(getProduct(addProduct.catalog_id));
+ // }, [catalog]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCatalog(addProduct.catalog_id);
-    
+   // setCatalog(addProduct.catalog_id);
+    var exist = false;
+    for(let i=0; i<products.length; i++){
+      if(products[i].catalog_id == addProduct.catalog_id) {
+      exist = true
+      break
+      } 
+    }
 
     if (
-      addProduct.title != "" &&
+      addProduct.title !== "" &&
       addProduct.resume !== "" &&
       addProduct.detail !== "" &&
       addProduct.price !== "" &&
@@ -80,15 +90,19 @@ const ProductCreation = (props) => {
       addProduct.image.length > 0 &&
       addProduct.quantity > 0 &&
       addProduct.office !== "" &&
-      product.length === 0
+      !exist 
     ) {
       dispatch(createProduct(addProduct));
       dispatch(getAllProduct());
-      //props.history.push("/productlist");
       handleAlert();
+      push("/productlist");
     } else {
-      if (product.length !== 0) {
-        throw alert("NUMERO DE CATALOGO YA EXISTE");
+      if (exist) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Numero de catalogo ya existe, producto no creado',
+        })
       } else {
         Swal.fire({
           icon: 'error',
