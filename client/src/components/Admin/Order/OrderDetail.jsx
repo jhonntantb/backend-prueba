@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom'
 import { getOrder } from '../../../redux/actions/order'
 import { updateOrderStatus } from "../../../redux/actions/order/index"
+import {sendOrderStatusEmail} from "../../../redux/actions/mail/index"
 import  Swal  from 'sweetalert2';
 
 function OrderDetail(props) {
@@ -29,11 +30,17 @@ function OrderDetail(props) {
     }
 
     useEffect(() => {
-    }, [detailOrder])
+        if(detailOrder.length===0) {
+            alerterror()
+        }
+    }, [dispatch])
 
     const handleStatusClick = (e) => {
         e.preventDefault()
         dispatch(updateOrderStatus(id, status))
+        setTimeout(()=>{
+            dispatch(sendOrderStatusEmail(detailOrder.userId, detailOrder.id))
+        }, 2000)
         alertsuccess()
         
     }
@@ -178,7 +185,7 @@ function OrderDetail(props) {
                                 : null}
                         </div>
                     </div>
-                    : <p>{alerterror()}</p>}
+                    : <p>{null}</p>}
             </div>
 
         </div>

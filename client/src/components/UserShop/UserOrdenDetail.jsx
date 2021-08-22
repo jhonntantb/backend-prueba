@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { getOrder } from "../../redux/actions/order";
 import { updateOrderStatus } from "../../redux/actions/order/index";
 import CreateReview from "../Review/CreateReview";
+import {sendOrderStatusEmail} from "../../redux/actions/mail/index";
 
 function UserOrdenDetail(props) {
   const id = props.match.params.id;
@@ -21,7 +22,10 @@ function UserOrdenDetail(props) {
 
   const handleUserShopStatus = (e) => {
     e.preventDefault();
-    //dispatch(updateOrderStatus(id, "cancelled"));
+    dispatch(updateOrderStatus(id, "cancelled"));
+    setTimeout(()=>{
+      dispatch(sendOrderStatusEmail(order.userId, order.id))
+    }, 1500)
   };
   const sendReview = (e) => {
     e.preventDefault();
@@ -42,9 +46,9 @@ function UserOrdenDetail(props) {
             <h4 className="text-center text-dark">Información de la Orden</h4>
           </div>
           <hr />
-          <p className="px-2 text-dark">Orden ID: {order.id}</p>
-          <p className="px-2 text-dark">Status: {order.status}</p>
-          <p className="px-2 text-dark">Date:</p>
+          <p className="px-2 text-dark">Orden Numero: {order.id}</p>
+          <p className="px-2 text-dark">Estado: {order.status}</p>
+          <p className="px-2 text-dark">Fecha:</p>
           <p className="px-2 text-dark">{order.delivery_date}</p>
         </div>
 
@@ -55,7 +59,7 @@ function UserOrdenDetail(props) {
 
           <hr />
           <p className="px-2 text-dark">Provincia: {order.province}</p>
-          <p className="px-2 text-dark">Location: {order.location}</p>
+          <p className="px-2 text-dark">Region: {order.location}</p>
           <p className="px-2 text-dark">Direccion: {order.home_address}</p>
         </div>
         <br />
@@ -80,7 +84,7 @@ function UserOrdenDetail(props) {
                       value={e.title}
                       onClick={(e) => sendReview(e)}
                     >
-                      Dejame tu Review
+                      Dejanos tu comentario
                     </button>
                   ) : null}
                 </div>
@@ -98,10 +102,8 @@ function UserOrdenDetail(props) {
       <div className="row justify-content-center">
         {" "}
         {order &&
-        (order.status !== "cancelled" ||
-          order.status !== "delivered" ||
-          order.status !== "shipped") ? (
-          <button id="buttondown" onClick={(e) => handleUserShopStatus(e)}>
+        (order.status === "approved" ) ? (
+          <button id="buttondown" hidden={order.status != "approved"} onClick={(e) => handleUserShopStatus(e)}>
             Cancelar mi Compra
           </button>
         ) : null}
