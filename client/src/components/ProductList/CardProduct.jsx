@@ -28,12 +28,16 @@ function CardProduct(props) {
     });
   };
 
-  useEffect(()=>{
-    if(typeof wishlist.find != undefined &&typeof wishlist.find == "function"&&typeof wishlist.map == "function" ){
-      if( wishlist.find(wish => wish.productId == props.id))addFav(true); else addFav(false) ;}
-    
-  
-  },[wishlist])
+  useEffect(() => {
+    if (
+      typeof wishlist.find != undefined &&
+      typeof wishlist.find == "function" &&
+      typeof wishlist.map == "function"
+    ) {
+      if (wishlist.find((wish) => wish.productId == props.id)) addFav(true);
+      else addFav(false);
+    }
+  }, [wishlist]);
   const handleAddCart = () => {
     const prod = {
       productId: props.id,
@@ -180,16 +184,18 @@ function CardProduct(props) {
           Añadir al carro
         </button>
         <div class="add">
-              <span class="product_fav">
-                { 
-                  <button class={Fav===true ? "fa fa-heart":"fa fa-heart-o"} value={Fav} onClick={handleSubmit} ></button>  
-                  
-                  }
-              
-              </span>
-            </div>
-          </div>
+          <span class="product_fav">
+            {
+              <button
+                class={Fav === true ? "fa fa-heart" : "fa fa-heart-o"}
+                value={Fav}
+                onClick={handleSubmit}
+              ></button>
+            }
+          </span>
         </div>
+      </div>
+    </div>
     //         </div>
     //   </div>
     // </div>

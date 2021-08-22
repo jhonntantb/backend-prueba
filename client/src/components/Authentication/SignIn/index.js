@@ -11,6 +11,7 @@ import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
 import {getUser, clearUser} from '../../../redux/actions/user/index';
 import {GoogleButton} from './GoogleSignIn';
+import { getWishlist } from '../../../redux/actions/wishlist';
 
 
 const SignInPage = () => (
@@ -81,11 +82,13 @@ function SignInFormBase(props) {
             if(user.isAdmin===true) {
               localStorage.setItem("pg_merceria" , (user.id))
               localStorage.setItem("admin" , user.email)
+              dispatch(getWishlist(user.id))
               props.history.push("/");
             }else {
 
               //setea el id del usuario al sessionStorage
               localStorage.setItem("pg_merceria", user.id)
+              dispatch(getWishlist(user.id))
               props.history.push("/");
 
             }
@@ -117,7 +120,7 @@ function SignInFormBase(props) {
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Sign in</h3>
+            <h3 className="mb-4 text-center fs-1">Ingresar</h3>
             <form className="mb-3" onSubmit={onSubmit}>
               <div className="form-floating mb-3">
                 <input
@@ -146,7 +149,7 @@ function SignInFormBase(props) {
               </div>
               <div className="d-grip gap-2 mb-3 text-center">
                 <button className="btn btn-dark btn-lg border-0 rounded-0" disabled={isInvalid} type="submit">
-                  Submit
+                  Enviar
                 </button>
               </div>
 

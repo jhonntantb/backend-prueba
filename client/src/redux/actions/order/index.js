@@ -60,3 +60,9 @@ export const deleteOrder = (id) => {
         return dispatch({ type: TYPES.DELETE_ORDER, payload: res.data })
     }
 }
+
+export const clearOrder = () => {
+    return (dispatch) => {
+        return dispatch({type: TYPES.CLEAR_ORDER})
+    }
+}

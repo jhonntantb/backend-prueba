@@ -20,6 +20,7 @@ const productReducer = (state = initialState, action) => {
             product:action.payload   
         }
         case TYPES.RESET_PRODUCT: return{
+            ...state,
             product: []
         }
         case TYPES.CREATE_PRODUCT: return state

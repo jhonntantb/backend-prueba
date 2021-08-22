@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SearchBar from './SearchBar';
@@ -12,18 +12,22 @@ import CheckUser from '../Authentication/CheckUser/CheckUser';
 import { getAllOrder } from '../../redux/actions/order';
 import { useHistory } from 'react-router';
 
+
 const Navbar = () => {
 
+  // const [authUser, setAuthUser] = useState(localStorage.getItem("pg_merceria"))
+  // const [admin, setAdmin] = useState(localStorage.getItem("admin"))
   // CheckUser();
   const history = useHistory()
   const dispatch = useDispatch();
-  var authUser = localStorage.getItem("pg_merceria")
-  var admin = localStorage.getItem("admin")
+  const authUser= localStorage.getItem("pg_merceria")
+  const admin = localStorage.getItem("admin")
   
- useEffect(()=>{
-  // if(authUser==='guest') history.push('/')
   
-  },[authUser])
+//  useEffect(()=>{
+//   if(authUser==='guest') history.push('/')
+  
+//   },[authUser])
 
   
   //var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
@@ -51,24 +55,26 @@ const Navbar = () => {
         <form className="d-flex ml-10 ">
           <SearchBar />
         </form>
-        {authUser !== 'guest' ?
+       
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <ul className="navbar-nav ml-10  ">
+         
+           <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/contactus" >
+                Contactanos
+              </NavLink>
+            </li>
+          <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+                Acerca de 
+              </NavLink>
+            </li> 
+            {authUser !== 'guest' ?
         <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/wishlist"  >
                 Wishlist
               </NavLink>
             </li>:null}
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-          <ul className="navbar-nav ml-10  ">
-           <li className="nav-item mx-3">
-              <NavLink activeClassName="text-white" className="nav-link" to="/contactus" onClick={() => dispatch(getAllProduct())} >
-                Contactanos
-              </NavLink>
-            </li>
-         {/* <li className="nav-item mx-3">
-              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
-                Acerca de Nosotros
-              </NavLink>
-            </li> */}
             <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Productos
@@ -84,11 +90,11 @@ const Navbar = () => {
             <li className="nav-item dropdown mx-3">
               <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">Mi Cuenta</NavLink>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href={ROUTES.ACCOUNT}>Seguridad</a></li>
+                <li><NavLink class="dropdown-item" to={ROUTES.USER_DATA}>Mis Datos</NavLink></li>
                 {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
                 <li> <NavLink class="dropdown-item" to="/user/compras" onClick={e=>dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" ><SignOutButton /></a></li>
+                <li><a class="dropdown-item" href='/'><SignOutButton /></a></li>
               </ul>
             </li>}
             <ul className="navbar-nav mx-3">

@@ -8,10 +8,10 @@ export const sendEmailConfirmation = (user) => {
     }
 }
 
-export const sendOrderStatusEmail = (user, order) => {
-   var data ={user,order}
+export const sendOrderStatusEmail = (userId, orderId) => {
+   var data ={userId: userId, orderId: orderId}
     return async (dispatch) => {
-        const res = await axios.put('http://localhost:3001/mail/', data)
+        const res = await axios.post('http://localhost:3001/mail/order', data)
         return dispatch({type: TYPES.ORDER_STATUS_EMAIL, payload: res.data})
     }
 }
@@ -23,4 +23,6 @@ export const sendLowStockEmail = (productId) => {
          return dispatch({type: TYPES.LOW_STOCK_EMAIL, payload: res.data})
      }
  }
+
+
 

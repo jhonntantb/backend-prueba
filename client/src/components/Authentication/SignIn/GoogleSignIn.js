@@ -7,6 +7,7 @@ import {LogInUser} from '../../../redux/actions/login/index';
 import * as ROUTES from '../../../routes';
 import { useHistory } from 'react-router-dom';
 import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
+import { getWishlist } from '../../../redux/actions/wishlist';
 
 const GoogleButton = (props) => {
     
@@ -45,12 +46,7 @@ const GoogleBase = (props) => {
                     email: credentials.additionalUserInfo.profile.email,
                     first_name: credentials.additionalUserInfo.profile.given_name,
                     last_name: credentials.additionalUserInfo.profile.family_name,
-                    user_name: credentials.additionalUserInfo.profile.given_name + credentials.additionalUserInfo.profile.family_name,
-                    address: 'no especificado',
-                    province: 'no especificado',
-                    location: 'no especificado',
-                    country: 'no especificado'
-
+                    user_name: credentials.additionalUserInfo.profile.email.split("@")[0],
                 }
                 //voy a tener que implementar una action especifica para esto =(
                     
@@ -82,12 +78,14 @@ const GoogleBase = (props) => {
                 if(storeUser.isAdmin===true) {
                   localStorage.setItem("pg_merceria" , (storeUser.id))
                   localStorage.setItem("admin" , storeUser.email)
+                  dispatch(getWishlist(storeUser.id))
                   history.push('/');
                 }else {
     
                   //setea el id del usuario al sessionStorage
                   localStorage.setItem("pg_merceria", storeUser.id)
                   localStorage.setItem("admin" , null)
+                  dispatch(getWishlist(storeUser.id))
                   history.push('/');
     
                 }
