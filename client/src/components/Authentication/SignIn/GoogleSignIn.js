@@ -7,6 +7,7 @@ import {LogInUser} from '../../../redux/actions/login/index';
 import * as ROUTES from '../../../routes';
 import { useHistory } from 'react-router-dom';
 import {sendEmailConfirmation} from '../../../redux/actions/mail/index';
+import { getWishlist } from '../../../redux/actions/wishlist';
 
 const GoogleButton = (props) => {
     
@@ -77,12 +78,14 @@ const GoogleBase = (props) => {
                 if(storeUser.isAdmin===true) {
                   localStorage.setItem("pg_merceria" , (storeUser.id))
                   localStorage.setItem("admin" , storeUser.email)
+                  dispatch(getWishlist(storeUser.id))
                   history.push('/');
                 }else {
     
                   //setea el id del usuario al sessionStorage
                   localStorage.setItem("pg_merceria", storeUser.id)
                   localStorage.setItem("admin" , null)
+                  dispatch(getWishlist(storeUser.id))
                   history.push('/');
     
                 }
