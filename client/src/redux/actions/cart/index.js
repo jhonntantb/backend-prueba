@@ -12,7 +12,7 @@ export const getCart = (id = null) => {
         else
         {
             var lsCart = JSON.parse(localStorage.getItem("cart"))
-            cart = lsCart.length > 0 ? lsCart : [] 
+            cart = lsCart ? lsCart : [] 
         }
         
         return dispatch({ type: TYPES.GET_CART, payload: cart})
