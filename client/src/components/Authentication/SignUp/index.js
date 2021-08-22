@@ -43,7 +43,7 @@ function SignUpFormBase(props) {
 
   const onSubmitHandler = async (e) => {
 
-    const { user_name, first_name, last_name, email, passwordOne, province, city, street, number, country } = state;
+    const { user_name, first_name, last_name, email, passwordOne, province, city, street, number } = state;
     e.preventDefault();
 
     try {
@@ -54,10 +54,9 @@ function SignUpFormBase(props) {
         first_name,
         last_name,
         email,
-        address: street + ' - ' + number,
+        address: street,
         province: province,
         location: city,
-        country: country,
         active: false
       }
 
@@ -98,20 +97,17 @@ function SignUpFormBase(props) {
       if (e.target.value.includes("@") && e.target.value.includes(".com")) {
         var validated = await validateUserEmail(e.target.value)
         setEmailError(validated)
-
-
+        
       } else {
 
         if (e.target.value.length > 0) {
           setEmailError(true)
         } else { setEmailError(false) }
-
       }
     }
-
   }
 
-  const { user_name, first_name, last_name, email, passwordOne, passwordTwo, country, province, city, street, number, error,
+  const { user_name, first_name, last_name, email, passwordOne, passwordTwo, province, city, street, error,
   } = state;
 
   const isInvalid =
@@ -129,36 +125,22 @@ function SignUpFormBase(props) {
     }
   }, [storeUser])
 
+  
+
   useEffect(async () => {
-    var countriesLoaded = await callCountries()
-    // console.log("countriesLoaded tiene:" , Object.keys(countriesLoaded))
-    console.log("countriesLoaded tiene:", countriesLoaded)
-    console.log("es array? ", Array.isArray(countriesLoaded))
-    setCountries(countriesLoaded)
+    
+      
+      var loadedRegion = await callRegion()
+      console.log("loadedRegion tiene " , loadedRegion)
+      setRegion(loadedRegion)
+      setLoading(false)
+    
 
   }, [])
 
-  useEffect(() => {
-    if (countries.length > 0) {
-      console.log("se cargaron los paises");
-      setLoading(false)
-    }
-
-  }, [countries])
-
   useEffect(async () => {
-    if (state.country) {
-      // console.log("state.contry: " , state.country)
-      var loadedRegion = await callRegion(state.country.split(",")[1])
-      // console.log("loadedRegion tiene " , loadedRegion)
-      setRegion(loadedRegion)
-    }
-
-  }, [state.country])
-
-  useEffect(async () => {
-    if (state.province) {
-      var loadedCity = await callCity(state.province, state.country)
+    if (state.province!="") {
+      var loadedCity = await callCity(state.province)
       console.log("loadedCity: ", loadedCity)
       setApiCity(loadedCity)
     }
@@ -173,14 +155,6 @@ function SignUpFormBase(props) {
         <div className="row">
           <div className="col-md-6">
 
-            {/* <label
-              hidden={user_name.length > 3 || user_name.length === 0}
-              className="username-error"
-            >El Nombre de usuario debe contar con al menos 4 caracteres</label> */}
-            {/* <label
-              hidden={!(userError)}
-              className="password-cont"
-            >El nombre de usuario ya esta en uso</label> */}
             <div className="mb-3 mt-3">
               <label style={{ marginLeft: "3px" }}>Nombre de usuario</label>
               <input
@@ -223,10 +197,7 @@ function SignUpFormBase(props) {
                 className="form-control"
               />
             </div>
-            {/* <label
-              className="password-cont"
-              hidden={!emailError}
-            >El email no tiene el formato adecuado o ya se encuentra registrado</label> */}
+            
             <div className="mb-3 mt-3">
               <label style={{ marginLeft: "3px" }}>Email</label>
               <input
@@ -252,10 +223,7 @@ function SignUpFormBase(props) {
                 className="form-control"
               />
             </div>
-            {/* <label
-              hidden={passwordOne === passwordTwo}
-              className='password-cont'
-            >las contraseñas deben coincidir</label> */}
+            
             <div className="mb-3 mt-3">
               <label style={{ marginLeft: "3px" }}>Confirmar contraseña</label>
               <input
@@ -274,21 +242,8 @@ function SignUpFormBase(props) {
 
 
           <div className="col-md-6">
-            <div className="mb-3 mt-3 separador">
-              <label style={{ marginLeft: "3px" }}>Pais</label>
-              <select
-                name="country"
-                value={country}
-                onChange={onChangeHandler}
-                // type="select"
-                placeholder="Pais"
-                className="form-control"
-              >
-                <option key={"inicial"} value='seleccionar'>--Seleccionar--</option>
-                {countries.map(c => <option key={c.code} value={[c.name, c.code]}>{c.name}</option>)}
-              </select>
+          
 
-            </div>
             <div className="mb-3 mt-3 separador">
               <label style={{ marginLeft: "3px" }}>Provincia</label>
               <Input
@@ -300,7 +255,7 @@ function SignUpFormBase(props) {
                 className="form-control"
               >
                 <option key='region' value='seleccionarRegion'>--Seleccionar--</option>
-                {region.map((r, index) => <option key={r.region + index} value={r.region}>{r.region.replace("Province", "")}</option>)}
+                {region.map((r, index) => <option key={r.nombre + index} value={r.nombre}>{r.nombre}</option>)}
               </Input>
             </div>
             <div className="mb-3 mt-3 separador">
@@ -314,31 +269,21 @@ function SignUpFormBase(props) {
                 className="form-control"
               >
                 <option key='city' value='seleccionarCiudad'>--Seleccionar--</option>
-                {apiCity.map((c, index) => <option key={index} value={c.city}>{c.city}</option>)}
+                {apiCity.map((c, index) => <option key={index} value={c.nombre}>{c.nombre}</option>)}
               </Input>
             </div>
             <div className="mb-3 mt-3 separador">
-              <label style={{ marginLeft: "3px" }}>Calle</label>
+              <label style={{ marginLeft: "3px" }}>Calle y Numero</label>
               <input
                 name="street"
                 value={street}
                 onChange={onChangeHandler}
                 type="text"
-                placeholder="calle"
+                placeholder="calle y numero"
                 className="form-control"
               />
             </div>
-            <div className="mb-3 mt-3 separador">
-              <label style={{ marginLeft: "3px" }}>Numero de calle</label>
-              <input
-                name="number"
-                value={number}
-                onChange={onChangeHandler}
-                type="text"
-                placeholder="numero de calle"
-                className="form-control"
-              />
-            </div>
+            
           </div>
 
         </div>
@@ -351,8 +296,6 @@ function SignUpFormBase(props) {
         {error && <p className='text-danger text-center'>{error.message}</p>}
 
       </form>
-
-
 
     </div>
   ) : (<h2 className="text-center text-dark mt-5">Cargando...</h2>);
