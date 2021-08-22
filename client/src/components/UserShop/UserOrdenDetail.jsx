@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { getOrder } from "../../redux/actions/order";
 import { updateOrderStatus } from "../../redux/actions/order/index";
 import CreateReview from "../Review/CreateReview";
+import {sendOrderStatusEmail} from "../../redux/actions/mail/index";
 
 function UserOrdenDetail(props) {
   const id = props.match.params.id;
@@ -22,6 +23,9 @@ function UserOrdenDetail(props) {
   const handleUserShopStatus = (e) => {
     e.preventDefault();
     dispatch(updateOrderStatus(id, "cancelled"));
+    setTimeout(()=>{
+      dispatch(sendOrderStatusEmail(order.userId, order.id))
+    }, 1500)
   };
   const sendReview = (e) => {
     e.preventDefault();
