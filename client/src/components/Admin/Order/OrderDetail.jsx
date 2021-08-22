@@ -45,16 +45,16 @@ function OrderDetail(props) {
     const alerterror = () => {
         Swal.fire({
             icon: 'error',
-            title: '¡Orden modificada con exito!',
+            title: 'No hay productos ',
             confirmButtonText: 'Ok',
             confirmButtonColor: "#212529",
         })
     }
-
+    
     const alertsuccess = () => {
         Swal.fire({
+            title: '¡Orden modificada con exito!',
             icon: 'success',
-            title: 'No hay productos ',
             confirmButtonText: 'Ok',
             confirmButtonColor: "#212529",
         }).then((result) => {

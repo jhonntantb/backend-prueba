@@ -11,6 +11,7 @@ import * as ROUTES from '../../../routes';
 import { LogInUser } from '../../../redux/actions/login/index'
 import {getUser, clearUser} from '../../../redux/actions/user/index';
 import {GoogleButton} from './GoogleSignIn';
+import { getWishlist } from '../../../redux/actions/wishlist';
 
 
 const SignInPage = () => (
@@ -81,11 +82,13 @@ function SignInFormBase(props) {
             if(user.isAdmin===true) {
               localStorage.setItem("pg_merceria" , (user.id))
               localStorage.setItem("admin" , user.email)
+              dispatch(getWishlist(user.id))
               props.history.push("/");
             }else {
 
               //setea el id del usuario al sessionStorage
               localStorage.setItem("pg_merceria", user.id)
+              dispatch(getWishlist(user.id))
               props.history.push("/");
 
             }

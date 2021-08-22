@@ -163,7 +163,8 @@ router.put('/:id/:Status', async (req, res) => {
     const statusNew = Status
     const statusDupla = statusAnt + "/" + statusNew;
     const validDuplas = [
-    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled","shipped/delivered","approved/cancelled"
+    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled","shipped/delivered","approved/cancelled",
+    "cart/cancelled", "shipped/cancelled"
     ];
 
     if(!validDuplas.includes(statusDupla)) return res.status(300).send('Cambio de status invalido');
