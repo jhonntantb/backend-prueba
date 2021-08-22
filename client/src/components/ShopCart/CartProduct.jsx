@@ -6,15 +6,20 @@ import Swal from "sweetalert2";
 
 export default function CartProduct({ content, addPrice, removePrice }) {
   const dispatch = useDispatch();
-  const [cant, setCant] = useState(content.cant);
+  const [cant, setCant] = useState(1);
   const [localPrice, setLocalPrice] = useState(content.price);
   const cart = useSelector((state) => state.cartReducer.cart);
+  const user = useSelector((state) => state.userReducer.user);
+
+  useEffect(() => {
+    user.id ? setCant(content.Order_Product.quantity) : setCant(content.cant)
+  }, [])
 
   useEffect(() => {
     setLocalPrice(content.price * cant);
     var arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
     localStorage.setItem("cart", JSON.stringify(arr));
-    dispatch(getCart());
+    dispatch(getCart())
   }, [cant]);
 
   useEffect(
@@ -50,7 +55,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
   const handleRes = () => {
     setCant(cant == 1 ? cant : cant - 1);
   };
-
+  console.log(content)
   return (
     <div class="container-fluid pb-5 mt-n2 mt-md-n3">
       <div class="row">
@@ -67,7 +72,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
                 </h3>
                 <br />
                 <span class="font-size-lg text-primary pt-5">
-                  $ {content.price}
+                  $ {localPrice}
                 </span>
               </div>
             </div>
@@ -127,67 +132,6 @@ export default function CartProduct({ content, addPrice, removePrice }) {
               </button>
             </div>
           </div>
-          {/*<div class="pt-4">
-                <div class="accordion" id="cart-accordion">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="accordion-heading font-weight-semibold"><a href="#promocode" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="promocode">Apply promo code<span class="accordion-indicator"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg></span></a></h3>
-                        </div>
-                        <div class="collapse show" id="promocode" data-parent="#cart-accordion">
-                            <div class="card-body">
-                                <form class="needs-validation" novalidate="">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" id="cart-promocode" placeholder="Promo code" required="">
-                                        <div class="invalid-feedback">Please provide a valid promo code!</div>
-                                    </div>
-                                    <button class="btn btn-outline-primary btn-block" type="submit">Apply promo code</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="accordion-heading font-weight-semibold"><a class="collapsed" href="#shipping" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="shipping">Shipping estimates<span class="accordion-indicator"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg></span></a></h3>
-                        </div>
-                        <div class="collapse" id="shipping" data-parent="#cart-accordion">
-                            <div class="card-body">
-                                <form class="needs-validation" novalidate="">
-                                    <div class="form-group">
-                                        <select class="form-control custom-select" required="">
-                                            <option value="">Choose your country</option>
-                                            <option value="Australia">Australia</option>
-                                            <option value="Belgium">Belgium</option>
-                                            <option value="Canada">Canada</option>
-                                            <option value="Finland">Finland</option>
-                                            <option value="Mexico">Mexico</option>
-                                            <option value="New Zealand">New Zealand</option>
-                                            <option value="Switzerland">Switzerland</option>
-                                            <option value="United States">United States</option>
-                                        </select>
-                                        <div class="invalid-feedback">Please choose your country!</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control custom-select" required="">
-                                            <option value="">Choose your city</option>
-                                            <option value="Bern">Bern</option>
-                                            <option value="Brussels">Brussels</option>
-                                            <option value="Canberra">Canberra</option>
-                                            <option value="Helsinki">Helsinki</option>
-                                            <option value="Mexico City">Mexico City</option>
-                                            <option value="Ottawa">Ottawa</option>
-                                            <option value="Washington D.C.">Washington D.C.</option>
-                                            <option value="Wellington">Wellington</option>
-                                        </select>
-                                        <div class="invalid-feedback">Please choose your city!</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="ZIP / Postal code" required="">
-                                        <div class="invalid-feedback">Please provide a valid zip!</div>
-                                    </div>
-                                    <button class="btn btn-outline-primary btn-block" type="submit">Calculate shipping</button>
-                                </form>
-                            </div>
-                        </div>*/}
         </div>
       </div>
     </div>

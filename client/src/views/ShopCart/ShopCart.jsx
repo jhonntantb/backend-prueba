@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../../redux/actions/product/index"
 import { getCart } from "../../redux/actions/cart/index";
+import { getAllOrder, updateOrder } from "../../redux/actions/order/index"
 import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts";
 import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
 
@@ -9,14 +11,34 @@ export default function ShopCart() {
   CheckUser();
   const dispatch = useDispatch()
   const [total, setTotal] = useState(0)
+  const [finalCart, setFinalCart] = useState([])
   const cart = useSelector(state => state.cartReducer.cart)
+  const order = useSelector(state => state.orderReducer.orders)
   const user =  useSelector(state => state.userReducer.user)
 
-  useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
+  useEffect(() => finalCart.length > 0 && dispatch(getProduct()), [])
 
-  return cart.length > 0 ? (
+  useEffect(() => { 
+    if(user.id)
+    {
+      dispatch(getCart(user.id))
+      dispatch(getAllOrder(user.id, "cart"))
+    }
+    else
+      dispatch(getCart())
+  }, [user])
+
+  useEffect(() => {
+    if(order.length > 0 && user.id) setFinalCart(order[0].products)
+  }, [order])
+
+  useEffect(() => {
+    if(cart.length > 0 && !user.id) setFinalCart(cart)
+  }, [cart])
+
+  return finalCart.length > 0 ? (
     <div>
-        <ShowCartProducts products={cart} setTotal={setTotal} />
+      <ShowCartProducts products={finalCart} setTotal={setTotal} />
       <div className="row justify-content-center">
       <div class="col align-self-center col-lg-6">
         <h2 class="h6 px-4 py-3 bg-secondary text-center">Total</h2>
