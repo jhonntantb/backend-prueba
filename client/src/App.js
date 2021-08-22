@@ -33,8 +33,8 @@ import AfterCheckoutRejected from './components/MPago/afterCheckout-reject';
 import Shopping from './components/UserShop/Shopping';
 import Wishlist from './views/Wishlist/Whislist';
 import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
-import twoStepsAuthPage from './components/Authentication/SignUp/twoSteps';
 import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
+import Index from './components/UserProfile';
 
 
 function App() {
@@ -52,7 +52,6 @@ function App() {
       <Route path={ROUTES.PRODUCT} component={Product} />
       <Route exact path={ROUTES.CART} component={ShopCart} />
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
-      <Route path='/productcreation' component={ProductCreation} />
       <Route path='/productupdate/:id' component={ProductUpdate} />
       <Route path={ROUTES.CONTACT_US} component={ContactUs} />
       <Route path='/pagar' component={CreateCheckoutButton}/>
@@ -69,8 +68,8 @@ function App() {
       <Route exact path="/admin/orders/:id" component={OrderDetail}/>
       <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>
       <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
-      <Route path='/twoStepsInit' component={twoStepsAuthPage}/>
       <Route path='/AccountConfirmation' component={AccountConfirmation}/>
+      <Route path={ROUTES.USER_DATA} component={Index} />
     </React.Fragment>
   )
 }

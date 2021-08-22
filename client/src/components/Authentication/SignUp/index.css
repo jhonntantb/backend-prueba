@@ -1,11 +1,16 @@
 .danger {
-    color: red
+  color: red;
 }
 
-.user-main {
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%
+.password-cont {
+  color: red;
+  font-size: smaller;
+}
+
+.username-error {
+  font-size: smaller;
+}
+
+.separador {
+  margin-left: 18px;
 }

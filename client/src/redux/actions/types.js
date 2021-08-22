@@ -21,6 +21,8 @@ export const CREATE_USER = "create_user"
 export const UPDATE_USER = "update_user" 
 export const DELETE_USER = "get_user"
 export const CLEAR_USER = "clear_user"
+export const GET_PREVIUOS_USER = "get_previous_user"
+export const GET_PREVIUOS_EMAIL = "get_previous_email"
 
 //Review
 export const GET_ALL_REVIEW = "get_all_review"
@@ -38,6 +40,7 @@ export const UPDATE_ORDER = "update_order"
 export const DELETE_ORDER= "get_order"
 export const GET_ORDER_FROM_USER = "get_order_from_user"
 export const UPDATE_ORDER_STATUS = "update_order_status"
+export const CLEAR_ORDER = "clear_order"
 
 //Stock
 export const GET_ALL_STOCK = "get_all_stock"
