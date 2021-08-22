@@ -21,7 +21,7 @@ function UserOrdenDetail(props) {
 
   const handleUserShopStatus = (e) => {
     e.preventDefault();
-    dispatch(updateOrderStatus(id, "cancelled"));
+    //dispatch(updateOrderStatus(id, "cancelled"));
   };
   const sendReview = (e) => {
     e.preventDefault();

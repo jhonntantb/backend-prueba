@@ -69,7 +69,7 @@ function App() {
       <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>
       <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
       <Route path='/AccountConfirmation' component={AccountConfirmation}/>
-      <Route path='/user/mydata' component={Index} />
+      <Route path={ROUTES.USER_DATA} component={Index} />
     </React.Fragment>
   )
 }
