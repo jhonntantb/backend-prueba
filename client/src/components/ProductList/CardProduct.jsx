@@ -9,6 +9,7 @@ import { updateOrder, createOrder, getAllOrder } from "../../redux/actions/order
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
+
 function CardProduct(props) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer.cart);
@@ -186,17 +187,17 @@ function CardProduct(props) {
         >
           Añadir al carro
         </button>
-        <div class="add">
+        {user.id?(<div class="add">
           <span class="product_fav">
             {
-              <button
+              (<button
                 class={Fav === true ? "fa fa-heart" : "fa fa-heart-o"}
                 value={Fav}
                 onClick={handleSubmit}
-              ></button>
+              ></button>)
             }
           </span>
-        </div>
+        </div>):null}
       </div>
     </div>
   );

@@ -5,18 +5,20 @@ import { getWishlist } from "../../redux/actions/wishlist";
 import  Swal  from 'sweetalert2';
 import { useHistory } from 'react-router';
 import { FaSlideshare } from "react-icons/fa";
+import CheckUser from "../../components/Authentication/CheckUser/CheckUser"
 
 
 
 export default function Wishlist() {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.userReducer.user.id);
+  // const id = localStorage.getItem("pg_merceria")
+  
   const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
   const [Ready,setReady] = useState(false)
   const history = useHistory()
   useEffect(() => {
     dispatch(getWishlist(id)).then(()=>{setReady(true)}) ;
-    // noproducts()
   }, []);
   
  

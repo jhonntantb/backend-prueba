@@ -8,8 +8,6 @@ import { getCart } from "../../redux/actions/cart/index"
 import { getAllOrder } from "../../redux/actions/order/index"
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
-import { BrowserRouter } from 'react-router-dom';
-import Wishlist from "../../views/Wishlist/Whislist.jsx";
 import { getWishlist } from "../../redux/actions/wishlist/index.js";
 
 
@@ -206,7 +204,7 @@ function ProductList() {
   
              
     </div>
-  ):<p>...Loading</p>
+  ):<h1>No hay productos que coincidan con ese nombre</h1>
 
  
 }
