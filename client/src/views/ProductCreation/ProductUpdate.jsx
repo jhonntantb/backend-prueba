@@ -14,7 +14,6 @@ import Swal from "sweetalert2";
 function ProductUpdate(props) {
   const admin = localStorage.getItem("admin");
 
-  const prodId = props.match.params.id;
   const product = useSelector((state) => state.productReducer.product);
   //console.log(product);
 

@@ -4,10 +4,8 @@ import { getCart } from "../../redux/actions/cart/index";
 import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
-//import {} from "../../redux/actions/"
 import "./CardProduct.css";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { getAllProduct } from "../../redux/actions/product";
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 

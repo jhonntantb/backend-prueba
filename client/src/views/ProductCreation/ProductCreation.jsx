@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "../../redux/actions/category";
 import {
   createProduct,
-  getProduct,
   getAllProduct,
-  resetProduct,
 } from "../../redux/actions/product";
 import { getAllOffice } from "../../redux/actions/office";
 import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader";
@@ -24,7 +22,6 @@ const ProductCreation = (props) => {
     (state) => state.categoryReducer.categories
   );
   const storeOffices = useSelector((state) => state.officeReducer.offices);
-  const product = useSelector((state) => state.productReducer.product);
   const products = useSelector((state) => state.productReducer.products);
 
   const [inputCategories, setInputCategories] = useState([]);
