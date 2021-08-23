@@ -99,7 +99,7 @@ const Navbar = () => {
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><NavLink class="dropdown-item" to={ROUTES.USER_DATA}>Mis Datos</NavLink></li>
                 {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
-                <li> <NavLink class="dropdown-item" to="/user/compras" onClick={e=>dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
+                <li> <NavLink class="dropdown-item" to="/user/compras" onClick={ async e=>await dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href='/'><SignOutButton /></a></li>
               </ul>

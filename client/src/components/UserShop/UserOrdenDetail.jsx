@@ -13,11 +13,12 @@ function UserOrdenDetail(props) {
   const [productId, setProductId] = useState("");
   const [productName, setProductName] = useState("");
   const [showReview, setShowReview] = useState(false);
-
+  const order = useSelector((state) => state.orderReducer.order);
+  
   useEffect(() => {
     dispatch(getOrder(id));
   }, []);
-  const order = useSelector((state) => state.orderReducer.order);
+  
   console.log(order);
 
   const handleUserShopStatus = (e) => {
