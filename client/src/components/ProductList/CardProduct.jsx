@@ -4,12 +4,11 @@ import { getCart } from "../../redux/actions/cart/index";
 import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
-//import {} from "../../redux/actions/"
 import "./CardProduct.css";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { getAllProduct } from "../../redux/actions/product";
 import "./CardProduct.css";
 import Swal from "sweetalert2";
+
 
 function CardProduct(props) {
   const dispatch = useDispatch();
@@ -145,17 +144,17 @@ function CardProduct(props) {
         >
           Añadir al carro
         </button>
-        <div class="add">
+        {user.id?(<div class="add">
           <span class="product_fav">
             {
-              <button
+              (<button
                 class={Fav === true ? "fa fa-heart" : "fa fa-heart-o"}
                 value={Fav}
                 onClick={handleSubmit}
-              ></button>
+              ></button>)
             }
           </span>
-        </div>
+        </div>):null}
       </div>
     </div>
     //         </div>
