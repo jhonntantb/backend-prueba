@@ -12,20 +12,20 @@ export  const ShowCartCant = () => {
 
     useEffect(() => {
         if(user.id)
-        {
-          dispatch(getCart(user.id))
           dispatch(getAllOrder(user.id, "cart"))
-        }
         else
           dispatch(getCart())
     }, [user])
 
     useEffect(() => {
-        if(order.length) setCant(cart.length + order[0].products.length)
+        if(order.length) setCant(order[0].products.length)
     }, [order])
 
     useEffect(() => {
-        if(cart.length) setCant(cart.length)
+        if(cart)
+            cart.length > 0 ? setCant(cart.length) : setCant(0)
+        else
+            setCant(0)
     }, [cart])
     
     return cant

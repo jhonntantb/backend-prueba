@@ -6,31 +6,27 @@ import "./CartProduct.css";
 import Swal from "sweetalert2";
 
 export default function CartProduct({ content, addPrice, removePrice }) {
-  const maxCant = 10000
+  const maxCant = content.stock ? content.stock : 10000
   const dispatch = useDispatch();
   const [cant, setCant] = useState(1);
-  const [localPrice, setLocalPrice] = useState(0);
+  const [localPrice, setLocalPrice] = useState(content.price);
   const cart = useSelector((state) => state.cartReducer.cart);
   const order = useSelector((state) => state.orderReducer.orders);
   const user = useSelector((state) => state.userReducer.user);
 
-  useEffect(() => {
-    setLocalPrice(content.price)
-    user.id ? setCant(content.Order_Product.quantity) : setCant(content.cant)
-  }, [])
+  useEffect(() => user.id ? setCant(content.Order_Product.quantity) : setCant(content.cant), [])
 
   useEffect(() => {
     setLocalPrice(content.price * cant);
-    var arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
+    let arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
     localStorage.setItem("cart", JSON.stringify(arr));
     dispatch(getCart())
   }, [cant]);
 
-  useEffect(
-    () => addPrice({ id: content.id, value: localPrice }),
-    [localPrice]
-  );
-  console.log(content)
+  useEffect(() => addPrice({ id: content.id, value: localPrice }), [localPrice]);
+  
+  console.log(cant)
+  
   const removeAlert = () => {
     Swal.fire({
       title: "Estas Seguro?",
@@ -63,14 +59,14 @@ export default function CartProduct({ content, addPrice, removePrice }) {
         else
         {
           removePrice(content.id)
-          var arr = cart.filter((e) => e.id != content.id);
-          localStorage.setItem("cart", JSON.stringify(arr));
-          dispatch(getCart());
+          let arr = cart.filter((e) => e.id != content.id);
+          localStorage.setItem("cart", JSON.stringify(arr))
+          dispatch(getCart())
         }
       }
     });
   };
-
+  
   const handleCant = (e) => {
     if(e.target.value > maxCant) setCant(maxCant)
     else if(e.target.value < 1) setCant(1)
@@ -92,7 +88,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
           <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
             <div class="media d-block d-sm-flex text-center text-sm-left">
               <a class="cart-item-thumb mx-auto mr-sm-4" href="#">
-                <img src={content.productimages[0].image_url} alt="Product" />
+                <img src={content.productimages ? content.productimages[0].image_url : content.url} alt="Product" />
               </a>
               <div class="media-body pt-3 align-text-center">
                 <h3 class="product-card-title font-weight-semibold border-0 pb-0 mx-5">

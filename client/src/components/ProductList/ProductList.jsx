@@ -33,10 +33,7 @@ function ProductList() {
     dispatch(getAllCategory());
     dispatch(getWishlist(id))
     if(user.id)
-    {
-      dispatch(getCart(user.id))
       dispatch(getAllOrder(user.id, "cart"))
-    }
     else
       dispatch(getCart())
   }, []);

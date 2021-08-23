@@ -16,25 +16,23 @@ export default function ShopCart() {
   const order = useSelector(state => state.orderReducer.orders)
   const user =  useSelector(state => state.userReducer.user)
 
-  useEffect(() => finalCart.length > 0 && dispatch(getProduct()), [])
-
   useEffect(() => { 
     if(user.id)
-    {
-      dispatch(getCart(user.id))
       dispatch(getAllOrder(user.id, "cart"))
-    }
     else
       dispatch(getCart())
   }, [user])
 
   useEffect(() => {
-    if(order.length > 0 && user.id) setFinalCart(order[0].products)
+    if(order.length > 0) setFinalCart(order[0].products)
   }, [order])
 
   useEffect(() => {
-    if(cart.length > 0 && !user.id) setFinalCart(cart)
+    if(cart)
+      cart.length > 0 ? setFinalCart(cart) : setFinalCart([])
   }, [cart])
+
+  console.log(cart)
 
   return finalCart.length > 0 ? (
     <div>

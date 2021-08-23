@@ -19,8 +19,9 @@ function CardProduct(props) {
   const [add, setAdd] = useState(false);
 
   useEffect(() => {
-    if(!user.id)
-      setAdd(cart.find((prod) => props.id == prod.id) ? true : false)
+    if(cart)
+      if(!user.id)
+        setAdd(cart.find((prod) => props.id == prod.id) ? true : false)
   }, [cart])
 
   useEffect(() => {
@@ -50,14 +51,16 @@ function CardProduct(props) {
   }, [wishlist]);
 
   const handleAddCart = () => {
-    const prod = {
-      productId: props.id,
-      unitprice: Number(props.price),
-      quantity: 1
-    }
+    
 
     if(user.id)
     {
+      const prod = {
+        productId: props.id,
+        unitprice: Number(props.price),
+        quantity: 1
+      }
+
       if(order.length > 0)
       {
         if(order[0].products.find(e => e.id == prod.productId))
@@ -103,13 +106,14 @@ function CardProduct(props) {
     }
     else
     {
+      let obj = {...props, cant: 1}
       if(cart) 
       {
-        if(cart.find(e => e.id == prod.id))
+        if(cart.find(e => e.id == props.id))
           alert("El producto ya esta agregado al carrito");
         else 
         {
-          localStorage.setItem("cart", JSON.stringify([...cart, prod]));
+          localStorage.setItem("cart", JSON.stringify([...cart, obj]));
           setAdd(true);
           sweetAlert();
           dispatch(getCart())
@@ -117,7 +121,7 @@ function CardProduct(props) {
       } 
       else 
       {
-        localStorage.setItem("cart", JSON.stringify([prod]));
+        localStorage.setItem("cart", JSON.stringify([obj]));
         setAdd(true);
         sweetAlert();
         dispatch(getCart())
