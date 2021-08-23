@@ -21,9 +21,9 @@ export default function CartForm(){
         <div>
             <div>
                 <CartReceipt/>
-                <AddressFrom setAddress={setAddress}/>
-                <div className="container ">
                 {address && <CreateCheckoutButton products={cart} direction={address}/>}
+                {!address && <AddressFrom setAddress={setAddress}/>}
+                <div className="container ">
                 </div>
             </div>
                

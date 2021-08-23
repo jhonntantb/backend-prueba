@@ -40,6 +40,7 @@ export const UPDATE_ORDER = "update_order"
 export const DELETE_ORDER= "get_order"
 export const GET_ORDER_FROM_USER = "get_order_from_user"
 export const UPDATE_ORDER_STATUS = "update_order_status"
+export const CLEAR_ORDER = "clear_order"
 
 //Stock
 export const GET_ALL_STOCK = "get_all_stock"
