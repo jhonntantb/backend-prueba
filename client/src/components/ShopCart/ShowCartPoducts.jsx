@@ -11,7 +11,7 @@ export default function ShowCartProduct({ products, setTotal }) {
   useEffect(() => {
     let acum = 0;
 
-    for (let i = 0; i < prices.length; i++) acum += prices[i].value;
+    for(let i = 0; i < prices.length; i++) acum += prices[i].value;
 
     setTotal(acum);
   }, [prices]);

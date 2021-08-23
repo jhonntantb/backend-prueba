@@ -198,7 +198,8 @@ router.delete("/:id",async (req, res) => {
     try {
         await Order.destroy({where:{id: req.params.id}})
         res.sendStatus(200)
-    } catch (error) {
+    } 
+    catch (error) {
         next(error)
     }
 })

@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateOrder, getAllOrder } from "../../redux/actions/order/index"
 import { getCart } from "../../redux/actions/cart";
 import "./CartProduct.css";
 import Swal from "sweetalert2";
 
 export default function CartProduct({ content, addPrice, removePrice }) {
+  const maxCant = 10000
   const dispatch = useDispatch();
   const [cant, setCant] = useState(1);
-  const [localPrice, setLocalPrice] = useState(content.price);
+  const [localPrice, setLocalPrice] = useState(0);
   const cart = useSelector((state) => state.cartReducer.cart);
+  const order = useSelector((state) => state.orderReducer.orders);
   const user = useSelector((state) => state.userReducer.user);
 
   useEffect(() => {
+    setLocalPrice(content.price)
     user.id ? setCant(content.Order_Product.quantity) : setCant(content.cant)
   }, [])
 
@@ -26,7 +30,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
     () => addPrice({ id: content.id, value: localPrice }),
     [localPrice]
   );
-  
+  console.log(content)
   const removeAlert = () => {
     Swal.fire({
       title: "Estas Seguro?",
@@ -40,31 +44,55 @@ export default function CartProduct({ content, addPrice, removePrice }) {
       allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
-        removePrice(content.id)
-        var arr = cart.filter((e) => e.id != content.id);
-        localStorage.setItem("cart", JSON.stringify(arr));
-        dispatch(getCart());
+        if(user.id)
+        {
+          const orderProducts = order[0].products.filter(e => e.id != content.id)
+
+          dispatch(updateOrder(order[0].id,
+            {...order[0], products: orderProducts.map(e => {
+                return {
+                  productId: e.id,
+                  unitprice: Number(e.price),
+                  quantity: Number(e.cant)
+                }
+              })
+            }
+          ))
+          .then(() => dispatch(getAllOrder(user.id, "cart")))
+        }
+        else
+        {
+          removePrice(content.id)
+          var arr = cart.filter((e) => e.id != content.id);
+          localStorage.setItem("cart", JSON.stringify(arr));
+          dispatch(getCart());
+        }
       }
     });
   };
-  
+
+  const handleCant = (e) => {
+    if(e.target.value > maxCant) setCant(maxCant)
+    else if(e.target.value < 1) setCant(1)
+    else setCant(e.target.value)
+  }
+
   const handleSum = () => {
-    setCant(cant + 1);
+    setCant(cant >= maxCant ? cant : cant + 1);
   };
 
   const handleRes = () => {
-    setCant(cant == 1 ? cant : cant - 1);
+    setCant(cant <= 1 ? cant : cant - 1);
   };
-  console.log(content)
+
   return (
     <div class="container-fluid pb-5 mt-n2 mt-md-n3">
       <div class="row">
         <div class="col-xl-12 col-md-8 col-sm-12">
-          {/*<!-- Item-->*/}
           <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
             <div class="media d-block d-sm-flex text-center text-sm-left">
               <a class="cart-item-thumb mx-auto mr-sm-4" href="#">
-                <img src={content.img} alt="Product" />
+                <img src={content.productimages[0].image_url} alt="Product" />
               </a>
               <div class="media-body pt-3 align-text-center">
                 <h3 class="product-card-title font-weight-semibold border-0 pb-0 mx-5">
@@ -85,7 +113,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
 
                 <input
                   class="form-control form-control-sm text-center"
-                  onChange={(e) => setCant(e.target.value)}
+                  onChange={handleCant}
                   type="number"
                   id="quantity1"
                   value={cant}

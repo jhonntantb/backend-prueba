@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { updateOrder, createOrder } from "../../redux/actions/order/index"
+import { updateOrder, createOrder, getAllOrder } from "../../redux/actions/order/index"
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
@@ -69,14 +69,14 @@ function CardProduct(props) {
             return {
               productId: e.id,
               unitprice: Number(e.price),
-              quantity: Number(e.cant)
+              quantity: Number(e.Order_Product.quantity)
             }
           })
-          dispatch(updateOrder(order[0].id, 
-          
+          dispatch(updateOrder(order[0].id,
             {...order[0], products: orderProducts.concat(prod)}
-            ))
-          console.log(order[0].products.concat(prod))
+          ))
+          .then(() => dispatch(getAllOrder(user.id, "cart")))
+
           setAdd(true);
           sweetAlert();
         }
@@ -95,6 +95,7 @@ function CardProduct(props) {
           userId: user.id,
           products: [prod]
         }))
+        .then(() => dispatch(getAllOrder(user.id, "cart")))
 
         setAdd(true);
         sweetAlert();
@@ -111,6 +112,7 @@ function CardProduct(props) {
           localStorage.setItem("cart", JSON.stringify([...cart, prod]));
           setAdd(true);
           sweetAlert();
+          dispatch(getCart())
         }
       } 
       else 
@@ -118,6 +120,7 @@ function CardProduct(props) {
         localStorage.setItem("cart", JSON.stringify([prod]));
         setAdd(true);
         sweetAlert();
+        dispatch(getCart())
       }
     }
   }
@@ -153,24 +156,7 @@ function CardProduct(props) {
       }
     }
   }
-  // return (
-  //       <div class="card" >
-  //         <div class="text-center p-4">
-  //           <img id="main-image" src={props.url} width="300" />
-  //         </div>
-  //         <div class="about text-center">
-  //           <NavLink style={{ textDecoration: 'none', color: "black"}} to={`/product/${props.id}`}>
-  //               <h6>{props.title}</h6>
-  //           </NavLink>
-  //           <span>${props.price}</span>
-  //          {props.stock > 0 && <h6>Stock Disponible </h6> }
-  //         </div>
-  //         <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
-  //           <button class="btn btn-dark text-uppercase " disabled={add} onClick={handleAddCart}>Añadir al carro</button>
-  //           <div class="add">
-  //   user.id ? dispatch(getCart(user.id)) : dispatch(getCart());
-  //   handleAdd();
-  // };
+
   console.log("order")
   console.log(order)
   return (
@@ -209,9 +195,6 @@ function CardProduct(props) {
         </div>
       </div>
     </div>
-    //         </div>
-    //   </div>
-    // </div>
   );
 }
 
