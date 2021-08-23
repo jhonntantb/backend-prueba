@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllProduct } from "../../redux/actions/product/index.js";
-import { getProduct } from "../../redux/actions/product/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import "./SearchBar.css";
 

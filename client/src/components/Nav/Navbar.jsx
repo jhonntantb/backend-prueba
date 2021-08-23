@@ -58,6 +58,12 @@ const Navbar = () => {
        
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
           <ul className="navbar-nav ml-10  ">
+
+          <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/search_ac" >
+                Búsqueda AC
+              </NavLink>
+          </li>  
          
            <li className="nav-item mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/contactus" >

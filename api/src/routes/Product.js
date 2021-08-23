@@ -6,11 +6,13 @@ const { Op } = require("sequelize");
 
 //////////  GET PRODUCT  /////////////
 router.get("/", async function (req, res, next) {
-  const { name } = req.query;
+  const { name, order } = req.query;
+  var orden;
+  if(order === 'alfa') {orden = 'title'} else {orden = 'catalog_id'};
 
   if (!name) {
     try {
-      const product = await Product.findAll({ order: [['catalog_id', 'ASC']], include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
+      const product = await Product.findAll({ order: [[orden, 'ASC']], include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
       res.status(200).json(product)
     }
     catch (error) { next(error) };

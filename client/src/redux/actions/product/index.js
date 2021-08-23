@@ -17,9 +17,9 @@ export const getProduct = (id) => {
     }
 }
 
-export const getAllProduct = (search='') => {
+export const getAllProduct = (search='', order='') => {
         return async  (dispatch) => {
-        const res = await axios.get(`http://localhost:3001/product?name=${search}`)
+        const res = await axios.get(`http://localhost:3001/product?name=${search}&order=${order}`)
         console.log('valor res:', res)
         return dispatch({ type: TYPES.GET_ALL_PRODUCT, payload: res.data })
     }
