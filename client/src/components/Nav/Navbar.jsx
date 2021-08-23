@@ -64,11 +64,11 @@ const Navbar = () => {
                 Contactanos
               </NavLink>
             </li>
-          <li className="nav-item mx-3">
+         {/* { <li className="nav-item mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Acerca de 
               </NavLink>
-            </li> 
+            </li> } */}
             {authUser !== 'guest' ?
         <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/wishlist"  >
