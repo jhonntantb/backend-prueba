@@ -39,6 +39,26 @@ function CardProduct(props) {
     });
   };
 
+  const addWishList = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Perfecto!",
+      text: "El producto se agrego correctamente a tu wishlist",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
+  const deleteWishList = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Perfecto!",
+      text: "El producto se elimino de wishlist",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
   useEffect(() => {
     if (
       typeof wishlist.find != undefined &&
@@ -74,8 +94,10 @@ function CardProduct(props) {
   };
   const handleSubmit = (e) => {
     console.log(typeof e.target.value);
+    deleteWishList();
     if (e.target.value == "true") {
       console.log("aca a punto de entrar al dispatch para deletearlo");
+
       if (user.id != undefined && props.id != undefined) {
         dispatch(deleteWishlist({ userId: user.id, productId: props.id })).then(
           () => {
@@ -92,6 +114,7 @@ function CardProduct(props) {
 
     if (e.target.value == "false") {
       console.log("aca a punto de entrar al dispatch para crearlo");
+      addWishList();
       if (user.id != undefined && props.id != undefined) {
         dispatch(createWishlist({ productId: props.id, userId: user.id })).then(
           () => {
@@ -123,11 +146,11 @@ function CardProduct(props) {
   // };
 
   return (
-    <div class="card">
-      <div class="text-center p-4">
+    <div className="card">
+      <div className="text-center p-4">
         <img id="main-image" src={props.url} width="300" />
       </div>
-      <div class="about text-center">
+      <div className="about text-center">
         <NavLink
           style={{ textDecoration: "none", color: "black" }}
           to={`/product/${props.id}`}
@@ -137,16 +160,16 @@ function CardProduct(props) {
         <span>${props.price}</span>
         {props.stock > 0 && <h6>Stock Disponible </h6>}
       </div>
-      <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
+      <div className="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
         <button
-          class="btn btn-dark text-uppercase "
+          className="carrito-button btn btn-dark text-uppercase "
           disabled={add}
           onClick={handleAddCart}
         >
           Añadir al carro
         </button>
-        <div class="add">
-          <span class="product_fav">
+        <div className="add">
+          <span className="product_fav">
             {
               <button
                 class={Fav === true ? "fa fa-heart" : "fa fa-heart-o"}
