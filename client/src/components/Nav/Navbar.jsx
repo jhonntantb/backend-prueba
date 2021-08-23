@@ -12,6 +12,7 @@ import CheckUser from '../Authentication/CheckUser/CheckUser';
 import { getAllOrder } from '../../redux/actions/order';
 import { useHistory } from 'react-router';
 
+
 const Navbar = () => {
 
   // const [authUser, setAuthUser] = useState(localStorage.getItem("pg_merceria"))
@@ -54,24 +55,26 @@ const Navbar = () => {
         <form className="d-flex ml-10 ">
           <SearchBar />
         </form>
-        {authUser !== 'guest' ?
+       
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <ul className="navbar-nav ml-10  ">
+         
+           <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/contactus" >
+                Contactanos
+              </NavLink>
+            </li>
+          <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+                Acerca de 
+              </NavLink>
+            </li> 
+            {authUser !== 'guest' ?
         <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/wishlist"  >
                 Wishlist
               </NavLink>
             </li>:null}
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-          <ul className="navbar-nav ml-10  ">
-           <li className="nav-item mx-3">
-              <NavLink activeClassName="text-white" className="nav-link" to="/contactus" onClick={() => dispatch(getAllProduct())} >
-                Contactanos
-              </NavLink>
-            </li>
-         {/* <li className="nav-item mx-3">
-              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
-                Acerca de Nosotros
-              </NavLink>
-            </li> */}
             <li className="nav-item active mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Productos
@@ -87,7 +90,7 @@ const Navbar = () => {
             <li className="nav-item dropdown mx-3">
               <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">Mi Cuenta</NavLink>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><NavLink class="dropdown-item" to={ROUTES.ACCOUNT}>Seguridad</NavLink></li>
+                <li><NavLink class="dropdown-item" to={ROUTES.USER_DATA}>Mis Datos</NavLink></li>
                 {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
                 <li> <NavLink class="dropdown-item" to="/user/compras" onClick={e=>dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
                 <li><hr class="dropdown-divider" /></li>

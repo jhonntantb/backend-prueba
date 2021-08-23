@@ -7,6 +7,10 @@ import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader"
 import "./ProductUpdate.css";
 import Swal from "sweetalert2";
 
+// Cambio Henry Goyret: render de catalog_id comentado, porque el catalogo_id esta asociado al id del producto y no debe poder cambiarse,
+// pues puede haber informacion (ordenes, etc) que ya tienen el dato del catalog id dle producto.
+// 
+
 function ProductUpdate(props) {
   const admin = localStorage.getItem("admin");
 
@@ -51,15 +55,14 @@ function ProductUpdate(props) {
       icon: "success",
       title: "¡Enhorabuena!",
       text: "El producto se actualizo correctamente",
-      showConfirmButton: false,
-      timer: 1500,
+      showConfirmButton: true,
+      
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAlert();
-
+ 
     if (
       addProduct.title != "" &&
       addProduct.resume !== "" &&
@@ -72,9 +75,16 @@ function ProductUpdate(props) {
     ) {
       dispatch(updateProduct(addProduct));
       dispatch(getAllProduct());
+      handleAlert();
       props.history.push("/productlist");
+      //props.history.push(`/product/${addProduct.catalog_id}`);
     } else {
-      throw alert("TODOS LOS CAMPOS SON OBLIGATORIOS");
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Debe completar todos los campos',
+      })
     }
   };
 
@@ -213,8 +223,8 @@ function ProductUpdate(props) {
             autoComplete="off"
           />
         </div>
-
-        <div className="mb-3">
+ 
+  {/*        <div className="mb-3">
           <label className="form-label">numero de catalogo</label>
           <input
             type="number"
@@ -226,7 +236,8 @@ function ProductUpdate(props) {
             placeholder="1000"
             autoComplete="off"
           />
-        </div>
+        </div> */}
+
         <div className="mb-3">
           <label className="form-label">cantidad</label>
           <input
@@ -246,12 +257,13 @@ function ProductUpdate(props) {
           storeImages={storeImages}
           setStoreImages={setStoreImages}
         />
-        {storeImages.length > 0
+        {/* {storeImages.length > 0
           ? storeImages.forEach((url) => {
               return <p>{url}</p>;
             })
-          : null}
+          : null} */}
         <button
+          disabled={storeImages.length > 0 ? false : true}
           className="buttonupdate"
           onClick={(e) => {
             handleSubmit(e);

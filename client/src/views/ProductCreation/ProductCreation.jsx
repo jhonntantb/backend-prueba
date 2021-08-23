@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useHistory} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "../../redux/actions/category";
 import {
@@ -9,7 +10,6 @@ import {
 } from "../../redux/actions/product";
 import { getAllOffice } from "../../redux/actions/office";
 import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader";
-import * as ROUTES from "../../routes";
 import "./ProductCreation.css";
 import NotFound from "../NotFound/NotFound";
 import Swal from "sweetalert2";
@@ -18,12 +18,14 @@ const ProductCreation = (props) => {
   const admin = localStorage.getItem("admin");
 
   const dispatch = useDispatch();
+  const { push } = useHistory() ;
 
   const storeCategories = useSelector(
     (state) => state.categoryReducer.categories
   );
   const storeOffices = useSelector((state) => state.officeReducer.offices);
   const product = useSelector((state) => state.productReducer.product);
+  const products = useSelector((state) => state.productReducer.products);
 
   const [inputCategories, setInputCategories] = useState([]);
   const [inputOffice, setInputOffice] = useState([]);
@@ -48,32 +50,39 @@ const ProductCreation = (props) => {
       icon: "success",
       title: "¡Enhorabuena!",
       text: "El producto se creó correctamente",
-      showConfirmButton: false,
-      timer: 1500,
+      showConfirmButton: true,
+      
     });
   };
 
-  const [catalog, setCatalog] = useState(0);
+  
 
   useEffect(() => {
-    dispatch(resetProduct());
+   // dispatch(resetProduct());
+    dispatch(getAllProduct());
   }, []);
 
   // useEffect(() => {
   // if(product.length>0){alert('Numero de catalogo ya existe')}
   // }, [product]);
 
-  useEffect(() => {
-    dispatch(getProduct(addProduct.catalog_id));
-  }, [catalog]);
+ // useEffect(() => {
+ //   dispatch(getProduct(addProduct.catalog_id));
+ // }, [catalog]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCatalog(addProduct.catalog_id);
-    handleAlert();
+   // setCatalog(addProduct.catalog_id);
+    var exist = false;
+    for(let i=0; i<products.length; i++){
+      if(products[i].catalog_id == addProduct.catalog_id) {
+      exist = true
+      break
+      } 
+    }
 
     if (
-      addProduct.title != "" &&
+      addProduct.title !== "" &&
       addProduct.resume !== "" &&
       addProduct.detail !== "" &&
       addProduct.price !== "" &&
@@ -81,19 +90,28 @@ const ProductCreation = (props) => {
       addProduct.image.length > 0 &&
       addProduct.quantity > 0 &&
       addProduct.office !== "" &&
-      product.length === 0
+      !exist 
     ) {
       dispatch(createProduct(addProduct));
       dispatch(getAllProduct());
-      props.history.push("/productlist");
+      handleAlert();
+      push("/productlist");
     } else {
-      if (product.length !== 0) {
-        throw alert("NUMERO DE CATALOGO YA EXISTE");
+      if (exist) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Numero de catalogo ya existe, producto no creado',
+        })
       } else {
-        throw alert("FALTA INGRESAR CAMPOS OBLIGATORIOS");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Debe completar todos los campos',
+        })
       }
     }
-    handleAlert();
+   
   };
 
   const handleChange = (e) => {
@@ -118,11 +136,12 @@ const ProductCreation = (props) => {
   function renderCategories() {
     return (
       <div>
-        {" "}
-        Categorias
+       <span className="fs-5">Categorias</span> 
+       <br />
         {storeCategories.map((c, i) => {
           return (
-            <div>
+            <div className="fs-6">
+              <br />
               <input
                 type="checkbox"
                 id={i}
@@ -130,7 +149,7 @@ const ProductCreation = (props) => {
                 value={c.id}
                 onChange={(e) => selectCategory(e)}
               />
-              <label for={i}>{c.name}</label>
+              <label key={i}>{c.name}</label>
               <br />
             </div>
           );
@@ -145,13 +164,12 @@ const ProductCreation = (props) => {
   }
 
   function renderOffices() {
-    console.log("store offices tiene : ", Object.keys(storeOffices));
+    // console.log("store offices tiene : ", Object.keys(storeOffices));
     return (
       <div>
-        {" "}
-        Sucursal
+        <span className="fs-5 mr-2">Sucursal</span>
         {
-          <select onChange={(e) => selectOffice(e)}>
+          <select className=" mx-5 " onChange={(e) => selectOffice(e)}>
             {storeOffices.map((o, i) => (
               <option value={o.id}>{o.name}</option>
             ))}
@@ -223,7 +241,6 @@ const ProductCreation = (props) => {
             autoComplete="off"
             rows="7"
           />
-          <label htmlFor="floatingTextarea">Detalle</label>
         </div>
 
         <div className="mb-3">
@@ -248,10 +265,11 @@ const ProductCreation = (props) => {
             name="catalog_id"
             value={addProduct.catalog_id}
             onChange={handleChange}
-            className="form-control"
-            placeholder="1000"
+            class="form-control"
             autoComplete="off"
+            required
           />
+          <div class="invalid-feedback">Se debe completar el campo</div>
         </div>
         <div className="mb-3">
           <label className="form-label">cantidad</label>
@@ -267,16 +285,17 @@ const ProductCreation = (props) => {
           />
         </div>
         {renderOffices()}
+        <br />
         {renderCategories()}
         <ReactFirebaseFileUpload
           storeImages={storeImages}
           setStoreImages={setStoreImages}
         />
-        {storeImages.length > 0
+        {/* {storeImages.length > 0
           ? storeImages.forEach((url) => {
               return <p>{url}</p>;
             })
-          : null}
+          : null} */}
         <button
           disabled={storeImages.length > 0 ? false : true}
           id="buttonproduct"

@@ -27,6 +27,7 @@ const orderReducer = (state = initialState, action) => {
         case TYPES.DELETE_ORDER: return state
 
         case TYPES.GET_ORDER_FROM_USER: return {...state, order:action.payload}
+        case TYPES.CLEAR_ORDER: return {...state, order:[]}
         default:                  return state;
     }
 }

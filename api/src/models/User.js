@@ -62,6 +62,7 @@ module.exports = (sequelize) => {
     },
     country: {
       type: DataTypes.STRING,
+      defaultValue: 'Argentina',
       allowNull: true,
     },
      phone_number : {
