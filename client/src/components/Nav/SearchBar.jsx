@@ -24,6 +24,12 @@ export default function SearchBar() {
       dispatch(SetCategoriesFiltradas("Todas"))
       push("/productlist");
     }
+    else if (name.trim().length == 0) {
+      dispatch(getAllProduct());
+      setName("");
+      dispatch(SetCategoriesFiltradas("Todas"))
+      push("/productlist");
+    }
   };
 
   return (
