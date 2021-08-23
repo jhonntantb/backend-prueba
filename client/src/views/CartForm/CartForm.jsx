@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom"
 import { useEffect, useState } from "react";
 import AddressFrom from "../../components/ShopCart/AddressForm"
 import CartReceipt from "../../components/ShopCart/CartReceipt"
@@ -8,10 +9,15 @@ import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
 
 export default function CartForm(){
     CheckUser();
-
+    const history = useHistory()
     const dispatch = useDispatch()
     const [address, setAddress] = useState("")
+    const user = useSelector(state => state.userReducer.user)
     const cart = useSelector(state => state.cartReducer.cart)
+
+    useEffect(() => {
+        history.push("/signin")
+    }, [])
 
     useEffect(() => {
         dispatch(getCart())

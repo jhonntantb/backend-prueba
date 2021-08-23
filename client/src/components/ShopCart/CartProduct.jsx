@@ -5,22 +5,58 @@ import { getCart } from "../../redux/actions/cart";
 import "./CartProduct.css";
 import Swal from "sweetalert2";
 
-export default function CartProduct({ content, addPrice, removePrice }) {
-  const maxCant = content.stock ? content.stock : 10000
+export default function CartProduct({ content, setLoading, loading, addPrice, removePrice }) {
+  const maxCant = content.stock ? content.stock : content.stocks[0].quantity
   const dispatch = useDispatch();
+  const [iniCant, setIniCant] = useState(1);
   const [cant, setCant] = useState(1);
   const [localPrice, setLocalPrice] = useState(content.price);
+  
   const cart = useSelector((state) => state.cartReducer.cart);
   const order = useSelector((state) => state.orderReducer.orders);
   const user = useSelector((state) => state.userReducer.user);
 
-  useEffect(() => user.id ? setCant(content.Order_Product.quantity) : setCant(content.cant), [])
+  useEffect(() => {
+    if(user.id )
+    {
+      setCant(content.Order_Product.quantity)
+      setIniCant(content.Order_Product.quantity)
+    }
+    else 
+      setCant(content.cant)
+  } , [])
 
   useEffect(() => {
     setLocalPrice(content.price * cant);
-    let arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
-    localStorage.setItem("cart", JSON.stringify(arr));
-    dispatch(getCart())
+
+    if(user.id)
+    {
+      if(iniCant != cant)
+      {
+        setLoading(true)
+        const products = order[0].products.map(e => {
+          return {
+            productId: e.id,
+            unitprice: Number(e.price),
+            quantity: Number(e.id == content.id ? cant : e.Order_Product.quantity)
+          }
+        })
+        
+        dispatch(updateOrder(
+          order[0].id,
+          {...order[0], products: products}
+        ))
+        .then(() => {
+          setLoading(false)
+        })
+      }
+    }
+    else
+    {
+      let arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
+      localStorage.setItem("cart", JSON.stringify(arr));
+      dispatch(getCart())
+    }
   }, [cant]);
 
   useEffect(() => addPrice({ id: content.id, value: localPrice }), [localPrice]);
@@ -40,6 +76,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
       allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
+        removePrice(content.id)
         if(user.id)
         {
           const orderProducts = order[0].products.filter(e => e.id != content.id)
@@ -58,7 +95,6 @@ export default function CartProduct({ content, addPrice, removePrice }) {
         }
         else
         {
-          removePrice(content.id)
           let arr = cart.filter((e) => e.id != content.id);
           localStorage.setItem("cart", JSON.stringify(arr))
           dispatch(getCart())
@@ -70,7 +106,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
   const handleCant = (e) => {
     if(e.target.value > maxCant) setCant(maxCant)
     else if(e.target.value < 1) setCant(1)
-    else setCant(e.target.value)
+    else setCant(parseInt(e.target.value))
   }
 
   const handleSum = () => {
@@ -114,17 +150,20 @@ export default function CartProduct({ content, addPrice, removePrice }) {
                   id="quantity1"
                   value={cant}
                   style={{ fontSize: "18px", fontWeight: "bold" }}
+                  disabled={true}
                 />
                 <div className="mt-3">
                   <button
                     className="btn btn-outline-dark btnmore"
                     onClick={handleSum}
+                    disabled={loading}
                   >
                     +
                   </button>
                   <button
                     className="btn btn-outline-dark btnless"
                     onClick={handleRes}
+                    disabled={loading}
                   >
                     -
                   </button>

@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct } from "../../redux/actions/product/index"
 import { getCart } from "../../redux/actions/cart/index";
-import { getAllOrder, updateOrder } from "../../redux/actions/order/index"
+import { getAllOrder } from "../../redux/actions/order/index"
 import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts";
 import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
 
 export default function ShopCart() {
   CheckUser();
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
   const [total, setTotal] = useState(0)
   const [finalCart, setFinalCart] = useState([])
   const cart = useSelector(state => state.cartReducer.cart)
@@ -28,15 +28,13 @@ export default function ShopCart() {
   }, [order])
 
   useEffect(() => {
-    if(cart)
-      cart.length > 0 ? setFinalCart(cart) : setFinalCart([])
+    if(cart && order.length == 0)
+      setFinalCart(cart)
   }, [cart])
-
-  console.log(cart)
 
   return finalCart.length > 0 ? (
     <div>
-      <ShowCartProducts products={finalCart} setTotal={setTotal} />
+      <ShowCartProducts loading={loading} setLoading={setLoading} products={finalCart} setTotal={setTotal} />
       <div className="row justify-content-center">
       <div class="col align-self-center col-lg-6">
         <h2 class="h6 px-4 py-3 bg-secondary text-center">Total</h2>
@@ -48,12 +46,12 @@ export default function ShopCart() {
       </div>
         
       <Link to="/cart/order">
-          <button  class="btn btn-primary btn-block position-relative bottom-0 start-50 translate-middle-x" >
+          <button disabled={loading} class="btn btn-primary btn-block position-relative bottom-0 start-50 translate-middle-x" >
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card mr-2 ">
           <rect x="1" y="4" width="20" height="16" rx="2" ry="2"></rect>
           <line x1="1" y1="10" x2="20" y2="10"></line>
         </svg>Iniciar Pedido</button>
-        </Link>
+      </Link>
      </div>
   ) : (
     <div className="text-center text-dark mt-5">

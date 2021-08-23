@@ -7,7 +7,7 @@ import "./index.css"
 function CreateCheckoutButton ({products, direction}) {
   const dispatch = useDispatch()
   const user = useSelector(state => state.userReducer.user)
-  // const dbOrder = useSelector(state => state.orderReducer.orders)
+  const order = useSelector(state => state.orderReducer.orders)
   const createdOrder = useSelector(state => state.orderReducer.order)
   const mpData = useSelector(state => state.checkoutReducer.MP_data)
 
@@ -31,70 +31,32 @@ function CreateCheckoutButton ({products, direction}) {
   })
 
   useEffect(() => {
-   if(createdOrder.length===0) {
-    let totalPrice = 0;
-    for(let i=0; i< products.length; i++) {
-      totalPrice = totalPrice + (products[i].price * products[i].cant)
+    if(createdOrder.length===0) {
+      let totalPrice = 0;
+      
+      for(let i=0; i< products.length; i++) {
+        totalPrice = totalPrice + (products[i].price * products[i].cant)
+      }
+
+      dispatch(createOrder({
+        status: "checkout",
+        home_address: direction.home_address,
+        location: direction.location,
+        total_price: totalPrice,
+        province: direction.province,
+        country: user.country,
+        postal_code: direction.postal_code,
+        phone_number: direction.phone_number,
+        userId: user.id,
+        products: productsToDB
+      }))
     }
-    dispatch(createOrder({
-      status: "checkout",
-      home_address: direction.home_address,
-      location: direction.location,
-      total_price: totalPrice,
-      province: direction.province,
-      country: user.country,
-      postal_code: direction.postal_code,
-      phone_number: direction.phone_number,
-      userId: user.id,
-      products: productsToDB
-    }))}
-    
   }, [])
-
-  // useEffect(() => {
-  //   var total = products.reduce((acum, e) => acum += (e.price * e.cant));
-
-  //   (dbOrder.length > 0) && dispatch(createOrder({
-  //     status: "checkout",
-  //     home_address: direction.home_address,
-  //     location: direction.location,
-  //     total_price: total,
-  //     province: direction.province,
-  //     country: user.country,
-  //     postal_code: direction.postal_code,
-  //     phone_number: direction.phone_number,
-  //     userId: user.id,
-  //     products: productsToDB
-  //   }))
-    
-  // }, [dbOrder])
-
-  // useEffect(() => {
-  //   user.id && dispatch(getAllOrder(user.id, "checkout"))
-  // }, [])
-
-  // useEffect(() => {
-  //   var total = products.reduce((acum, e) => acum += (e.price * e.cant));
-
-  //   (dbOrder.length > 0) && dispatch(createOrder({
-  //     status: "checkout",
-  //     home_address: direction.home_address,
-  //     location: direction.location,
-  //     total_price: total,
-  //     province: direction.province,
-  //     country: user.country,
-  //     postal_code: direction.postal_code,
-  //     phone_number: direction.phone_number,
-  //     userId: user.id,
-  //     products: productsToDB
-  //   }))
-    
-  // }, [dbOrder])
 
   useEffect(() => {createdOrder.id && dispatch(goToCheckout(user.id, productsToMP))}, [createdOrder])
 
   useEffect(() => {
-    if(mpData&&loading) {
+    if(mpData && loading) {
         var script = document.createElement("script");
         script.src = "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
         script.type = "text/javascript";
