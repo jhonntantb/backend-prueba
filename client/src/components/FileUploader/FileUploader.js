@@ -13,7 +13,7 @@ const ReactFirebaseFileUpload = ({ storeImages, setStoreImages }) => {
     const [progress, setProgress] = useState(0);
    
     var auxLoadedImage =[]
-    var imageCounter=0;
+    
 
     const handleChange2 = (e) => {
         e.preventDefault()
@@ -21,8 +21,6 @@ const ReactFirebaseFileUpload = ({ storeImages, setStoreImages }) => {
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
             newImage["id"] = Math.random();
-            // setImages((prevState) => [...prevState, newImage]);
-
             auxLoader.push(newImage)
         }
         setImages(auxLoader)
@@ -32,8 +30,6 @@ const ReactFirebaseFileUpload = ({ storeImages, setStoreImages }) => {
         console.log("SE DISPARO EL SUBMIT")
         e.preventDefault();
         var promises = [];
-        
-
         
         images.forEach( (image) => {
             const uploadTask = firebase.storage().ref(`images/${image.name}`).put(image);
@@ -91,6 +87,10 @@ const ReactFirebaseFileUpload = ({ storeImages, setStoreImages }) => {
         }
         
     }, [urls])
+
+    useEffect(()=>{
+       if(storeImages.length>0) setUrls(storeImages)
+    },[storeImages])
 
 
     function quitImageHandler(e) {

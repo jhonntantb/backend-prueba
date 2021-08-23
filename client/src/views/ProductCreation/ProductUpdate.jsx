@@ -28,6 +28,8 @@ function ProductUpdate(props) {
   const [inputCategories, setInputCategories] = useState([]);
   const [inputOffice, setInputOffice] = useState([]);
   const [storeImages, setStoreImages] = useState([]);
+
+
   var stockQuantity = 0;
   var stockOfficeId = "0";
   if (product.stocks.length > 0) {
@@ -47,6 +49,8 @@ function ProductUpdate(props) {
     quantity: stockQuantity,
     office: stockOfficeId,
   };
+
+  // console.log("productCategories: " , product.categories)
 
   const [addProduct, setaddProduct] = useState(local_initial_state);
   // setInputCategories(product.categories)
@@ -108,24 +112,44 @@ function ProductUpdate(props) {
   }
 
   function renderCategories() {
+    
     return (
       <div>
         {" "}
         Categorias
         {storeCategories.map((c, i) => {
-          return (
-            <div>
-              <input
-                type="checkbox"
-                id={i}
-                name={c.name}
-                value={c.id}
-                onChange={(e) => selectCategory(e)}
-              />
-              <label for={i}>{c.name}</label>
-              <br />
-            </div>
-          );
+          
+          let preCat = product.categories.find( e=> e.id == c.id)
+          if (preCat!==undefined) {
+            return (
+              <div>
+                <input
+                  type="checkbox"
+                  id={i}
+                  name={c.name}
+                  value={c.id}
+                  checked="true"
+                  onChange={(e) => selectCategory(e)}
+                />
+                <label for={i}>{c.name}</label>
+                <br />
+              </div>
+            );
+          }else {
+            return (
+              <div>
+                <input
+                  type="checkbox"
+                  id={i}
+                  name={c.name}
+                  value={c.id}
+                  onChange={(e) => selectCategory(e)}
+                />
+                <label for={i}>{c.name}</label>
+                <br />
+              </div>
+            );
+          }
         })}
       </div>
     );
@@ -173,11 +197,22 @@ function ProductUpdate(props) {
     if (storeOffices.length > 0) setInputOffice(storeOffices[0].id);
   }, [storeOffices]);
 
+  useEffect(()=>{
+    console.log("product.productimages tiene: " , product.productimages)
+    
+      let auxStoreImages=[]
+      product.productimages.forEach(pi => auxStoreImages.push(pi.image_url))
+      console.log("auxStoreImages tiene: " , auxStoreImages)
+      setStoreImages(auxStoreImages)
+      console.log("storeImages ahora tiene: " , storeImages);
+    
+  },[product])
+
   return admin !== "null" ? (
     <div className="container">
       <h1 className="text-center mt-3">Modificación de productos</h1>
       <form>
-        <p>Order: 123</p>
+
         <div className="mb-3">
           <label className="form-label">Nombre del Producto</label>
           <input
@@ -223,20 +258,6 @@ function ProductUpdate(props) {
             autoComplete="off"
           />
         </div>
- 
-  {/*        <div className="mb-3">
-          <label className="form-label">numero de catalogo</label>
-          <input
-            type="number"
-            min="0"
-            name="catalog_id"
-            value={addProduct.catalog_id}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="1000"
-            autoComplete="off"
-          />
-        </div> */}
 
         <div className="mb-3">
           <label className="form-label">cantidad</label>
@@ -251,8 +272,11 @@ function ProductUpdate(props) {
             autoComplete="off"
           />
         </div>
+        <div>
+          <p>{`Catalogo:  ${addProduct.catalog_id}`}</p>
+        </div>
         {renderOffices()}
-        {renderCategories()}
+        {product.categories? renderCategories():<p>...loading</p>}
         <ReactFirebaseFileUpload
           storeImages={storeImages}
           setStoreImages={setStoreImages}
