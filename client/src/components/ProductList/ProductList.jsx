@@ -25,6 +25,7 @@ function ProductList() {
   const [Maximo, setMaximo] = useState("");
   const [orden, setOrden] = useState("A-Z");
   useEffect(() => {
+    console.log('useEffect list productlist: ',list)
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
     dispatch(getWishlist(id));
@@ -246,7 +247,6 @@ function ProductList() {
           )}
         </div>
       </div>
-
       <ul className="pageNumbers">
         <li>
           <button

@@ -25,6 +25,12 @@ export const getAllProduct = (search='', order='') => {
     }
 }
 
+export const getSomeProduct = (arr=[]) => {
+    console.log('get some product aqui estoy');
+    return { type: TYPES.GET_SOME_PRODUCT, payload: arr }
+}
+
+
 
 export const updateProduct = (params) => {
     return async  (dispatch) => {
