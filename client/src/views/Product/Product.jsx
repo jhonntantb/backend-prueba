@@ -8,6 +8,7 @@ import Carrousel from "../../components/Carrousel/Carrousel";
 import { NavLink } from "react-router-dom";
 import { getCart } from "../../redux/actions/cart/index";
 import "./Product.css";
+import Scroll from "../../components/Scroll/Scroll";
 
 export default function Product({ match }) {
   const admin = localStorage.getItem("admin");
@@ -48,7 +49,7 @@ export default function Product({ match }) {
   };
 
   return !Loading ? (
-    <div className="container">
+    <div className="container" style={{marginTop:"5%"}}>
       <div className="cartas">
         <div className="container-fluid">
           <div className="wrapper row box-shadow bg-white">
@@ -78,9 +79,7 @@ export default function Product({ match }) {
               </h4>
               <h3 className="text-dark mt-3">${product.price}</h3>
 
-              {/* <div className="productDetails">
-              </div> */}
-              <div className="action">
+              <div >
                 <button
                   className="add-to-cart btn btn-default mt-2"
                   onClick={handleAddCart}
@@ -100,6 +99,7 @@ export default function Product({ match }) {
             </div>
             <CreateReview match={match.params.id} />
             <ShowReviews reviews={product.reviews} />
+            <Scroll />
           </div>
         </div>
       </div>

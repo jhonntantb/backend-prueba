@@ -15,7 +15,7 @@ export default function ShopCart() {
   useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
 
   return cart.length > 0 ? (
-    <div>
+    <div className="cartm" style={{marginTop: "5%"}}>
         <ShowCartProducts products={cart} setTotal={setTotal} />
       <div className="row justify-content-center">
       <div class="col align-self-center col-lg-6">
@@ -36,7 +36,7 @@ export default function ShopCart() {
         </Link>
      </div>
   ) : (
-    <div className="text-center text-dark mt-5">
+    <div className="text-center text-dark"style={{marginTop: "5%"}}>
       <h3 className="text-center ">No hay articulos en tu carrito</h3>
     </div>
   );

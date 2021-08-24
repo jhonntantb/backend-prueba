@@ -12,6 +12,7 @@ import { LogInUser } from '../../../redux/actions/login/index'
 import {getUser, clearUser} from '../../../redux/actions/user/index';
 import {GoogleButton} from './GoogleSignIn';
 import { getWishlist } from '../../../redux/actions/wishlist';
+import { Label } from 'reactstrap';
 
 
 const SignInPage = () => (
@@ -116,13 +117,14 @@ function SignInFormBase(props) {
   const isInvalid = (password === '' || email === '');
 
   return (
-    <div className="container mt-5">
+    <div className="container" style={{marginTop: "18%"}}>
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
             <h3 className="mb-4 text-center fs-1">Ingresar</h3>
             <form className="mb-3" onSubmit={onSubmit}>
-              <div className="form-floating mb-3">
+              <div className=" mb-3">
+                <label>E-mail</label>
                 <input
                   name="email"
                   className="form-control rounded-0"
@@ -133,9 +135,10 @@ function SignInFormBase(props) {
                   placeholder="name@example"
 
                 />
-                <label for="floatingInput">Email</label>
+               
               </div>
-              <div className="form-floating mb-3">
+              <div className="mb-3">
+                <label>Password</label>
                 <input
                   name="password"
                   value={password}
@@ -145,7 +148,6 @@ function SignInFormBase(props) {
                   className="form-control rounded-0"
                   id="floatingPassword"
                 />
-                <label for="floatingPassword">Password</label>
               </div>
               <div className="d-grip gap-2 mb-3 text-center">
                 <button className="btn btn-dark btn-lg border-0 rounded-0" disabled={isInvalid} type="submit">

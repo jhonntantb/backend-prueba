@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const axios = require('axios')
 const { Order, User, Product, Order_Product, Office, Stock, Productimage } = require('../db')
+
 
 
 ///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
@@ -161,6 +163,17 @@ router.put('/:id/:Status', async (req, res) => {
       products.map( async e => {
         const [stock, created] = await Stock.findOrCreate({ defaults:{quantity: 0},where:{productId: e.dataValues.productId, officeId: sucid}})
         oper === 'resta' ?  stock.quantity = stock.quantity - e.dataValues.quantity : stock.quantity = stock.quantity + e.dataValues.quantity ;
+        
+        try {
+            
+            if(stock.quantity <= 5) {
+               let msgSend = axios.get(`http://localhost:3001/mail/stock/${e.dataValues.productId}`)
+               if(msgSend.data.length>0) {
+                   console.log("se envió mensaje LowSTOCK")
+               }
+            }
+        }catch (err) {console.log("error al enviar el mensaje de low stock " , err)}
+
         await stock.save()
       })
     } 
