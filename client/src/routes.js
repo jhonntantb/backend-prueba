@@ -20,9 +20,8 @@ export const FORM = '/admin/form';
 export const ORDER ='/admin/orders';
 export const PRODUCT_CREATION = '/admin/productcreation'
 export const ADMIN_ORDER_DETAIL="/admin/orders/:id";
-export const ADMIN_OFFICES="/admin/offices";
-
 export const MANAGE_USERS ='/admin/manage-users';
+export const ADMIN_OFFICES = '/admin/offices'
 
 export const PRODDETAIL = '/productdetail';
 export const ABOUT ='/about';
