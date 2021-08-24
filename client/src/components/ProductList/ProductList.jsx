@@ -95,7 +95,7 @@ function ProductList() {
   }
       //-------------------------Paginado de Tablas------------------//
       const [currentPage,setCurrentPage]=useState(1);
-      const [rows,setRows]=useState(10);//modificamos esto si queremos mostrar mas filas
+      const [cardsPerPage,setCardsPerPage]=useState(10);//modificamos esto si queremos mostrar mas cards de produtos
       const [pageNumberLimit,setPageNumberLimit]=useState(5);
       const [maxPageNumberLimit,setMaxPageNumberLimit]=useState(5);
       const [minPageNumberLmit,setMinPageNumberLmit]=useState(0);
@@ -118,12 +118,12 @@ function ProductList() {
       }
   
       const pages=[];
-      for(let i=1; i<=Math.ceil(stock.length/rows);i++){
+      for(let i=1; i<=Math.ceil(lista_filtrada.length/cardsPerPage);i++){
           pages.push(i)
       }
-      const indexOfLastItem=currentPage*rows;
-      const indexOfFirstItem=indexOfLastItem-rows;
-      const currentItems= stock.slice(indexOfFirstItem,indexOfLastItem);
+      const indexOfLastItem=currentPage*cardsPerPage;
+      const indexOfFirstItem=indexOfLastItem-cardsPerPage;
+      const currentItems= lista_filtrada.slice(indexOfFirstItem,indexOfLastItem);
       const renderPageNumbers=pages.map(number=>{
           if(number<maxPageNumberLimit+1&&number
               >minPageNumberLmit){
@@ -178,7 +178,7 @@ function ProductList() {
       </div>
       <div className="d-table-cell" >
           {
-            lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e => {
+            currentItems && currentItems.length > 0 ? currentItems.map(e => {
                console.log( e)
               return (<span key={e.id} className="card-deck   mx-1" >
                 <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} stock={e.stocks.length > 0 ?  e.stocks[0].quantity : undefined} />
@@ -198,9 +198,7 @@ function ProductList() {
                         disabled={currentPage===pages[pages.length-1]?true:false}
                         >next</button>
                     </li>
-                </ul>
-  
-             
+                </ul>   
     </div>
   ):<p>...Loading</p>
 
