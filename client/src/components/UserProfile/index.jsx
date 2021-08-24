@@ -113,6 +113,7 @@ function Index() {
                                             <ul>
                                                 <li > <button type="submit" className="items my-2" onClick={e => ShowMyData(e)}>Mis Datos</button></li>
                                                 <li > <button type="submit" className="items my-2" onClick={e => showSecurity(e)} >Seguridad</button></li>
+                                                <li> <button type="submit" className="items my-2" >Direcciones</button></li>
                                             </ul>
                                         </div>
                                     </div>
