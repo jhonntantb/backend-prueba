@@ -166,18 +166,6 @@ function CardProduct(props) {
     }
   };
   
-  if(e.target.value == "false"){
-    console.log("aca a punto de entrar al dispatch para crearlo")
-    if(user.id != undefined && props.id != undefined)
-    {
-      dispatch(createWishlist({productId:props.id,userId:user.id, })).then(()=>{
-        if(document.getElementById("wishlist") !=undefined )
-        dispatch(getWishlist(user.id))
-      })
-      addFav(true)
-    }
-  }
-  
   return (
     <div className="card mt-5">
       <div className="about text-center">

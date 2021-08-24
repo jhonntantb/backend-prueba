@@ -4,12 +4,8 @@ import { useDispatch } from "react-redux";
 import { getAllProduct } from "../../redux/actions/product/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import { getAllCategory } from "../../redux/actions/category/index.js";
-<<<<<<< HEAD
 import { getCart } from "../../redux/actions/cart/index"
 import { getAllOrder } from "../../redux/actions/order/index"
-=======
-import { getCart } from "../../redux/actions/cart/index";
->>>>>>> develop
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
 import { getWishlist } from "../../redux/actions/wishlist/index.js";
