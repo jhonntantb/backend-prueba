@@ -132,60 +132,18 @@ const Navbar = () => {
                 </li>
               ) : null}
             </ul>
-            {authUser === "guest" ? (
-              <li className="nav-item mx-3">
-                <NavLink
-                  activeClassName="text-white"
-                  className="nav-link"
-                  to={ROUTES.SIGN_IN}
-                >
-                  Ingresar
-                </NavLink>
-              </li>
-            ) : (
-              <li className="nav-item dropdown mx-3">
-                <NavLink
-                  class="nav-link active dropdown-toggle"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="true"
-                  to="#"
-                >
-                  Mi Cuenta
-                </NavLink>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <NavLink class="dropdown-item" to={ROUTES.USER_DATA}>
-                      Mis Datos
-                    </NavLink>
-                  </li>
-                  {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
-                  <li>
-                    {" "}
-                    <NavLink
-                      class="dropdown-item"
-                      to="/user/compras"
-                      onClick={(e) =>
-                        dispatch(
-                          getAllOrder(localStorage.getItem("pg_merceria"))
-                        )
-                      }
-                    >
-                      Compras
-                    </NavLink>{" "}
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/">
-                      <SignOutButton />
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            )}
+          {authUser === 'guest' ?
+            <li className="nav-item mx-3"><NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink></li> :
+            <li className="nav-item dropdown mx-3">
+              <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">Mi Cuenta</NavLink>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><NavLink class="dropdown-item" to={ROUTES.USER_DATA}>Mis Datos</NavLink></li>
+                {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
+                <li> <NavLink class="dropdown-item" to="/user/compras" onClick={ async e=>await dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href='/'><SignOutButton /></a></li>
+              </ul>
+            </li>}
             <ul className="navbar-nav mx-3">
               <li className="nav-item">
                 <NavLink to={ROUTES.CART}>

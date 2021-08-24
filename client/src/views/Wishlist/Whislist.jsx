@@ -35,6 +35,7 @@ export default function Wishlist() {
 
   return (
     Ready && (
+      <div id="wishlist">
       <div className="container">
         <h2 className="text-dark text-center mt-5">Tu wishlist</h2>
         <div className="text-center">
@@ -57,6 +58,7 @@ export default function Wishlist() {
             <h1>{noproducts()}</h1>
           )}
         </div>
+      </div>
       </div>
     )
   );
