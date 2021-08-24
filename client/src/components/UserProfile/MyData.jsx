@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { getUser, updateUser } from '../../redux/actions/user'
 import PasswordChangePage from '../Authentication/PasswordChange';
-import './index.css'
 
-function Index() {
+
+function MyData() {
     const dispatch = useDispatch()
     const userId = localStorage.getItem("pg_merceria")
     const user = useSelector(state => state.userReducer.user)
+
     useEffect(() => {
         dispatch(getUser(userId))
     }, [])
+
     //---------------------Render info----------------------------
     const [myData, setMyData] = useState(true)
-    const [security, setSecurity] = useState(false)
+    
 
     //--------------------Data User----------------------------
     const [disabledDirection, setDisabledDirection] = useState(true)
@@ -51,18 +53,7 @@ function Index() {
         e.target.id == "address" && setAddress(e.target.value)
 
     }
-    const showSecurity = (e) => {
-        e.preventDefault()
-        setSecurity(true)
-        setMyData(false)
-        setDisabledDirection(true)
-        setDisabledUser(true)
-    }
-    const ShowMyData = (e) => {
-        e.preventDefault()
-        setMyData(true)
-        setSecurity(false)
-    }
+
     const modifyUserData = (e) => {
         e.preventDefault();
         setDisabledUser(false)
@@ -92,35 +83,20 @@ function Index() {
 
     return (
         <main className="page-main">
+
             <div>
-                
+                {myData === true && user ?
                     <div>
                         <div className="page-title-wraper">
                             <div className="container">
                                 <h1 className="page-title">
-                                    {myData ? 
                                     <span className="base" data-ui-id="page-title-wrapper"> Editar informacion personal</span>
-                                    : <span className="base" data-ui-id="page-title-wrapper"> Cambiar contraseña</span>
-                                     }
                                 </h1>
                             </div>
                         </div>
                         <div className="colums container">
                             <div className="row">
-                                <div className="col-sm-3 grid-left">
-                                    <div className="sidebar sidebar-main">
-                                        <div className="block account-nav">
-                                            <div className="content account-nav-content">
-                                                <ul className="nav items">
-                                                    <li className="nav items"> <button onClick={e => ShowMyData(e)}>Mis Datos</button></li>
-                                                    <li > <button onClick={e => showSecurity(e)} >Seguridad</button></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div className="col-sm-9 grid-main">
-                                {myData === true && user ?
                                     <div className="column main">
                                         <form>
                                             <fieldset className="fieldset info">
@@ -184,15 +160,14 @@ function Index() {
                                             </div>
                                         </form>
                                     </div>
-                                     : <PasswordChangePage />}
                                 </div>
                             </div>
                         </div>
                     </div>
-                   
+                    : <PasswordChangePage />}
             </div>
         </main>
     )
 }
 
-export default Index
+export default MyData

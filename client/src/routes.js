@@ -22,10 +22,11 @@ export const PRODUCT_CREATION = '/admin/productcreation'
 export const ADMIN_ORDER_DETAIL="/admin/orders/:id";
 
 export const MANAGE_USERS ='/admin/manage-users';
-export const PASSWORD_CHANGE = '/pw-change';
+
 export const PRODDETAIL = '/productdetail';
 export const ABOUT ='/about';
 export const WISHLIST ='/wishlist';
 export const USER_DATA='/user/mydata'
+export const PASSWORD_CHANGE = '/user/mydata/pw-change';
 
 

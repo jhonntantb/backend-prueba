@@ -16,7 +16,6 @@ import SignUpPage from './components/Authentication/SignUp/index';
 import SignInPage from './components/Authentication/SignIn';
 import Account from './components/Authentication/Account';
 import PasswordForgetPage from './components/Authentication/PasswordForget';
-import PasswordChangePage from './components/Authentication/PasswordChange';
 import ProductList from './components/ProductList/ProductList';
 import Navbar from './components/Nav/Navbar';
 import Form from './components/Admin/FormDetail/FormCategory';
@@ -45,7 +44,7 @@ function App() {
       <Route exact path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangePage} />
+  
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />

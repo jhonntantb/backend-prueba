@@ -68,13 +68,11 @@ function PasswordChangeFormBase(props) {
     },[state])
 
   return (
-    <div className="container mt-5">
-      <div className="row content d-flex justify-content-center">
-        <div className="col-md-5">
-          <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Reset your password?</h3>
-            <form className="mb-3" onSubmit={onSubmit}>
-              <input
+    <div className="col-sm-9 grid-main">
+    <div className="column main">
+        <form onSubmit={onSubmit}>
+            <fieldset className="fieldset info">
+            <input
                 name="passwordOne"
                 value={passwordOne}
                 onChange={onChange}
@@ -99,11 +97,10 @@ function PasswordChangeFormBase(props) {
               </div>
 
               {error && <p>{error.message}</p>}
-            </form>
-          </div>
-        </div>
-      </div>
+            </fieldset>
+        </form>
     </div>
+</div>
   );
 }
 
