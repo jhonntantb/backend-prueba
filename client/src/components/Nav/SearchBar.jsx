@@ -32,7 +32,7 @@ export default function SearchBar() {
     console.log('Options: ',options);
   },[]);
 
-  /*  useEffect(() => {
+   useEffect(() => {
       document.addEventListener('mousedown', handleClickOutside);
       return () => {
           document.removeEventListener("mousedown", handleClickOutside);
@@ -45,7 +45,7 @@ export default function SearchBar() {
           setDisplay(false);
           setSearch("");
       }
-  } */
+  } 
 
   const handleChange = (event) => {
       setSearch(event.target.value);
@@ -57,6 +57,8 @@ export default function SearchBar() {
   const handleClickSearch = () => {
     console.log('Filtrada: ',filtrada);
    dispatch(getSomeProduct(filtrada));
+   setDisplay(false);
+   setSearch("");
    push('/productlist')
    //alert('aprete boton de buscar');
   }

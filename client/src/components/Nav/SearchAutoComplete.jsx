@@ -30,7 +30,7 @@ const Auto = () => {
       },[]);
 
      
-    /*   useEffect(() => {
+      useEffect(() => {
           document.addEventListener('mousedown', handleClickOutside);
           return () => {
               document.removeEventListener("mousedown", handleClickOutside);
@@ -45,7 +45,8 @@ const Auto = () => {
 
           }
       }
-*/
+ 
+
       const handleChange = (event) => {
           setSearch(event.target.value);
            setDisplay(true);
@@ -108,6 +109,9 @@ const Auto = () => {
 function SearchAutoComplete() {
     return (
         <div className="SearchAutoComplete">
+            <br></br>
+            <br></br>
+            <br></br>
             <h1>Autocomplete de Productos</h1>
             <div className="auto-container">   
               <Auto />
