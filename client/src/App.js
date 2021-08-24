@@ -34,6 +34,8 @@ import Wishlist from './views/Wishlist/Whislist';
 import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
 import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
 import Index from './components/UserProfile';
+import Office from './components/Admin/Office/Office';
+import Turnero from './components/Turnero/Turnero';
 import SearchAutoComplete from './components/Nav/SearchAutoComplete';
 
 
@@ -50,7 +52,7 @@ function App() {
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
-      <Route exact path={ROUTES.CART} component={ShopCart} />
+      <Route path={ROUTES.CART} exact component={ShopCart} />
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path='/productupdate/:id' component={ProductUpdate} />
       <Route path={ROUTES.CONTACT_US} component={ContactUs} />
@@ -71,6 +73,8 @@ function App() {
       <Route path='/AccountConfirmation' component={AccountConfirmation} />
       <Route path={ROUTES.USER_DATA} component={Index} />
       <Route exact path="/search_ac" component={SearchAutoComplete}/>
+      <Route path={ROUTES.ADMIN_OFFICES} exact component={Office}/>
+      <Route path="/user/turnero" exact component={Turnero}/>
       
     </React.Fragment>
   )

@@ -29,9 +29,9 @@ export const getAllOffice = () => {
     }
 }
 
-export const deleteOffice = (params) => {
+export const deleteOffice = (id) => {
     return async (dispatch) => {
-        const res = await axios.delete('http://localhost:3001/office', params)
+        const res = await axios.delete('http://localhost:3001/office/'+ id)
         return dispatch({ type: TYPES.DELETE_OFFICE, payload: res.data })
     }
 }
