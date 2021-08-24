@@ -26,6 +26,7 @@ function ProductList() {
   const [orden, setOrden] = useState("A-Z");
 
   useEffect(() => {
+    console.log('useEffect list productlist: ',list)
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
     dispatch(getWishlist(id))
@@ -177,8 +178,7 @@ function ProductList() {
       <div className="d-table-cell" >
           {
             lista_filtrada && lista_filtrada.length > 0 ? lista_filtrada.map(e => {
-               console.log( e)
-              return (<span key={e.id} className="card-deck   mx-1" >
+                return (<span key={e.id} className="card-deck   mx-1" >
                 <CardProduct title={e.title} price={e.price} url={e.productimages[0].image_url} id={e.id} stock={e.stocks.length > 0 ?  e.stocks[0].quantity : undefined} />
               </span>)}
             ) : <h3 className="text-center mt-4">No hay productos</h3>}
