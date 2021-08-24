@@ -23,7 +23,7 @@ const Footer = () => {
                             <i class="fa fa-facebook" aria-hidden="true"></i>
                           </a>
                         </span>
-                        <span class="mx-4">
+                        {/* <span class="mx-4">
                           <a href="#">
                             <i class="fa fa-twitter" aria-hidden="true"></i>
                           </a>
@@ -32,7 +32,7 @@ const Footer = () => {
                           <a href="#">
                             <i class="fa fa-instagram" aria-hidden="true"></i>
                           </a>
-                        </span>
+                        </span> */}
                       </p>
                     </div>
                   </div>

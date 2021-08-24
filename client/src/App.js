@@ -34,6 +34,7 @@ import Wishlist from './views/Wishlist/Whislist';
 import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
 import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
 import Index from './components/UserProfile';
+import SearchAutoComplete from './components/Nav/SearchAutoComplete';
 
 
 function App() {
@@ -53,22 +54,24 @@ function App() {
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path='/productupdate/:id' component={ProductUpdate} />
       <Route path={ROUTES.CONTACT_US} component={ContactUs} />
-      <Route path='/pagar' component={CreateCheckoutButton}/>
-      <Route path='/after-checkout' component={AfterCheckout}/>
-      <Route path='/after-checkout-reject' component={AfterCheckoutRejected}/>
+      <Route path='/pagar' component={CreateCheckoutButton} />
+      <Route path='/after-checkout' component={AfterCheckout} />
+      <Route path='/after-checkout-reject' component={AfterCheckoutRejected} />
 
-      <Route  path={ROUTES.ADMIN} component={NavAdmin} />
-      <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin}/>
-      <Route exact path= {ROUTES.STOCK} component={Stock}/>
-      <Route  exact path={ROUTES.ORDER} component={Order}/>
+      <Route path={ROUTES.ADMIN} component={NavAdmin} />
+      <Route path={ROUTES.MANAGE_USERS} component={UsersAdmin} />
+      <Route exact path={ROUTES.STOCK} component={Stock} />
+      <Route exact path={ROUTES.ORDER} component={Order} />
       <Route exact path={ROUTES.FORM} component={Form} />
       <Route exact path={ROUTES.PRODUCT_CREATION} component={ProductCreation} />
       <Route exact path={ROUTES.WISHLIST} component={Wishlist} />
-      <Route exact path="/admin/orders/:id" component={OrderDetail}/>
-      <Route path={ROUTES.USER_SHOP} exact component={Shopping}/>
-      <Route path="/user/compras/:id" exact component={UserOrdenDetail}/>   
-      <Route path='/AccountConfirmation' component={AccountConfirmation}/>
+      <Route exact path="/admin/orders/:id" component={OrderDetail} />
+      <Route path={ROUTES.USER_SHOP} exact component={Shopping} />
+      <Route path="/user/compras/:id" exact component={UserOrdenDetail} />
+      <Route path='/AccountConfirmation' component={AccountConfirmation} />
       <Route path={ROUTES.USER_DATA} component={Index} />
+      <Route exact path="/search_ac" component={SearchAutoComplete}/>
+      
     </React.Fragment>
   )
 }

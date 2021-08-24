@@ -1,20 +1,8 @@
 const router = require('express').Router();
+const axios = require('axios')
 const { Order, User, Product, Order_Product, Office, Stock, Productimage } = require('../db')
 
 
-
-//////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
-// router.get("/:id",async (req, res, next) =>{
-//     try {
-//      //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
-//        const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
- 
-//        //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
-//         res.send(order)
-//     } catch (error) {
-//         next(error)
-//     }
-// })
 
 ///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
 // Si no viene ingun parametro en el query lista todas las ordenes
@@ -25,24 +13,20 @@ router.get("/",async (req, res,next) =>{
     userId ? filtro.userId = userId : null;
     productId ? filtroProd.id = productId: null;
     status ? filtro.status = status : null;
-
     try {
-        //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product, include: { model: Productimage, attributes: ['id', 'image_url'] } } ]  })  
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product, include: [{ model: Productimage, attributes: ['id', 'image_url'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'], include: {model: Office, attributes:['codesuc','name']} }] } ]  })  
         res.send(allOrder)
      } catch (error) {
         next(error)
 
 } 
 })
+
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-     //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
-       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product},{model:User},{model:Product, include: { model: Productimage, attributes: ['id', 'image_url'] }}]})
- 
-       //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
-        res.send(order)
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product},{model:User},{model:Product, include: [{ model: Productimage, attributes: ['id', 'image_url'] },{ model: Stock, attributes: ['id', 'quantity', 'officeId'], include: {model: Office, attributes:['codesuc','name']} }]}]})
+       res.send(order)
     } catch (error) {
         next(error)
     }
@@ -51,10 +35,8 @@ router.get("/:id",async (req, res, next) =>{
 
 // relacion con oficina (pendiente)
 //la orden se relaciona con una oficina---->con un calendario
-//-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
 //////////// P O S T ////////////////////////////////////////******/
-
 // *************** FORMATO EJEMPLO DEL POST **********************
 // {"status": "En preparacion",
 // "total_price": 10000,
@@ -181,6 +163,17 @@ router.put('/:id/:Status', async (req, res) => {
       products.map( async e => {
         const [stock, created] = await Stock.findOrCreate({ defaults:{quantity: 0},where:{productId: e.dataValues.productId, officeId: sucid}})
         oper === 'resta' ?  stock.quantity = stock.quantity - e.dataValues.quantity : stock.quantity = stock.quantity + e.dataValues.quantity ;
+        
+        try {
+            
+            if(stock.quantity <= 5) {
+               let msgSend = axios.get(`http://localhost:3001/mail/stock/${e.dataValues.productId}`)
+               if(msgSend.data.length>0) {
+                   console.log("se envió mensaje LowSTOCK")
+               }
+            }
+        }catch (err) {console.log("error al enviar el mensaje de low stock " , err)}
+
         await stock.save()
       })
     } 

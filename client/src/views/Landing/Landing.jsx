@@ -5,8 +5,7 @@ import Carrousel from "../../components/Carrousel/Carrousel";
 import CardProduct from "../../components/ProductList/CardProduct";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "./../../components/Footer/Footer";
-import './Landing.css'
-
+import "./Landing.css";
 
 export const Landing = () => {
   const items = [
@@ -37,18 +36,17 @@ export const Landing = () => {
   }, []);
 
   let list4 = [];
-  
 
   //console.log("LIST: ",list5)
   //console.log("acaaaa")
   //console.log(list)
   list4.push(list[0], list[1], list[2], list[3]);
-   return (
+  return (
     <div>
       <div class="container-fluid ">
-          <Carrousel images={items} />
+        <Carrousel images={items} />
       </div>
-      <div class="container-fluid position-relative">
+      {/* <div class="container-fluid position-relative">
         <div class="row row-cols-lg-1 row-cols-md-2 row-cols-sm-2 row-cols-xs-2">
           <div class="col col-xl-5 col-lg-6 col-md-12 col-sm-12 col-xs-12 position-relative">
             <Newsletter />
@@ -67,6 +65,28 @@ export const Landing = () => {
                 ))}
                 </div>
             </div>
+        </div>
+      </div> */}
+      <div class="container-fluid">
+        <h2 className="text-center">Productos Destacados</h2>
+        <div class="row">
+          <div class="col-md-3">
+            <Newsletter />
+          </div>
+          <div class="col-md-9">
+            <div>
+              {list.length > 2 &&
+                list4.map((c) => (
+                  <CardProduct
+                    key={c.id}
+                    id={c.id}
+                    url={c.productimages[0].image_url}
+                    price={c.price}
+                    title={c.title}
+                  />
+                ))}
+            </div>
+          </div>
         </div>
       </div>
 
