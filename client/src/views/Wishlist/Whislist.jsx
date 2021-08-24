@@ -38,7 +38,6 @@ export default function Wishlist() {
       <div className="container" style={{marginTop: "5%"}}>
         <h2 className="text-dark text-center mt-5">Lista de favoritos</h2>
       <div id="wishlist">
-        <h2 className="text-dark text-center mt-5">Tu wishlist</h2>
         <div className="text-center">
           {wishlist.length > 0 && typeof wishlist.map == "function" ? (
             wishlist.map((wish) => {
