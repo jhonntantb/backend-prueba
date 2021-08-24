@@ -42,42 +42,45 @@ function Shopping() {
   };
   return (
     <div className="container-fluid shop">
-      <br />
-      <br />
-      <div>
-        <button id="buttonshopping" onClick={(e) => showHistory(e)}>
-          Historial de Compras
-        </button>
-        <button
-          style={{ marginLeft: "10px" }}
-          id="buttonshopping"
-          onClick={(e) => ShowShoopInProcess(e)}
-        >
-          Seguimiento de Pedido
-        </button>
+      <div style={{ marginTop: "130px" }}>
+        {history === true ? (
+          <h3 className="text-center">Seguimiento de Pedidos</h3>
+        ) : (
+          <h3 className="text-center">Historial de Compras</h3>
+        )}
+
+        <div className="row">
+          <div className="col-md-2">
+            <div clasName="ordenar">
+              <button id="buttonshopping" onClick={(e) => showHistory(e)}>
+                Historial de Compras
+              </button>
+              <button
+                id="buttonshopping"
+                onClick={(e) => ShowShoopInProcess(e)}
+              >
+                Seguimiento de Pedido
+              </button>
+            </div>
+          </div>
+
+          <div className="col-md-10">
+            {orderView && orderView.length > 0 ? (
+              orderView.map((e) => (
+                <CardOrder
+                  id={e.id}
+                  status={e.status}
+                  products={e.products}
+                  total_price={e.total_price}
+                  className="justify-content-center"
+                />
+              ))
+            ) : (
+              <p>Aún no tiene Pedidos</p>
+            )}
+          </div>
+        </div>
       </div>
-      <br />
-      <br />
-
-      {history === true ? (
-        <h3 className="text-center">Seguimiento de Pedidos</h3>
-      ) : (
-        <h3 className="text-center">Historial de Compras</h3>
-      )}
-
-      {orderView && orderView.length > 0 ? (
-        orderView.map((e) => (
-          <CardOrder
-            id={e.id}
-            status={e.status}
-            products={e.products}
-            total_price={e.total_price}
-            className="justify-content-center"
-          />
-        ))
-      ) : (
-        <p>Aún no tiene Pedidos</p>
-      )}
     </div>
   );
 }

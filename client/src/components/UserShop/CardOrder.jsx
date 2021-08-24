@@ -18,7 +18,7 @@ function CardOrder(props) {
 
   return (
     <div className="cardUserOrder text-center">
-      <div style={{ minHeight: "150px" }}>
+      <div style={{ minHeight: "150px", minWidth: "553px" }}>
         <p className="text-dark mt-2">
           Estado:{" "}
           <span style={{ color: color, fontSize: "20px", fontWeight: "bold" }}>
@@ -33,10 +33,10 @@ function CardOrder(props) {
         </ul>
         <h5>Precio Total: ${props.total_price}</h5>
       </div>
-      <div >
+      <div className="d-flex align-items-center">
         <div>
           <NavLink to={"/user/compras/" + props.id}>
-            <button className="btn btn-block btn-black rm-border">
+            <button className="ver-compras btn btn-block btn-black rm-border">
               Ver Compras
             </button>
           </NavLink>
