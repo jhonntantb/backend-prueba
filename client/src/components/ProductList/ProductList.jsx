@@ -24,8 +24,8 @@ function ProductList() {
   const [Minimo, setMinimo] = useState("");
   const [Maximo, setMaximo] = useState("");
   const [orden, setOrden] = useState("A-Z");
-
   useEffect(() => {
+    console.log('useEffect list productlist: ',list)
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
     dispatch(getWishlist(id));
@@ -93,7 +93,7 @@ function ProductList() {
   }
   //-------------------------Paginado de Tablas------------------//
   const [currentPage, setCurrentPage] = useState(1);
-  const [rows, setRows] = useState(10); //modificamos esto si queremos mostrar mas filas
+  const [cardPerPage, setCardsPerPage] = useState(10); //cuantas cards queremos mostrar
   const [pageNumberLimit, setPageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLmit, setMinPageNumberLmit] = useState(0);
@@ -116,12 +116,12 @@ function ProductList() {
   };
 
   const pages = [];
-  for (let i = 1; i <= Math.ceil(stock.length / rows); i++) {
+  for (let i = 1; i <= Math.ceil(lista_filtrada.length / cardPerPage); i++) {
     pages.push(i);
   }
-  const indexOfLastItem = currentPage * rows;
-  const indexOfFirstItem = indexOfLastItem - rows;
-  const currentItems = stock.slice(indexOfFirstItem, indexOfLastItem);
+  const indexOfLastItem = currentPage * cardPerPage;
+  const indexOfFirstItem = indexOfLastItem - cardPerPage;
+  const currentItems = lista_filtrada.slice(indexOfFirstItem, indexOfLastItem);
   const renderPageNumbers = pages.map((number) => {
     if (number < maxPageNumberLimit + 1 && number > minPageNumberLmit) {
       return (
@@ -138,7 +138,14 @@ function ProductList() {
       return null;
     }
   });
-
+  
+  useEffect(() => {
+    //console.log("esto es lista filtrada",lista_filtrada)
+    //console.log("pages*10",pages)
+    if(lista_filtrada.length<((pages.length)*10)){
+      setCurrentPage(1)
+    }
+  }, [lista_filtrada])
   // console.log(lista_filtrada)
 
   return list.length > 0 ? (
@@ -215,9 +222,8 @@ function ProductList() {
           </div>
         </div>
         <div className="col-md-9">
-          {lista_filtrada && lista_filtrada.length > 0 ? (
-            lista_filtrada.map((e) => {
-              console.log(e);
+          {currentItems && currentItems.length > 0 ? (
+            currentItems.map((e) => {
               return (
                 <>
                   <span key={e.id} className="card-deck   mx-1">
@@ -240,7 +246,6 @@ function ProductList() {
           )}
         </div>
       </div>
-
       <ul className="pageNumbers">
         <li>
           <button
