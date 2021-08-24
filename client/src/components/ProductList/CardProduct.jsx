@@ -134,22 +134,26 @@ function CardProduct(props) {
 
   return (
     <div className="card mt-5">
-      <div className="about text-center">
-        <NavLink
-          style={{ textDecoration: "none", color: "black" }}
-          to={`/product/${props.id}`}
-        >
-          <div className="text-center imagen-container">
-            <img className="nail" id="main-image" src={props.url} width="300" />
-          </div>
-          <br />
-          <h6>{props.title}</h6>
-        </NavLink>
+      <div className="text-center">
+        <div className="about">
+          <NavLink
+            style={{ textDecoration: "none", color: "black" }}
+            to={`/product/${props.id}`}
+          >
+            <div className="text-center imagen-container">
+              <img className="nail" id="main-image" src={props.url} />
+            </div>
+            <div className="titulo">
+              <h6>{props.title}</h6>
+            </div>
+          </NavLink>
+        </div>
         <div className="descri-price">
           <h3>${props.price}</h3>
           {props.stock > 0 && <h6>Stock Disponible </h6>}
         </div>
       </div>
+
       <div className="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
         <button
           className="carrito-button btn btn-dark text-uppercase "

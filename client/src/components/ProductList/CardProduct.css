@@ -16,13 +16,14 @@
   border: 1px solid #212529;
   margin: 2%;
   padding: 1%;
-  min-width: 30rem;
+  width: 30rem;
+  min-height: 25rem;
 }
 
 .about {
   margin-top: 1.5rem;
   padding: 5px;
-  max-width: 450px;
+  width: 450px;
 }
 
 .add {
@@ -81,9 +82,10 @@
 }
 
 .imagen-container {
-  margin-top: 10px;
+  margin: 10px;
+  margin-bottom: 30px;
 }
 
 .descri-price {
-  margin-top: 40px;
+  margin-top: 15px;
 }
