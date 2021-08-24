@@ -20,14 +20,18 @@ function Turnero() {
     const userSelectOffice=(e)=>{
         setSelectOffice(!selectOffice)
     }
-
+    console.log("Holaaaaaaaa")
     return (
         <div>
+            <br />
+            <br />
+            <br />
+            <h3>Estamos en turnero</h3>
             <button onClick={e=>userSelectOffice(e)} >Recojer en Oficina</button>
             <div>
                 {selectOffice&&viewOffice.length>0&&
                 viewOffice.map(ofi=>
-                    <div>
+                    <div key={ofi.codesuc}>
                         <button>
                         <p>Nombre: {ofi.name}</p>
                         <p>Dirección: {ofi.address}</p>
