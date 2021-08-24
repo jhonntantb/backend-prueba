@@ -140,8 +140,8 @@ function ProductList() {
   });
   
   useEffect(() => {
-    console.log("esto es lista filtrada",lista_filtrada)
-    console.log("pages*10",pages)
+    //console.log("esto es lista filtrada",lista_filtrada)
+    //console.log("pages*10",pages)
     if(lista_filtrada.length<((pages.length)*10)){
       setCurrentPage(1)
     }
@@ -224,7 +224,6 @@ function ProductList() {
         <div className="col-md-9">
           {currentItems && currentItems.length > 0 ? (
             currentItems.map((e) => {
-              console.log(e);
               return (
                 <>
                   <span key={e.id} className="card-deck   mx-1">
