@@ -7,8 +7,6 @@ import { getAllCategory } from "../../redux/actions/category/index.js";
 import { getCart } from "../../redux/actions/cart/index";
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
-import { BrowserRouter } from "react-router-dom";
-import Wishlist from "../../views/Wishlist/Whislist.jsx";
 import { getWishlist } from "../../redux/actions/wishlist/index.js";
 import Scroll from "../Scroll/Scroll.jsx";
 
@@ -264,7 +262,9 @@ function ProductList() {
       </ul>
     </div>
   ) : (
-    <p>...Loading</p>
+    <h1 className="text-center mt-5">
+      No hay productos que coincidan con ese nombre
+    </h1>
   );
 }
 

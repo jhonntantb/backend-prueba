@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllProduct } from "../../redux/actions/product/index.js";
-import { getProduct } from "../../redux/actions/product/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import "./SearchBar.css";
 
@@ -25,29 +24,15 @@ export default function SearchBar() {
       dispatch(SetCategoriesFiltradas("Todas"))
       push("/productlist");
     }
+    else if (name.trim().length == 0) {
+      dispatch(getAllProduct());
+      setName("");
+      dispatch(SetCategoriesFiltradas("Todas"))
+      push("/productlist");
+    }
   };
 
   return (
-    // <div className="search">
-    //   <input
-    //     className="form-control"
-    //     type="text"
-    //     placeholder="Crochets, Bastidores"
-    //     onChange={(e) => handleInputSearch(e)}
-    //   />
-    //   <button className="btn btn-block" onClick={(e) => handleClickSearch(e)}>
-    //     Buscar
-    //   </button>
-    // </div>
-    // <div className="search">
-    //   " "
-    //   <input
-    //     type="text"
-    //     className="form-control"
-    //     placeholder="Have a question? Ask Now"
-    //   />
-    //   <button className="btn btn-primary">Search</button>
-    // </div>
 
     <div className="search">
       <input

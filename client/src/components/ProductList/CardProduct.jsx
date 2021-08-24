@@ -4,10 +4,8 @@ import { getCart } from "../../redux/actions/cart/index";
 import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
-//import {} from "../../redux/actions/"
 import "./CardProduct.css";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { getAllProduct } from "../../redux/actions/product";
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
@@ -160,17 +158,19 @@ function CardProduct(props) {
         >
           Añadir al carro
         </button>
-        <div className="add">
-          <span className="product_fav">
-            {
-              <button
-                class={Fav === true ? "fa fa-heart" : "fa fa-heart-o"}
-                value={Fav}
-                onClick={handleSubmit}
-              ></button>
-            }
-          </span>
-        </div>
+        {user.id ? (
+          <div class="add">
+            <span class="product_fav">
+              {
+                <button
+                  class={Fav === true ? "fa fa-heart" : "fa fa-heart-o"}
+                  value={Fav}
+                  onClick={handleSubmit}
+                ></button>
+              }
+            </span>
+          </div>
+        ) : null}
       </div>
     </div>
     //         </div>

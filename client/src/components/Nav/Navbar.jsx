@@ -1,14 +1,13 @@
-import React, { useEffect, useState} from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect} from 'react'
+import { useDispatch,useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import "./Navbar.css";
-
+import { getUser } from '../../redux/actions/user';
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
 import { getAllProduct } from '../../redux/actions/product';
 import {ShowCartCant} from './ShowCartCant';
-import CheckUser from '../Authentication/CheckUser/CheckUser';
 import { getAllOrder } from '../../redux/actions/order';
 import { useHistory } from 'react-router';
 
@@ -17,17 +16,25 @@ const Navbar = () => {
 
   // const [authUser, setAuthUser] = useState(localStorage.getItem("pg_merceria"))
   // const [admin, setAdmin] = useState(localStorage.getItem("admin"))
-  // CheckUser();
+  
   const history = useHistory()
   const dispatch = useDispatch();
   const authUser= localStorage.getItem("pg_merceria")
   const admin = localStorage.getItem("admin")
+  const storeUser = useSelector(state=>state.userReducer.user)
   
+ useEffect(()=>{
+    var localUser = localStorage.getItem("pg_merceria")
+    var localAdmin = localStorage.getItem("admin")
+
+
+    if(localUser!=="guest") {
+            if(storeUser.id===undefined) {
+                dispatch(getUser(localUser))
+            }
+    }
   
-//  useEffect(()=>{
-//   if(authUser==='guest') history.push('/')
-  
-//   },[authUser])
+  },[])
 
   
   //var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
@@ -58,6 +65,12 @@ const Navbar = () => {
        
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
           <ul className="navbar-nav ml-10  ">
+
+          <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/search_ac" >
+                Búsqueda AC
+              </NavLink>
+          </li>  
          
            <li className="nav-item mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/contactus" >
