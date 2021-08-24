@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail');
 const router = require('express').Router();
-const {User, Order} = require("../db");
+const {User, Order, Product} = require("../db");
 const {SENDGRID_API_KEY} = process.env;
 
 sgMail.setApiKey(SENDGRID_API_KEY);
@@ -197,20 +197,59 @@ if(orderOk.status === "cancelled") {
   html
 };
 
-  sgMail
-  .send(msg)
-  .then(() => {
-    
-    console.log("mensaje de orden cancelada enviado")
-    return  res.send(`Mensaje enviado a  ${userOk.email}`)
-  })
-  .catch((error) => {
+    sgMail
+    .send(msg)
+    .then(() => {
       
-      console.log("ERROR AL ENVIAR EL MENSAJE: " , error)
-      return res.status(407).send("ERROR AL ENVIAR EL MENSAJE DE LA ORDEN: -cancelled ")
-  })
+      console.log("mensaje de orden cancelada enviado")
+      return  res.send(`Mensaje enviado a  ${userOk.email}`)
+    })
+    .catch((error) => {
+        
+        console.log("ERROR AL ENVIAR EL MENSAJE: " , error)
+        return res.status(407).send("ERROR AL ENVIAR EL MENSAJE DE LA ORDEN: -cancelled ")
+    })
 }
 
+})
+
+router.get("/stock/:productId", async (req, res, next) => {
+  const {productId} = req.params
+
+  const product = await Product.findByPk(productId)
+
+  console.log("esto es product dentro de mailing low stock: ", product)
+
+  html = `<div >
+  <h1>Estimado Aministrador:</h1>
+  <p>Le informamos que el producto ${product.title} , con numero de catalogo ${product.catalog_id} se encuentra con stock minimo o sin stock</p>
+  <br/>
+  <br/>
+  <p> ¡¡¡Muchas Gracias!!! </p>
+  <br/>
+  <p>Araceli Merceria</p>
+</div>`
+
+  msg = {
+  to: 'jerexand@gmail.com', // Change to your recipient
+  from: 'jerexand@gmail.com', // Change to your verified sender
+  subject: 'Aviso de Stock Bajo',
+  text: 'aviso de stock bajo',
+  html
+};
+
+sgMail
+    .send(msg)
+    .then(() => {
+      
+      console.log("mensaje de stock Bajo enviado")
+      return  res.send(`Mensaje enviado a jerexand@gmail.com `)
+    })
+    .catch((error) => {
+        
+        console.log("ERROR AL ENVIAR EL MENSAJE: " , error)
+        return res.status(407).send("ERROR AL ENVIAR EL MENSAJE DE LOW STOCK ")
+    })
 
 })
 

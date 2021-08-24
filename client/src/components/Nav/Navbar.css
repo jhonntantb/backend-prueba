@@ -1,9 +1,9 @@
 #iconcart {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 #iconcart:hover {
-    color: black;
+  color: black;
 }
 
 #buttoncart {
@@ -15,18 +15,23 @@
 }
 
 nav .nav-link:hover {
-    color: rgba(255,255,255,.75);
+  color: rgba(255, 255, 255, 0.75);
 }
 
- .nav-link {
-    color: #b1b0b0;
+.nav-link {
+  color: #b1b0b0;
 }
 
 .mx-3 {
-    margin-right: 3rem !important;
-    margin-left: 1rem !important;
+  margin-right: 3rem !important;
+  margin-left: 1rem !important;
 }
 
 .badge {
-    margin-left:1%;
+  margin-left: 1%;
+}
+
+#nav-main {
+  position: fixed;
+  margin-bottom: 50px;
 }
