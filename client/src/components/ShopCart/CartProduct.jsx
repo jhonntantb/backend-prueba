@@ -1,40 +1,49 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOrder, getAllOrder } from "../../redux/actions/order/index"
-import { getCart } from "../../redux/actions/cart";
+import { updateOrder } from "../../redux/actions/order/index"
+import { getCart, addPrice, removePrice, setLoading } from "../../redux/actions/cart";
 import "./CartProduct.css";
 import Swal from "sweetalert2";
 
-export default function CartProduct({ content, setLoading, loading, addPrice, removePrice }) {
+export default function CartProduct({ content }) {
   const maxCant = content.stock ? content.stock : content.stocks[0].quantity
   const dispatch = useDispatch();
-  const [iniCant, setIniCant] = useState(1);
+  const [initCant, setInitCant] = useState(1);
   const [cant, setCant] = useState(1);
   const [localPrice, setLocalPrice] = useState(content.price);
+  const loading = useSelector(state => state.cartReducer.loading)
+  const cart = useSelector(state => state.cartReducer.cart);
+  const user = useSelector(state => state.userReducer.user);
   
-  const cart = useSelector((state) => state.cartReducer.cart);
-  const order = useSelector((state) => state.orderReducer.orders);
-  const user = useSelector((state) => state.userReducer.user);
-
+  //setea las cantidades iniciales
   useEffect(() => {
-    if(user.id )
+    if(cart.order)
     {
       setCant(content.Order_Product.quantity)
-      setIniCant(content.Order_Product.quantity)
+      setInitCant(content.Order_Product.quantity)
     }
-    else 
+    else
+    {
       setCant(content.cant)
-  } , [])
+      setInitCant(content.cant)
+    }
+      
+  }, [cart]);
 
+  //manejo de cambio de cantidades
   useEffect(() => {
+    //setea el precio local con el precio * cantidad
     setLocalPrice(content.price * cant);
 
-    if(user.id)
+    //verifica si el usuario esta logueado validando si se trae o no una orden en el carrito
+    if(cart.order)
     {
-      if(iniCant != cant)
+      //detecta si hubo un cambio en las cantidades
+      if(initCant != cant)
       {
-        setLoading(true)
-        const products = order[0].products.map(e => {
+        //se setea loading a true para evitar prosibles conflictos durante el proceso
+        dispatch(setLoading(true))
+        const products = cart.cartProducts.map(e => {
           return {
             productId: e.id,
             unitprice: Number(e.price),
@@ -43,25 +52,26 @@ export default function CartProduct({ content, setLoading, loading, addPrice, re
         })
         
         dispatch(updateOrder(
-          order[0].id,
-          {...order[0], products: products}
+          cart.order.id,
+          {...cart.order, products: products}
         ))
         .then(() => {
-          setLoading(false)
+          return dispatch(getCart(user.id))//se actualiza el carrito
         })
+        .then(() => dispatch(setLoading(false)))//se habilitan los botones
       }
     }
     else
     {
-      let arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
+      //actualiza el local storage con las nuevas cantidades
+      let arr = cart.cartProducts.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
       localStorage.setItem("cart", JSON.stringify(arr));
       dispatch(getCart())
     }
   }, [cant]);
 
-  useEffect(() => addPrice({ id: content.id, value: localPrice }), [localPrice]);
-  
-  console.log(cant)
+  //envia un nuevo objeto precio con el valor actualizado
+  useEffect(() => dispatch(addPrice({ id: content.id, value: localPrice })), [localPrice]);
   
   const removeAlert = () => {
     Swal.fire({
@@ -74,28 +84,38 @@ export default function CartProduct({ content, setLoading, loading, addPrice, re
       confirmButtonText: "Si, Borrar!",
       cancelButtonText: "Cancelar",
       allowOutsideClick: false
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
-        removePrice(content.id)
+        
+
         if(user.id)
         {
-          const orderProducts = order[0].products.filter(e => e.id != content.id)
-
-          dispatch(updateOrder(order[0].id,
-            {...order[0], products: orderProducts.map(e => {
-                return {
-                  productId: e.id,
-                  unitprice: Number(e.price),
-                  quantity: Number(e.cant)
-                }
-              })
+          //filtra el producto a borrar
+          var orderProducts = cart.cartProducts.filter(e => e.id != content.id)
+          orderProducts = orderProducts.map(e => {
+            return {
+              productId: e.id,
+              unitprice: Number(e.price),
+              quantity: Number(e.Order_Product.quantity)
+            }
+          })
+          //mapea a un formato valido y envia el dispatch
+          dispatch(updateOrder(cart.order.id,
+            {
+              ...cart.order, 
+              products: orderProducts
             }
           ))
-          .then(() => dispatch(getAllOrder(user.id, "cart")))
+          .then(() => {
+            dispatch(removePrice(content.id))
+            dispatch(getCart(user.id))
+          })
         }
         else
         {
-          let arr = cart.filter((e) => e.id != content.id);
+          dispatch(removePrice(content.id))
+          //filtra el producto a borrar y setea el local storage
+          let arr = cart.cartProducts.filter((e) => e.id != content.id);
           localStorage.setItem("cart", JSON.stringify(arr))
           dispatch(getCart())
         }
@@ -103,12 +123,14 @@ export default function CartProduct({ content, setLoading, loading, addPrice, re
     });
   };
   
+  //maneja elc ambio de cantidades
   const handleCant = (e) => {
     if(e.target.value > maxCant) setCant(maxCant)
     else if(e.target.value < 1) setCant(1)
     else setCant(parseInt(e.target.value))
   }
 
+  //botones de suma y resta de cantidad
   const handleSum = () => {
     setCant(cant >= maxCant ? cant : cant + 1);
   };
@@ -116,7 +138,8 @@ export default function CartProduct({ content, setLoading, loading, addPrice, re
   const handleRes = () => {
     setCant(cant <= 1 ? cant : cant - 1);
   };
-
+  console.log("carrito")
+  console.log(cart)
   return (
     <div class="container-fluid pb-5 mt-n2 mt-md-n3">
       <div class="row">

@@ -15,19 +15,15 @@ export default function CartForm(){
     const user = useSelector(state => state.userReducer.user)
     const cart = useSelector(state => state.cartReducer.cart)
 
-    useEffect(() => {
-        history.push("/signin")
-    }, [])
+    useEffect(() => user.id || history.push("/signin"), [])
 
-    useEffect(() => {
-        dispatch(getCart())
-    }, [address])
+    useEffect(() => dispatch(getCart(user.id)), [address])
 
     return (
         <div>
             <div>
                 <CartReceipt/>
-                {address && <CreateCheckoutButton products={cart} direction={address}/>}
+                {address && <CreateCheckoutButton products={cart.cartProducts} direction={address}/>}
                 {!address && <AddressFrom setAddress={setAddress}/>}
                 <div className="container ">
                 </div>

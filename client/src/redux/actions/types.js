@@ -1,5 +1,8 @@
 //Cart
 export const GET_CART = "get_cart"
+export const ADD_PRICE = "add_price"
+export const REMOVE_PRICE = "remove_price"
+export const SET_LOADING = "set_loading"
 
 //Login
 export const LOG_IN_USER = "log_in_user"

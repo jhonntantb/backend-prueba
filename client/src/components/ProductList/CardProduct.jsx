@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { updateOrder, createOrder, getAllOrder } from "../../redux/actions/order/index"
+import { updateOrder, createOrder } from "../../redux/actions/order/index"
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
@@ -14,21 +14,16 @@ function CardProduct(props) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer.user);
-  const order = useSelector((state) => state.orderReducer.orders);
   const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
   const [Fav, addFav] = useState(false);
   const [add, setAdd] = useState(false);
 
   useEffect(() => {
-    if(cart)
-      if(!user.id)
-        setAdd(cart.find((prod) => props.id == prod.id) ? true : false)
+    if(cart.order)
+      setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
+    else
+        setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
   }, [cart])
-
-  useEffect(() => {
-    if(user.id)
-      if(order.length > 0) setAdd(order[0].products.find((prod) => props.id == prod.id) ? true : false)
-  }, [order])
 
   const sweetAlert = () => {
     Swal.fire({
@@ -52,9 +47,7 @@ function CardProduct(props) {
   }, [wishlist]);
 
   const handleAddCart = () => {
-    
-
-    if(user.id)
+    if(cart.order)
     {
       const prod = {
         productId: props.id,
@@ -62,30 +55,30 @@ function CardProduct(props) {
         quantity: 1
       }
 
-      if(order.length > 0)
+      if(cart.cartProducts.length > 0)
       {
-        if(order[0].products.find(e => e.id == prod.productId))
-          alert("El producto ya esta agregado al carrito");
+        if(cart.cartProducts.find(e => e.id == prod.productId))
+        alert("El producto ya esta agregado al carrito");
         else
         { 
           console.log("entro al update")
-          const orderProducts = order[0].products.map(e => {
+          const orderProducts = cart.cartProducts.map(e => {
             return {
               productId: e.id,
               unitprice: Number(e.price),
               quantity: Number(e.Order_Product.quantity)
             }
           })
-          dispatch(updateOrder(order[0].id,
-            {...order[0], products: orderProducts.concat(prod)}
+          dispatch(updateOrder(cart.order.id,
+            {...cart.order, products: orderProducts.concat(prod)}
           ))
-          .then(() => dispatch(getAllOrder(user.id, "cart")))
+          .then(() => dispatch(getCart(user.id)))
 
           setAdd(true);
           sweetAlert();
         }
       }
-      else
+      else 
       {
         dispatch(createOrder({
           status: "cart",
@@ -99,7 +92,7 @@ function CardProduct(props) {
           userId: user.id,
           products: [prod]
         }))
-        .then(() => dispatch(getAllOrder(user.id, "cart")))
+        .then(() => dispatch(getCart(user.id)))
 
         setAdd(true);
         sweetAlert();
@@ -108,13 +101,13 @@ function CardProduct(props) {
     else
     {
       let obj = {...props, cant: 1}
-      if(cart) 
+      if(cart.cartProducts.length > 0) 
       {
-        if(cart.find(e => e.id == props.id))
+        if(cart.cartProducts.find(e => e.id == props.id))
           alert("El producto ya esta agregado al carrito");
         else 
         {
-          localStorage.setItem("cart", JSON.stringify([...cart, obj]));
+          localStorage.setItem("cart", JSON.stringify([...cart.cartProducts, obj]));
           setAdd(true);
           sweetAlert();
           dispatch(getCart())
@@ -161,9 +154,7 @@ function CardProduct(props) {
       }
     }
   }
-
-  console.log("order")
-  console.log(order)
+  
   return (
     <div class="card">
       <div class="text-center p-4">

@@ -6,11 +6,12 @@ import { getCart } from "../../redux/actions/cart/index"
 export default function CartReceipt() {
     const [total, setTotal] = useState(0)
     const cart = useSelector(state => state.cartReducer.cart)
+    const user = useSelector(state => state.userReducer.user)
     const dispatch = useDispatch()
 
-    useEffect(() => dispatch(getCart()), [])
+    useEffect(() => dispatch(getCart(user.id)), [])
     useEffect(() => {
-        setTotal(cart.reduce((acum, e) => acum + (e.price * e.cant), 0))
+        setTotal(cart.cartProducts.reduce((acum, e) => acum + (e.price * e.Order_Product.quantity), 0))
     }, [cart])
 
     return (
@@ -24,7 +25,7 @@ export default function CartReceipt() {
                     <th>Precio</th>
                 </tr>
                 <tbody>
-                {cart.map((e, i) => {
+                {cart.cartProducts.map((e, i) => {
                     return (
                     <tr>
                         <th className="text-dark">{i + 1}</th>
