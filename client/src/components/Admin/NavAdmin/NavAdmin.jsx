@@ -14,8 +14,8 @@ function NavAdmin() {
 
 
   return admin!=='null'?(
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light my-5">
+      <div class="container-fluid mt-5">
         <span class="navbar-text">Tareas</span>
         <button
           class="navbar-toggler"
@@ -91,6 +91,16 @@ function NavAdmin() {
               >
                 {" "}
                 Administrar Usuarios{" "}
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                activeClassName="text-dark"
+                className="dropdown-item"
+                to="/admin/offices"
+              >
+                {" "}
+                Officina{" "}
               </NavLink>
             </li>
           </ul>
