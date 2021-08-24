@@ -1,159 +1,196 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Label, Input, FormText, FormGroup } from "reactstrap";
-import { useDispatch,useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { getUser, updateUser } from '../../redux/actions/user'
-import AccountPage from '../Authentication/Account';
 import PasswordChangePage from '../Authentication/PasswordChange';
+import './index.css'
 
 function Index() {
     const dispatch = useDispatch()
-    const userId=localStorage.getItem("pg_merceria")
+    const userId = localStorage.getItem("pg_merceria")
     const user = useSelector(state => state.userReducer.user)
     useEffect(() => {
         dispatch(getUser(userId))
     }, [])
     //---------------------Render info----------------------------
-    const [myData,setMyData]=useState(true)
-    const [security,setSecurity]=useState(false)
+    const [myData, setMyData] = useState(true)
+    const [security, setSecurity] = useState(false)
 
     //--------------------Data User----------------------------
-    const [disabledDirection,setDisabledDirection]=useState(true)
-    const [disabledUser,setDisabledUser]=useState(true)//
-    const [username,setUserName]=useState("")
-    const [email,setEmail]=useState("")
-    const [firstName,setFirstName]=useState("")
-    const [lastname,setLastname]=useState("")
-    const [phone,setPhone]=useState("")
-    const [location,setLocation]=useState("")
-    const [province,setProvince]=useState("")
-    const [address,setAddress]=useState("")
+    const [disabledDirection, setDisabledDirection] = useState(true)
+    const [disabledUser, setDisabledUser] = useState(true)//
+    const [username, setUserName] = useState("")
+    const [email, setEmail] = useState("")
+    const [firstName, setFirstName] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [phone, setPhone] = useState("")
+    const [location, setLocation] = useState("")
+    const [province, setProvince] = useState("")
+    const [address, setAddress] = useState("")
 
-   useEffect(() => {
-       if(typeof user==="object"){
-           setUserName(user.user_name)
-           setEmail(user.email)
-           setFirstName(user.first_name)
-           setLastname(user.last_name)
-           setPhone(user.phone_number)
-           setLocation(user.location)
-           setProvince(user.province)
-           setAddress(user.address)
-       }
-   }, [user])
-    
-    const handleChange=(e)=>{
-        e.target.id=="username"&&setUserName(e.target.value)
-        e.target.id=="email"&&setEmail(e.target.value)
-        e.target.id=="first_name"&&setFirstName(e.target.value)
-        e.target.id=="last_name"&&setLastname(e.target.value)
-        e.target.id=="phone"&&setPhone(e.target.value)
-        e.target.id=="province"&&setProvince(e.target.value)
-        e.target.id=="location"&&setLocation(e.target.value)
-        e.target.id=="address"&&setAddress(e.target.value)
-        
+    useEffect(() => {
+        if (typeof user === "object") {
+            setUserName(user.user_name)
+            setEmail(user.email)
+            setFirstName(user.first_name)
+            setLastname(user.last_name)
+            setPhone(user.phone_number)
+            setLocation(user.location)
+            setProvince(user.province)
+            setAddress(user.address)
+        }
+    }, [user])
+
+    const handleChange = (e) => {
+        e.target.id == "username" && setUserName(e.target.value)
+        e.target.id == "email" && setEmail(e.target.value)
+        e.target.id == "first_name" && setFirstName(e.target.value)
+        e.target.id == "last_name" && setLastname(e.target.value)
+        e.target.id == "phone" && setPhone(e.target.value)
+        e.target.id == "province" && setProvince(e.target.value)
+        e.target.id == "location" && setLocation(e.target.value)
+        e.target.id == "address" && setAddress(e.target.value)
+
     }
-    const showSecurity=(e)=>{
+    const showSecurity = (e) => {
         e.preventDefault()
         setSecurity(true)
         setMyData(false)
         setDisabledDirection(true)
         setDisabledUser(true)
     }
-    const ShowMyData=(e)=>{
+    const ShowMyData = (e) => {
         e.preventDefault()
         setMyData(true)
         setSecurity(false)
     }
-    const modifyUserData=(e)=>{
+    const modifyUserData = (e) => {
         e.preventDefault();
         setDisabledUser(false)
     }
-    const modifyUserDirection=(e)=>{
+    const modifyUserDirection = (e) => {
         e.preventDefault()
         setDisabledDirection(false)
     }
 
-    const changes={
+    const changes = {
         username: username,
         first_name: firstName,
-        last_name:lastname,
-        email:email,
-        phone_number:phone,
-        province:province,
-        location:location,
-        address:address
+        last_name: lastname,
+        email: email,
+        phone_number: phone,
+        province: province,
+        location: location,
+        address: address
     }
-    console.log("estos son los cambios",changes)
-    const handleUserUpdate=(e)=>{
+    //console.log("estos son los cambios", changes)
+    const handleUserUpdate = (e) => {
         e.preventDefault();
-        dispatch(updateUser([{id:userId,changes:changes}]))
+        dispatch(updateUser([{ id: userId, changes: changes }]))
         setDisabledUser(true)
         setDisabledDirection(true)
     }
 
     return (
-        <div>
-            <button onClick={e=>ShowMyData(e)}>Mis Datos</button>
-            <button onClick={e=>showSecurity(e)} >Seguridad</button>
+        <main className="page-main">
             <div>
-                {myData===true&&user?
-                <div>  
-                 <div>
-                    <h4>Datos Personales</h4>
-                    
-                    <form>
-                        <div class="mb-3">
-                            <label htmlFor="username" class="form-label">Username</label>
-                            <input type="text" disabled={disabledUser} value={username} class="form-control" id="username" onChange={e=>handleChange(e)} />
+                <div>
+                    <div className="page-title-wraper">
+                        <div className="container">
+                            <h1 className="page-title">
+                                {myData ?
+                                    <span className="base" data-ui-id="page-title-wrapper"> Editar informacion personal</span>
+                                    : <span className="base" data-ui-id="page-title-wrapper">Seguridad</span>
+                                }
+                            </h1>
                         </div>
-                        <div class="mb-3">
-                            <label htmlFo="email" class="form-label">E-mail</label>
-                            <input type="email" value={email} disabled={true} class="form-control" id="email" aria-describedby="emailHelp"/>
-                            <div id="emailHelp" class="form-text">No puedes modificar tu email para mayor informacion contactanos</div>
-                    
+                    </div>
+                    <div className="colums container">
+                        <div className="row">
+                            <div className="col-sm-3 grid-left px-1">
+                                <div className="sidebar sidebar-main">
+                                    <div className="block account-nav">
+                                        <div className="content account-nav-content">
+                                            <ul>
+                                                <li > <button type="submit" className="items my-2" onClick={e => ShowMyData(e)}>Mis Datos</button></li>
+                                                <li > <button type="submit" className="items my-2" onClick={e => showSecurity(e)} >Seguridad</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-sm-9 grid-main px-5">
+                                {myData === true && user ?
+                                    <div className="column main">
+                                        <form>
+                                            <fieldset className="fieldset info">
+                                                <legend className="legend">
+                                                    <span>Informacion personal</span>
+                                                </legend>
+                                                <br />
+                                                <div className="field field-username required">
+                                                    <label htmlFor="username" className="label">
+                                                        <span>Usuario</span>
+                                                    </label>
+                                                    <div className="control">
+                                                        <input type="text" disabled={disabledUser} value={username} className="input-text required-entry" aria-required="true" id="username" onChange={e => handleChange(e)} />
+                                                    </div>
+                                                </div>
+                                                <div className="field field-email required">
+                                                    <label htmlFor="email" className="label">
+                                                        <span> E-mail</span>
+                                                    </label>
+                                                    <div className="control">
+                                                        <input type="email" value={email} disabled={true} className="input-text required-entry" aria-required="true" id="email" aria-describedby="emailHelp" />
+                                                        <label id="emailHelp" className="form-text">No puedes modificar tu email,para mayor informacion contactanos</label>
+                                                    </div>
+                                                </div>
+                                                <div className="field field-name-firstname required">
+                                                    <label htmlFo="firstname" className="label">
+                                                        <span>Nombre</span>
+                                                    </label>
+                                                    <div className="control">
+                                                        <input id="firstname" type="text" disabled={disabledUser} value={firstName} aria-required="true" class="input-text required-entry" onChange={e => handleChange(e)} />
+                                                    </div>
+                                                </div>
+                                                <div className="field field-name-lastname required">
+                                                    <label htmlFor="lastname" className="label">
+                                                        <span>Apellido</span>
+                                                    </label>
+                                                    <div className="control">
+                                                        <input type="text" disabled={disabledUser} value={lastname} aria-required="true" class="input-text required-entry" id="lastname" onChange={e => handleChange(e)} />
+                                                    </div>
+                                                </div>
+                                                <div className="field field-phonenumber required">
+                                                    <label htmlFor="phone" className="label">
+                                                        <span>N° Telefonico de Contacto</span>
+                                                    </label>
+                                                    <input type="text" disabled={disabledUser} value={phone} aria-required="true" class="input-text required-entry" id="phone" onChange={e => handleChange(e)} />
+                                                </div>
+                                            </fieldset>
+
+                                            <div className="actions-toolbar">
+                                                <div className="primary">
+                                                    <button type="submit" className="action save primary" onClick={e => modifyUserData(e)}>
+                                                        <span>Modificar Datos </span>
+                                                    </button>
+                                                </div>
+                                                <div className="secondary">
+                                                    <button type="submit" className="action primary" onClick={e => handleUserUpdate(e)} >
+                                                        <span>Guardar Cambios</span>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                    : <PasswordChangePage />}
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label htmlFo="first_name" class="form-label">Nombre</label>
-                            <input type="text" disabled={disabledUser} value={firstName} class="form-control" id="first_name" onChange={e=>handleChange(e)}/>
-                        </div>
-                        <div class="mb-3">
-                            <label htmlFo="last_name" class="form-label">Apellido</label>
-                            <input type="text" disabled={disabledUser} value={lastname} class="form-control" id="last_name" onChange={e=>handleChange(e)}/>
-                        </div>
-                        <div class="mb-3">
-                            <label htmlFor="phone" class="form-label">N° Telefonico de Contacto</label>
-                            <input type="number" disabled={disabledUser} value={phone} class="form-control" id="phone" onChange={e=>handleChange(e)}/>
-                        </div>
-                        <button type="submit" class="btn btn-primary" onClick={e=>modifyUserData(e)}>Modificar Datos Personales</button>
-                    </form>
-                    <br />
-                    <br />
-                    <h4>Direcciones</h4>
-                    <form>
-                        <div class="mb-3">
-                            <label htmlFor="province" class="form-label">Provincia</label>
-                            <input type="text" disabled={disabledDirection} value={province} class="form-control" id="province" onChange={e=>handleChange(e)}/>
-                    
-                        </div>
-                        <div class="mb-3">
-                            <label htmlFor="location" class="form-label">Locación</label>
-                            <input type="text" disabled={disabledDirection} value={location} class="form-control" id="location" onChange={e=>handleChange(e)}/>
-                        </div>
-                        <div class="mb-3">
-                            <label htmlFo="address" class="form-label">Dirección</label>
-                            <input type="text" disabled={disabledDirection} value={address} class="form-control" id="address" onChange={e=>handleChange(e)}/>
-                        </div>
-                        <button type="submit" class="btn btn-primary" onClick={e=>modifyUserDirection(e)}>Modificar Datos de Dirección</button>
-                    </form> 
+                    </div>
                 </div>
-                <br />
-                <br />
-                <button onClick={e=>handleUserUpdate(e)} >Guardar Cambios</button>
-                </div>
-                :<PasswordChangePage/>}
+
             </div>
-            
-        </div>
+        </main>
     )
 }
 

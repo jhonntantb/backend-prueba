@@ -142,7 +142,7 @@ function ProductList() {
   // console.log(lista_filtrada)
 
   return list.length > 0 ? (
-    <div className="container-fluid">
+    <div className="container-fluid main">
       <div className="row">
         <div id="tableleft" className="col-md-3 mt-5">
           <div className="justify-content-start mx-5">

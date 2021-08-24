@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import * as ROUTES from './routes';
-import { PASSWORD_CHANGE } from './constants/routes';
+
 //views
 import Home from './views/Home/Home';
 import ShopCart from './views/ShopCart/ShopCart';
@@ -16,7 +16,6 @@ import SignUpPage from './components/Authentication/SignUp/index';
 import SignInPage from './components/Authentication/SignIn';
 import Account from './components/Authentication/Account';
 import PasswordForgetPage from './components/Authentication/PasswordForget';
-import PasswordChangePage from './components/Authentication/PasswordChange';
 import ProductList from './components/ProductList/ProductList';
 import Navbar from './components/Nav/Navbar';
 import Form from './components/Admin/FormDetail/FormCategory';
@@ -35,6 +34,8 @@ import Wishlist from './views/Wishlist/Whislist';
 import UserOrdenDetail from './components/UserShop/UserOrdenDetail';
 import AccountConfirmation from './components/Authentication/Account/accountConfirmation';
 import Index from './components/UserProfile';
+import Office from './components/Admin/Office/Office';
+import Turnero from './components/Turnero/Turnero';
 import SearchAutoComplete from './components/Nav/SearchAutoComplete';
 
 
@@ -46,12 +47,12 @@ function App() {
       <Route exact path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route path={ROUTES.PASSWORD_CHANGE} component={PasswordChangePage} />
+  
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
       <Route path={ROUTES.PRODUCT} component={Product} />
-      <Route exact path={ROUTES.CART} component={ShopCart} />
+      <Route path={ROUTES.CART} exact component={ShopCart} />
       <Route path={ROUTES.CART_ORDER} component={CartForm} />
       <Route path='/productupdate/:id' component={ProductUpdate} />
       <Route path={ROUTES.CONTACT_US} component={ContactUs} />
@@ -72,6 +73,8 @@ function App() {
       <Route path='/AccountConfirmation' component={AccountConfirmation} />
       <Route path={ROUTES.USER_DATA} component={Index} />
       <Route exact path="/search_ac" component={SearchAutoComplete}/>
+      <Route path={ROUTES.ADMIN_OFFICES} exact component={Office}/>
+      <Route path="/user/turnero" exact component={Turnero}/>
       
     </React.Fragment>
   )

@@ -52,10 +52,11 @@ router.put("/",async (req,res,next)=>{
     }
 })
 
-router.delete("/",async (req,res,next)=>{
+router.delete("/:id",async (req,res,next)=>{
+    console.log(req.params.id)
     try {
-        const office=await Office.destroy({where:{id:req.body.id}})
-        res.send(office)
+        const office=await Office.destroy({where:{id:req.params.id}})
+        res.sendStatus(200)
     } catch (error) {
         next(error)
     }
