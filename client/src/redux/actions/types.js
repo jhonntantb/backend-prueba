@@ -15,6 +15,8 @@ export const UPDATE_PRODUCT = "update_product"
 export const DELETE_PRODUCT = "get_product"
 export const PRODUCT_CATEGORY="product_by_category"
 export const RESET_PRODUCT = "reset_product"
+export const GET_SOME_PRODUCT = "get_some_product"
+export const RESET_PRODUCTS = "reset_products"
 
 
 //User
