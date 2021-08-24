@@ -93,6 +93,16 @@ function NavAdmin() {
                 Administrar Usuarios{" "}
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                activeClassName="text-dark"
+                className="dropdown-item"
+                to="/admin/offices"
+              >
+                {" "}
+                Officina{" "}
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
