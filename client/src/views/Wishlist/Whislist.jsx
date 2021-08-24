@@ -4,6 +4,7 @@ import CardProduct from "../../components/ProductList/CardProduct";
 import { getWishlist } from "../../redux/actions/wishlist";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router";
+import Scroll from "../../components/Scroll/Scroll";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
