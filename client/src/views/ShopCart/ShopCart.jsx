@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../redux/actions/cart/index";
 import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts";
-import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
+
 
 export default function ShopCart() {
-  CheckUser();
+  
   const dispatch = useDispatch()
   const [total, setTotal] = useState(0)
   const cart = useSelector(state => state.cartReducer.cart)
