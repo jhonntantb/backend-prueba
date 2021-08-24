@@ -60,7 +60,8 @@ const Navbar = () => {
        
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
           <ul className="navbar-nav ml-10  ">
-            <li className="nav-item mx-3">
+            
+   {/*          <li className="nav-item mx-3">
               <NavLink
                 activeClassName="text-white"
                 className="nav-link"
@@ -68,7 +69,8 @@ const Navbar = () => {
               >
                 Búsqueda AC
               </NavLink>
-            </li>
+            </li> */}
+
          {/* { <li className="nav-item mx-3">
               <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
                 Acerca de 

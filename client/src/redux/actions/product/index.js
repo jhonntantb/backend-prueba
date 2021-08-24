@@ -58,3 +58,9 @@ export const resetProduct = () => {
     }
   };
 
+  export const resetProducts = () => {
+    return {
+    type: TYPES.RESET_PRODUCTS
+    }
+  };  
+
