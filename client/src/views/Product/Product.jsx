@@ -8,6 +8,7 @@ import Carrousel from "../../components/Carrousel/Carrousel";
 import { NavLink } from "react-router-dom";
 import { getCart } from "../../redux/actions/cart/index";
 import "./Product.css";
+import Scroll from "../../components/Scroll/Scroll";
 
 export default function Product({ match }) {
   const admin = localStorage.getItem("admin");
@@ -100,6 +101,7 @@ export default function Product({ match }) {
             </div>
             <CreateReview match={match.params.id} />
             <ShowReviews reviews={product.reviews} />
+            <Scroll />
           </div>
         </div>
       </div>
