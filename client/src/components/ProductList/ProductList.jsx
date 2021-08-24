@@ -29,8 +29,11 @@ function ProductList() {
   useEffect(() => {
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
-    dispatch(getWishlist(id));
-    user.id ? dispatch(getCart(user.id)) : dispatch(getCart());
+    dispatch(getWishlist(id))
+    if(user.id)
+      dispatch(getAllOrder(user.id, "cart"))
+    else
+      dispatch(getCart())
   }, []);
 
   var lista_filtrada = [];

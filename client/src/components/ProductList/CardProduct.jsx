@@ -166,7 +166,6 @@ function CardProduct(props) {
     }
   };
   
-  
   return (
     <div className="card mt-5">
       <div className="about text-center">
