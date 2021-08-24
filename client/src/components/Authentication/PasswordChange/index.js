@@ -4,13 +4,15 @@ import { withFirebase } from '../../FireBase';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../routes'
 import NotFound from '../../../views/NotFound/NotFound';
+import "./index.css"
+import { deleteReview } from './../../../redux/actions/review/index';
 
-const  PasswordChangePage = () => {
+const PasswordChangePage = () => {
 
-  const authUser= localStorage.getItem("pg_merceria");
+  const authUser = localStorage.getItem("pg_merceria");
 
-   return (<div>
-    <PasswordChangeForm/>
+  return (<div>
+    <PasswordChangeForm />
   </div>)
 }
 
@@ -29,7 +31,7 @@ function PasswordChangeFormBase(props) {
 
 
   const onSubmit = event => {
-    
+
     const { passwordOne } = state;
 
     props.firebase
@@ -44,63 +46,97 @@ function PasswordChangeFormBase(props) {
         setState({ error });
       });
 
-      event.preventDefault()
-    
+    event.preventDefault()
+
   };
 
   const onChange = event => {
-    setState({ ...state,
-      [event.target.name]: event.target.value });
+    setState({
+      ...state,
+      [event.target.name]: event.target.value
+    });
   };
 
 
   const { passwordOne, passwordTwo, error } = state;
 
-  
-    
 
-    useEffect(()=>{
-      if(passwordOne !== passwordTwo || passwordOne === '') {
-        setIsInvalid(true)
-      }else {
-        setIsInvalid(false)
-      }
-    },[state])
+
+
+  useEffect(() => {
+    if (passwordOne !== passwordTwo || passwordOne === '') {
+      setIsInvalid(true)
+    } else {
+      setIsInvalid(false)
+    }
+  }, [state])
 
   return (
-    <div className="col-sm-9 grid-main">
-    <div className="column main">
-        <form onSubmit={onSubmit}>
-            <fieldset className="fieldset info">
+    <form className="mb-3" onSubmit={onSubmit}>
+      <fieldset className="fieldset password" style={{ display: "block" }}>
+        <legend className="legend">
+          <span className="change-email-password">Cambio de contraseña</span>
+        </legend>
+        <br />
+        <div className="field password current required" style={{ display: "block" }}>
+          <label className="label" htmlFor="current-password">
+            <span>Contraseña actual</span>
+          </label>
+          <div className="control">
             <input
-                name="passwordOne"
-                value={passwordOne}
-                onChange={onChange}
-                type="password"
-                placeholder="New Password"
-                className="form-control"
-              />
-              <input
-                name="passwordTwo"
-                value={passwordTwo}
-                onChange={onChange}
-                type="password"
-                placeholder="Confirm New Password"
-                className="form-control mt-3"
-              />
-              {isInvalid&&state.passwordOne!==''? <div>las contraseñas deben coincidir</div>:null}
-              
-              <div className="d-grip gap-2 mb-3 text-center">
-                <button disabled={isInvalid} className="btn btn-dark btn-lg mt-4 border-0 rounded-0" type="submit">
-                  Reset My Password
-                </button>
-              </div>
-
-              {error && <p>{error.message}</p>}
-            </fieldset>
-        </form>
-    </div>
-</div>
+              id="current-password"
+              name="currentPassword"
+              value={passwordOne}
+              onChange={onChange}
+              type="password"
+              placeholder="Contraseña Actual"
+              className="form-control"
+            />
+          </div>
+        </div>
+        <div className="field new password required" style={{ display: "block" }}>
+          <label className="label" htmlFor="password">
+            <span>Nueva contraseña</span>
+          </label>
+          <div className="control">
+            <input
+              id="password"
+              name="passwordOne"
+              value={passwordOne}
+              onChange={onChange}
+              type="password"
+              placeholder="Nueva Contraseña"
+              className="form-control"
+            />
+          </div>
+        </div>
+        <div className="field confirm password required" style={{ display: "block" }}>
+          <label className="label" htmlFor="password-confirmation">
+            <span>Confirmar contraseña</span>
+          </label>
+          <div className="control">
+            <input
+              id="password-confirmation"
+              name="passwordTwo"
+              value={passwordTwo}
+              onChange={onChange}
+              type="password"
+              placeholder="Confirmar nueva contraseña"
+              className="form-control mt-3"
+            />
+          </div>
+        </div>
+        {isInvalid && state.passwordOne !== '' ? <div>las contraseñas deben coincidir</div> : null}
+        <div className="actions-toolbar">
+          <div className="primary">
+          <button disabled={isInvalid} className="action save primary" type="submit">
+             <span>Cambiar mi contraseña </span> 
+          </button>
+          </div>
+        </div>
+        {error && <p>{error.message}</p>}
+      </fieldset>
+    </form>
   );
 }
 

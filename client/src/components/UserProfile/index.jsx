@@ -82,7 +82,7 @@ function Index() {
         location: location,
         address: address
     }
-    console.log("estos son los cambios", changes)
+    //console.log("estos son los cambios", changes)
     const handleUserUpdate = (e) => {
         e.preventDefault();
         dispatch(updateUser([{ id: userId, changes: changes }]))
@@ -93,33 +93,32 @@ function Index() {
     return (
         <main className="page-main">
             <div>
-                
-                    <div>
-                        <div className="page-title-wraper">
-                            <div className="container">
-                                <h1 className="page-title">
-                                    {myData ? 
+                <div>
+                    <div className="page-title-wraper">
+                        <div className="container">
+                            <h1 className="page-title">
+                                {myData ?
                                     <span className="base" data-ui-id="page-title-wrapper"> Editar informacion personal</span>
-                                    : <span className="base" data-ui-id="page-title-wrapper"> Cambiar contraseña</span>
-                                     }
-                                </h1>
-                            </div>
+                                    : <span className="base" data-ui-id="page-title-wrapper">Seguridad</span>
+                                }
+                            </h1>
                         </div>
-                        <div className="colums container">
-                            <div className="row">
-                                <div className="col-sm-3 grid-left">
-                                    <div className="sidebar sidebar-main">
-                                        <div className="block account-nav">
-                                            <div className="content account-nav-content">
-                                                <ul className="nav items">
-                                                    <li className="nav items"> <button onClick={e => ShowMyData(e)}>Mis Datos</button></li>
-                                                    <li > <button onClick={e => showSecurity(e)} >Seguridad</button></li>
-                                                </ul>
-                                            </div>
+                    </div>
+                    <div className="colums container">
+                        <div className="row">
+                            <div className="col-sm-3 grid-left px-1">
+                                <div className="sidebar sidebar-main">
+                                    <div className="block account-nav">
+                                        <div className="content account-nav-content">
+                                            <ul>
+                                                <li > <button type="submit" className="items my-2" onClick={e => ShowMyData(e)}>Mis Datos</button></li>
+                                                <li > <button type="submit" className="items my-2" onClick={e => showSecurity(e)} >Seguridad</button></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-sm-9 grid-main">
+                            </div>
+                            <div className="col-sm-9 grid-main px-5">
                                 {myData === true && user ?
                                     <div className="column main">
                                         <form>
@@ -184,12 +183,12 @@ function Index() {
                                             </div>
                                         </form>
                                     </div>
-                                     : <PasswordChangePage />}
-                                </div>
+                                    : <PasswordChangePage />}
                             </div>
                         </div>
                     </div>
-                   
+                </div>
+
             </div>
         </main>
     )

@@ -82,7 +82,7 @@ const Navbar = () => {
                   className="nav-link"
                   to="/wishlist"
                 >
-                  Wishlist
+                  Favoritos
                 </NavLink>
               </li>
             ) : null}
