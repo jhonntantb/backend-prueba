@@ -9,8 +9,8 @@ const initialState = {
 const productReducer = (state = initialState, action) => {
     switch (action.type) { 
         case TYPES.GET_ALL_PRODUCT: 
-        //console.log('estoy en reducer');
-        //console.log(action.payload);
+        console.log('estoy en reducer de get Allproduct y mi acion payload es: ',action.payload);
+        
         return{
             ...state,
             products:action.payload   
@@ -23,6 +23,12 @@ const productReducer = (state = initialState, action) => {
             ...state,
             product: []
         }
+
+        case TYPES.RESET_PRODUCTS: return{
+            ...state,
+            products: []
+        }
+
         case TYPES.GET_SOME_PRODUCT: 
          const ids = action.payload.map(e => e.id);
          //console.log('action ids: ', ids)
