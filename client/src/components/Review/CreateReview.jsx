@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import React from "react";
 import { createReview } from "../../redux/actions/review/index";
 import ReviewSeparator from "./ReviewSeparator";
@@ -10,12 +10,7 @@ export default function CreateReview({ match }) {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.userReducer.user.id);
 
-  // const [values, setValues] = React.useState({
-  //   description: "",
-  //   score: 1,
-  //   userId: id, //ACA TENGO QUE ACCEDER AL SESSION STORAGE PARA OBTENER EL USERID
-  //   productId: match,
-  // });
+ 
   const [send, setsend] = useState("False");
   function handleSubmit(e) {
     const mostrarAlerta = () => {
@@ -25,7 +20,7 @@ export default function CreateReview({ match }) {
         text: "El campo no puede quedar vacio!",
       });
     };
-    // e.preventDefault();
+  
     if (values.description.length < 1) mostrarAlerta();
     else if (parseInt(values.score) < 1 || parseInt(values.score) > 5)
       alert("El Valor de score esta fuera del permitido");
@@ -121,19 +116,6 @@ export default function CreateReview({ match }) {
                 );
               })}
             </div>
-            {/* <select
-              id="score"
-              style={{ marginLeft: "5px" }}
-              onChange={(e) => {
-                setValues({ ...values, score: e.target.value });
-              }}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select> */}
           </div>
         </div>
         <input
@@ -144,7 +126,6 @@ export default function CreateReview({ match }) {
         />
       </form>
       {send == "true" && alertSucces()}
-
       <ReviewSeparator />
     </div>
   );

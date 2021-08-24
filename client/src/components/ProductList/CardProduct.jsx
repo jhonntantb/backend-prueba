@@ -140,7 +140,7 @@ function CardProduct(props) {
           to={`/product/${props.id}`}
         >
           <div className="text-center imagen-container">
-            <img className="nail" id="main-image" src={props.url} width="300" />
+            <img  id="main-image" src={props.url}    />
           </div>
           <br />
           <h6>{props.title}</h6>
