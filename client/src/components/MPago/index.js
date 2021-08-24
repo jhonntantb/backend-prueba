@@ -1,14 +1,14 @@
 import { goToCheckout } from '../../redux/actions/checkout/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { createOrder, getAllOrder } from '../../redux/actions/order/index';
+import { updateOrder } from '../../redux/actions/order/index';
 import "./index.css"
 
 function CreateCheckoutButton ({products, direction}) {
   const dispatch = useDispatch()
   const user = useSelector(state => state.userReducer.user)
-  const order = useSelector(state => state.orderReducer.orders)
-  const createdOrder = useSelector(state => state.orderReducer.order)
+  const updatedOrder = useSelector(state => state.orderReducer.order)
+  const order = useSelector(state => state.cartReducer.cart.order)
   const mpData = useSelector(state => state.checkoutReducer.MP_data)
 
   const [loading, setLoading] = useState(true)
@@ -16,29 +16,23 @@ function CreateCheckoutButton ({products, direction}) {
   const productsToMP = products.map(p => {
     return {
       title: p.id,
-      price: p.price,
+      price: p.unitprice,
       discount: 0,
-      quantity: p.cant
+      quantity: p.quantity
     }
   })
 
-  const productsToDB = products.map(p => {
-    return {
-      productId: p.id,
-      unitprice: Number(p.price),
-      quantity: Number(p.cant)
-    }
-  })
 
   useEffect(() => {
-    if(createdOrder.length===0) {
+    
       let totalPrice = 0;
       
       for(let i=0; i< products.length; i++) {
         totalPrice = totalPrice + (products[i].price * products[i].cant)
       }
 
-      dispatch(createOrder({
+      dispatch(updateOrder( order.id , 
+        {
         status: "checkout",
         home_address: direction.home_address,
         location: direction.location,
@@ -47,13 +41,12 @@ function CreateCheckoutButton ({products, direction}) {
         country: user.country,
         postal_code: direction.postal_code,
         phone_number: direction.phone_number,
-        userId: user.id,
-        products: productsToDB
-      }))
-    }
+        })
+      )
+    
   }, [])
 
-  useEffect(() => {createdOrder.id && dispatch(goToCheckout(user.id, productsToMP))}, [createdOrder])
+  useEffect(() => {updatedOrder.id && dispatch(goToCheckout(user.id, productsToMP))}, [updatedOrder])
 
   useEffect(() => {
     if(mpData && loading) {

@@ -7,11 +7,12 @@ export const getCart = (userId) => {
         
         if (userId) {
             let res = await axios.get("http://localhost:3001/order?status=cart&userId=" + userId)
-            cart = res.data ? {order: res.data[0], cartProducts: res.data[0].products} : cart
-            console.log(cart)
+            // console.log("esto es res.data en el reducer " , res.data)
+            cart = res.data.length>0 ? {order: res.data[0], cartProducts: res.data[0].products} : {order: null, cartProducts : null}
+            // console.log(cart)
         }
-        else
-            cart.cartProducts = JSON.parse(localStorage.getItem("cart")) || []
+        // else
+        //     cart.cartProducts = JSON.parse(localStorage.getItem("cart")) || []
         
         return dispatch({ type: TYPES.GET_CART, payload: cart})
     }

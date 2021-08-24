@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { getCart } from "../../redux/actions/cart/index";
 import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
@@ -10,6 +11,7 @@ import "./CardProduct.css";
 import Swal from "sweetalert2";
 
 function CardProduct(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer.user);
@@ -17,12 +19,12 @@ function CardProduct(props) {
   const [Fav, addFav] = useState(false);
   const [add, setAdd] = useState(false);
 
-  useEffect(() => {
-    if(cart.order)
-      setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
-    else
-        setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
-  }, [cart])
+  // useEffect(() => {
+  //   if(cart.order)
+  //     setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
+  //   else
+  //       setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
+  // }, [cart])
 
   const sweetAlert = () => {
     Swal.fire({
@@ -56,80 +58,66 @@ function CardProduct(props) {
   }, [wishlist]);
 
   const handleAddCart = () => {
-    if(cart.order)
-    {
-      const prod = {
-        productId: props.id,
-        unitprice: Number(props.price),
-        quantity: 1
-      }
 
-      if(cart.cartProducts.length > 0)
-      {
-        if(cart.cartProducts.find(e => e.id == prod.productId))
-        alert("El producto ya esta agregado al carrito");
-        else
-        { 
-          console.log("entro al update")
-          const orderProducts = cart.cartProducts.map(e => {
-            return {
-              productId: e.id,
-              unitprice: Number(e.price),
-              quantity: Number(e.Order_Product.quantity)
-            }
-          })
-          dispatch(updateOrder(cart.order.id,
-            {...cart.order, products: orderProducts.concat(prod)}
-          ))
-          .then(() => dispatch(getCart(user.id)))
-
-          setAdd(true);
-          sweetAlert();
+    if (user.id) {
+        
+        const prod = {
+          productId: props.id,
+          unitprice: Number(props.price),
+          quantity: 1
         }
-      }
-      else 
-      {
-        dispatch(createOrder({
-          status: "cart",
-          home_address: "",
-          location: "",
-          total_price: 0,
-          province: "",
-          country: "Argentina",
-          postal_code: "0000",
-          phone_number: "0000000000",
-          userId: user.id,
-          products: [prod]
-        }))
-        .then(() => dispatch(getCart(user.id)))
 
-        setAdd(true);
-        sweetAlert();
-      }
-    }
-    else
-    {
-      let obj = {...props, cant: 1}
-      if(cart.cartProducts.length > 0) 
-      {
-        if(cart.cartProducts.find(e => e.id == props.id))
-          alert("El producto ya esta agregado al carrito");
-        else 
+        if(cart.order!=null)
         {
-          localStorage.setItem("cart", JSON.stringify([...cart.cartProducts, obj]));
+  
+                if(cart.cartProducts.find(e => e.id == prod.productId))
+                  {alert("El producto ya esta agregado al carrito");}
+                else
+                    { 
+                      console.log("entro al update")
+                      const orderProducts = cart.cartProducts.map(e => {
+                        return {
+                          productId: e.id,
+                          unitprice: Number(e.price),
+                          quantity: Number(e.Order_Product.quantity)
+                        }
+                      })
+                      dispatch(updateOrder(cart.order.id,
+                        {...cart.order, products: orderProducts.concat(prod)}
+                      ))
+                      .then(() => dispatch(getCart(user.id)))
+            
+                      setAdd(true);
+                      sweetAlert();
+                    }
+            
+        
+        }
+       else
+        {
+        dispatch(createOrder({
+            status: "cart",
+            home_address: "",
+            location: "",
+            total_price: 0,
+            province: "",
+            country: "Argentina",
+            postal_code: "0000",
+            phone_number: "0000000000",
+            userId: user.id,
+            products: [prod]
+          }))
+          .then(() => dispatch(getCart(user.id)))
+  
           setAdd(true);
           sweetAlert();
-          dispatch(getCart())
         }
-      } 
-      else 
-      {
-        localStorage.setItem("cart", JSON.stringify([obj]));
-        setAdd(true);
-        sweetAlert();
-        dispatch(getCart())
-      }
+        
+    }else {
+      alert("por favor, ingresa para seguir comprando")
+      history.push("/signin")
     }
+
   }
 
   const handleSubmit = (e) => {
@@ -190,7 +178,7 @@ function CardProduct(props) {
           disabled={add}
           onClick={handleAddCart}
         >
-          Añadir al carro
+          Añadir al carrito
         </button>
         {user.id ? (
           <div class="add">

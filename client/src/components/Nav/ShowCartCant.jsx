@@ -14,7 +14,9 @@ export  const ShowCartCant = () => {
           dispatch(getCart())
     }, [user])
     
-    return cart.cartProducts.length
+    if(cart.cartProducts != null) {return cart.cartProducts.length}
+    else {return 0}
+    
 }
 
 
