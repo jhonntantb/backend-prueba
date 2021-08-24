@@ -4,7 +4,7 @@ import CardProduct from "../../components/ProductList/CardProduct";
 import { getWishlist } from "../../redux/actions/wishlist";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router";
-import { FaSlideshare } from "react-icons/fa";
+import Scroll from "../../components/Scroll/Scroll";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
@@ -35,23 +35,28 @@ export default function Wishlist() {
 
   return (
     Ready && (
-      <div id="wishlist">
+      <div className="container">
         <h2 className="text-dark text-center mt-5">Tu wishlist</h2>
-        {wishlist.length > 0 && typeof wishlist.map == "function" ? (
-          wishlist.map((wish) => {
-            return (
-              <CardProduct
-                title={wish.product.title}
-                price={wish.product.price}
-                url={wish.product.productimages[0].image_url}
-                id={wish.product.id}
-                stock={wish.product.stocks[0].quantity}
-              />
-            );
-          })
-        ) : (
-          <h1>{noproducts()}</h1>
-        )}
+        <div className="text-center">
+          {wishlist.length > 0 && typeof wishlist.map == "function" ? (
+            wishlist.map((wish) => {
+              return (
+                <>
+                  <CardProduct
+                    title={wish.product.title}
+                    price={wish.product.price}
+                    url={wish.product.productimages[0].image_url}
+                    id={wish.product.id}
+                    stock={wish.product.stocks[0].quantity}
+                  />
+                  <Scroll />
+                </>
+              );
+            })
+          ) : (
+            <h1>{noproducts()}</h1>
+          )}
+        </div>
       </div>
     )
   );

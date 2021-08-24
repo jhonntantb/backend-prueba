@@ -45,17 +45,7 @@ function CardProduct(props) {
       title: "Perfecto!",
       text: "El producto se agrego correctamente a tu wishlist",
       showConfirmButton: false,
-      timer: 1500,
-    });
-  };
-
-  const deleteWishList = () => {
-    Swal.fire({
-      icon: "success",
-      title: "Perfecto!",
-      text: "El producto se elimino de wishlist",
-      showConfirmButton: false,
-      timer: 1500,
+      timer: 1300,
     });
   };
 
@@ -94,7 +84,6 @@ function CardProduct(props) {
   };
   const handleSubmit = (e) => {
     console.log(typeof e.target.value);
-    deleteWishList();
     if (e.target.value == "true") {
       console.log("aca a punto de entrar al dispatch para deletearlo");
 
@@ -146,19 +135,22 @@ function CardProduct(props) {
   // };
 
   return (
-    <div className="card">
-      <div className="text-center p-4">
-        <img id="main-image" src={props.url} width="300" />
-      </div>
+    <div className="card mt-5">
       <div className="about text-center">
         <NavLink
           style={{ textDecoration: "none", color: "black" }}
           to={`/product/${props.id}`}
         >
+          <div className="text-center imagen-container">
+            <img className="nail" id="main-image" src={props.url} width="300" />
+          </div>
+          <br />
           <h6>{props.title}</h6>
         </NavLink>
-        <span>${props.price}</span>
-        {props.stock > 0 && <h6>Stock Disponible </h6>}
+        <div className="descri-price">
+          <h3>${props.price}</h3>
+          {props.stock > 0 && <h6>Stock Disponible </h6>}
+        </div>
       </div>
       <div className="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
         <button

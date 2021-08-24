@@ -145,8 +145,8 @@ function ProductList() {
 
   return list.length > 0 ? (
     <div className="container-fluid">
-      <div className="d-table">
-        <div id="tableleft" className="d-table-cell">
+      <div className="row">
+        <div id="tableleft" className="col-md-3 mt-5">
           <div className="justify-content-start mx-5">
             <label htmlFor="categories">Filtrar por categorias</label>
             <select
@@ -216,7 +216,7 @@ function ProductList() {
             </select>
           </div>
         </div>
-        <div className="d-table-cell">
+        <div className="col-md-9">
           {lista_filtrada && lista_filtrada.length > 0 ? (
             lista_filtrada.map((e) => {
               console.log(e);
