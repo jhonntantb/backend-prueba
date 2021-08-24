@@ -23,6 +23,16 @@ const productReducer = (state = initialState, action) => {
             ...state,
             product: []
         }
+        case TYPES.GET_SOME_PRODUCT: 
+         const ids = action.payload.map(e => e.id);
+         //console.log('action ids: ', ids)
+        return{
+           ...state,
+           products: state.products.filter((e) => {
+              return ids.includes(e.id) 
+            })
+        }
+
         case TYPES.CREATE_PRODUCT: return state
         case TYPES.UPDATE_PRODUCT: return state
         case TYPES.DELETE_PRODUCT: return state
