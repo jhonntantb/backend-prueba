@@ -1,38 +1,33 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import SearchBar from "./SearchBar";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import SearchBar from './SearchBar';
 import "./Navbar.css";
-import { getUser } from "../../redux/actions/user";
-import SignOutButton from "../Authentication/SignOut/index";
-import * as ROUTES from "../../routes";
-import { getAllProduct } from "../../redux/actions/product";
-import { ShowCartCant } from "./ShowCartCant";
-import { getAllOrder } from "../../redux/actions/order";
-import { useHistory } from "react-router";
+
+import SignOutButton from '../Authentication/SignOut/index';
+import * as ROUTES from '../../routes';
+import { getAllProduct } from '../../redux/actions/product';
+import {ShowCartCant} from './ShowCartCant';
+import { getAllOrder } from '../../redux/actions/order';
+import { useHistory } from 'react-router';
+import { getUser } from './../../redux/actions/user/index';
+
 
 const Navbar = () => {
-  // const [authUser, setAuthUser] = useState(localStorage.getItem("pg_merceria"))
-  // const [admin, setAdmin] = useState(localStorage.getItem("admin"))
 
-  const history = useHistory();
+  const history = useHistory()
   const dispatch = useDispatch();
-  const authUser = localStorage.getItem("pg_merceria");
-  const admin = localStorage.getItem("admin");
-  const storeUser = useSelector((state) => state.userReducer.user);
-
+  const authUser= localStorage.getItem("pg_merceria")
+  const admin = localStorage.getItem("admin")
+  const storeUser = useSelector (state=>state.userReducer.user);
+  var localUserId = localStorage.getItem("pg_merceria");
+  
   useEffect(() => {
-    var localUser = localStorage.getItem("pg_merceria");
-    var localAdmin = localStorage.getItem("admin");
-
-    if (localUser !== "guest") {
-      if (storeUser.id === undefined) {
-        dispatch(getUser(localUser));
-      }
-    }
-  }, []);
-
-  //var cart = localStorage.getItem("cart") != undefined ? (JSON.parse(localStorage.getItem("cart"))) : [];
+    if (localUserId != 'guest') {
+      dispatch(getUser(localUserId))
+  }
+  },[])
+  
 
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
@@ -59,14 +54,11 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <form className="d-flex ml-10 ">
+        <div class="d-flex search ">
           <SearchBar />
-        </form>
-
-        <div
-          className="collapse navbar-collapse justify-content-end"
-          id="navbarNavAltMarkup"
-        >
+        </div>
+       
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
           <ul className="navbar-nav ml-10  ">
             <li className="nav-item mx-3">
               <NavLink
@@ -77,34 +69,20 @@ const Navbar = () => {
                 Búsqueda AC
               </NavLink>
             </li>
-
-            <li className="nav-item mx-3">
-              <NavLink
-                activeClassName="text-white"
-                className="nav-link"
-                to="/contactus"
-              >
-                Contactanos
+         {/* { <li className="nav-item mx-3">
+              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
+                Acerca de 
               </NavLink>
-            </li>
-            <li className="nav-item mx-3">
-              <NavLink
-                activeClassName="text-white"
-                className="nav-link"
-                to="/productlist"
-                onClick={() => dispatch(getAllProduct())}
-              >
-                Acerca de
-              </NavLink>
-            </li>
+            </li> } */}
+            
             {authUser !== "guest" ? (
               <li className="nav-item active mx-3">
                 <NavLink
-                  activeClassName="text-white"
+                   activeClassName="text-white"
                   className="nav-link"
                   to="/wishlist"
                 >
-                  Wishlist
+                  Favoritos
                 </NavLink>
               </li>
             ) : null}
@@ -135,11 +113,13 @@ const Navbar = () => {
           {authUser === 'guest' ?
             <li className="nav-item mx-3"><NavLink activeClassName="text-white" className="nav-link" to={ROUTES.SIGN_IN}>Ingresar</NavLink></li> :
             <li className="nav-item dropdown mx-3">
-              <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">Mi Cuenta</NavLink>
+              <NavLink class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true" to="#">
+              <i class=" mx-2 fa fa-user-circle"></i>
+                {storeUser.user_name}
+                </NavLink>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><NavLink class="dropdown-item" to={ROUTES.USER_DATA}>Mis Datos</NavLink></li>
-                {/* <li><a class="dropdown-item" href="#">Mis Datos</a></li> */}
-                <li> <NavLink class="dropdown-item" to="/user/compras" onClick={ async e=>await dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
+                <li><NavLink className="dropdown-item" to={ROUTES.USER_DATA}>Mi Cuenta</NavLink></li>
+                <li> <NavLink class="dropdown-item" to="/user/compras" onClick={e=>dispatch(getAllOrder(localStorage.getItem('pg_merceria')))}>Compras</NavLink> </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href='/'><SignOutButton /></a></li>
               </ul>

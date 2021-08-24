@@ -33,7 +33,7 @@ function CardOrder(props) {
         </ul>
         <h5>Precio Total: ${props.total_price}</h5>
       </div>
-      <div>
+      <div >
         <div>
           <NavLink to={"/user/compras/" + props.id}>
             <button className="btn btn-block btn-black rm-border">

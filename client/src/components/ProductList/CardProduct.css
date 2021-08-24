@@ -9,6 +9,10 @@
     margin-top: 5%;
 } */
 
+.main {
+  margin-top: 5%;
+}
+
 .card {
   display: inline-flex;
   flex-direction: column;
@@ -22,7 +26,7 @@
 .about {
   margin-top: 1.5rem;
   padding: 5px;
-  max-width: 450px;
+  width: 450px;
 }
 
 .add {
@@ -76,7 +80,7 @@
 
 #main-image {
   height: 250px;
-  width: 250px;
+  width: auto;
   object-fit: cover;
 }
 

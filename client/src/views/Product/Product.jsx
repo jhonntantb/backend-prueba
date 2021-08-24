@@ -49,7 +49,7 @@ export default function Product({ match }) {
   };
 
   return !Loading ? (
-    <div className="container">
+    <div className="container" style={{marginTop:"5%"}}>
       <div className="cartas">
         <div className="container-fluid">
           <div className="wrapper row box-shadow bg-white">
@@ -79,9 +79,7 @@ export default function Product({ match }) {
               </h4>
               <h3 className="text-dark mt-3">${product.price}</h3>
 
-              {/* <div className="productDetails">
-              </div> */}
-              <div className="action">
+              <div >
                 <button
                   className="add-to-cart btn btn-default mt-2"
                   onClick={handleAddCart}
