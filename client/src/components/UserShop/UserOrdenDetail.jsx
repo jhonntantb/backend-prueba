@@ -4,8 +4,8 @@ import { useHistory } from "react-router-dom";
 import { getOrder } from "../../redux/actions/order";
 import { updateOrderStatus } from "../../redux/actions/order/index";
 import CreateReview from "../Review/CreateReview";
-import { sendOrderStatusEmail } from "../../redux/actions/mail/index";
-
+import {sendOrderStatusEmail} from "../../redux/actions/mail/index";
+import { NavLink } from "react-router-dom";
 
 function UserOrdenDetail(props) {
   const id = props.match.params.id;
@@ -75,25 +75,25 @@ function UserOrdenDetail(props) {
           <hr />
           {order.products && order.products.length > 0
             ? order.products.map((e) => (
-              <div className="">
-                <p className="px-2 text-dark">Nombre: {e.title}</p>
-                <p className="px-2 text-dark">
-                  Cantidad: {e.Order_Product.quantity}
-                </p>
-                <p className="px-2 text-dark">Precio/Unitario :{e.price}</p>
-                <hr />
-                {order.status === "delivered" ? (
-                  <button
-                    className="boton-drop-review"
-                    id={e.id}
-                    value={e.title}
-                    onClick={(e) => sendReview(e)}
-                  >
-                    Dejanos tu comentario
-                  </button>
-                ) : null}
-              </div>
-            ))
+                <div className="">
+                 <NavLink  style={{color: "red" , fontSize: "18px"}} to={`/product/${e.id}`}> <p style={{color:"blue" , fontSize: "18px"}} className="px-2">Nombre: {e.title}</p> </NavLink>
+                  <p className="px-2 text-dark">
+                    Cantidad: {e.Order_Product.quantity}
+                  </p>
+                  <p className="px-2 text-dark">Precio/Unitario :{e.price}</p>
+                  <hr />
+                  {order.status === "delivered" ? (
+                    <button
+                      className="boton-drop-review"
+                      id={e.id}
+                      value={e.title}
+                      onClick={(e) => sendReview(e)}
+                    >
+                      Dejanos tu comentario
+                    </button>
+                  ) : null}
+                </div>
+              ))
             : null}
         </div>
       </div>
