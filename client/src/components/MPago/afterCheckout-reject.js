@@ -4,6 +4,7 @@ import { getUser } from '../../redux/actions/user/index';
 import { getOrdersFromUser, updateOrderStatus } from '../../redux/actions/order/index';
 import Swal from 'sweetalert2';
 import {useHistory} from "react-router-dom";
+
 export default function AfterCheckoutRejected(props) {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -19,23 +20,19 @@ export default function AfterCheckoutRejected(props) {
 
 
     useEffect(() => {
-        if (localUserId != 'guest') {
+        if (localUserId !== 'guest') {
             dispatch(getUser(localUserId))
             dispatch(getOrdersFromUser(localUserId, 'checkout'))
 
         }
     }, [])
 
-    useEffect(()=>{
-        if(storeOrder.length>0 ) {
-
-            
-            
-            if(storeOrder[0].status==='checkout') {
+    useEffect(() => {
+        if (storeOrder.length > 0) {
+            if (storeOrder[0].status === 'checkout') {
                 dispatch(updateOrderStatus(storeOrder[0].id, "cart"))
             }
             setLoading(false)
-
         }
     }, [storeOrder])
 
@@ -57,7 +54,6 @@ export default function AfterCheckoutRejected(props) {
     }
 
     return loading ? (
-
         <div>{alerterror()}</div>
     ) : <div>loading...</div>
 
