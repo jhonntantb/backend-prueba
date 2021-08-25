@@ -11,7 +11,7 @@ import {ShowCartCant} from './ShowCartCant';
 import { getAllOrder } from '../../redux/actions/order';
 import { useHistory } from 'react-router';
 import { getUser } from './../../redux/actions/user/index';
-
+import { getCart } from '../../redux/actions/cart';
 
 const Navbar = () => {
 
@@ -25,6 +25,7 @@ const Navbar = () => {
   useEffect(() => {
     if (localUserId != 'guest') {
       dispatch(getUser(localUserId))
+      // dispatch(getCart(localUserId))
   }
   },[])
   
