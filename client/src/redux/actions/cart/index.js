@@ -1,4 +1,6 @@
 import * as TYPES from "../types"
+import  axios  from 'axios';
+
 
 export const getCart = (userId) => {
     return async (dispatch) => {

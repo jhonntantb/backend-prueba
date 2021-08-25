@@ -35,7 +35,7 @@ export default function CartProduct({ content }) {
   useEffect(() => {
     //setea el precio local con el precio * cantidad
     setLocalPrice(content.price * cant);
-    var arr = cart.map((e) => (e.id === content.id ? { ...e, cant: cant } : e));
+   
 
     //verifica si el usuario esta logueado validando si se trae o no una orden en el carrito
     if(cart.order)
