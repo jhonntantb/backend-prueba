@@ -12,7 +12,7 @@ export default function CartProduct({ content, addPrice, removePrice }) {
 
   useEffect(() => {
     setLocalPrice(content.price * cant);
-    var arr = cart.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
+    var arr = cart.map((e) => (e.id === content.id ? { ...e, cant: cant } : e));
 
     localStorage.setItem("cart", JSON.stringify(arr));
     //agrego dispatch y actualizo el store
@@ -38,12 +38,13 @@ export default function CartProduct({ content, addPrice, removePrice }) {
     }).then((result) => {
       if (result.isConfirmed) {
         removePrice(content.id)
-        var arr = cart.filter((e) => e.id != content.id);
+        var arr = cart.filter((e) => e.id !== content.id);
         localStorage.setItem("cart", JSON.stringify(arr));
         dispatch(getCart());
       }
     });
   };
+
   const handleSum = () => {
     setCant(cant + 1);
   };
@@ -59,9 +60,9 @@ export default function CartProduct({ content, addPrice, removePrice }) {
           {/*<!-- Item-->*/}
           <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
             <div class="media d-block d-sm-flex text-center text-sm-left">
-              <a class="cart-item-thumb mx-auto mr-sm-4" href="#">
+              <span class="cart-item-thumb mx-auto mr-sm-4" >
                 <img src={content.img} alt="Product" />
-              </a>
+              </span>
               <div class="media-body pt-3 align-text-center">
                 <h3 class="product-card-title font-weight-semibold border-0 pb-0 mx-5">
                   {content.title}

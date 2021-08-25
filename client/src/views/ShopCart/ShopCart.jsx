@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../redux/actions/cart/index";
 import ShowCartProducts from "../../components/ShopCart/ShowCartPoducts";
 import CheckUser from "../../components/Authentication/CheckUser/CheckUser";
+import  Swal  from 'sweetalert2';
 
-export default function ShopCart() {
+export default function ShopCart(props) {
   CheckUser();
   const dispatch = useDispatch()
   const [total, setTotal] = useState(0)
@@ -13,6 +14,19 @@ export default function ShopCart() {
   const user =  useSelector(state => state.userReducer.user)
 
   useEffect(() => user.id ? dispatch(getCart(user.id)) : dispatch(getCart()), [user])
+
+  const noProductCart = () => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Parece que no hay productos en tu carrito',
+      confirmButtonText: `Ok`,
+      confirmButtonColor: "#ee8585",
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        props.history.push("/productlist")}})
+    }
 
   return cart.length > 0 ? (
     <div className="cartm" style={{marginTop: "5%"}}>
@@ -37,7 +51,7 @@ export default function ShopCart() {
      </div>
   ) : (
     <div className="text-center text-dark"style={{marginTop: "5%"}}>
-      <h3 className="text-center ">No hay articulos en tu carrito</h3>
+      <h3 className="text-center ">{noProductCart()}</h3>
     </div>
   );
 }

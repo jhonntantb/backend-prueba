@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import "./Navbar.css";
-
 import SignOutButton from '../Authentication/SignOut/index';
 import * as ROUTES from '../../routes';
 import { getAllProduct } from '../../redux/actions/product';
@@ -14,8 +13,6 @@ import { getUser } from './../../redux/actions/user/index';
 
 
 const Navbar = () => {
-
-  const history = useHistory()
   const dispatch = useDispatch();
   const authUser= localStorage.getItem("pg_merceria")
   const admin = localStorage.getItem("admin")
@@ -23,7 +20,7 @@ const Navbar = () => {
   var localUserId = localStorage.getItem("pg_merceria");
   
   useEffect(() => {
-    if (localUserId != 'guest') {
+    if (localUserId !== 'guest') {
       dispatch(getUser(localUserId))
   }
   },[])
@@ -64,17 +61,11 @@ const Navbar = () => {
               <NavLink
                 activeClassName="text-white"
                 className="nav-link"
-                to="/search_ac"
+                to="/contactus"
               >
-                Búsqueda AC
+                Contactanos
               </NavLink>
             </li>
-         {/* { <li className="nav-item mx-3">
-              <NavLink activeClassName="text-white" className="nav-link" to="/productlist" onClick={() => dispatch(getAllProduct())} >
-                Acerca de 
-              </NavLink>
-            </li> } */}
-            
             {authUser !== "guest" ? (
               <li className="nav-item active mx-3">
                 <NavLink

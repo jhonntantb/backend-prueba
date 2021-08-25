@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import { getCart } from "../../redux/actions/cart/index";
 import "./Product.css";
 import Scroll from "../../components/Scroll/Scroll";
+import Footer from "../../components/Footer/Footer";
 
 export default function Product({ match }) {
   const admin = localStorage.getItem("admin");
@@ -27,7 +28,7 @@ export default function Product({ match }) {
     user.id ? dispatch(getCart(user.id)) : dispatch(getCart());
   }, []);
   useEffect(() => {
-    if (product.id != undefined) setLoading(false);
+    if (product.id !== undefined) setLoading(false);
   }, [product]);
 
   const handleAddCart = () => {
@@ -40,7 +41,7 @@ export default function Product({ match }) {
     };
 
     if (cart) {
-      if (cart.find((e) => e.id == prod.id))
+      if (cart.find((e) => e.id === prod.id))
         alert("El producto ya esta agregado al carrito");
       else localStorage.setItem("cart", JSON.stringify([...cart, prod]));
     } else localStorage.setItem("cart", JSON.stringify([prod]));
@@ -100,9 +101,13 @@ export default function Product({ match }) {
             <CreateReview match={match.params.id} />
             <ShowReviews reviews={product.reviews} />
             <Scroll />
+            
           </div>
+         
         </div>
+        
       </div>
+      <Footer/>
     </div>
   ) : (
     <div></div>

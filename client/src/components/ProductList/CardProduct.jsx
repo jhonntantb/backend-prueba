@@ -15,18 +15,17 @@ function CardProduct(props) {
   const user = useSelector((state) => state.userReducer.user);
   const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
   const [Fav, addFav] = useState(false);
-  useEffect(
-    () => (user.id ? dispatch(getCart(user.id)) : dispatch(getCart())),
-    []
-  );
-  const [add, setAdd] = useState(
-    cart.find((prod) => props.id == prod.id) ? true : false
-  );
 
-  useEffect(
-    () => (user.id ? dispatch(getCart(user.id)) : dispatch(getCart())),
-    []
-  );
+  useEffect(() => (user.id ? dispatch(getCart(user.id)) 
+  : dispatch(getCart())),
+  []);
+
+  const [add, setAdd] = useState(cart.find((prod) => props.id == prod.id) ? true : false);
+
+  useEffect(() => (user.id ? dispatch(getCart(user.id)) 
+  : dispatch(getCart())),
+  []);
+
   const handleAdd = () => {
     Swal.fire({
       icon: "success",
@@ -49,11 +48,11 @@ function CardProduct(props) {
 
   useEffect(() => {
     if (
-      typeof wishlist.find != undefined &&
-      typeof wishlist.find == "function" &&
-      typeof wishlist.map == "function"
+      typeof wishlist.find !== undefined &&
+      typeof wishlist.find === "function" &&
+      typeof wishlist.map === "function"
     ) {
-      if (wishlist.find((wish) => wish.productId == props.id)) addFav(true);
+      if (wishlist.find((wish) => wish.productId === props.id)) addFav(true);
       else addFav(false);
     }
   }, [wishlist]);
@@ -68,8 +67,14 @@ function CardProduct(props) {
     handleAdd();
 
     if (cart) {
-      if (cart.find((e) => e.id == prod.id))
-        alert("El producto ya esta agregado al carrito");
+      if (cart.find((e) => e.id === prod.id))
+      Swal.fire({
+        icon: "error",
+        title: "Oopss..",
+        text: "El producto ya esta agregado al carrito",
+        showConfirmButton: false,
+        timer: 1500,
+      })
       else {
         localStorage.setItem("cart", JSON.stringify([...cart, prod]));
         setAdd(true);
@@ -80,17 +85,13 @@ function CardProduct(props) {
 
     user.id ? dispatch(getCart(user.id)) : dispatch(getCart());
   };
-  const handleSubmit = (e) => {
-    console.log(typeof e.target.value);
-    if (e.target.value == "true") {
-      console.log("aca a punto de entrar al dispatch para deletearlo");
 
+  const handleSubmit = (e) => {
+    if (e.target.value === "true") {
       if (user.id != undefined && props.id != undefined) {
         dispatch(deleteWishlist({ userId: user.id, productId: props.id })).then(
           () => {
-            if (document.getElementById("wishlist") != undefined) {
-              console.log("magia de jacobo");
-              console.log(document.getElementById("wishlist"));
+            if (document.getElementById("wishlist") !== undefined) {
               dispatch(getWishlist(user.id));
             }
           }
@@ -99,13 +100,12 @@ function CardProduct(props) {
       }
     }
 
-    if (e.target.value == "false") {
-      console.log("aca a punto de entrar al dispatch para crearlo");
+    if (e.target.value === "false") {
       addWishList();
-      if (user.id != undefined && props.id != undefined) {
+      if (user.id != undefined && props.id !== undefined) {
         dispatch(createWishlist({ productId: props.id, userId: user.id })).then(
           () => {
-            if (document.getElementById("wishlist") != undefined)
+            if (document.getElementById("wishlist") !== undefined)
               dispatch(getWishlist(user.id));
           }
         );
@@ -113,24 +113,6 @@ function CardProduct(props) {
       }
     }
   };
-  // return (
-  //       <div class="card" >
-  //         <div class="text-center p-4">
-  //           <img id="main-image" src={props.url} width="300" />
-  //         </div>
-  //         <div class="about text-center">
-  //           <NavLink style={{ textDecoration: 'none', color: "black"}} to={`/product/${props.id}`}>
-  //               <h6>{props.title}</h6>
-  //           </NavLink>
-  //           <span>${props.price}</span>
-  //          {props.stock > 0 && <h6>Stock Disponible </h6> }
-  //         </div>
-  //         <div class="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
-  //           <button class="btn btn-dark text-uppercase " disabled={add} onClick={handleAddCart}>Añadir al carro</button>
-  //           <div class="add">
-  //   user.id ? dispatch(getCart(user.id)) : dispatch(getCart());
-  //   handleAdd();
-  // };
 
   return (
     <div className="card mt-5">
@@ -173,9 +155,6 @@ function CardProduct(props) {
         ) : null}
       </div>
     </div>
-    //         </div>
-    //   </div>
-    // </div>
   );
 }
 
