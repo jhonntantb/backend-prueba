@@ -21,11 +21,9 @@
   margin: 2%;
   padding: 1%;
   width: 30rem;
-  min-height: 25rem;
 }
 
 .about {
-  margin-top: 1.5rem;
   padding: 5px;
   width: 450px;
 }
@@ -88,8 +86,4 @@
 .imagen-container {
   margin: 10px;
   margin-bottom: 30px;
-}
-
-.descri-price {
-  margin-top: 15px;
 }
