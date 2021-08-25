@@ -713,7 +713,7 @@ router.post("/order", async (req, res, next) => {
   <tbody>
     <tr>
       <td style="padding:50px 30px 30px 30px; line-height:28px; text-align:inherit; background-color:#ffffff;" height="100%" valign="top" bgcolor="#ffffff" role="module-content"><div><div style="font-family: inherit; text-align: inherit"><span style="font-size: 20px; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; color: #656565">Hola!</span></div>
-<div style="font-family: inherit; text-align: inherit"><span style="font-size: 20px; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; color: #656565">Estimado usuario le informamos que su pedido ha ${orderOk.home_address} , ${orderOk.location}. Puede monitorear el estado de su pedido desde Mi cuenta - Compras, dentro de nuestra web</span></div>
+<div style="font-family: inherit; text-align: inherit"><span style="font-size: 20px; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; color: #656565">Estimado usuario le informamos que su pedido ha sido enviado a   ${orderOk.home_address} , ${orderOk.location}. Puede monitorear el estado de su pedido desde Mi cuenta - Compras, dentro de nuestra web</span></div>
 <div style="font-family: inherit; text-align: inherit"><br></div><div></div></div></td>
     </tr>
   </tbody>
@@ -969,7 +969,7 @@ ol ol ol ol {
   <tr>
     <td style="padding:50px 30px 30px 30px; line-height:28px; text-align:inherit; background-color:#ffffff;" height="100%" valign="top" bgcolor="#ffffff" role="module-content"><div><div style="font-family: inherit; text-align: inherit"><span style="font-size: 20px; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; color: #656565">Hola!</span></div>
 <div style="font-family: inherit; text-align: inherit"><br></div>
-<div style="font-family: inherit; text-align: inherit"><span style="font-size: 20px; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; color: #656565">&nbsp;Le informamos que su pedido ha sido entregado a ${orderOk.home_address} , ${orderOk.location}.</span></div>
+<div style="font-family: inherit; text-align: inherit"><span style="font-size: 20px; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; color: #656565">&nbsp;Le informamos que su pedido a sido entregado a ${orderOk.home_address} , ${orderOk.location}.</span></div>
 <div style="font-family: inherit; text-align: inherit"><span style="font-size: 20px; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif; color: #656565">Agradecemos que nos deje sus comentarios respecto a la experiencia de compra en nuestra web!</span></div><div></div></div></td>
   </tr>
 </tbody>

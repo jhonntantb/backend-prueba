@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { getAllProduct } from "../../redux/actions/product/index.js";
 import { getSomeProduct } from "../../redux/actions/product/index.js";
 import "./SearchBar.css";
-// import "./SearchAC.css";
+import "./SearchAC.css";
 
 export default function SearchBar() {
   const [display, setDisplay] = useState(false);
@@ -65,7 +65,8 @@ export default function SearchBar() {
 
   const handleChange = (event) => {
     setSearch(event.target.value);
-    setDisplay(true);
+    if (event.target.value.length > 3) setDisplay(true);
+
     var tempFiltrada = options.filter(({ title }) =>
       title.toLowerCase().includes(search.toLowerCase())
     );
@@ -88,7 +89,7 @@ export default function SearchBar() {
   };
 
   const handleSetDisplay = () => {
-    setDisplay(!display);
+    if (search.length > 4) setDisplay(!display);
     dispatch(getAllProduct("", "alfa"));
   };
 
@@ -100,7 +101,7 @@ export default function SearchBar() {
         placeholder="Ingrese su busqueda..."
         id="autox"
         onClick={() => handleSetDisplay()}
-        autoComplete="off"
+        autocomplete="off"
         value={search}
         onChange={(e) => handleChange(e)}
       />
@@ -112,18 +113,18 @@ export default function SearchBar() {
         Buscar
       </button>
 
-      {display && (
+      {display && filtrada.length > 3 && (
         <div className="autoContainer">
           {filtrada.map((v, i) => {
             return (
-              <div
+              <li
                 onClick={() => setTexto(v.title, v.id)}
                 className="option"
                 key={i}
                 tabIndex="0"
               >
-                <span>{v.title}</span>
-              </div>
+                <span className="darle-hover">{v.title}</span>
+              </li>
             );
           })}
         </div>
