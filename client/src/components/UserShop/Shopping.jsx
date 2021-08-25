@@ -74,7 +74,8 @@ function Shopping() {
             total_price={e.total_price}
             className="justify-content-center"
           />
-        ))
+        )
+        )
       ) : (
         <p>Aún no tiene Pedidos</p>
       )}
