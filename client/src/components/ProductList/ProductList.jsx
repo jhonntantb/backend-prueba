@@ -228,6 +228,9 @@ function ProductList() {
         <div className="col-md-9">
           {currentItems && currentItems.length > 0 ? (
             currentItems.map((e) => {
+              if(e.stocks[0].quantity != 0) 
+              {
+              
               return (
                 <>
                   <span key={e.id} className="card-deck   mx-1">
@@ -237,13 +240,13 @@ function ProductList() {
                       url={e.productimages[0].image_url}
                       id={e.id}
                       stock={
-                        e.stocks.length > 0 ? e.stocks[0].quantity : undefined
+                        e.stocks.length > 0 ? e.stocks[0].quantity : 0
                       }
                     />
                   </span>
                   <Scroll />
                 </>
-              );
+              )}
             })
           ) : (
             <h3 className="text-center mt-4">No hay productos</h3>

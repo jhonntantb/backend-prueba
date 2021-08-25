@@ -74,7 +74,7 @@ export default function Product({ match }) {
                   ? product.stocks[0].quantity
                   : product.stock
                   ? product.stock
-                  : "0"}{" "}
+                  : "  0"}{" "}
                 unidades
               </h4>
               <h3 className="text-dark mt-3">${product.price}</h3>
@@ -82,6 +82,7 @@ export default function Product({ match }) {
               <div >
                 <button
                   className="add-to-cart btn btn-default mt-2"
+                  disabled={product.stocks[0].quantity==0} 
                   onClick={handleAddCart}
                   style={{ marginLeft: "20px" }}
                 >

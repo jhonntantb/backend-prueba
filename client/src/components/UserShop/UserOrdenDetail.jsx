@@ -5,6 +5,7 @@ import { getOrder } from "../../redux/actions/order";
 import { updateOrderStatus } from "../../redux/actions/order/index";
 import CreateReview from "../Review/CreateReview";
 import {sendOrderStatusEmail} from "../../redux/actions/mail/index";
+import { NavLink } from "react-router-dom";
 
 function UserOrdenDetail(props) {
   const id = props.match.params.id;
@@ -72,7 +73,7 @@ function UserOrdenDetail(props) {
           {order.products && order.products.length > 0
             ? order.products.map((e) => (
                 <div className="">
-                  <p className="px-2 text-dark">Nombre: {e.title}</p>
+                 <NavLink  style={{color: "red" , fontSize: "18px"}} to={`/product/${e.id}`}> <p style={{color:"blue" , fontSize: "18px"}} className="px-2">Nombre: {e.title}</p> </NavLink>
                   <p className="px-2 text-dark">
                     Cantidad: {e.Order_Product.quantity}
                   </p>

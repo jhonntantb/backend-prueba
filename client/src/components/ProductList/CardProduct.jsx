@@ -63,7 +63,7 @@ function CardProduct(props) {
         
         const prod = {
           productId: props.id,
-          unitprice: Number(props.price),
+          unitprice: parseInt(props.price),
           quantity: 1
         }
 
@@ -78,8 +78,8 @@ function CardProduct(props) {
                       const orderProducts = cart.cartProducts.map(e => {
                         return {
                           productId: e.id,
-                          unitprice: Number(e.price),
-                          quantity: Number(e.Order_Product.quantity)
+                          unitprice: parseInt(e.price),
+                          quantity: parseInt(e.Order_Product.quantity)
                         }
                       })
                       dispatch(updateOrder(cart.order.id,
@@ -175,7 +175,7 @@ function CardProduct(props) {
       <div className="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
         <button
           className="carrito-button btn btn-dark text-uppercase "
-          disabled={add}
+          disabled={add || props.stock == 0}
           onClick={handleAddCart}
         >
           Añadir al carrito

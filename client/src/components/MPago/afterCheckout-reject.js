@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { getUser } from '../../redux/actions/user/index';
 import { getOrdersFromUser, updateOrderStatus } from '../../redux/actions/order/index';
 import Swal from 'sweetalert2';
-
+import {useHistory} from "react-router-dom";
 export default function AfterCheckoutRejected(props) {
+    const history = useHistory();
     const dispatch = useDispatch();
     var storeUser = useSelector(state => state.userReducer.user);
     var storeOrder = useSelector(state => state.orderReducer.order);
@@ -50,7 +51,7 @@ export default function AfterCheckoutRejected(props) {
             allowOutsideClick: false
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '/cart'
+                history.push('/cart') 
             }
         })
     }
