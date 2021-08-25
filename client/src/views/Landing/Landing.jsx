@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../../redux/actions/product";
 import Carrousel from "../../components/Carrousel/Carrousel";
 import CardProduct from "../../components/ProductList/CardProduct";
-//import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "./../../components/Footer/Footer";
 import "./Landing.css";
+import { NavLink } from 'react-router-dom';
+import  NewCarusel  from "../../components/Carrousel/NewCarusel";
+
+
 
 export const Landing = () => {
   const items = [
@@ -28,6 +31,7 @@ export const Landing = () => {
       caption: "Slide 3",
     },
   ];
+
   const dispatch = useDispatch();
 
   const list = useSelector((state) => state.productReducer.products);
@@ -37,18 +41,22 @@ export const Landing = () => {
 
   let list4 = [];
 
-
   list4.push(list[0], list[1], list[2], list[3]);
+
   return (
-    <div style={{marginTop:"5%"}}>
-      <div >
-        <Carrousel images={items} />
+    <div  style={{marginTop:"1%"}}>
+      <div  className="container-image">
+       
+        <img className="img-fluid" src="https://merceriacadi.com/wp-content/uploads/2021/05/merceria-Cadi-024.jpg" alt="img principal" />
+
+        <div class="centrado">Nueva Colecciòn</div>
+        <NavLink to="/productlist"> Comprar ahora</NavLink>
       </div>
       <div class="container-fluid">
         <h2 className="text-center">Productos Destacados</h2>
         <div class="row">
           <div class="col-md-3">
-            {/* {<Newsletter />} */}
+         
           </div>
           <div class="col-md-9">
             <div>
@@ -64,6 +72,7 @@ export const Landing = () => {
                 ))}
             </div>
           </div>
+          <NewCarusel />
         </div>
       </div>
 
