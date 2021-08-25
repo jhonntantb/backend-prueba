@@ -67,13 +67,14 @@ function Shopping() {
 
       {orderView && orderView.length > 0 ? (
         orderView.map((e) => (
+          e.status!="cart"?
           <CardOrder
             id={e.id}
             status={e.status}
             products={e.products}
             total_price={e.total_price}
             className="justify-content-center"
-          />
+          />:null
         )
         )
       ) : (
