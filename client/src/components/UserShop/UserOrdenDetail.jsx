@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom";
 import { getOrder } from "../../redux/actions/order";
 import { updateOrderStatus } from "../../redux/actions/order/index";
 import CreateReview from "../Review/CreateReview";
-import {sendOrderStatusEmail} from "../../redux/actions/mail/index";
+import { sendOrderStatusEmail } from "../../redux/actions/mail/index";
+
 
 function UserOrdenDetail(props) {
   const id = props.match.params.id;
@@ -14,30 +15,33 @@ function UserOrdenDetail(props) {
   const [productName, setProductName] = useState("");
   const [showReview, setShowReview] = useState(false);
   const order = useSelector((state) => state.orderReducer.order);
-  
+
   useEffect(() => {
     dispatch(getOrder(id));
   }, []);
-  
-  console.log(order);
+
+
 
   const handleUserShopStatus = (e) => {
     e.preventDefault();
     dispatch(updateOrderStatus(id, "cancelled"));
-    setTimeout(()=>{
+    setTimeout(() => {
       dispatch(sendOrderStatusEmail(order.userId, order.id))
     }, 1500)
   };
+
   const sendReview = (e) => {
     e.preventDefault();
     setProductId(e.target.id);
     setProductName(e.target.value);
     setShowReview(true);
   };
+
   const viewShopping = (e) => {
     e.preventDefault();
     push("/user/compras");
   };
+
   return (
     <div className="container">
       <h3 className="text-center mt-4">Detalle de la Orden</h3>
@@ -71,25 +75,25 @@ function UserOrdenDetail(props) {
           <hr />
           {order.products && order.products.length > 0
             ? order.products.map((e) => (
-                <div className="">
-                  <p className="px-2 text-dark">Nombre: {e.title}</p>
-                  <p className="px-2 text-dark">
-                    Cantidad: {e.Order_Product.quantity}
-                  </p>
-                  <p className="px-2 text-dark">Precio/Unitario :{e.price}</p>
-                  <hr />
-                  {order.status === "delivered" ? (
-                    <button
-                      className="boton-drop-review"
-                      id={e.id}
-                      value={e.title}
-                      onClick={(e) => sendReview(e)}
-                    >
-                      Dejanos tu comentario
-                    </button>
-                  ) : null}
-                </div>
-              ))
+              <div className="">
+                <p className="px-2 text-dark">Nombre: {e.title}</p>
+                <p className="px-2 text-dark">
+                  Cantidad: {e.Order_Product.quantity}
+                </p>
+                <p className="px-2 text-dark">Precio/Unitario :{e.price}</p>
+                <hr />
+                {order.status === "delivered" ? (
+                  <button
+                    className="boton-drop-review"
+                    id={e.id}
+                    value={e.title}
+                    onClick={(e) => sendReview(e)}
+                  >
+                    Dejanos tu comentario
+                  </button>
+                ) : null}
+              </div>
+            ))
             : null}
         </div>
       </div>
@@ -101,10 +105,9 @@ function UserOrdenDetail(props) {
       )}
       <hr />
       <div className="row justify-content-center">
-        {" "}
         {order &&
-        (order.status === "approved" ) ? (
-          <button id="buttondown" hidden={order.status != "approved"} onClick={(e) => handleUserShopStatus(e)}>
+          (order.status === "approved") ? (
+          <button id="buttondown" hidden={order.status !== "approved"} onClick={(e) => handleUserShopStatus(e)}>
             Cancelar mi Compra
           </button>
         ) : null}
