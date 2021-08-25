@@ -19,12 +19,12 @@ function CardProduct(props) {
   const [Fav, addFav] = useState(false);
   const [add, setAdd] = useState(false);
 
-  // useEffect(() => {
-  //   if(cart.order)
-  //     setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
-  //   else
-  //       setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
-  // }, [cart])
+  useEffect(() => {
+    if(cart.order)
+      setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
+    else
+        setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
+  }, [cart])
 
   const sweetAlert = () => {
     Swal.fire({
