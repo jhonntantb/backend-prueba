@@ -25,7 +25,7 @@ function ProductList() {
   const [Maximo, setMaximo] = useState("");
   const [orden, setOrden] = useState("A-Z");
   useEffect(() => {
-    console.log('useEffect list productlist: ',list)
+    console.log("useEffect list productlist: ", list);
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
     dispatch(getWishlist(id));
@@ -129,23 +129,31 @@ function ProductList() {
           key={number}
           id={number}
           onClick={handleClick}
-          className={currentPage === number ? "activo" : null}
+          className={currentPage === number ? "activo page-item active" : null}
         >
-          {number}
+          <div
+            key={number}
+            id={number}
+            onClick={handleClick}
+            className="page-link numeros-numeros-paginado page-item active"
+            aria-current="page"
+          >
+            {number}
+          </div>
         </li>
       );
     } else {
       return null;
     }
   });
-  
+
   useEffect(() => {
     //console.log("esto es lista filtrada",lista_filtrada)
     //console.log("pages*10",pages)
-    if(lista_filtrada.length<((pages.length)*10)){
-      setCurrentPage(1)
+    if (lista_filtrada.length < pages.length * 10) {
+      setCurrentPage(1);
     }
-  }, [lista_filtrada])
+  }, [lista_filtrada]);
   // console.log(lista_filtrada)
 
   return list.length > 0 ? (
@@ -246,7 +254,34 @@ function ProductList() {
           )}
         </div>
       </div>
-      <ul className="pageNumbers">
+      <div className="botones-paginado">
+        <nav aria-label="...">
+          <ul className="pagination justify-content-center">
+            <li className="pagination">
+              <button
+                onClick={handlePrevbtn}
+                disabled={currentPage === pages[0] ? true : false}
+                className="page-link botones-botones-paginado"
+              >
+                Anterior
+              </button>
+            </li>
+            {renderPageNumbers}
+            <li className="page-item">
+              <button
+                onClick={handleNextbtn}
+                disabled={
+                  currentPage === pages[pages.length - 1] ? true : false
+                }
+                className="page-link  botones-botones-paginado"
+              >
+                Siguiente
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      {/* <ul className="pageNumbers">
         <li>
           <button
             onClick={handlePrevbtn}
@@ -264,7 +299,7 @@ function ProductList() {
             next
           </button>
         </li>
-      </ul>
+      </ul> */}
     </div>
   ) : (
     <h1 className="text-center mt-5">
