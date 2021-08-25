@@ -18,23 +18,19 @@ export default function AfterCheckoutRejected(props) {
 
 
     useEffect(() => {
-        if (localUserId != 'guest') {
+        if (localUserId !== 'guest') {
             dispatch(getUser(localUserId))
             dispatch(getOrdersFromUser(localUserId, 'checkout'))
 
         }
     }, [])
 
-    useEffect(()=>{
-        if(storeOrder.length>0 ) {
-
-            
-            
-            if(storeOrder[0].status==='checkout') {
+    useEffect(() => {
+        if (storeOrder.length > 0) {
+            if (storeOrder[0].status === 'checkout') {
                 dispatch(updateOrderStatus(storeOrder[0].id, "cart"))
             }
             setLoading(false)
-
         }
     }, [storeOrder])
 
@@ -50,13 +46,12 @@ export default function AfterCheckoutRejected(props) {
             allowOutsideClick: false
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '/cart'
+                props.history.push('/cart')
             }
         })
     }
 
     return loading ? (
-
         <div>{alerterror()}</div>
     ) : <div>loading...</div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { getUser, updateUser } from '../../redux/actions/user'
 import PasswordChangePage from '../Authentication/PasswordChange';
+import Footer from '../Footer/Footer';
 import './index.css'
 
 function Index() {
@@ -41,14 +42,14 @@ function Index() {
     }, [user])
 
     const handleChange = (e) => {
-        e.target.id == "username" && setUserName(e.target.value)
-        e.target.id == "email" && setEmail(e.target.value)
-        e.target.id == "first_name" && setFirstName(e.target.value)
-        e.target.id == "last_name" && setLastname(e.target.value)
-        e.target.id == "phone" && setPhone(e.target.value)
-        e.target.id == "province" && setProvince(e.target.value)
-        e.target.id == "location" && setLocation(e.target.value)
-        e.target.id == "address" && setAddress(e.target.value)
+        e.target.id === "username" && setUserName(e.target.value)
+        e.target.id === "email" && setEmail(e.target.value)
+        e.target.id === "first_name" && setFirstName(e.target.value)
+        e.target.id === "last_name" && setLastname(e.target.value)
+        e.target.id === "phone" && setPhone(e.target.value)
+        e.target.id === "province" && setProvince(e.target.value)
+        e.target.id === "location" && setLocation(e.target.value)
+        e.target.id === "address" && setAddress(e.target.value)
 
     }
     const showSecurity = (e) => {
@@ -82,7 +83,7 @@ function Index() {
         location: location,
         address: address
     }
-    //console.log("estos son los cambios", changes)
+
     const handleUserUpdate = (e) => {
         e.preventDefault();
         dispatch(updateUser([{ id: userId, changes: changes }]))
@@ -91,6 +92,7 @@ function Index() {
     }
 
     return (
+        <div>
         <main className="page-main">
             <div>
                 <div>
@@ -113,6 +115,7 @@ function Index() {
                                             <ul>
                                                 <li > <button type="submit" className="items my-2" onClick={e => ShowMyData(e)}>Mis Datos</button></li>
                                                 <li > <button type="submit" className="items my-2" onClick={e => showSecurity(e)} >Seguridad</button></li>
+                                                <li> <button type="submit" className="items my-2" >Direcciones</button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -188,9 +191,10 @@ function Index() {
                         </div>
                     </div>
                 </div>
-
             </div>
         </main>
+         <Footer />
+         </div>
     )
 }
 

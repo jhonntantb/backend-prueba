@@ -13,6 +13,7 @@ import Scroll from "../../components/Scroll/Scroll";
 import { updateOrder, createOrder } from "../../redux/actions/order/index"
 import Swal from "sweetalert2";
 
+
 export default function Product({ match }) {
   const history= useHistory();
   const admin = localStorage.getItem("admin");
@@ -61,7 +62,7 @@ export default function Product({ match }) {
   }, []);
 
   useEffect(() => {
-    if (product.id != undefined) setLoading(false);
+    if (product.id !== undefined) setLoading(false);
   }, [product]);
 
   const handleAddCart = () => {
@@ -184,9 +185,13 @@ export default function Product({ match }) {
             <CreateReview match={match.params.id} />
             <ShowReviews reviews={product.reviews} />
             <Scroll />
+            
           </div>
+         
         </div>
+        
       </div>
+  
     </div>
   ) : (
     <div></div>
