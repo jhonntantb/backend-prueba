@@ -34,6 +34,40 @@
   border-color: goldenrod;
   background-color: whitesmoke;
   right: 10px;
+  top: 70px;
+  width: 770px;
+  height: 600px;
+  margin-left: 40px;
+  overflow: auto;
+}
+
+.auto-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+
+#auto {
+  padding: 10px;
+  height: 35px;
+  width: 760px;
+  border: 1px solid purple;
+  margin: 10px;
+  font-size: 20px;
+}
+
+.pos-rel {
+  position: relative;
+}
+
+.autoContainer {
+  position: absolute;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: goldenrod;
+  background-color: whitesmoke;
+  right: 10px;
   top: 100px;
   width: 770px;
   height: 600px;

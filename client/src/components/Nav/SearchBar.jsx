@@ -15,29 +15,45 @@ export default function SearchBar() {
   const dispatch = useDispatch();
   const { push } = useHistory();
 
+  const history = useHistory();
+
   const products = useSelector((state) => state.productReducer.products);
 
   useEffect(() => {
-    const list = [];
-    dispatch(getAllProduct("", "alfa")).then(() => {
-      console.log("Use effect inicio Productos: ", products);
-      products.map((e) =>
-        list.push({ title: e.title + " (" + e.catalog_id + ")", id: e.id })
-      );
-    });
-    console.log("Lista: ", list);
+    // const list = [];
+    dispatch(getAllProduct("", "alfa"));
+    //dispatch(getAllProduct()).then(() => {
+    console.log("Use effect inicio Productos: ", products);
+    // products.map(e => list.push({title: e.title + " (" + e.catalog_id + ")", id: e.id}))
+    // console.log('Lista: ', list)
+    // setOptions(list);
+    // setFiltrada(list);
+    // })
 
-    setOptions(list);
-    setFiltrada(list);
-    console.log("Options: ", options);
-  }, []);
+    //console.log('Options: ',options);
 
-  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  /*   useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+      }
+  },[]); */
+
+  useEffect(() => {
+    const list = [];
+    console.log("Segundo effect cambio Productos: ", products);
+    products.map((e) =>
+      list.push({ title: e.title + " (" + e.catalog_id + ")", id: e.id })
+    );
+    setOptions(list);
+    setFiltrada(list);
+  }, [products]);
 
   const handleClickOutside = (event) => {
     const { current: wrap } = wrapperRef;
@@ -73,6 +89,7 @@ export default function SearchBar() {
 
   const handleSetDisplay = () => {
     setDisplay(!display);
+    dispatch(getAllProduct("", "alfa"));
   };
 
   return (
