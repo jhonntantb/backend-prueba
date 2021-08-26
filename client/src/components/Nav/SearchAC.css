@@ -66,10 +66,10 @@
   border: 3px solid;
   border-color: gray;
   background-color: #fff;
-  right: 122px;
+  right: -2px;
   top: 59px;
-  width: 629px;
-  height: 250px;
+  width: 626px;
+  height: 217px;
   overflow: auto;
   padding: 10px;
   border-top: none;
@@ -103,5 +103,36 @@
   width: 100%;
 }
 
-.darle-hover {
+@media (min-width: 368px) {
+  .autoContainer {
+    position: absolute;
+    border-width: 0px 1px 1px 1px;
+    border: 3px solid;
+    border-color: gray;
+    background-color: #fff;
+    right: -1px;
+    top: 72px;
+    width: 403px;
+    height: 184px;
+    overflow: auto;
+    padding: 10px;
+    border-top: none;
+  }
+}
+
+@media (min-width: 800px) {
+  .autoContainer {
+    position: absolute;
+    border-width: 0px 1px 1px 1px;
+    border: 3px solid;
+    border-color: gray;
+    background-color: #fff;
+    right: -2px;
+    top: 59px;
+    width: 626px;
+    height: 215px;
+    overflow: auto;
+    padding: 10px;
+    border-top: none;
+  }
 }

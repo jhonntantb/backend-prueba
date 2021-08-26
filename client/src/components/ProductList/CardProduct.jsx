@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { updateOrder, createOrder } from "../../redux/actions/order/index"
+import { updateOrder, createOrder } from "../../redux/actions/order/index";
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
@@ -58,44 +58,38 @@ function CardProduct(props) {
   }, [wishlist]);
 
   const handleAddCart = () => {
-
     if (user.id) {
-        
-        const prod = {
-          productId: props.id,
-          unitprice: Number(props.price),
-          quantity: 1
-        }
+      const prod = {
+        productId: props.id,
+        unitprice: Number(props.price),
+        quantity: 1,
+      };
 
-        if(cart.order!=null)
-        {
-  
-                if(cart.cartProducts.find(e => e.id == prod.productId))
-                  {alert("El producto ya esta agregado al carrito");}
-                else
-                    { 
-                      console.log("entro al update")
-                      const orderProducts = cart.cartProducts.map(e => {
-                        return {
-                          productId: e.id,
-                          unitprice: Number(e.price),
-                          quantity: Number(e.Order_Product.quantity)
-                        }
-                      })
-                      dispatch(updateOrder(cart.order.id,
-                        {...cart.order, products: orderProducts.concat(prod)}
-                      ))
-                      .then(() => dispatch(getCart(user.id)))
-            
-                      setAdd(true);
-                      sweetAlert();
-                    }
-            
-        
+      if (cart.order != null) {
+        if (cart.cartProducts.find((e) => e.id == prod.productId)) {
+          alert("El producto ya esta agregado al carrito");
+        } else {
+          console.log("entro al update");
+          const orderProducts = cart.cartProducts.map((e) => {
+            return {
+              productId: e.id,
+              unitprice: Number(e.price),
+              quantity: Number(e.Order_Product.quantity),
+            };
+          });
+          dispatch(
+            updateOrder(cart.order.id, {
+              ...cart.order,
+              products: orderProducts.concat(prod),
+            })
+          ).then(() => dispatch(getCart(user.id)));
+
+          setAdd(true);
+          sweetAlert();
         }
-       else
-        {
-        dispatch(createOrder({
+      } else {
+        dispatch(
+          createOrder({
             status: "cart",
             home_address: "",
             location: "",
@@ -105,20 +99,18 @@ function CardProduct(props) {
             postal_code: "0000",
             phone_number: "0000000000",
             userId: user.id,
-            products: [prod]
-          }))
-          .then(() => dispatch(getCart(user.id)))
-  
-          setAdd(true);
-          sweetAlert();
-        }
-        
-    }else {
-      alert("por favor, ingresa para seguir comprando")
-      history.push("/signin")
-    }
+            products: [prod],
+          })
+        ).then(() => dispatch(getCart(user.id)));
 
-  }
+        setAdd(true);
+        sweetAlert();
+      }
+    } else {
+      alert("por favor, ingresa para seguir comprando");
+      history.push("/signin");
+    }
+  };
 
   const handleSubmit = (e) => {
     console.log(typeof e.target.value);
@@ -153,7 +145,7 @@ function CardProduct(props) {
       }
     }
   };
-  
+
   return (
     <div className="card mt-5">
       <div className="text-center">
@@ -165,18 +157,18 @@ function CardProduct(props) {
             <div className="text-center imagen-container">
               <img className="nail" id="main-image" src={props.url} />
             </div>
-            <div className="titulo">
+            <div className="titulo text-center">
               <h6>{props.title}</h6>
             </div>
           </NavLink>
         </div>
-        <div className="descri-price">
+        <div className="descri-price text-center">
           <h3>${props.price}</h3>
           {props.stock > 0 && <h6>Stock Disponible </h6>}
         </div>
       </div>
 
-      <div className="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
+      <div className="botones-center cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
         <button
           className="carrito-button btn btn-dark text-uppercase "
           disabled={add}

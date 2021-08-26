@@ -10,10 +10,9 @@ import NotFound from "../../../views/NotFound/NotFound";
 function NavAdmin() {
   const dispatch = useDispatch();
 
-  const admin = localStorage.getItem("admin")
+  const admin = localStorage.getItem("admin");
 
-
-  return admin!=='null'?(
+  return admin !== "null" ? (
     <nav class="navbar navbar-expand-lg navbar-light bg-light my-5">
       <div class="container-fluid mt-5">
         <span class="navbar-text">Tareas</span>
@@ -107,7 +106,9 @@ function NavAdmin() {
         </div>
       </div>
     </nav>
-  ): <NotFound/>
+  ) : (
+    <NotFound />
+  );
 }
 
 export default NavAdmin;

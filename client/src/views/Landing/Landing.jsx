@@ -6,6 +6,7 @@ import CardProduct from "../../components/ProductList/CardProduct";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "./../../components/Footer/Footer";
 import "./Landing.css";
+import Scroll from "../../components/Scroll/Scroll";
 
 export const Landing = () => {
   const items = [
@@ -89,7 +90,7 @@ export const Landing = () => {
           </div>
         </div>
       </div>
-
+      <Scroll />
       <Footer />
     </div>
   );

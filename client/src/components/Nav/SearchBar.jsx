@@ -89,7 +89,12 @@ export default function SearchBar() {
   };
 
   const handleSetDisplay = () => {
-    if (search.length > 4) setDisplay(!display);
+    if (search.length > 4) {
+      setDisplay(!display);
+    } else if (search.length < 0) {
+      setDisplay(display);
+    }
+
     dispatch(getAllProduct("", "alfa"));
   };
 
