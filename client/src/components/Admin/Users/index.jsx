@@ -93,19 +93,20 @@ export default function UsersAdmin(props) {
 
           <tbody>
             {storeUsers.map((u) => (
-              <tr key={u.id}>
+             
+             <tr key={u.id}>
                 <td>{u.email}</td>
                 <td>{u.last_name + " " + u.first_name}</td>
                 <td>{u.active ? "Habilitado" : "Inhabilitado"}</td>
                 <td>{u.isAdmin ? "Si" : "No"}</td>
                 <td>
-                  <input
+                  {u.user_name != "superuser"?<input
                     className="checkbox"
                     type="checkbox"
                     value={u.id}
                     onChange={(e) => selectUser(e)}
                     defaultChecked={false}
-                  ></input>
+                  ></input> : null}
                 </td>
               </tr>
             ))}

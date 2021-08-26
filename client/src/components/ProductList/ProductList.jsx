@@ -261,7 +261,7 @@ function ProductList(props) {
                 }
               })
             ) : (
-              <h3 className="text-center mt-4">{noProduct()}</h3>
+              <h3 className="text-center mt-4" style={{height:"60vh"}}>No hay productos </h3>
             )}
           </div>
         </div>

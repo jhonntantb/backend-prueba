@@ -187,7 +187,6 @@ const ProductCreation = (props) => {
     <div className="container">
       <h1 className="text-center mt-3">Creación de productos</h1>
       <form>
-        <p>Order: 123</p>
         <div className="mb-3">
           <label className="form-label">Nombre del Producto</label>
           <input

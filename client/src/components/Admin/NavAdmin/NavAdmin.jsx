@@ -15,7 +15,7 @@ function NavAdmin() {
 
   return admin !== "null" ? (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid" style={{ marginTop: "10%" }}>
+      <div className="container-fluid" style={{ marginTop: "7%" }}>
         <span className="navbar-text">Tareas</span>
         <button
           className="navbar-toggler"
@@ -92,7 +92,7 @@ function NavAdmin() {
                 to="/admin/offices"
               >
                 {" "}
-                Officina{" "}
+                Oficina{" "}
               </NavLink>
             </li>
           </ul>
