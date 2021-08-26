@@ -94,6 +94,7 @@ export default function CartProduct({ content }) {
               quantity: parseInt(e.Order_Product.quantity)
             }
           })
+          dispatch(setLoading(true))
           //mapea a un formato valido y envia el dispatch
           dispatch(updateOrder(cart.order.id,
             {
@@ -102,14 +103,10 @@ export default function CartProduct({ content }) {
             }
           ))
           .then(() => {
-            dispatch(removePrice(content.id))
-            setTimeout(()=>{
-              dispatch(getCart(user.id))
-              if(prices.length===0) {
-                dispatch(clearCart())
-              }
-            }, 600)
+            dispatch(removePrice(content.id)) 
+            return dispatch(getCart(user.id))
           })
+          .then(() => dispatch(setLoading(false)))
         }
 
       }
