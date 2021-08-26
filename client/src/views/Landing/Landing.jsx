@@ -51,88 +51,80 @@ export const Landing = () => {
 
   return (
     <div  style={{marginTop:"1%"}}>
-      <section className=" welcome_area bg-img background-overlay" >
-       <div className="container h-100">
-         <div className="row h-100 align-items-center">
-           <div className="col-12">
-             <div className="hero-content text-center">
-              <h2 >Nueva Colecciòn</h2>
-             <NavLink className="btn essence-btn"  to="/productlist"> Comprar ahora</NavLink>
-             </div>
+    <section className=" welcome_area bg-img background-overlay" >
+     <div className="container h-100">
+       <div className="row h-100 align-items-center">
+         <div className="col-12">
+           <div className="hero-content text-center">
+            <h2 >Nueva ColecciÃ²n</h2>
+           <NavLink className="btn essence-btn" to="/productlist"> Comprar ahora</NavLink>
            </div>
          </div>
        </div>
-      </section>
-      <div class="top_catagory_area section-padding-80 clearfix">
-       <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-sm-6 col-md-4">
-           <div id="img1" className="single_catagory_area d-flex align-items-center justify-content-center bg-img" >
-            <div className="catagory-content">
-             <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Bastidores"))}}>Bastidores</NavLink>
-            </div>
-           </div>
+     </div>
+    </section>
+    <div class="top_catagory_area section-padding-80 clearfix">
+     <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-12 col-sm-6 col-md-4">
+         <div id="img1" className="single_catagory_area d-flex align-items-center justify-content-center bg-img" >
+          <div className="catagory-content">
+           <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Bastidores"))}}>Bastidores</NavLink>
           </div>
-          <div className="col-12 col-sm-6 col-md-4">
-           <div id="img2" className="single_catagory_area d-flex align-items-center justify-content-center bg-img"  >
-            <div className="catagory-content">
-             <NavLink  to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Agujas"))}}>Agujas</NavLink>
-            </div>
-           </div>
+         </div>
+        </div>
+        <div className="col-12 col-sm-6 col-md-4">
+         <div id="img2" className="single_catagory_area d-flex align-items-center justify-content-center bg-img"  >
+          <div className="catagory-content">
+           <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Agujas"))}}>Agujas</NavLink>
           </div>
-          <div className="col-12 col-sm-6 col-md-4">
-           <div id="img3" className="single_catagory_area d-flex align-items-center justify-content-center bg-img"  >
-            <div className="catagory-content">
-             <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Tijeras de Sastre"))}}>Tijeras</NavLink>
-
-            </div>
+         </div>
+        </div>
+        <div className="col-12 col-sm-6 col-md-4">
+         <div id="img3" className="single_catagory_area d-flex align-items-center justify-content-center bg-img"  >
+          <div className="catagory-content">
+           <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Tijeras de Sastre"))}}>Tijeras</NavLink>
           </div>
+         </div>
         </div>
       </div>
-      <section className="new_arrivals_area section-padding-80 clearfix">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div className="section-heading text-center">
-                <h2>Productos Populares</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div className="popular-products-slides owl-carousel owl-theme owl-loaded">
-                <div className="owl-stage-outer">
-                  <div
-                    className="owl-stage"
-                    style={{
-                      transform: "translate3d(-1995px, 0px, 0px)",
-                      transition: "all 1s ease 0s",
-                      width: "3420px",
-                    }}
-                  >
-                    {list.length > 2 &&
-                      list4.map((c) => (
-                        <CardProduct
-                          key={c.id}
-                          id={c.id}
-                          url={c.productimages[0].image_url}
-                          price={c.price}
-                          title={c.title}
-                        />
-                      ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <Scroll />
-      </section>
-      <Footer />
+     </div>
     </div>
+     <section className="new_arrivals_area section-padding-80 clearfix">
+      <div className="container">
+       <div className="row">
+        <div className="col-12">
+         <div className="section-heading text-center">
+          <h2>Productos Populares</h2>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div className="container">
+       <div className="row">
+          <div className="col-12">
+            <div className="popular-products-slides owl-carousel owl-theme owl-loaded">
+             <div className="owl-stage-outer">
+              <div className="owl-stage" style={{transform: "translate3d(-1995px, 0px, 0px)", transition: "all 1s ease 0s", width: "3420px"}}>
+              {list.length > 2 &&
+              list4.map((c) => (
+                <CardProduct
+                key={c.id} 
+                  id={c.id}
+                  url={c.productimages[0].image_url}
+                  price={c.price}
+                  title={c.title}/>
+              ))}
+              </div>
+             </div>
+            </div>
+          </div>
+       </div>
+      </div>
+      <Scroll />
+     </section>
+    <Footer />
+  </div>
   );
 };
 
