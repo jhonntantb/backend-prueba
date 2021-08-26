@@ -39,7 +39,7 @@ export const Landing = () => {
 
   let list4 = [];
 
-  list4.push(list[0], list[1], list[2], list[3]);
+  list4.push(list[0], list[1], list[2], list[4]);
 
   return (
     <div style={{ marginTop: "1%" }}>
@@ -48,7 +48,7 @@ export const Landing = () => {
           <div className="row h-100 align-items-center">
             <div className="col-12">
               <div className="hero-content text-center">
-                <h2>Nueva Colecciòn</h2>
+                <h2>Nueva Colección</h2>
                 <NavLink className="btn essence-btn" to="/productlist">
                   {" "}
                   Comprar ahora
@@ -107,29 +107,16 @@ export const Landing = () => {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <div className="popular-products-slides owl-carousel owl-theme owl-loaded">
-                <div className="owl-stage-outer">
-                  <div
-                    className="owl-stage"
-                    style={{
-                      transform: "translate3d(-1995px, 0px, 0px)",
-                      transition: "all 1s ease 0s",
-                      width: "3420px",
-                    }}
-                  >
-                    {list.length > 2 &&
-                      list4.map((c) => (
-                        <CardProduct
-                          key={c.id}
-                          id={c.id}
-                          url={c.productimages[0].image_url}
-                          price={c.price}
-                          title={c.title}
-                        />
-                      ))}
-                  </div>
-                </div>
-              </div>
+              {list.length > 2 &&
+                list4.map((c) => (
+                  <CardProduct
+                    key={c.id}
+                    id={c.id}
+                    url={c.productimages[0].image_url}
+                    price={c.price}
+                    title={c.title}
+                  />
+                ))}
             </div>
           </div>
         </div>
