@@ -20,11 +20,11 @@
   border: 1px solid #212529;
   margin: 2%;
   padding: 1%;
-  min-width: 30rem;
+  width: 25rem;
+  min-height: 31rem;
 }
 
 .about {
-  margin-top: 1.5rem;
   padding: 5px;
   width: 450px;
 }
@@ -79,15 +79,25 @@
 }
 
 #main-image {
-  height: 250px;
+  height: 200px;
   width: auto;
   object-fit: cover;
 }
 
 .imagen-container {
-  margin-top: 10px;
+  margin: 10px;
+  margin-bottom: 30px;
+  width: 351px;
+}
+
+.titulo {
+  width: 360px;
 }
 
 .descri-price {
-  margin-top: 40px;
+  width: 385px;
+}
+
+.botones-center {
+  width: 390px;
 }

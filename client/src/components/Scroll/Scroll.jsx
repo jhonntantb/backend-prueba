@@ -8,7 +8,7 @@ const Scroll = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (pageYOffset > 400) {
+    if (pageYOffset > 300) {
       setVisible(true);
     } else {
       setVisible(false);

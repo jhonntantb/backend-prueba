@@ -5,9 +5,14 @@ import Carrousel from "../../components/Carrousel/Carrousel";
 import CardProduct from "../../components/ProductList/CardProduct";
 import Footer from "./../../components/Footer/Footer";
 import "./Landing.css";
-import { NavLink } from 'react-router-dom';
+
+import Scroll from "../../components/Scroll/Scroll";
+import { NavLink } from "react-router-dom";
+
+
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
  
+
 
 
 
@@ -79,44 +84,53 @@ export const Landing = () => {
            <div id="img3" className="single_catagory_area d-flex align-items-center justify-content-center bg-img"  >
             <div className="catagory-content">
              <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Tijeras de Sastre"))}}>Tijeras</NavLink>
+
             </div>
-           </div>
           </div>
         </div>
-       </div>
       </div>
-       <section className="new_arrivals_area section-padding-80 clearfix">
+      <section className="new_arrivals_area section-padding-80 clearfix">
         <div className="container">
-         <div className="row">
-          <div className="col-12">
-           <div className="section-heading text-center">
-            <h2>Productos Populares</h2>
-           </div>
-          </div>
-         </div>
-        </div>
-        <div className="container">
-         <div className="row">
+          <div className="row">
             <div className="col-12">
-              <div className="popular-products-slides owl-carousel owl-theme owl-loaded">
-               <div className="owl-stage-outer">
-                <div className="owl-stage" style={{transform: "translate3d(-1995px, 0px, 0px)", transition: "all 1s ease 0s", width: "3420px"}}>
-                {list.length > 2 &&
-                list4.map((c) => (
-                  <CardProduct
-                  key={c.id} 
-                    id={c.id}
-                    url={c.productimages[0].image_url}
-                    price={c.price}
-                    title={c.title}/>
-                ))}
-                </div>
-               </div>
+              <div className="section-heading text-center">
+                <h2>Productos Populares</h2>
               </div>
             </div>
-         </div>
+          </div>
         </div>
-       </section>
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="popular-products-slides owl-carousel owl-theme owl-loaded">
+                <div className="owl-stage-outer">
+                  <div
+                    className="owl-stage"
+                    style={{
+                      transform: "translate3d(-1995px, 0px, 0px)",
+                      transition: "all 1s ease 0s",
+                      width: "3420px",
+                    }}
+                  >
+                    {list.length > 2 &&
+                      list4.map((c) => (
+                        <CardProduct
+                          key={c.id}
+                          id={c.id}
+                          url={c.productimages[0].image_url}
+                          price={c.price}
+                          title={c.title}
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Scroll />
+      </section>
       <Footer />
     </div>
   );

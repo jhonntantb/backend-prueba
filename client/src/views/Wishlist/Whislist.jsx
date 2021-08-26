@@ -36,37 +36,31 @@ export default function Wishlist() {
 
   return (
     Ready && (
-      <div>
-      <div className="container" style={{marginTop: "5%"}}>
+      <div className="container" style={{ marginTop: "11%" }}>
         <h2 className="text-dark text-center mt-5">Lista de favoritos</h2>
-      <div id="wishlist">
-        <div className="text-center">
-          {wishlist.length > 0 && typeof wishlist.map == "function" ? (
-            wishlist.map((wish) => {
-              return (
-                <>
-                  <CardProduct
-                    title={wish.product?.title}
-                    price={wish.product?.price}
-                    url={wish.product?.productimages[0].image_url}
-                    id={wish.product?.id}
-                    stock={wish.product?.stocks[0].quantity}
-                  />
-                  <Scroll />
-                </>
-              );
-            })
-          ) : (
-            <div>
-            <h1>{noproducts()}</h1>
-           
-            </div>
-          )}
+        <div id="wishlist">
+          <div className="text-center">
+            {wishlist.length > 0 && typeof wishlist.map == "function" ? (
+              wishlist.map((wish) => {
+                return (
+                  <>
+                    <CardProduct
+                      title={wish.product.title}
+                      price={wish.product.price}
+                      url={wish.product.productimages[0].image_url}
+                      id={wish.product.id}
+                      stock={wish.product.stocks[0].quantity}
+                    />
+                    <Scroll />
+                  </>
+                );
+              })
+            ) : (
+              <h1>{noproducts()}</h1>
+            )}
+          </div>
         </div>
       </div>
-      </div>
-      <Footer />
-    </div>
     )
   );
 }

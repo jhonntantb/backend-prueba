@@ -4,14 +4,14 @@ import { useDispatch } from "react-redux";
 import { getAllProduct } from "../../redux/actions/product/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import { getAllCategory } from "../../redux/actions/category/index.js";
-import { getCart } from "../../redux/actions/cart/index"
-import { getAllOrder } from "../../redux/actions/order/index"
+import { getCart } from "../../redux/actions/cart/index";
+import { getAllOrder } from "../../redux/actions/order/index";
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
 import { getWishlist } from "../../redux/actions/wishlist/index.js";
 import Scroll from "../Scroll/Scroll.jsx";
-import Footer from './../Footer/Footer';
-import  Swal  from 'sweetalert2';
+import Footer from "./../Footer/Footer";
+import Swal from "sweetalert2";
 
 function ProductList(props) {
   const dispatch = useDispatch();
@@ -28,14 +28,12 @@ function ProductList(props) {
   const [Maximo, setMaximo] = useState("");
   const [orden, setOrden] = useState("A-Z");
   useEffect(() => {
-    console.log('useEffect list productlist: ',list)
+    console.log("useEffect list productlist: ", list);
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
-    dispatch(getWishlist(id))
-    if(user.id)
-      dispatch(getAllOrder(user.id, "cart"))
-    else
-      dispatch(getCart())
+    dispatch(getWishlist(id));
+    if (user.id) dispatch(getAllOrder(user.id, "cart"));
+    else dispatch(getCart());
   }, []);
 
   var lista_filtrada = [];
@@ -46,7 +44,6 @@ function ProductList(props) {
       })
     );
   } else lista_filtrada = list;
-  
 
   if (Minimo != "" && Maximo != "") {
     lista_filtrada = lista_filtrada.filter((val) => {
@@ -131,149 +128,180 @@ function ProductList(props) {
           key={number}
           id={number}
           onClick={handleClick}
-          className={currentPage === number ? "activo" : null}
+          className={currentPage === number ? "activo page-item active" : null}
         >
-          {number}
+          <div
+            key={number}
+            id={number}
+            onClick={handleClick}
+            className="page-link numeros-numeros-paginado page-item active"
+            aria-current="page"
+          >
+            {number}
+          </div>
         </li>
       );
     } else {
       return null;
     }
   });
-  
+
   useEffect(() => {
-    
-    if(lista_filtrada.length<((pages.length)*10)){
-      setCurrentPage(1)
+    if (lista_filtrada.length < pages.length * 10) {
+      setCurrentPage(1);
     }
-  }, [lista_filtrada])
-   
+  }, [lista_filtrada]);
+
   const noProduct = () => {
-  Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Parece que no hay productos',
-    confirmButtonText: `Ok`,
-    allowOutsideClick: false,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      props.history.push("/")}})
-  }
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Parece que no hay productos",
+      confirmButtonText: `Ok`,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        props.history.push("/");
+      }
+    });
+  };
 
   const noProductSearch = () => {
     Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Parece que no hay productos que coincidan con ese nombre',
+      icon: "error",
+      title: "Oops...",
+      text: "Parece que no hay productos que coincidan con ese nombre",
       confirmButtonText: `Ok`,
-    })
-    }
-    
-  
+    });
+  };
 
   return list.length > 0 ? (
-    <div>
-    <div className="container-fluid main">
-      <div className="row">
-        <div id="tableleft" className="col-md-4 col-sm-12 mt-5">
-          <div className=" position-fixed  mx-5">
-            <label htmlFor="categories">Filtrar por categorias</label>
-            <select
-              className="form-select"
-              aria-label=".form-select-lg "
-              id="categories"
-              onChange={(e) => {
-                dispatch(SetCategoriesFiltradas(e.target.value));
-              }}
-            >
-              <option value={categoryFiltrada}>{categoryFiltrada}</option>
-              {categoryFiltrada != "Todas" && (
-                <option  value="Todas">Todas</option>
-              )}
-
-              {categorias &&
-                categorias.length > 0 &&
-                categorias.map(
-                  (lista) =>
-                    lista.name != categoryFiltrada && (
-                      <option value={lista.name}>{lista.name}</option>
-                    )
+    <div style={{ marginTop: "11%" }}>
+      <div className="container-fluid main">
+        <div className="row">
+          <div id="tableleft" className="col-md-4 col-sm-12 mt-5">
+            <div className=" position-fixed  mx-5">
+              <label htmlFor="categories">Filtrar por categorias</label>
+              <select
+                className="form-select"
+                aria-label=".form-select-lg "
+                id="categories"
+                onChange={(e) => {
+                  dispatch(SetCategoriesFiltradas(e.target.value));
+                }}
+              >
+                <option value={categoryFiltrada}>{categoryFiltrada}</option>
+                {categoryFiltrada != "Todas" && (
+                  <option value="Todas">Todas</option>
                 )}
-            </select>
-            <br />
-            <br />
-            <label>Precio </label>
-            <div className="input-group  mb-3">
-              <span class="input-group-text">$</span>
-              <input
-                className="form-control"
-                type="text"
-                name="Minimo"
-                id="Minimo"
-                placeholder="Minimo"
+
+                {categorias &&
+                  categorias.length > 0 &&
+                  categorias.map(
+                    (lista) =>
+                      lista.name != categoryFiltrada && (
+                        <option value={lista.name}>{lista.name}</option>
+                      )
+                  )}
+              </select>
+              <br />
+              <br />
+              <label>Precio </label>
+              <div className="input-group  mb-3">
+                <span class="input-group-text">$</span>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="Minimo"
+                  id="Minimo"
+                  placeholder="Minimo"
+                  onChange={(e) => {
+                    setMinimo(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="input-group">
+                <span class="input-group-text">$</span>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="Maximo"
+                  id="Maximo"
+                  placeholder="Maximo"
+                  onChange={(e) => {
+                    setMaximo(e.target.value);
+                  }}
+                />
+              </div>
+              <br />
+              <br />
+              <label htmlFor="categories">Ordenar </label>
+              <br />
+              <select
+                className="form-select"
+                id="categories"
                 onChange={(e) => {
-                  setMinimo(e.target.value);
+                  setOrden(e.target.value);
                 }}
-              />
+              >
+                <option value="A-Z">"A-Z"</option>
+                <option value="Z-A">"Z-A"</option>
+              </select>
             </div>
-            <div className="input-group">
-              <span class="input-group-text">$</span>
-              <input
-                className="form-control"
-                type="text"
-                name="Maximo"
-                id="Maximo"
-                placeholder="Maximo"
-                onChange={(e) => {
-                  setMaximo(e.target.value);
-                }}
-              />
-            </div>
-            <br />
-            <br />
-            <label htmlFor="categories">Ordenar </label>
-            <br />
-            <select
-              className="form-select"
-              id="categories"
-              onChange={(e) => {
-                setOrden(e.target.value);
-              }}
-            >
-              <option value="A-Z">"A-Z"</option>
-              <option value="Z-A">"Z-A"</option>
-            </select>
+          </div>
+          <div className="col-md-8">
+            {currentItems && currentItems.length > 0 ? (
+              currentItems.map((e) => {
+                if (e.stocks[0].quantity != 0) {
+                  return (
+                    <>
+                      <span key={e.id} className="card-deck   mx-1">
+                        <CardProduct
+                          title={e.title}
+                          price={e.price}
+                          url={e.productimages[0].image_url}
+                          id={e.id}
+                          stock={e.stocks.length > 0 ? e.stocks[0].quantity : 0}
+                        />
+                      </span>
+                      <Scroll />
+                    </>
+                  );
+                }
+              })
+            ) : (
+              <h3 className="text-center mt-4">{noProduct()}</h3>
+            )}
           </div>
         </div>
-        <div className="col-md-8">
-          {currentItems && currentItems.length > 0 ? (
-            currentItems.map((e) => {
-              if(e.stocks[0].quantity != 0) 
-              {
-              
-              return (
-                <>
-                  <span key={e.id} className="card-deck   mx-1">
-                    <CardProduct
-                      title={e.title}
-                      price={e.price}
-                      url={e.productimages[0].image_url}
-                      id={e.id}
-                      stock={
-                        e.stocks.length > 0 ? e.stocks[0].quantity : 0
-                      }
-                    />
-                  </span>
-                  <Scroll />
-                </>
-              )}
-            })
-          ) : (
-            <h3 className="text-center mt-4">{noProduct()}</h3>
-          )}
+        <div className="botones-paginado">
+          <nav aria-label="...">
+            <ul className="pagination justify-content-center">
+              <li className="pagination">
+                <button
+                  onClick={handlePrevbtn}
+                  disabled={currentPage === pages[0] ? true : false}
+                  className="page-link botones-botones-paginado"
+                >
+                  Anterior
+                </button>
+              </li>
+              {renderPageNumbers}
+              <li className="page-item">
+                <button
+                  onClick={handleNextbtn}
+                  disabled={
+                    currentPage === pages[pages.length - 1] ? true : false
+                  }
+                  className="page-link  botones-botones-paginado"
+                >
+                  Siguiente
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
-      </div>
-      <ul className="pageNumbers">
+        {/* <ul className="pageNumbers">
         <li>
           <button
             onClick={handlePrevbtn}
@@ -291,14 +319,12 @@ function ProductList(props) {
             next
           </button>
         </li>
-      </ul>
-    </div>
-    <Footer />
+      </ul> */}
+      </div>
+      <Footer />
     </div>
   ) : (
-    <h1 className="text-center mt-5">
-      {noProductSearch()}
-    </h1>
+    <h1 className="text-center mt-5">{noProductSearch()}</h1>
   );
 }
 

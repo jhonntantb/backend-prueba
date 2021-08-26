@@ -1,8 +1,6 @@
-
 .shop {
   margin-top: 5%;
 }
-
 
 #buttonshopping {
   color: #fff;
@@ -13,6 +11,9 @@
   border: 1px solid transparent;
   border-radius: 0.25rem;
   transition: background-color 0.3s;
+  width: 65%;
+  align-items: center;
+  margin-top: 15px;
 }
 
 #buttonshopping:hover {
@@ -39,4 +40,9 @@
   border: 1px solid transparent;
   border-radius: 0.25rem;
   transition: background-color 0.3s;
+}
+
+.ordenar {
+  display: flex;
+  flex-direction: row;
 }
