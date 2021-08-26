@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../../redux/actions/product";
 import Carrousel from "../../components/Carrousel/Carrousel";
 import CardProduct from "../../components/ProductList/CardProduct";
-import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "./../../components/Footer/Footer";
 import "./Landing.css";
 import Scroll from "../../components/Scroll/Scroll";
+import { NavLink } from "react-router-dom";
 
 export const Landing = () => {
   const items = [
@@ -29,6 +29,7 @@ export const Landing = () => {
       caption: "Slide 3",
     },
   ];
+
   const dispatch = useDispatch();
 
   const list = useSelector((state) => state.productReducer.products);
@@ -38,59 +39,103 @@ export const Landing = () => {
 
   let list4 = [];
 
-  //console.log("LIST: ",list5)
-  //console.log("acaaaa")
-  //console.log(list)
   list4.push(list[0], list[1], list[2], list[3]);
+
   return (
-    <div style={{ marginTop: "10%" }}>
-      <div class="container-fluid ">
-        <Carrousel images={items} />
-      </div>
-      {/* <div class="container-fluid position-relative">
-        <div class="row row-cols-lg-1 row-cols-md-2 row-cols-sm-2 row-cols-xs-2">
-          <div class="col col-xl-5 col-lg-6 col-md-12 col-sm-12 col-xs-12 position-relative">
-            <Newsletter />
+    <div style={{ marginTop: "1%" }}>
+      <section className=" welcome_area bg-img background-overlay">
+        <div className="container h-100">
+          <div className="row h-100 align-items-center">
+            <div className="col-12">
+              <div className="hero-content text-center">
+                <h2>Nueva Colecciòn</h2>
+                <NavLink className="btn essence-btn" to="/productlist">
+                  {" "}
+                  Comprar ahora
+                </NavLink>
+              </div>
             </div>
-            <div id="cardgroup" class="card-deck col col-lg-6  bottom-0 start-50 translate-middle-x">
-              <div className=" col-lg-12 col-md-12 col-sm-12">
-                <h2>Productos Destacados</h2>
-              {list.length > 2 &&
-                list4.map((c) => (
-                  <CardProduct
-                  key={c.id} 
-                    id={c.id}
-                    url={c.productimages[0].image_url}
-                    price={c.price}
-                    title={c.title}/>
-                ))}
+          </div>
+        </div>
+      </section>
+      <div class="top_catagory_area section-padding-80 clearfix">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12 col-sm-6 col-md-4">
+              <div
+                id="img1"
+                className="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+              >
+                <div className="catagory-content">
+                  <NavLink to="#">Bastidores</NavLink>
                 </div>
+              </div>
             </div>
-        </div>
-      </div> */}
-      <div class="container-fluid">
-        <h2 className="text-center">Productos Destacados</h2>
-        <div class="row">
-          <div class="col-md-3">
-            <Newsletter />
-          </div>
-          <div class="col-md-9">
-            <div>
-              {list.length > 2 &&
-                list4.map((c) => (
-                  <CardProduct
-                    key={c.id}
-                    id={c.id}
-                    url={c.productimages[0].image_url}
-                    price={c.price}
-                    title={c.title}
-                  />
-                ))}
+            <div className="col-12 col-sm-6 col-md-4">
+              <div
+                id="img2"
+                className="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+              >
+                <div className="catagory-content">
+                  <NavLink to="#">Agujas</NavLink>
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-sm-6 col-md-4">
+              <div
+                id="img3"
+                className="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+              >
+                <div className="catagory-content">
+                  <NavLink to="#">Tijeras</NavLink>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <Scroll />
+      <section className="new_arrivals_area section-padding-80 clearfix">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="section-heading text-center">
+                <h2>Productos Populares</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="popular-products-slides owl-carousel owl-theme owl-loaded">
+                <div className="owl-stage-outer">
+                  <div
+                    className="owl-stage"
+                    style={{
+                      transform: "translate3d(-1995px, 0px, 0px)",
+                      transition: "all 1s ease 0s",
+                      width: "3420px",
+                    }}
+                  >
+                    {list.length > 2 &&
+                      list4.map((c) => (
+                        <CardProduct
+                          key={c.id}
+                          id={c.id}
+                          url={c.productimages[0].image_url}
+                          price={c.price}
+                          title={c.title}
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Scroll />
+      </section>
       <Footer />
     </div>
   );

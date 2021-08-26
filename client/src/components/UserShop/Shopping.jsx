@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllOrder } from "../../redux/actions/order";
-import { getProduct } from "../../redux/actions/product";
 import CardOrder from "./CardOrder";
 import "./ButtonShopping.css";
 
@@ -12,7 +11,6 @@ function Shopping() {
   const [history, setHistory] = useState(true);
   const orders = useSelector((state) => state.orderReducer.orders);
 
-  //console.log("este es el usuaario",userid)
   useEffect(() => {
     // get orders de un usuario????
     dispatch(getAllOrder(userid));
@@ -21,13 +19,7 @@ function Shopping() {
     orders.length &&
       setOrderView(orders.filter((e) => e.status !== "delivered"));
   }, []);
-  console.log("este es el usuaario", userid);
 
-  // useEffect(() => {
-  //   orders.length &&
-  //     setOrderView(orders.filter((e) => e.status !== "delivered"));
-  // }, [orders]);
-  console.log(orders.products);
   //primero se muestra los productos que no tienen status  delivered luego pasa a history
   //historial
   const showHistory = (event) => {

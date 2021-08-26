@@ -10,8 +10,10 @@ import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
 import { getWishlist } from "../../redux/actions/wishlist/index.js";
 import Scroll from "../Scroll/Scroll.jsx";
+import Footer from "./../Footer/Footer";
+import Swal from "sweetalert2";
 
-function ProductList() {
+function ProductList(props) {
   const dispatch = useDispatch();
 
   const list = useSelector((state) => state.productReducer.products);
@@ -42,11 +44,6 @@ function ProductList() {
       })
     );
   } else lista_filtrada = list;
-  //console.log(list);
-  //console.log("CATEGORY" + categoryFiltrada);
-  //console.log("lISTA_FILTRADA" + lista_filtrada);
-  //console.log(Minimo);
-  // console.log(Maximo);
 
   if (Minimo != "" && Maximo != "") {
     lista_filtrada = lista_filtrada.filter((val) => {
@@ -150,140 +147,161 @@ function ProductList() {
   });
 
   useEffect(() => {
-    //console.log("esto es lista filtrada",lista_filtrada)
-    //console.log("pages*10",pages)
     if (lista_filtrada.length < pages.length * 10) {
       setCurrentPage(1);
     }
   }, [lista_filtrada]);
-  // console.log(lista_filtrada)
+
+  const noProduct = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Parece que no hay productos",
+      confirmButtonText: `Ok`,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        props.history.push("/");
+      }
+    });
+  };
+
+  const noProductSearch = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Parece que no hay productos que coincidan con ese nombre",
+      confirmButtonText: `Ok`,
+    });
+  };
 
   return list.length > 0 ? (
-    <div className="container-fluid main" style={{ marginTop: "11%" }}>
-      <div className="row">
-        <div id="tableleft" className="col-md-3 mt-5">
-          <div className="justify-content-start mx-5">
-            <label htmlFor="categories">Filtrar por categorias</label>
-            <select
-              className="form-select"
-              aria-label=".form-select-lg "
-              id="categories"
-              onChange={(e) => {
-                dispatch(SetCategoriesFiltradas(e.target.value));
-              }}
-            >
-              <option value={categoryFiltrada}>{categoryFiltrada}</option>
-              {categoryFiltrada != "Todas" && (
-                <option value="Todas">Todas</option>
-              )}
-
-              {categorias &&
-                categorias.length > 0 &&
-                categorias.map(
-                  (lista) =>
-                    lista.name != categoryFiltrada && (
-                      <option value={lista.name}>{lista.name}</option>
-                    )
+    <div style={{ marginTop: "11%" }}>
+      <div className="container-fluid main">
+        <div className="row">
+          <div id="tableleft" className="col-md-4 col-sm-12 mt-5">
+            <div className=" position-fixed  mx-5">
+              <label htmlFor="categories">Filtrar por categorias</label>
+              <select
+                className="form-select"
+                aria-label=".form-select-lg "
+                id="categories"
+                onChange={(e) => {
+                  dispatch(SetCategoriesFiltradas(e.target.value));
+                }}
+              >
+                <option value={categoryFiltrada}>{categoryFiltrada}</option>
+                {categoryFiltrada != "Todas" && (
+                  <option value="Todas">Todas</option>
                 )}
-            </select>
-            <br />
-            <br />
-            <label>Precio </label>
-            <div className="input-group  mb-3">
-              <span class="input-group-text">$</span>
-              <input
-                className="form-control"
-                type="text"
-                name="Minimo"
-                id="Minimo"
-                placeholder="Minimo"
+
+                {categorias &&
+                  categorias.length > 0 &&
+                  categorias.map(
+                    (lista) =>
+                      lista.name != categoryFiltrada && (
+                        <option value={lista.name}>{lista.name}</option>
+                      )
+                  )}
+              </select>
+              <br />
+              <br />
+              <label>Precio </label>
+              <div className="input-group  mb-3">
+                <span class="input-group-text">$</span>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="Minimo"
+                  id="Minimo"
+                  placeholder="Minimo"
+                  onChange={(e) => {
+                    setMinimo(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="input-group">
+                <span class="input-group-text">$</span>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="Maximo"
+                  id="Maximo"
+                  placeholder="Maximo"
+                  onChange={(e) => {
+                    setMaximo(e.target.value);
+                  }}
+                />
+              </div>
+              <br />
+              <br />
+              <label htmlFor="categories">Ordenar </label>
+              <br />
+              <select
+                className="form-select"
+                id="categories"
                 onChange={(e) => {
-                  setMinimo(e.target.value);
+                  setOrden(e.target.value);
                 }}
-              />
+              >
+                <option value="A-Z">"A-Z"</option>
+                <option value="Z-A">"Z-A"</option>
+              </select>
             </div>
-            <div className="input-group">
-              <span class="input-group-text">$</span>
-              <input
-                className="form-control"
-                type="text"
-                name="Maximo"
-                id="Maximo"
-                placeholder="Maximo"
-                onChange={(e) => {
-                  setMaximo(e.target.value);
-                }}
-              />
-            </div>
-            <br />
-            <br />
-            <label htmlFor="categories">Ordenar </label>
-            <br />
-            <select
-              className="form-select"
-              id="categories"
-              onChange={(e) => {
-                setOrden(e.target.value);
-              }}
-            >
-              <option value="A-Z">"A-Z"</option>
-              <option value="Z-A">"Z-A"</option>
-            </select>
+          </div>
+          <div className="col-md-8">
+            {currentItems && currentItems.length > 0 ? (
+              currentItems.map((e) => {
+                if (e.stocks[0].quantity != 0) {
+                  return (
+                    <>
+                      <span key={e.id} className="card-deck   mx-1">
+                        <CardProduct
+                          title={e.title}
+                          price={e.price}
+                          url={e.productimages[0].image_url}
+                          id={e.id}
+                          stock={e.stocks.length > 0 ? e.stocks[0].quantity : 0}
+                        />
+                      </span>
+                      <Scroll />
+                    </>
+                  );
+                }
+              })
+            ) : (
+              <h3 className="text-center mt-4">{noProduct()}</h3>
+            )}
           </div>
         </div>
-        <div className="col-md-9">
-          {currentItems && currentItems.length > 0 ? (
-            currentItems.map((e) => {
-              return (
-                <>
-                  <span key={e.id} className="card-deck   mx-1">
-                    <CardProduct
-                      title={e.title}
-                      price={e.price}
-                      url={e.productimages[0].image_url}
-                      id={e.id}
-                      stock={
-                        e.stocks.length > 0 ? e.stocks[0].quantity : undefined
-                      }
-                    />
-                  </span>
-                  <Scroll />
-                </>
-              );
-            })
-          ) : (
-            <h3 className="text-center mt-4">No hay productos</h3>
-          )}
+        <div className="botones-paginado">
+          <nav aria-label="...">
+            <ul className="pagination justify-content-center">
+              <li className="pagination">
+                <button
+                  onClick={handlePrevbtn}
+                  disabled={currentPage === pages[0] ? true : false}
+                  className="page-link botones-botones-paginado"
+                >
+                  Anterior
+                </button>
+              </li>
+              {renderPageNumbers}
+              <li className="page-item">
+                <button
+                  onClick={handleNextbtn}
+                  disabled={
+                    currentPage === pages[pages.length - 1] ? true : false
+                  }
+                  className="page-link  botones-botones-paginado"
+                >
+                  Siguiente
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
-      </div>
-      <div className="botones-paginado">
-        <nav aria-label="...">
-          <ul className="pagination justify-content-center">
-            <li className="pagination">
-              <button
-                onClick={handlePrevbtn}
-                disabled={currentPage === pages[0] ? true : false}
-                className="page-link botones-botones-paginado"
-              >
-                Anterior
-              </button>
-            </li>
-            {renderPageNumbers}
-            <li className="page-item">
-              <button
-                onClick={handleNextbtn}
-                disabled={
-                  currentPage === pages[pages.length - 1] ? true : false
-                }
-                className="page-link  botones-botones-paginado"
-              >
-                Siguiente
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      {/* <ul className="pageNumbers">
+        {/* <ul className="pageNumbers">
         <li>
           <button
             onClick={handlePrevbtn}
@@ -302,11 +320,11 @@ function ProductList() {
           </button>
         </li>
       </ul> */}
+      </div>
+      <Footer />
     </div>
   ) : (
-    <h1 className="text-center mt-5">
-      No hay productos que coincidan con ese nombre
-    </h1>
+    <h1 className="text-center mt-5">{noProductSearch()}</h1>
   );
 }
 

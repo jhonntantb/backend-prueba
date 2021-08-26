@@ -1,5 +1,6 @@
-import axios from "axios"
 import * as TYPES from "../types"
+import  axios  from 'axios';
+
 
 export const getCart = (userId) => {
     return async (dispatch) => {
@@ -33,5 +34,11 @@ export const addPrice = (newPrice) => {
 export const removePrice = (productId) => {
     return async (dispatch) => {
         return dispatch({ type: TYPES.REMOVE_PRICE, payload: productId})
+    }
+}
+
+export const clearCart = () => {
+    return async (dispatch) => {
+        return dispatch({ type: TYPES.CLEAR_CART})
     }
 }

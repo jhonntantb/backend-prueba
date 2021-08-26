@@ -5,6 +5,7 @@ import { getWishlist } from "../../redux/actions/wishlist";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router";
 import Scroll from "../../components/Scroll/Scroll";
+import Footer from "../../components/Footer/Footer";
 
 export default function Wishlist() {
   const dispatch = useDispatch();

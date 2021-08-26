@@ -1,10 +1,3 @@
-/* #cardgroup {
-    margin-top: 20%;
-    margin-bottom: 5%; 
-    margin-left: 5%;
-    align-content: space-around;
-    
-} */
 
 #cardgroup {
   display: flex;
@@ -15,6 +8,120 @@
   margin-left: 5%;
 }
 
-/*.col-md-12 {
-    justify-content:end ;
-}*/
+
+.welcome_area {
+  background-image: url(./images/imagen\ merceria\ 3.jpg);
+  position: relative;
+  z-index: 1;
+  margin-top: 4%;
+  width: 100%;
+  height: 600px;
+}
+
+.bg-img {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.welcome_area .hero-content h2 {
+  font-size: 60px;
+  color: #000000;
+  margin-bottom: 50px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.essence-btn {
+  display: inline-block;
+ justify-content: center;
+  min-width: 170px;
+  height: 50px;
+  color: #ffffff;
+  border: none;
+  border-radius: 0;
+  padding: 0 40px;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 50px;
+  background-color: #1f1f1f;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+.essence-btn:hover {
+  color: #ffffff;
+  background-color: #e07193;
+  transition: all 500ms ease 0s;
+  outline: 0 solid transparent;
+  font-weight: 600;
+}
+
+.section-padding-80 {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.single_catagory_area {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 240px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
+}
+
+.single_catagory_area .catagory-content a {
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  color: #643426;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 500ms ease 0s;
+text-decoration: none;
+outline: 0 solid transparent;
+}
+
+.catagory-content a:hover {
+  color: #000000;
+}
+
+
+#img1 {
+  background-image: url(./images/conopacidadbastidor.jpg)
+}
+#img2 {
+  background-image: url(./images/conopacidadaguja.jpg)
+}
+#img3 {
+  background-image: url(./images/conopacidadtijeras.jpg);
+}
+
+
+.section-heading {
+  margin-bottom: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.owl-carousel.owl-loaded {
+  display: block;
+}
+
+.owl-carousel {
+  display: none;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.owl-carousel .owl-stage-outer {
+  position: relative;
+  overflow: hidden;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
+}

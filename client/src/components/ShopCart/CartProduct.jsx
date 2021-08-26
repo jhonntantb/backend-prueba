@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder } from "../../redux/actions/order/index"
-import { getCart, addPrice, removePrice, setLoading } from "../../redux/actions/cart";
+import { getCart, addPrice, removePrice, setLoading, clearCart } from "../../redux/actions/cart";
 import "./CartProduct.css";
 import Swal from "sweetalert2";
 
@@ -14,6 +14,7 @@ export default function CartProduct({ content }) {
   const loading = useSelector(state => state.cartReducer.loading)
   const cart = useSelector(state => state.cartReducer.cart);
   const user = useSelector(state => state.userReducer.user);
+  const prices = useSelector(state => state.cartReducer.prices)
   
   //setea las cantidades iniciales
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function CartProduct({ content }) {
   useEffect(() => {
     //setea el precio local con el precio * cantidad
     setLocalPrice(content.price * cant);
+   
 
     //verifica si el usuario esta logueado validando si se trae o no una orden en el carrito
     if(cart.order)
@@ -61,13 +63,7 @@ export default function CartProduct({ content }) {
         .then(() => dispatch(setLoading(false)))//se habilitan los botones
       }
     }
-    else
-    {
-      //actualiza el local storage con las nuevas cantidades
-      let arr = cart.cartProducts.map((e) => (e.id == content.id ? { ...e, cant: cant } : e));
-      localStorage.setItem("cart", JSON.stringify(arr));
-      dispatch(getCart())
-    }
+    
   }, [cant]);
 
   //envia un nuevo objeto precio con el valor actualizado
@@ -95,8 +91,8 @@ export default function CartProduct({ content }) {
           orderProducts = orderProducts.map(e => {
             return {
               productId: e.id,
-              unitprice: Number(e.price),
-              quantity: Number(e.Order_Product.quantity)
+              unitprice: parseInt(e.price),
+              quantity: parseInt(e.Order_Product.quantity)
             }
           })
           //mapea a un formato valido y envia el dispatch
@@ -108,17 +104,15 @@ export default function CartProduct({ content }) {
           ))
           .then(() => {
             dispatch(removePrice(content.id))
-            dispatch(getCart(user.id))
+            setTimeout(()=>{
+              dispatch(getCart(user.id))
+              if(prices.length===0) {
+                dispatch(clearCart())
+              }
+            }, 600)
           })
         }
-        else
-        {
-          dispatch(removePrice(content.id))
-          //filtra el producto a borrar y setea el local storage
-          let arr = cart.cartProducts.filter((e) => e.id != content.id);
-          localStorage.setItem("cart", JSON.stringify(arr))
-          dispatch(getCart())
-        }
+
       }
     });
   };
@@ -146,9 +140,9 @@ export default function CartProduct({ content }) {
         <div class="col-xl-12 col-md-8 col-sm-12">
           <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
             <div class="media d-block d-sm-flex text-center text-sm-left">
-              <a class="cart-item-thumb mx-auto mr-sm-4" href="#">
+              <span class="cart-item-thumb mx-auto mr-sm-4">
                 <img src={content.productimages ? content.productimages[0].image_url : content.url} alt="Product" />
-              </a>
+              </span>
               <div class="media-body pt-3 align-text-center">
                 <h3 class="product-card-title font-weight-semibold border-0 pb-0 mx-5">
                   {content.title}
