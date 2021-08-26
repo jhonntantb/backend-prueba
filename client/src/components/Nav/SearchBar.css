@@ -64,11 +64,11 @@
   }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 900px) {
   .search {
     position: static;
     box-shadow: 0 0 40px rgb(51 51 51 / 10%);
-    margin-left: 2rem;
+    margin-left: 1px;
   }
 
   .search input {
