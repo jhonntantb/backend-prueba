@@ -166,17 +166,8 @@ function ProductList(props) {
     });
   };
 
-  const noProductSearch = () => {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Parece que no hay productos que coincidan con ese nombre",
-      confirmButtonText: `Ok`,
-    });
-  };
-
   return list.length > 0 ? (
-    <div style={{ marginTop: "11%" }}>
+    <div style={{ marginTop: "10%" }}>
       <div className="container-fluid main">
         <div className="row">
           <div id="tableleft" className="col-md-4 col-sm-12 mt-5">
@@ -324,7 +315,7 @@ function ProductList(props) {
       <Footer />
     </div>
   ) : (
-    <h1 className="text-center mt-5">{noProductSearch()}</h1>
+    <h1 className="text-center mt-5">No hay Productos!</h1>
   );
 }
 

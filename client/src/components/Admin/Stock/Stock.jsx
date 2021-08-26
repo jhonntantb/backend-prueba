@@ -9,7 +9,7 @@ import "./Stock.css";
 import "./Table.css";
 
 function Stock() {
-  var admin = localStorage.getItem("admin")
+  var admin = localStorage.getItem("admin");
   const dispatch = useDispatch();
   const { push } = useHistory();
 
@@ -79,8 +79,9 @@ function Stock() {
     push("/admin");
   };
   useEffect(() => {
-        idOffice.length>0&&setStock(productsAll.filter(e=>e.stocks[0].officeId===idOffice))
-    }, [idOffice])
+    idOffice.length > 0 &&
+      setStock(productsAll.filter((e) => e.stocks[0].officeId === idOffice));
+  }, [idOffice]);
 
   //-------------------------Paginado de Tablas------------------//
   const [currentPage, setCurrentPage] = useState(1);
@@ -130,50 +131,30 @@ function Stock() {
     }
   });
   //-------------------------------------------------------------------------
-  return admin!='null'?(
-    <div>
-      {/* <nav
-        className="navbar justify-content-start mx-3"
-        aria-label="breadcrumb"
-      >
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href={ROUTES.ADMIN}>Admin</a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Stock
-          </li>
-        </ol>
-      </nav> */}
+  return admin != "null" ? (
+    <div className="container-fluid mt-5">
+      <table className="row">
+        <div id="tableleft" className="col-md-2">
+          <h3 className=""> Oficinas</h3>
+          {offices && offices.length > 0 ? (
+            offices.map((office) => (
+              <div id="buttoncategory" className="mx-2 my-2" key={office.id}>
+                <button
+                  id="buttonstock"
+                  onClick={(e) => handleClickOffice(e, office.id)}
+                >
+                  {office.name}
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No hay oficinas</p>
+          )}
+        </div>
 
-      <br />
-
-      <div className="table-responsive">
-        <table className="table">
-          <div id="tableleft" className="d-table-cell ">
-            <h3 className="mx-4"> Oficinas</h3>
-            {offices && offices.length > 0 ? (
-              offices.map((office) => (
-                <div id="buttoncategory" className="mx-2 my-2" key={office.id}>
-                  <button
-                    id="buttonstock"
-                    onClick={(e) => handleClickOffice(e, office.id)}
-                  >
-                    {office.name}
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No hay oficinas</p>
-            )}
-          </div>
-
-          <table
-            id="tableright"
-            className="d-table-cell justify-content-center"
-          >
-            <h3 className="text-center">Stock</h3>
-
+        <table className="col-md-9">
+          <h3 className="text-center">Stock</h3>
+          <div>
             <thead>
               <tr>
                 <th scope="col">check</th>
@@ -212,40 +193,43 @@ function Stock() {
                     </tr>
                   ))
                 : null}
-              
             </tbody>
-          </table>
+          </div>
         </table>
-      </div>
+      </table>
 
-      { <nav aria-label="Page navigation example" className="pageNumbers">
-        <ul className="pagination justify-content-center">
-          <li className="page-item">
-            <button
-              onClick={handlePrevbtn}
-              disabled={currentPage === pages[0] ? true : false}
-            >
-              prev
-            </button>
-          </li>
-          {renderPageNumbers}
-          <li className="page-item">
-            <button
-              onClick={handleNextbtn}
-              disabled={currentPage === pages[pages.length - 1] ? true : false}
-            >
-              next
-            </button>
-          </li>
-        </ul>
-      </nav> }
+      {
+        <nav aria-label="Page navigation example" className="pageNumbers">
+          <ul className="pagination justify-content-center">
+            <li className="page-item">
+              <button
+                onClick={handlePrevbtn}
+                disabled={currentPage === pages[0] ? true : false}
+              >
+                prev
+              </button>
+            </li>
+            {renderPageNumbers}
+            <li className="page-item">
+              <button
+                onClick={handleNextbtn}
+                disabled={
+                  currentPage === pages[pages.length - 1] ? true : false
+                }
+              >
+                next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      }
       {stock && stock.length > 0 ? (
-                <button onClick={(e) => handleChanges(e)}>
-                  Enviar cambios
-                </button>
-              ) : null}
+        <button className="buttonstock" onClick={(e) => handleChanges(e)}>
+          Enviar cambios
+        </button>
+      ) : null}
     </div>
-  ):null;
+  ) : null;
 }
 
 export default Stock;
