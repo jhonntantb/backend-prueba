@@ -91,12 +91,15 @@ export default function SearchBar() {
   const handleSetDisplay = () => {
     if (search.length > 4) {
       setDisplay(!display);
-    } else if (search.length < 0) {
-      setDisplay(display);
     }
-
     dispatch(getAllProduct("", "alfa"));
   };
+
+  useEffect(() => {
+    if (search.length < 1) {
+      setDisplay(false);
+    }
+  }, [search]);
 
   return (
     <div ref={wrapperRef} className="search flex-container flex-column pos-rel">

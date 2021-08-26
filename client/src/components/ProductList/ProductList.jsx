@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { getAllProduct } from "../../redux/actions/product/index.js";
 import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import { getAllCategory } from "../../redux/actions/category/index.js";
-import { getCart } from "../../redux/actions/cart/index"
-import { getAllOrder } from "../../redux/actions/order/index"
+import { getCart } from "../../redux/actions/cart/index";
+import { getAllOrder } from "../../redux/actions/order/index";
 import "./ProductList.css";
 import CardProduct from "./CardProduct.jsx";
 import { getWishlist } from "../../redux/actions/wishlist/index.js";
@@ -29,11 +29,9 @@ function ProductList() {
     console.log("useEffect list productlist: ", list);
     !list.length && dispatch(getAllProduct());
     dispatch(getAllCategory());
-    dispatch(getWishlist(id))
-    if(user.id)
-      dispatch(getAllOrder(user.id, "cart"))
-    else
-      dispatch(getCart())
+    dispatch(getWishlist(id));
+    if (user.id) dispatch(getAllOrder(user.id, "cart"));
+    else dispatch(getCart());
   }, []);
 
   var lista_filtrada = [];
@@ -161,7 +159,7 @@ function ProductList() {
   // console.log(lista_filtrada)
 
   return list.length > 0 ? (
-    <div className="container-fluid main">
+    <div className="container-fluid main" style={{ marginTop: "11%" }}>
       <div className="row">
         <div id="tableleft" className="col-md-3 mt-5">
           <div className="justify-content-start mx-5">

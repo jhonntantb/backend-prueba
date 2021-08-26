@@ -43,7 +43,7 @@ export const Landing = () => {
   //console.log(list)
   list4.push(list[0], list[1], list[2], list[3]);
   return (
-    <div>
+    <div style={{ marginTop: "10%" }}>
       <div class="container-fluid ">
         <Carrousel images={items} />
       </div>

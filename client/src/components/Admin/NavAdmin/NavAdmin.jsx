@@ -6,6 +6,7 @@ import { getAllOffice } from "../../../redux/actions/office";
 import { getAllProduct } from "../../../redux/actions/product";
 import * as ROUTES from "../../../routes";
 import NotFound from "../../../views/NotFound/NotFound";
+import "./NavAdmin.css";
 
 function NavAdmin() {
   const dispatch = useDispatch();
@@ -13,11 +14,11 @@ function NavAdmin() {
   const admin = localStorage.getItem("admin");
 
   return admin !== "null" ? (
-    <nav class="navbar navbar-expand-lg navbar-light bg-light my-5">
-      <div class="container-fluid mt-5">
-        <span class="navbar-text">Tareas</span>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid" style={{ marginTop: "10%" }}>
+        <span className="navbar-text">Tareas</span>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -25,12 +26,12 @@ function NavAdmin() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav  pt-4,5 mb-lg-0">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav  pt-4,5 mb-lg-0">
             <h3 className="mx-3">/</h3>
-            <li class="nav-item">
+            <li className="nav-item">
               <NavLink
                 activeClassName="text-dark"
                 className="dropdown-item"
