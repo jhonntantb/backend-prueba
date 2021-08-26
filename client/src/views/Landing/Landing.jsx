@@ -37,7 +37,7 @@ export const Landing = () => {
        <div className="row h-100 align-items-center">
          <div className="col-12">
            <div className="hero-content text-center">
-            <h2 >Nueva Colección</h2>
+            <h2 >Te damos la bienvenida!</h2>
            <NavLink className="btn essence-btn" to="/productlist"> Comprar ahora</NavLink>
            </div>
          </div>

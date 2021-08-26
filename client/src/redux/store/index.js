@@ -2,9 +2,13 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../reducer/index";
 import thunk from "redux-thunk";
 
-const composeEnhancers = (typeof window !== 'undefined' && window.REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || "noCompose";
-// const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+// const composeEnhancers = (typeof window !== 'undefined' && window.REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || "noCompose";
+// // const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+var composeEnhancers = null;
 
+if(window.REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+    composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+}
 const ConfigureStore = () => {
 
     try {
@@ -19,7 +23,7 @@ const ConfigureStore = () => {
         return next(action);
     }
 
-    if (composeEnhancers !== "noCompose") {
+    if (composeEnhancers !== null) {
 
         return createStore(
             rootReducer, initialState,

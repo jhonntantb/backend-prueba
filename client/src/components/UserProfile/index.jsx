@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { getUser, updateUser } from '../../redux/actions/user'
 import PasswordChangePage from '../Authentication/PasswordChange';
+import Direction from './Direction';
 import Footer from '../Footer/Footer';
 import './index.css'
 
@@ -15,6 +16,7 @@ function Index() {
     //---------------------Render info----------------------------
     const [myData, setMyData] = useState(true)
     const [security, setSecurity] = useState(false)
+    const [showDirection,setShowDiretion]=useState(false)
 
     //--------------------Data User----------------------------
     const [disabledDirection, setDisabledDirection] = useState(true)
@@ -24,9 +26,9 @@ function Index() {
     const [firstName, setFirstName] = useState("")
     const [lastname, setLastname] = useState("")
     const [phone, setPhone] = useState("")
-    const [location, setLocation] = useState("")
-    const [province, setProvince] = useState("")
-    const [address, setAddress] = useState("")
+    // const [location, setLocation] = useState("")
+    // const [province, setProvince] = useState("")
+    // const [address, setAddress] = useState("")
 
     useEffect(() => {
         if (typeof user === "object") {
@@ -35,9 +37,9 @@ function Index() {
             setFirstName(user.first_name)
             setLastname(user.last_name)
             setPhone(user.phone_number)
-            setLocation(user.location)
-            setProvince(user.province)
-            setAddress(user.address)
+            // setLocation(user.location)
+            // setProvince(user.province)
+            // setAddress(user.address)
         }
     }, [user])
 
@@ -47,9 +49,9 @@ function Index() {
         e.target.id === "first_name" && setFirstName(e.target.value)
         e.target.id === "last_name" && setLastname(e.target.value)
         e.target.id === "phone" && setPhone(e.target.value)
-        e.target.id === "province" && setProvince(e.target.value)
-        e.target.id === "location" && setLocation(e.target.value)
-        e.target.id === "address" && setAddress(e.target.value)
+        // e.target.id === "province" && setProvince(e.target.value)
+        // e.target.id === "location" && setLocation(e.target.value)
+        // e.target.id === "address" && setAddress(e.target.value)
 
     }
     const showSecurity = (e) => {
@@ -63,14 +65,21 @@ function Index() {
         e.preventDefault()
         setMyData(true)
         setSecurity(false)
+        setShowDiretion(false)
     }
     const modifyUserData = (e) => {
         e.preventDefault();
         setDisabledUser(false)
+        setShowDiretion(false)
     }
     const modifyUserDirection = (e) => {
         e.preventDefault()
         setDisabledDirection(false)
+    }
+    const showDirections=(e)=>{
+        setShowDiretion(true)
+        setMyData(false)
+        setSecurity(false)
     }
 
     const changes = {
@@ -79,9 +88,9 @@ function Index() {
         last_name: lastname,
         email: email,
         phone_number: phone,
-        province: province,
-        location: location,
-        address: address
+        // province: province,
+        // location: location,
+        // address: address
     }
 
     const handleUserUpdate = (e) => {
@@ -115,14 +124,14 @@ function Index() {
                                             <ul>
                                                 <li > <button type="submit" className="items my-2" onClick={e => ShowMyData(e)}>Mis Datos</button></li>
                                                 <li > <button type="submit" className="items my-2" onClick={e => showSecurity(e)} >Seguridad</button></li>
-                                                <li> <button type="submit" className="items my-2" >Direcciones</button></li>
+                                                <li > <button type="submit" className="items my-2" onClick={e => showDirections(e)} >Direcciones</button></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-sm-9 grid-main px-5">
-                                {myData === true && user ?
+                                {myData === true && user &&
                                     <div className="column main">
                                         <form>
                                             <fieldset className="fieldset info">
@@ -186,7 +195,16 @@ function Index() {
                                             </div>
                                         </form>
                                     </div>
-                                    : <PasswordChangePage />}
+                                    }
+                                    {security&&
+                                    <div>
+                                    <PasswordChangePage />
+                                    </div>}
+                                    {showDirection&&
+                                        <div>
+                                            <Direction/>
+                                        </div>
+                                    }
                             </div>
                         </div>
                     </div>
