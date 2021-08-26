@@ -6,6 +6,7 @@ import CardProduct from "../../components/ProductList/CardProduct";
 import Footer from "./../../components/Footer/Footer";
 import "./Landing.css";
 import { NavLink } from 'react-router-dom';
+import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
  
 
 
@@ -51,7 +52,7 @@ export const Landing = () => {
            <div className="col-12">
              <div className="hero-content text-center">
               <h2 >Nueva Colecciòn</h2>
-             <NavLink className="btn essence-btn" to="/productlist"> Comprar ahora</NavLink>
+             <NavLink className="btn essence-btn"  to="/productlist"> Comprar ahora</NavLink>
              </div>
            </div>
          </div>
@@ -63,21 +64,21 @@ export const Landing = () => {
           <div className="col-12 col-sm-6 col-md-4">
            <div id="img1" className="single_catagory_area d-flex align-items-center justify-content-center bg-img" >
             <div className="catagory-content">
-             <NavLink to="#">Bastidores</NavLink>
+             <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Bastidores"))}}>Bastidores</NavLink>
             </div>
            </div>
           </div>
           <div className="col-12 col-sm-6 col-md-4">
            <div id="img2" className="single_catagory_area d-flex align-items-center justify-content-center bg-img"  >
             <div className="catagory-content">
-             <NavLink to="#">Agujas</NavLink>
+             <NavLink  to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Agujas"))}}>Agujas</NavLink>
             </div>
            </div>
           </div>
           <div className="col-12 col-sm-6 col-md-4">
            <div id="img3" className="single_catagory_area d-flex align-items-center justify-content-center bg-img"  >
             <div className="catagory-content">
-             <NavLink to="#">Tijeras</NavLink>
+             <NavLink to="/productlist"onClick={ ()=>{dispatch(SetCategoriesFiltradas("Tijeras de Sastre"))}}>Tijeras</NavLink>
             </div>
            </div>
           </div>
