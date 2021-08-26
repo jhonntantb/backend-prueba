@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import "./CardOrder.css";
 
 function CardOrder(props) {
-  const dispatch = useDispatch();
-  const [disabled, setDisabled] = useState(false);
+
+
 
   var color = "";
   if (props.status === "approved") color = "#A0D568";
@@ -17,8 +16,9 @@ function CardOrder(props) {
   if (props.status === "cancelled") color = "##ED5564";
 
   return (
+
     <div className="cardUserOrder text-center">
-      <div style={{ minHeight: "150px" }}>
+      <div style={{ minHeight: "150px", minWidth: "553px" }}>
         <p className="text-dark mt-2">
           Estado:{" "}
           <span style={{ color: color, fontSize: "20px", fontWeight: "bold" }}>
@@ -33,16 +33,18 @@ function CardOrder(props) {
         </ul>
         <h5>Precio Total: ${props.total_price}</h5>
       </div>
-      <div >
+      <div className="d-flex align-items-center">
         <div>
           <NavLink to={"/user/compras/" + props.id}>
-            <button className="btn btn-block btn-black rm-border">
+            <button className="ver-compras btn btn-block btn-black rm-border">
               Ver Compras
             </button>
           </NavLink>
         </div>
       </div>
+
     </div>
+
   );
 }
 

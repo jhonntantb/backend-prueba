@@ -36,7 +36,7 @@ import AccountConfirmation from './components/Authentication/Account/accountConf
 import Index from './components/UserProfile';
 import Office from './components/Admin/Office/Office';
 import Turnero from './components/Turnero/Turnero';
-import SearchAutoComplete from './components/Nav/SearchAutoComplete';
+
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
       <Route exact path={ROUTES.HOME} component={Home} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-  
+
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.ACCOUNT} component={Account} />
       <Route path={ROUTES.PRODUCTS} component={ProductList} />
@@ -72,10 +72,11 @@ function App() {
       <Route path="/user/compras/:id" exact component={UserOrdenDetail} />
       <Route path='/AccountConfirmation' component={AccountConfirmation} />
       <Route path={ROUTES.USER_DATA} component={Index} />
-      <Route exact path="/search_ac" component={SearchAutoComplete}/>
-      <Route path={ROUTES.ADMIN_OFFICES} exact component={Office}/>
-      <Route path="/user/turnero" exact component={Turnero}/>
-      
+
+      <Route path={ROUTES.ADMIN_OFFICES} exact component={Office} />
+      <Route path="/user/turnero" exact component={Turnero} />
+      <Route path={ROUTES.ABOUT_US} component={AboutUs} />
+
     </React.Fragment>
   )
 }

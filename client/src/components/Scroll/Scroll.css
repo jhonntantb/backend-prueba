@@ -1,7 +1,7 @@
 .scroll-to-top {
   position: fixed;
   bottom: 30px;
-  left: 94%;
+  left: 90%;
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
@@ -22,5 +22,11 @@
   }
   to {
     transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 600px) {
+  .scroll-to-top {
+    display: none;
   }
 }

@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { deleteWishlist } from "../../redux/actions/wishlist/index";
 import { createWishlist } from "../../redux/actions/wishlist/index";
 import { getWishlist } from "../../redux/actions/wishlist/index";
-import { updateOrder, createOrder } from "../../redux/actions/order/index"
+import { updateOrder, createOrder } from "../../redux/actions/order/index";
 import "./CardProduct.css";
 import Swal from "sweetalert2";
 
@@ -46,8 +46,6 @@ function CardProduct(props) {
     });
   };
 
-
-
   const addWishList = () => {
     Swal.fire({
       icon: "success",
@@ -70,48 +68,45 @@ function CardProduct(props) {
   }, [wishlist]);
 
   const handleAddCart = () => {
-
     if (user.id) {
-      
-      const prod = [{
-        productId: props.id,
-        unitprice: parseInt(props.price),
-        quantity: 1
-      }]
-      console.log("este es el producto que voy a mandar " , prod)
-
-        if(cart.order!=null)
+      const prod = [
         {
-  
-                if(cart.cartProducts.find(e => e.id == prod[0].productId))
-                  {productAlert()}
-                else
-                    { 
-                      console.log("entro al update")
-                      const orderProducts = cart.cartProducts.map(e => {
-                        return {
-                          productId: e.id,
-                          unitprice: parseInt(e.price),
-                          quantity: parseInt(e.Order_Product.quantity)
-                        }
-                      })
-                      dispatch(updateOrder(cart.order.id,
-                        {...cart.order, products: orderProducts.concat(prod)}
-                      ))
-                      .then(() => {
-                        setTimeout(()=>{
-                          dispatch(getCart(user.id))
-                          setAdd(true);
-                          sweetAlert();
+          productId: props.id,
+          unitprice: parseInt(props.price),
+          quantity: 1,
+        },
+      ];
+      console.log("este es el producto que voy a mandar ", prod);
 
-                        }, 600)
-
-                      })
-                    }
+      if (cart.order != null) {
+        if (cart.cartProducts.find((e) => e.id == prod[0].productId)) {
+          productAlert();
+        } else {
+          console.log("entro al update");
+          const orderProducts = cart.cartProducts.map((e) => {
+            return {
+              productId: e.id,
+              unitprice: parseInt(e.price),
+              quantity: parseInt(e.Order_Product.quantity),
+            };
+          });
+          dispatch(
+            updateOrder(cart.order.id, {
+              ...cart.order,
+              products: orderProducts.concat(prod),
+            })
+          ).then(() => {
+            setTimeout(() => {
+              dispatch(getCart(user.id));
+              setAdd(true);
+              sweetAlert();
+            }, 600);
+          });
         }
-       else
-        { console.log("con este producto se creara la orden, " , prod)
-        dispatch(createOrder({
+      } else {
+        console.log("con este producto se creara la orden, ", prod);
+        dispatch(
+          createOrder({
             status: "cart",
             home_address: "",
             location: "",
@@ -121,25 +116,21 @@ function CardProduct(props) {
             postal_code: "0000",
             phone_number: "0000000000",
             userId: user.id,
-            products: prod
-          }))
-          .then(() => {
-            setTimeout(()=>{
-              dispatch(getCart(user.id))
-              setAdd(true);
-              sweetAlert();
-
-            }, 600)
-
+            products: [prod],
           })
-        }
-        
-    }else {
-      alert("por favor, ingresa para seguir comprando")
-      history.push("/signin")
+        ).then(() => {
+          setTimeout(() => {
+            dispatch(getCart(user.id));
+            setAdd(true);
+            sweetAlert();
+          }, 600);
+        });
+      }
+    } else {
+      alert("por favor, ingresa para seguir comprando");
+      history.push("/signin");
     }
-
-  }
+  };
 
   const handleSubmit = (e) => {
     console.log(typeof e.target.value);
@@ -174,29 +165,33 @@ function CardProduct(props) {
       }
     }
   };
-  
+
   return (
     <div className="card mt-5">
-      <div className="about text-center">
-        <NavLink
-          style={{ textDecoration: "none", color: "black" }}
-          to={`/product/${props.id}`}
-        >
-          <div className="text-center imagen-container">
-            <img  id="main-image" src={props.url}    />
-          </div>
-          <br />
-          <h6>{props.title}</h6>
-        </NavLink>
-        <div className="descri-price">
+      <div className="text-center">
+        <div className="about">
+          <NavLink
+            style={{ textDecoration: "none", color: "black" }}
+            to={`/product/${props.id}`}
+          >
+            <div className="text-center imagen-container">
+              <img className="nail" id="main-image" src={props.url} />
+            </div>
+            <div className="titulo text-center">
+              <h6>{props.title}</h6>
+            </div>
+          </NavLink>
+        </div>
+        <div className="descri-price text-center">
           <h3>${props.price}</h3>
           {props.stock > 0 && <h6>Stock Disponible </h6>}
         </div>
       </div>
-      <div className="cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
+
+      <div className="botones-center cart-button mt-3 px-2 d-flex justify-content-around align-items-center">
         <button
           className="carrito-button btn btn-dark text-uppercase "
-          disabled={add}
+          disabled={add || props.stock == 0}
           onClick={handleAddCart}
         >
           Añadir al carrito
