@@ -59,13 +59,13 @@ function Shopping() {
           <div className="col-md-10">
             {orderView && orderView.length > 0 ? (
               orderView.map((e) => (
-                <CardOrder
+                (e.status !== "cart")?(<CardOrder
                   id={e.id}
                   status={e.status}
                   products={e.products}
                   total_price={e.total_price}
                   className="justify-content-center"
-                />
+                />) : null
               ))
             ) : (
               <p>Aún no tiene Pedidos</p>
