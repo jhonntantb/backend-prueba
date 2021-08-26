@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllProduct } from "../../redux/actions/product/index.js";
 import { getSomeProduct } from "../../redux/actions/product/index.js";
+import { SetCategoriesFiltradas } from "../../redux/actions/category/index.js";
 import "./SearchBar.css";
 import "./SearchAC.css";
 
@@ -76,6 +77,7 @@ export default function SearchBar() {
   const handleClickSearch = () => {
     console.log("Filtrada: ", filtrada);
     dispatch(getSomeProduct(filtrada));
+    dispatch(SetCategoriesFiltradas("Todas"))
     setDisplay(false);
     setSearch("");
     push("/productlist");

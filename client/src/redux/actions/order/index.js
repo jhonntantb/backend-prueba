@@ -35,7 +35,7 @@ export const getAllOrder = (userId = null, status = null, productId = null) => {
         var dir = 'http://localhost:3001/order'
     else
     {
-        let dir = 'http://localhost:3001/order?'
+        var dir = 'http://localhost:3001/order?'
         userId && (dir += ("userId=" + userId + "&"))
         status && (dir += ("status=" + status + "&"))
         productId && (dir += ("status=" + productId + "&"))

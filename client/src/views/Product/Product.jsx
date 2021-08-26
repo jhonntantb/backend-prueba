@@ -183,7 +183,7 @@ export default function Product({ match }) {
                 ) : null}
               </div>
             </div>
-            <CreateReview match={match.params.id} />
+            {/* <CreateReview match={match.params.id} /> */}
             <ShowReviews reviews={product.reviews} />
             <Scroll />
             

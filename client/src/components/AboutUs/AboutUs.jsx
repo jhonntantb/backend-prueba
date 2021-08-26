@@ -131,7 +131,7 @@ const AboutUs = () => {
             <div className="col-xl-3 col-sm-6 mb-5">
               <div className="bg-white rounded shadow-sm py-5 px-4">
                 <img
-                  src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                  src="https://avatars.githubusercontent.com/u/66852989?v=4"
                   alt="imagen del profile"
                   width={100}
                   className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"

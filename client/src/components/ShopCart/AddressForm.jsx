@@ -102,11 +102,11 @@ export default function AddresForm({setAddress}){
                     <FormText>ej. 1706</FormText>
                 </FormGroup>
                  <br />
-                <FormGroup>
+                {/* <FormGroup>
                     <Label>Pais</Label>
                     <Input onChange={handleChange} type="text" value={pais} name="pais"  id="orderCountry"/>
                 </FormGroup>
-                 <br />
+                 <br /> */}
                 <FormGroup>
                     <Label>Numero de Telefono</Label>
                     <Input onChange={handleChange} type="text" value={telephone} name="telephone" maxLength="10" id="orderPhone"/>
