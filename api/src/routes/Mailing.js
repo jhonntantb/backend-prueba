@@ -451,7 +451,7 @@ router.post("/order", async (req, res, next) => {
         <td style="padding:0px;margin:0px;border-spacing:0;"><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="efe5a2c4-1b11-49e7-889d-856d80b40f63" data-mc-module-version="2019-10-22">
   <tbody>
     <tr>
-      <td style="padding:40px 0px 30px 0px; line-height:36px; text-align:inherit; background-color:#212529;" height="100%" valign="top" bgcolor="#212529" role="module-content"><div><div style="font-family: inherit; text-align: center"><span style="font-size: 46px; color: #ffffff; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif"><strong>Su pedido ha sido aprovado!</strong></span></div><div></div></div></td>
+      <td style="padding:40px 0px 30px 0px; line-height:36px; text-align:inherit; background-color:#212529;" height="100%" valign="top" bgcolor="#212529" role="module-content"><div><div style="font-family: inherit; text-align: center"><span style="font-size: 46px; color: #ffffff; font-family: &quot;trebuchet ms&quot;, helvetica, sans-serif"><strong>Su pedido ha sido aprobado!</strong></span></div><div></div></div></td>
     </tr>
   </tbody>
 </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="efe5a2c4-1b11-49e7-889d-856d80b40f63.2" data-mc-module-version="2019-10-22">

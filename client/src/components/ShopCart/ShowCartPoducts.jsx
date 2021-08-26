@@ -32,7 +32,7 @@ export default function ShowCartProduct() {
   console.log("length: ", cart.cartProducts.length);
 
   return cart.cartProducts.length > 0 ? (
-    <div style={{ marginTop: "7%" }}>
+    <div style={{ marginTop: "10%" }}>
       <h2 class="h6 d-flex flex-wrap justify-content-between align-items-center px-4 py-3 bg-secondary">
         <span>Productos</span>
         <NavLink class="font-size-sm" to="/productlist">
