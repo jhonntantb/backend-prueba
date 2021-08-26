@@ -1,68 +1,124 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import React from "react";
 import { createReview } from "../../redux/actions/review/index";
 import ReviewSeparator from "./ReviewSeparator";
+import Swal from "sweetalert2";
+import { FaStar } from "react-icons/fa";
 
 export default function CreateReview({ match }) {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.userReducer.user.id);
 
-  const [values, setValues] = React.useState({
-    description: "",
-    score: 1,
-    userId: id, //ACA TENGO QUE ACCEDER AL SESSION STORAGE PARA OBTENER EL USERID
-    productId: match,
-  });
+ 
   const [send, setsend] = useState("False");
+
   function handleSubmit(e) {
-    e.preventDefault();
-    if (values.description.length < 1)
-      alert("La descripcion no puede estar vacio");
+    const mostrarAlerta = () => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "¡El campo no puede quedar vacio!",
+      });
+    };
+  
+    if (values.description.length < 1) mostrarAlerta();
     else if (parseInt(values.score) < 1 || parseInt(values.score) > 5)
-      alert("El Valor de score esta fuera del permitido");
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "El Valor de score esta fuera del permitido",
+    })
     else {
-      console.log(values);
       dispatch(createReview(values));
       setsend("true");
     }
   }
 
+  const stars = Array(5).fill(0);
+  const [values, setValues] = useState({
+    description: "",
+    score: 0,
+    userId: id, //ACA TENGO QUE ACCEDER AL SESSION STORAGE PARA OBTENER EL USERID
+    productId: match,
+  });
+  const [hoverValue, setHoverValue] = useState(undefined);
+
+  const colors = {
+    orange: "FFBA5A",
+    grey: "a9a9a9",
+  };
+
+  const handleClick = (value) => {
+    setValues({
+      ...values,
+      score: value,
+    });
+  };
+
+  const handleMouseOver = (value) => {
+    setHoverValue(value);
+  };
+
+  const handleMouseleave = () => {
+    setHoverValue(undefined);
+  };
+
+  const alertSucces = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Muchas gracias",
+      text: "Tu review se a enviado correctamente!",
+      showConfirmButton: false,
+      timer: 1400,
+    });
+  };
+
   return (
     <div className="container mt-5">
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="form-group mt-5">
-          <label for="email" class="col-sm-2 control-label mt-5">
-            <p className="text-dark">Dejanos tu review!</p>
+          <label for="email" class="col-sm-3 control-label mt-5">
+            <h3 className="text-dark">Dejanos tu review!</h3>
           </label>
           <div className="col-sm-5">
             <textarea
               className="form-control"
-              rows="5"
+              rows="6"
               onChange={(e) => {
                 setValues({ ...values, description: e.target.value });
               }}
             >
-              {" "}
             </textarea>
           </div>
           <div className="mt-2">
             <label className="mt-2" htmlFor="score">
               Selecciona una puntuación{" "}
             </label>
-            <select
-              id="score"
-              style={{ marginLeft: "5px" }}
-              onChange={(e) => {
-                setValues({ ...values, score: e.target.value });
-              }}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <div>
+              {stars.map((_, index) => {
+                return (
+                  <FaStar
+                    key={index}
+                    id="score"
+                    size={28}
+                    value={index}
+                    style={{
+                      marginRight: 10,
+                      cursor: "pointer",
+                    }}
+                    color={
+                      (hoverValue || values.score) > index
+                        ? colors.orange
+                        : colors.grey
+                    }
+                    onClick={() => handleClick(index + 1)}
+                    onMouseOver={() => handleMouseOver(index + 1)}
+                    onMouseLeave={handleMouseleave}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
         <input
@@ -72,12 +128,7 @@ export default function CreateReview({ match }) {
           value="Enviar"
         />
       </form>
-      {send == "true" && (
-        <div class="alert alert-success col-sm-5 mt-3" role="alert">
-          Perfecto! el formulario se envió correctamente
-        </div>
-      )}
-
+      {send === "true" && alertSucces()}
       <ReviewSeparator />
     </div>
   );

@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
+import {useHistory} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "../../redux/actions/category";
-import { createProduct, getAllProduct } from "../../redux/actions/product";
+import {createProduct,getAllProduct,} from "../../redux/actions/product";
 import { getAllOffice } from "../../redux/actions/office";
 import ReactFirebaseFileUpload from "../../components/FileUploader/FileUploader";
-import * as ROUTES from "../../routes";
 import "./ProductCreation.css";
 import NotFound from "../NotFound/NotFound";
+import Swal from "sweetalert2";
 
 const ProductCreation = (props) => {
-
-  const admin = localStorage.getItem("admin")
+  const admin = localStorage.getItem("admin");
 
   const dispatch = useDispatch();
+  const { push } = useHistory() ;
 
   const storeCategories = useSelector(
     (state) => state.categoryReducer.categories
   );
   const storeOffices = useSelector((state) => state.officeReducer.offices);
+  const products = useSelector((state) => state.productReducer.products);
 
   const [inputCategories, setInputCategories] = useState([]);
   const [inputOffice, setInputOffice] = useState([]);
@@ -37,25 +39,63 @@ const ProductCreation = (props) => {
 
   const [addProduct, setaddProduct] = useState(local_initial_state);
 
+  const handleAlert = () => {
+    Swal.fire({
+      icon: "success",
+      title: "¡Enhorabuena!",
+      text: "El producto se creó correctamente",
+      showConfirmButton: true,
+      
+    });
+  };
+
+  
+
+  useEffect(() => {
+    dispatch(getAllProduct());
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    var exist = false;
+    for(let i=0; i<products.length; i++){
+      if(products[i].catalog_id === addProduct.catalog_id) {
+      exist = true
+      break
+      } 
+    }
 
     if (
-      addProduct.title != "" &&
+      addProduct.title !== "" &&
       addProduct.resume !== "" &&
       addProduct.detail !== "" &&
       addProduct.price !== "" &&
       addProduct.catalog_id !== null &&
       addProduct.image.length > 0 &&
       addProduct.quantity > 0 &&
-      addProduct.office !== ""
+      addProduct.office !== "" &&
+      !exist 
     ) {
       dispatch(createProduct(addProduct));
       dispatch(getAllProduct());
-      props.history.push("/productlist");
+      handleAlert();
+      push("/productlist");
     } else {
-      throw alert("TODOS LOS CAMPOS SON OBLIGATORIOS");
+      if (exist) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Numero de catalogo ya existe, producto no creado',
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Debe completar todos los campos',
+        })
+      }
     }
+   
   };
 
   const handleChange = (e) => {
@@ -70,7 +110,7 @@ const ProductCreation = (props) => {
     var aux = [categorySelected];
 
     if (!e.target.checked) {
-      let filtered = inputCategories.filter((e) => e != categorySelected);
+      let filtered = inputCategories.filter((e) => e !== categorySelected);
       setInputCategories(filtered);
     } else {
       setInputCategories(inputCategories.concat(aux));
@@ -80,11 +120,12 @@ const ProductCreation = (props) => {
   function renderCategories() {
     return (
       <div>
-        {" "}
-        Categorias
+       <span className="fs-5">Categorias</span> 
+       <br />
         {storeCategories.map((c, i) => {
           return (
-            <div>
+            <div className="fs-6">
+              <br />
               <input
                 type="checkbox"
                 id={i}
@@ -92,7 +133,7 @@ const ProductCreation = (props) => {
                 value={c.id}
                 onChange={(e) => selectCategory(e)}
               />
-              <label for={i}>{c.name}</label>
+              <label key={i}>{c.name}</label>
               <br />
             </div>
           );
@@ -107,13 +148,11 @@ const ProductCreation = (props) => {
   }
 
   function renderOffices() {
-    console.log("store offices tiene : ", Object.keys(storeOffices));
     return (
       <div>
-        {" "}
-        Sucursal
+        <span className="fs-5 mr-2">Sucursal</span>
         {
-          <select onChange={(e) => selectOffice(e)}>
+          <select className=" mx-5 " onChange={(e) => selectOffice(e)}>
             {storeOffices.map((o, i) => (
               <option value={o.id}>{o.name}</option>
             ))}
@@ -143,18 +182,11 @@ const ProductCreation = (props) => {
     if (storeOffices.length > 0) setInputOffice(storeOffices[0].id);
   }, [storeOffices]);
 
-  // onSubmit={(e)=>handleSubmit(e)}
-  return admin!=='null'?(
+
+  return admin !== "null" ? (
     <div className="container">
-      {/* <nav className="navbar justify-content-start mx-3" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href={ROUTES.ADMIN}>Admin</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Stock</li>
-                </ol>
-            </nav> */}
       <h1 className="text-center mt-3">Creación de productos</h1>
       <form>
-        <p>Order: 123</p>
         <div className="mb-3">
           <label className="form-label">Nombre del Producto</label>
           <input
@@ -175,16 +207,16 @@ const ProductCreation = (props) => {
             autoComplete="off"
           />
         </div>
-        <div className="form-floating">
+        <div className="mb-3">
+          <label className="form-label">Detalle</label>
           <textarea
             name="detail"
             className="form-control"
             value={addProduct.detail}
             onChange={handleChange}
-            id="floatingTextarea"
             autoComplete="off"
+            rows="7"
           />
-          <label htmlFor="floatingTextarea">Detalle</label>
         </div>
 
         <div className="mb-3">
@@ -209,10 +241,11 @@ const ProductCreation = (props) => {
             name="catalog_id"
             value={addProduct.catalog_id}
             onChange={handleChange}
-            className="form-control"
-            placeholder="1000"
+            class="form-control"
             autoComplete="off"
+            required
           />
+          <div class="invalid-feedback">Se debe completar el campo</div>
         </div>
         <div className="mb-3">
           <label className="form-label">cantidad</label>
@@ -228,16 +261,12 @@ const ProductCreation = (props) => {
           />
         </div>
         {renderOffices()}
+        <br />
         {renderCategories()}
         <ReactFirebaseFileUpload
           storeImages={storeImages}
           setStoreImages={setStoreImages}
         />
-        {storeImages.length > 0
-          ? storeImages.forEach((url) => {
-              return <p>{url}</p>;
-            })
-          : null}
         <button
           disabled={storeImages.length > 0 ? false : true}
           id="buttonproduct"
@@ -249,7 +278,9 @@ const ProductCreation = (props) => {
         </button>
       </form>
     </div>
-  ):<NotFound/>;
+  ) : (
+    <NotFound />
+  );
 };
 
 export default ProductCreation;

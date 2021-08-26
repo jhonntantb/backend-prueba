@@ -6,11 +6,13 @@ const { Op } = require("sequelize");
 
 //////////  GET PRODUCT  /////////////
 router.get("/", async function (req, res, next) {
-  const { name } = req.query;
-
+  const { name, order } = req.query;
+  var orden;
+  if(order === 'alfa') {orden = 'title'} else {orden = 'catalog_id'};
+console.log('orden: ', orden)
   if (!name) {
     try {
-      const product = await Product.findAll({ order: [['catalog_id', 'ASC']], include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
+      const product = await Product.findAll({ order: [[orden, 'ASC']], include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
       res.status(200).json(product)
     }
     catch (error) { next(error) };
@@ -36,15 +38,30 @@ router.get("/", async function (req, res, next) {
 })
 
 router.get("/:idProducto", async function (req, res, next) {
-  try {
-
-    const product_id = req.params.idProducto;
-    console.log(product_id);
-    const product = await Product.findByPk(product_id, { include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
-    if (product) { return res.status(200).json(product) }
-    else { res.status(400) }
-  }
+  let product_id = req.params.idProducto;
+  // Si no viene nada en esta ruta (nulo) lo pone en cero, si no se rompe.
+  if(product_id === "null") product_id = 0;
+  
+  // Si el largo de product_id es mayor a 10 lo considera un UUID y busca por pk
+  // Si es menor lo considera un catalog id y busca por catalog id 
+  if(product_id.length > 10){
+   try {
+     const product = await Product.findByPk(product_id, { include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
+     if (product) { return res.status(200).json(product) }
+     else { res.status(400) }
+   }
   catch (error) { next(error) };
+  }
+  else
+  {
+    try {
+      const product = await Product.findAll({where: { catalog_id: product_id  }, include: [{ model: Category, attributes: ['id', 'name'] }, { model: Productimage, attributes: ['id', 'image_url'] }, { model: Review, attributes: ['id', 'date', 'score', 'description'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'] }] })
+      if (product) { return res.status(200).json(product) }
+      else { res.status(400) }
+    }
+   catch (error) { next(error) };
+  }
+
 })
 
 ///////////    POST PRODUCT    ///////////

@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { getAllOrder, getOrder } from "../../../redux/actions/order";
-import CardOrder from "./CardOrder";
-import * as ROUTES from "../../../routes";
 import "./PaginationTable.css";
 import "./Order.css";
 
-
 function Order() {
-  var admin = localStorage.getItem("admin")
+  var admin = localStorage.getItem("admin");
   const dispatch = useDispatch();
   const [orderView, setOrderView] = useState([]);
   const [status, setStatus] = useState("");
@@ -22,62 +19,65 @@ function Order() {
   useEffect(() => {
     setOrderView(orders);
   }, [orders]);
+  
   const handleStatus = (e) => {
     setStatus(e.target.value);
+    setCurrentPage(1)
   };
   useEffect(() => {
-    setOrderView(orders.filter((e) => e.status === status));
+    status.length>0&&setOrderView(orders.filter((e) => e.status === status));
   }, [status]);
 
-  //-------------------------Paginado de Tablas------------------//
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rows, setRows] = useState(10); //cardperPage
-  const [pageNumberLimit, setPageNumberLimit] = useState(5);
-  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
-  const [minPageNumberLmit, setMinPageNumberLmit] = useState(0);
-  const handleClick = (event) => {
-    setCurrentPage(Number(event.target.id));
-  };
-  const handleNextbtn = () => {
-    setCurrentPage(currentPage + 1);
-    if (currentPage + 1 > maxPageNumberLimit) {
-      setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
-      setMinPageNumberLmit(minPageNumberLmit + pageNumberLimit);
-    }
-  };
-  const handlePrevbtn = () => {
-    setCurrentPage(currentPage - 1);
-    if ((currentPage - 1) % pageNumberLimit === 0) {
-      setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
-      setMinPageNumberLmit(minPageNumberLmit - pageNumberLimit);
-    }
-  };
+ //-------------------------Paginado de Tablas------------------//
+ const [currentPage, setCurrentPage] = useState(1);
+ const [rows, setRows] = useState(10); //modificamos esto si queremos mostrar mas filas
+ const [pageNumberLimit, setPageNumberLimit] = useState(5);
+ const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+ const [minPageNumberLmit, setMinPageNumberLmit] = useState(0);
+ const handleClick = (event) => {
+   setCurrentPage(Number(event.target.id));
+ };
+ const handleNextbtn = () => {
+   setCurrentPage(currentPage + 1);
+   if (currentPage + 1 > maxPageNumberLimit) {
+     setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
+     setMinPageNumberLmit(minPageNumberLmit + pageNumberLimit);
+   }
+ };
+ const handlePrevbtn = () => {
+   setCurrentPage(currentPage - 1);
+   if ((currentPage - 1) % pageNumberLimit === 0) {
+     setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
+     setMinPageNumberLmit(minPageNumberLmit - pageNumberLimit);
+   }
+ };
 
-  const pages = [];
-  for (let i = 1; i <= Math.ceil(orderView.length / rows); i++) {
-    pages.push(i);
-  }
-  const indexOfLastItem = currentPage * rows;
-  const indexOfFirstItem = indexOfLastItem - rows;
-  const currentItems = orderView.slice(indexOfFirstItem, indexOfLastItem);
-  const renderPageNumbers = pages.map((number) => {
-    if (number < maxPageNumberLimit + 1 && number > minPageNumberLmit) {
-      return (
-        <li
-          key={number}
-          id={number}
-          onClick={handleClick}
-          className={currentPage === number ? "activo" : null}
-        >
-          {number}
-        </li>
-      );
-    } else {
-      return null;
-    }
-  });
+ const pages = [];
+ for (let i = 1; i <= Math.ceil(orderView.length / rows); i++) {
+   pages.push(i);
+ }
+ const indexOfLastItem = currentPage * rows;
+ const indexOfFirstItem = indexOfLastItem - rows;
+ const currentItems = orderView.slice(indexOfFirstItem, indexOfLastItem);
+ const renderPageNumbers = pages.map((number) => {
+   if (number < maxPageNumberLimit + 1 && number > minPageNumberLmit) {
+     return (
+       <li
+         key={number}
+         id={number}
+         onClick={e=>handleClick(e)}
+         className={currentPage === number ? "activo" : null}
+       >
+         {number}
+       </li>
+     );
+   } else {
+     return null;
+   }
+ });
+ //-------------------------------------------------------------------------
 
-  return admin!=='null'?(
+  return admin !== "null" ? (
     <div>
       <div>
         <br />
@@ -106,7 +106,7 @@ function Order() {
                 onClick={(e) => handleStatus(e)}
                 value={"cart"}
               >
-                Carro
+                Carrito
               </button>
             </div>
             <div id="buttoncategory" className="mx-2 my-2">
@@ -115,7 +115,7 @@ function Order() {
                 onClick={(e) => handleStatus(e)}
                 value={"checkout"}
               >
-                Pagado
+                Checkout
               </button>
             </div>
             <div id="buttoncategory" className="mx-2 my-2">
@@ -124,7 +124,7 @@ function Order() {
                 onClick={(e) => handleStatus(e)}
                 value={"cancelled"}
               >
-                Cancelado
+                Canceladas
               </button>
             </div>
             <div id="buttoncategory" className="mx-2 my-2">
@@ -133,7 +133,7 @@ function Order() {
                 onClick={(e) => handleStatus(e)}
                 value={"delivered"}
               >
-                Entregado
+                Entregadas
               </button>
             </div>
             <div id="buttoncategory" className="mx-2 my-2">
@@ -142,7 +142,7 @@ function Order() {
                 onClick={(e) => handleStatus(e)}
                 value={"approved"}
               >
-                Aprovado
+                Aprobadas
               </button>
             </div>
             <div id="buttoncategory" className="mx-2 my-2">
@@ -151,7 +151,7 @@ function Order() {
                 onClick={(e) => handleStatus(e)}
                 value={"rejected"}
               >
-                Rechazado
+                Rechazadas
               </button>
             </div>
           </div>
@@ -171,7 +171,7 @@ function Order() {
                     <th>detalle</th>
                   </tr>
                 </thead>
-                {currentItems.map((e) => (
+                {currentItems.length>0&&currentItems.map((e) => (
                   <tbody>
                     <tr>
                       <td>{e.id}</td>
@@ -193,28 +193,32 @@ function Order() {
         </div>
         <br />
 
-        { <ul className="pageNumbers">
-          <li>
-            <button
-              onClick={handlePrevbtn}
-              disabled={currentPage === pages[0] ? true : false}
-            >
-              prev
-            </button>
-          </li>
-          {renderPageNumbers}
-          <li>
-            <button
-              onClick={handleNextbtn}
-              disabled={currentPage === pages[pages.length - 1] ? true : false}
-            >
-              next
-            </button>
-          </li>
-        </ul> }
+        {
+          <ul className="pageNumbers">
+            <li>
+              <button
+                onClick={handlePrevbtn}
+                disabled={currentPage === pages[0] ? true : false}
+              >
+                prev
+              </button>
+            </li>
+            {renderPageNumbers}
+            <li>
+              <button
+                onClick={handleNextbtn}
+                disabled={
+                  currentPage === pages[pages.length - 1] ? true : false
+                }
+              >
+                next
+              </button>
+            </li>
+          </ul>
+        }
       </div>
     </div>
-  ):null;
+  ) : null;
 }
 
 export default Order;

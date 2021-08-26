@@ -1,48 +1,51 @@
-import React,{ useEffect } from 'react'
-import { useDispatch,useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import { getProduct } from '../../redux/actions/product'
-import "./CardOrder.css"
+import React from "react";
+import { NavLink } from "react-router-dom";
+import "./CardOrder.css";
 
 function CardOrder(props) {
-const dispatch = useDispatch()
 
-// useEffect(() => {
-//     dispatch(getProduct(props.products[0].id))
-// }, [])
 
-const product = useSelector(state => state.productReducer.product)
-var color="";
-if(props.status==="approved") color="green"
-if(props.status==="rejected") color="red"
-if(props.status==="shipped") color="orange"
-if(props.status==="delivered") color="blue"
-if(props.status==="cart") color="yellow"
-if(props.status==="checkout") color="brown"
-console.log(product)
 
-    return (
-        <div className="cardUserOrder">
-            <div>
-                {/* {
-                    product.length>0?<img src={product.productimages[0].image_url} alt="Not Fount" />:null
-                } */}
-            </div>
-            <br />
-            <div>
-                <p>Estado: <span style={{color:color,fontSize: "20px"}}>{props.status}</span></p>
-                <p>Productos comprados</p>
-                <ul>
-                    {props.products.map(e=> <li>{e.title}</li> )}
-                </ul>
-                <p>Precio Total: {props.total_price}</p>
-            </div>
-            {/* <div>
-                <NavLink>Ver Compra</NavLink>
-            </div> */}
-              
+  var color = "";
+  if (props.status === "approved") color = "#A0D568";
+  if (props.status === "rejected") color = "#ED5564";
+  if (props.status === "shipped") color = "#FF7500";
+  if (props.status === "delivered") color = "#4FC1E8";
+  if (props.status === "cart") color = "#FFCE54";
+  if (props.status === "checkout") color = "#5a3711";
+  if (props.status === "cancelled") color = "##ED5564";
+
+  return (
+
+    <div className="cardUserOrder text-center">
+      <div style={{ minHeight: "150px", minWidth: "553px" }}>
+        <p className="text-dark mt-2">
+          Estado:{" "}
+          <span style={{ color: color, fontSize: "20px", fontWeight: "bold" }}>
+            {props.status}
+          </span>
+        </p>
+        <h6 className="text-dark">Productos comprados</h6>
+        <ul>
+          {props.products.map((e) => (
+            <li>{e.title}</li>
+          ))}
+        </ul>
+        <h5>Precio Total: ${props.total_price}</h5>
+      </div>
+      <div className="d-flex align-items-center">
+        <div>
+          <NavLink to={"/user/compras/" + props.id}>
+            <button className="ver-compras btn btn-block btn-black rm-border">
+              Ver Compras
+            </button>
+          </NavLink>
         </div>
-    )
+      </div>
+
+    </div>
+
+  );
 }
 
-export default CardOrder
+export default CardOrder;

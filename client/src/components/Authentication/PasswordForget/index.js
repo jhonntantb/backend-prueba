@@ -1,15 +1,19 @@
 import { withFirebase } from '../../FireBase';
 import * as ROUTES from '../../../routes';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import NotFound from '../../../views/NotFound/NotFound';
+import { useHistory } from 'react-router';
+import Footer from '../../Footer/Footer';
+import { NavLink } from 'react-router-dom';
 
 const PasswordForgetPage = () => {
   const authUser= localStorage.getItem("pg_merceria");
   
-  return authUser!=='guest'?(<div>
+  return ( 
+            <div>
             <PasswordForgetForm />
-          </div>):<NotFound/>
+          </div>)
 };
 
 const INITIAL_STATE = {
@@ -19,6 +23,7 @@ const INITIAL_STATE = {
 
 function PasswordForgetFormBase(props) {
   const [state, setState] = useState(INITIAL_STATE)
+  var history=useHistory();
 
 
   const onSubmit = event => {
@@ -32,7 +37,8 @@ function PasswordForgetFormBase(props) {
       .catch(error => {
         setState({ error });
       });
-
+      alert("verifica tu casilla de correo para continuar")
+      history.push('/')
     event.preventDefault();
   };
 
@@ -45,27 +51,28 @@ function PasswordForgetFormBase(props) {
   const isInvalid = email === '';
 
   return (
-    <div className="container mt-5">
+    <div >
+    <div style={{marginTop:"10%"}} className="container">
       <div className="row content d-flex justify-content-center">
         <div className="col-md-5">
           <div className="box shadow bg-white p-4">
-            <h3 className="mb-4 text-center fs-1">Forgot your password?</h3>
+            <h3 className="mb-4 text-center fs-1">¿Olvidaste tu contraseña?</h3>
             <form className="mb-3" onSubmit={onSubmit}>
-              <div className="form-floating mb-3">
+              <div className="form mb-3">
+              <label for="floatingInput">Ingresa tu email</label>
                 <input
                   name="email"
                   value={state.email}
                   onChange={onChange}
                   type="text"
-                  placeholder="Email Address"
+                  placeholder="Direccion de email"
                   className="form-control"
                   id="floatingInput"
                 />
-                <label for="floatingInput">Type your email</label>
               </div>
               <div className="d-grip gap-2 mb-3 text-center">
                 <button className="btn btn-dark btn-lg border-0 rounded-0" disabled={isInvalid} type="submit">
-                  Reset My Password
+                  Resetear contraseña
                 </button>
               </div>
 
@@ -75,13 +82,16 @@ function PasswordForgetFormBase(props) {
 
         </div>
       </div>
+      
+    </div>
+   
     </div>
   );
 }
 
 const PasswordForgetLink = () => (
   
-    <Link  className="text-dark" to={ROUTES.PASSWORD_FORGET}>Olvide mi contraseña</Link>
+    <NavLink  className="text-dark" to={ROUTES.PASSWORD_FORGET}>Olvide mi contraseña</NavLink>
   
 );
 

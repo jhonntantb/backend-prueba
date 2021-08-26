@@ -1,20 +1,8 @@
 const router = require('express').Router();
-const { Order, User, Product, Order_Product, Office, Stock } = require('../db')
+const axios = require('axios');
+const { Order, User, Product, Order_Product, Office, Stock, Productimage } = require('../db')
 
 
-
-//////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
-// router.get("/:id",async (req, res, next) =>{
-//     try {
-//      //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
-//        const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product}]})
- 
-//        //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
-//         res.send(order)
-//     } catch (error) {
-//         next(error)
-//     }
-// })
 
 ///////////////   GET GENERAL usando query con userId o productId o status o combinados ////////////////////////////////
 // Si no viene ingun parametro en el query lista todas las ordenes
@@ -25,24 +13,20 @@ router.get("/",async (req, res,next) =>{
     userId ? filtro.userId = userId : null;
     productId ? filtroProd.id = productId: null;
     status ? filtro.status = status : null;
-
     try {
-        //   const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Product, where:filtroProd, attributes:['catalog_id','id','title']} ]  }); 
-        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product} ]  })  
+        const allOrder=await Order.findAll({where:filtro, include:[{model: User,  attributes: ['user_name', 'id', 'email'] }, {model: Order_Product },{model:Product, include: [{ model: Productimage, attributes: ['id', 'image_url'] }, { model: Stock, attributes: ['id', 'quantity', 'officeId'], include: {model: Office, attributes:['codesuc','name']} }] } ]  })  
         res.send(allOrder)
      } catch (error) {
         next(error)
 
 } 
 })
+
 //////////////////// GET ESPECIFICO POR ID /////////////////////////////////////
 router.get("/:id",async (req, res, next) =>{
     try {
-     //  const order=await Order.findByPk(req.params.id, {include:[{model: User,  attributes: ['user_name','id'] },{model: Product, attributes:['catalog_id','id','title']} ] })
-       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product},{model:User},{model:Product}]})
- 
-       //    const order=await Order.findOne({where:{id:req.params.id}, include:[{model: User,  attributes: ['user_name'] },{model: Product, attributes:['catalog_id'], include:[{model: Order_Product, attributes:['quantity','unitprice']}]} ] })
-        res.send(order)
+       const order=await Order.findByPk(req.params.id, {include: [{model: Order_Product},{model:User},{model:Product, include: [{ model: Productimage, attributes: ['id', 'image_url'] },{ model: Stock, attributes: ['id', 'quantity', 'officeId'], include: {model: Office, attributes:['codesuc','name']} }]}]})
+       res.send(order)
     } catch (error) {
         next(error)
     }
@@ -51,10 +35,8 @@ router.get("/:id",async (req, res, next) =>{
 
 // relacion con oficina (pendiente)
 //la orden se relaciona con una oficina---->con un calendario
-//-----> para el front  si el usuario no esta logueado pedir los datos necesarios para el delivery
 
 //////////// P O S T ////////////////////////////////////////******/
-
 // *************** FORMATO EJEMPLO DEL POST **********************
 // {"status": "En preparacion",
 // "total_price": 10000,
@@ -122,27 +104,31 @@ router.put("/:id",async (req,res,next) => {
       // Busco orden a actualizar  
       const order=await Order.findByPk(req.params.id, {include:[{model: Order_Product}] })
       
-      // Elimino registros actuales de productos dela orden
-      const resultado  = await Order_Product.destroy({where:{orderId:req.params.id}})
       // Agrego registros actualizados de productos d ela orden y computo el costo total
       var total = 0;
       var promisesAux = []
-      req.body.products.forEach(async (e) => {
-          promisesAux.push( order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
-          total = total + (e.quantity * e.unitprice);
-      })
+      if(req.body.products) {
+          // Elimino registros actuales de productos dela orden
+          const resultado  = await Order_Product.destroy({where:{orderId:req.params.id}})
+          
+          req.body.products.forEach(async (e) => {
+              promisesAux.push( order.addProducts(e.productId, {through: {quantity: e.quantity, unitprice: e.unitprice}}))
+              total = total + (e.quantity * e.unitprice);
+          })
+      }
       await Promise.all(promisesAux)
 
-      order.status= req.body.status
-      order.total_price= total
-      order.home_address= req.body.home_address,
-      order.location= req.body.location,
-      order.province= req.body.province,
-      order.country= req.body.country,
-      order.delivery_date= req.body.delivery_date,
-      order.userId= req.body.userId
-      order.phone_number= req.body.phone_number
-      order.postal_code=req.body.postal_code
+      if(req.body.status) order.status= req.body.status;
+      if(req.body.products) order.total_price= total;
+      if(req.body.home_address) order.home_address= req.body.home_address;
+      if(req.body.location) order.location= req.body.location;
+      if(req.body.province) order.province= req.body.province;
+      if(req.body.country) order.country= req.body.country;
+      if(req.body.delivery_date) order.delivery_date= req.body.delivery_date;
+      if(req.body.phone_number) order.phone_number= req.body.phone_number;
+      if(req.body.postal_code) order.postal_code=req.body.postal_code;
+      
+      
       const saved_order = await order.save() 
 
       res.send(saved_order);
@@ -163,7 +149,8 @@ router.put('/:id/:Status', async (req, res) => {
     const statusNew = Status
     const statusDupla = statusAnt + "/" + statusNew;
     const validDuplas = [
-    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled"
+    "cart/checkout", "checkout/cart", "checkout/approved", "checkout/cancelled","approved/shipped","checkout/rejected","rejected/cancelled","shipped/delivered","approved/cancelled",
+    "cart/cancelled", "shipped/cancelled"
     ];
 
     if(!validDuplas.includes(statusDupla)) return res.status(300).send('Cambio de status invalido');
@@ -180,6 +167,17 @@ router.put('/:id/:Status', async (req, res) => {
       products.map( async e => {
         const [stock, created] = await Stock.findOrCreate({ defaults:{quantity: 0},where:{productId: e.dataValues.productId, officeId: sucid}})
         oper === 'resta' ?  stock.quantity = stock.quantity - e.dataValues.quantity : stock.quantity = stock.quantity + e.dataValues.quantity ;
+        
+        try {
+            
+            if(stock.quantity <= 5) {
+               let msgSend = axios.get(`http://localhost:3001/mail/stock/${e.dataValues.productId}`)
+               if(msgSend.data.length>0) {
+                   console.log("se envió mensaje LowSTOCK")
+               }
+            }
+        }catch (err) {console.log("error al enviar el mensaje de low stock " , err)}
+
         await stock.save()
       })
     } 
@@ -195,9 +193,10 @@ router.put('/:id/:Status', async (req, res) => {
 //solo puede deletear el admin
 router.delete("/:id",async (req, res) => {
     try {
-        await Order.destroy({where:{id:req.params.id}})
+        await Order.destroy({where:{id: req.params.id}})
         res.sendStatus(200)
-    } catch (error) {
+    } 
+    catch (error) {
         next(error)
     }
 })

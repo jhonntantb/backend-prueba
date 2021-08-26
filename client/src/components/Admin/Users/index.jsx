@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllUser, updateUser } from "../../../redux/actions/user/index";
-import { withFirebase } from "../../FireBase/index";
+import { getAllUser } from "../../../redux/actions/user/index";
+
 
 import SetAdminUser from "./SetAdminUser";
 import BannAdminUser from "./BannUser";
@@ -20,7 +20,7 @@ export default function UsersAdmin(props) {
 
   const storeUsers = useSelector((state) => state.userReducer.users);
 
-  //console.log("usersSelected tiene " + usersSelected.length + " elementos");
+
 
   function selectUser(e) {
     var userId = e.target.value;
@@ -42,8 +42,6 @@ export default function UsersAdmin(props) {
     var checkeds = document.getElementsByClassName("checkbox");
 
     for (let i = 0; i < checkeds.length; i++) {
-      //   console.log('esto es cada elemento ' , checkeds[i])
-      console.log();
       checkeds[i].checked = false;
     }
     setUsersSelected([]);
@@ -56,9 +54,7 @@ export default function UsersAdmin(props) {
     <div className="table-responsive">
       <h1 className="text-center mt-4">Control de usuarios</h1>
       <div className="table">
-        {/* {console.log('storeUsers[0].id: ' + storeUsers[0].id)}
-            {console.log('USERSELECTED: ' + usersSelected[0])} */}
-        <div id="tableleft" className="d-table-cell">
+        <div id="tableleft" className="d-table-cell me-5">
           <div className="mt-3">
             <SetAdminUser
               users={usersSelected}
@@ -84,7 +80,7 @@ export default function UsersAdmin(props) {
           </div>
         </div>
 
-        <table id="tableright" className="d-table-cell">
+        <table id="tableright" className="d-table-cell ms-5">
           <thead class="thead-warning">
             <tr>
               <th>Email</th>
@@ -97,19 +93,20 @@ export default function UsersAdmin(props) {
 
           <tbody>
             {storeUsers.map((u) => (
-              <tr key={u.id}>
+             
+             <tr key={u.id}>
                 <td>{u.email}</td>
                 <td>{u.last_name + " " + u.first_name}</td>
                 <td>{u.active ? "Habilitado" : "Inhabilitado"}</td>
                 <td>{u.isAdmin ? "Si" : "No"}</td>
                 <td>
-                  <input
+                  {u.user_name != "superuser"?<input
                     className="checkbox"
                     type="checkbox"
                     value={u.id}
                     onChange={(e) => selectUser(e)}
                     defaultChecked={false}
-                  ></input>
+                  ></input> : null}
                 </td>
               </tr>
             ))}

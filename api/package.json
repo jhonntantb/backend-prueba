@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.6",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -20,6 +22,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
     "pg": "^8.7.1",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0"
   }
 }

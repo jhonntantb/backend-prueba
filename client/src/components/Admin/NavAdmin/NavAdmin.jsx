@@ -6,19 +6,19 @@ import { getAllOffice } from "../../../redux/actions/office";
 import { getAllProduct } from "../../../redux/actions/product";
 import * as ROUTES from "../../../routes";
 import NotFound from "../../../views/NotFound/NotFound";
+import "./NavAdmin.css";
 
 function NavAdmin() {
   const dispatch = useDispatch();
 
-  const admin = localStorage.getItem("admin")
+  const admin = localStorage.getItem("admin");
 
-
-  return admin!=='null'?(
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <span class="navbar-text">Tareas</span>
+  return admin !== "null" ? (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid" style={{ marginTop: "7%" }}>
+        <span className="navbar-text">Tareas</span>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -26,12 +26,12 @@ function NavAdmin() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav  pt-4,5 mb-lg-0">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav  pt-4,5 mb-lg-0">
             <h3 className="mx-3">/</h3>
-            <li class="nav-item">
+            <li className="nav-item">
               <NavLink
                 activeClassName="text-dark"
                 className="dropdown-item"
@@ -54,15 +54,7 @@ function NavAdmin() {
                 Ordenes
               </NavLink>
             </li>
-            {/* <li class="nav-item">
-              <NavLink
-                activeClassName="text-dark"
-                className="dropdown-item"
-                to="#"
-              >
-                Review
-              </NavLink>
-            </li> */}
+        
             <li className="nav-item">
               <NavLink
                 activeClassName="text-dark"
@@ -93,11 +85,23 @@ function NavAdmin() {
                 Administrar Usuarios{" "}
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                activeClassName="text-dark"
+                className="dropdown-item"
+                to="/admin/offices"
+              >
+                {" "}
+                Oficina{" "}
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
-  ): <NotFound/>
+  ) : (
+    <NotFound />
+  );
 }
 
 export default NavAdmin;

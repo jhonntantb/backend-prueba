@@ -1,129 +1,71 @@
-import {goToCheckout} from '../../redux/actions/checkout/index';
-import {useDispatch, useSelector} from 'react-redux';
+import { goToCheckout } from '../../redux/actions/checkout/index';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import {updateOrderStatus, createOrder} from '../../redux/actions/order/index';
-import setDeliveryDate from './setDeliveryDate';
+import { updateOrder } from '../../redux/actions/order/index';
+import "./index.css"
 
-function CreateCheckoutButton ({products, direction}) {
+function CreateCheckoutButton({ products, direction }) {
   const dispatch = useDispatch()
   const user = useSelector(state => state.userReducer.user)
-  const createdOrder = useSelector(state => state.orderReducer.order)
+  const updatedOrder = useSelector(state => state.orderReducer.order)
+  const order = useSelector(state => state.cartReducer.cart.order)
   const mpData = useSelector(state => state.checkoutReducer.MP_data)
 
-  const [abble, setAbble] =useState(true)
-  
-  const productsToMP = products.map(p=> {
+  const [loading, setLoading] = useState(true)
+
+  const productsToMP = products.map(p => {
     return {
-        title: p.id,
-        price: p.price,
-        discount: 0,
-        quantity: p.cant
+      title: p.id,
+      price: p.unitprice,
+      discount: 0,
+      quantity: p.quantity
     }
   })
 
-  const productsToDB = products.map(p=> {
-    return {
-      productId: p.id,
-      unitprice: Number(p.price),
-      quantity: Number(p.cant)
-    }
-  })
 
-  console.log("esta es la direccion recibida en el checkoutbutton " , direction)
-
-  // useEffect(() => {
-  //   var total = products.reduce((acum, e) => acum + (e.price * e.cant), 0)
-
-  //   dispatch(createOrder({
-  //     status: "checkout",
-  //     total_price: total,
-  //     home_address: user.address,
-  //     location: user.location,
-  //     province: user.province,
-  //     country: user.country,
-  //     postal_code: 1111,
-  //     phone_numer: 0,
-  //     delivery_date: "2021-08-20",
-  //     userId: user.id,
-  //     products: productsOk
-  //   }))
-  // }, [])
-
-  // useEffect(() => {createdOrder.length > 0 && dispatch(goToCheckout(user.id, productsOk))}, [createdOrder])
-
-  useEffect(()=>{
+  useEffect(() => {
     
+      let totalPrice = 0;
+      
+      for(let i=0; i< products.length; i++) {
+        totalPrice = totalPrice + (products[i].price * products[i].cant)
+      }
 
-    if(mpData!==null) {
+      dispatch(updateOrder( order.id , 
+        {
+        status: "checkout",
+        home_address: direction.home_address,
+        location: direction.location,
+        total_price: totalPrice,
+        province: direction.province,
+        country: user.country,
+        postal_code: direction.postal_code,
+        phone_number: direction.phone_number,
+        })
+      )
+    
+  }, [])
+
+  useEffect(() => {updatedOrder.id && dispatch(goToCheckout(user.id, productsToMP))}, [updatedOrder])
+
+  useEffect(() => {
+    if(mpData && loading) {
         var script = document.createElement("script");
         script.src = "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
         script.type = "text/javascript";
-        script.dataset.preferenceId = mpData.id;
+        script.dataset.preferenceId = mpData;
         document.getElementById("button-checkout").innerHTML = "";
         document.querySelector("#button-checkout").appendChild(script);
+
+        setLoading(false)
     }
   }, [mpData])
 
-  // useEffect(()=>{
-    
-
-  //   if(direction.location!==undefined){
-      
-  //     var total = 0
-  //     products.forEach(e => {total = total + (e.price*e.cant)});
-
-  //     dispatch(createOrder({
-  //     status: "checkout",
-  //     total_price: total,
-  //     home_address: direction.home_address,
-  //     location: direction.location,
-  //     province: direction.province,
-  //     country: user.country,
-  //     postal_code: direction.postal_code,
-  //     phone_number: direction.phone_number,
-  //     delivery_date: setDeliveryDate(),
-  //     userId: user.id,
-  //     products: productsOk
-  //   }))}
-
-  // },[])
-
-  // The source domain must be completed according to the site for which you are integrating.
-  // For example: for Argentina ".com.ar" or for Brazil ".com.br".
-
-  function createMPpreference () {
-     console.log("esto es products " , products) 
-     console.log("esto es products[0]" , products[0])
-    var total = 0
-      products.forEach(e => total = total +  (e.price*parseInt(e.cant)));
-
-      dispatch(createOrder({
-      status: "checkout",
-      // total_price: total,
-      home_address: direction.home_address,
-      location: direction.location,
-      province: direction.province,
-      country: user.country,
-      postal_code: direction.postal_code,
-      phone_number: direction.phone_number,
-      // delivery_date: "",
-      userId: user.id,
-      products: productsToDB
-    }))
-
-    dispatch(goToCheckout(user.id, productsToMP))
-
-    setAbble(false)
-
-  }
-
-  return (<div>
-
-    <button disabled={!abble} onClick={createMPpreference} className='btn btn-block btn-black rm-border'>Confirmar Pedido</button>
-    <br/>
-    <div id='button-checkout'></div>
-  </div>)
-  
+  return (
+    <div>
+      <div className="btn btn-block rm-border" id='button-checkout' hidden={loading}></div>
+      <p className="btn btn-block rm-border" hidden={!loading}>...loading</p>
+    </div>)
 }
 
 export default CreateCheckoutButton;

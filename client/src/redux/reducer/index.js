@@ -10,6 +10,8 @@ import reviewReducer from '../actions/review/reducer';
 import stockReducer from '../actions/stock/reducer';
 import userReducer from '../actions/user/reducer';
 import checkoutReducer from '../actions/checkout/reducer';
+import wishlistReducer from '../actions/wishlist/reducer';
+import mailReducer from '../actions/mail/reducer';
 
 const rootReducer = combineReducers(
     {
@@ -23,7 +25,9 @@ const rootReducer = combineReducers(
         stockReducer,
         userReducer,
         cartReducer,
-        checkoutReducer
+        checkoutReducer,
+        wishlistReducer,
+        mailReducer
     }
 );
 

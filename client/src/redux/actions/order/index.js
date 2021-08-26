@@ -54,9 +54,15 @@ export const getOrdersFromUser = (userId, status) => {
     }
 }
 
-export const deleteOrder = (params) => {
+export const deleteOrder = (id) => {
     return async (dispatch) => {
-        const res = await axios.delete('http://localhost:3001/order', params)
+        const res = await axios.delete('http://localhost:3001/order/' + id)
         return dispatch({ type: TYPES.DELETE_ORDER, payload: res.data })
+    }
+}
+
+export const clearOrder = () => {
+    return (dispatch) => {
+        return dispatch({type: TYPES.CLEAR_ORDER})
     }
 }

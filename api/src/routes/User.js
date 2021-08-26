@@ -9,8 +9,10 @@ router.get("/:id", async  (req,res,next) => {
     console.log('id? ' + id)
     try {
         var user= await User.findByPk(id)
-
-        res.send(user)
+        //console.log("ESTO ES USER despues de buscar en la DB: " , user)
+        if(user) {res.send(user)}
+        else{throw  Error("no se encontró el usuario")}
+        
 
     } catch (err) {next(err)}
 })
@@ -48,8 +50,7 @@ router.post("/",async (req,res,next)=>{
     }
 })
 router.put("/",async (req,res,next)=>{
-//entra un array con los cambio a realizar
-
+//entra un array
  var arr = req.body
     //reformular para trabajar con promise.all
      arr.forEach(async (c) => {
@@ -78,6 +79,42 @@ router.delete("/:id",async (req,res,next)=>{
     }
 })
 
+router.get("/username/:user_name", async (req, res, next)=> {
+    const {user_name} = req.params
+
+    try {
+        let userPre = await User.findOne({where:{user_name: user_name}})
+        console.log("esto es userPre", userPre)
+        if(userPre.id) {
+            return res.send(userPre)
+        }else {
+            throw new Error(false)
+        }
+        
+    } catch(err) {
+        console.log("no se encontro el usuario")
+        return res.send(false)
+    }
+})
+
+router.get("/useremail/:email", async (req, res, next)=> {
+    const {email} = req.params
+
+    try {
+
+        let userPre = await User.findOne({where:{email: email}})
+    
+        if(userPre.id) {
+            res.send(userPre)
+        }else {
+            throw new Error(false)
+        }
+
+    } catch(err) {
+        console.log("no se encontro el email")
+        return res.send(false)
+    }
+})
 
 
 module.exports = router;

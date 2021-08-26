@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
     },
     user_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     first_name: {
@@ -41,7 +41,7 @@ module.exports = (sequelize) => {
     },
     active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: false,
       allowNull: false,
     },
     address: {
@@ -52,13 +52,22 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    postal_code: {
+      type:DataTypes.INTEGER,
+      allowNull:true
+    },
     province: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     country: {
       type: DataTypes.STRING,
+      defaultValue: 'Argentina',
       allowNull: true,
+    },
+     phone_number : {
+      type:DataTypes.BIGINT,
+      allowNull: true
     },
   });
 }
