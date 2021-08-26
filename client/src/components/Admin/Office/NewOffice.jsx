@@ -1,10 +1,12 @@
 import React,{ useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
+import { useHistory } from 'react-router-dom'
 import { createOffice, deleteOffice, getAllOffice } from '../../../redux/actions/office'
 function NewOffice() {
     const dispatch = useDispatch()
+    const {push} =useHistory()
     const [viewOffices,setViewOffices]=useState([])
-    const [renderOffices,setRenderOffices]=useState(false)
+    const [renderOffices,setRenderOffices]=useState(true)
     const [allCodesuc,setAllCodesuc]=useState([])
     const [renderNewOffice,setRenderNewOffice]=useState(false)
     const [newOffice,setNewOffice]=useState({
@@ -36,9 +38,7 @@ function NewOffice() {
     const deleteOffices=(event)=>{
         console.log(event.target.id)
         dispatch(deleteOffice(event.target.id))
-    }
-    const ShowOffices=(e)=>{
-        setRenderOffices(!renderOffices)
+        push("/admin/offices")
     }
     const renderFormNewOffice=(e)=>{
         setRenderNewOffice(!renderNewOffice)
@@ -46,43 +46,87 @@ function NewOffice() {
     return (
         <div>
             <div>
-                <button onClick={e=>ShowOffices(e)}>Ver las Oficinas</button>
-                {renderOffices&& viewOffices.map(e=> 
+                <h3>Sucursales Existentes</h3>
+                {renderOffices&&
                 <div> 
-                    <p>Nombre: {e.name}</p>
-                    <p>Dirección: {e.address}</p>
-                    <p>Telefono: {e.phone} </p>
-                    <p>Codesuc: {e.codesuc}</p>
-                    <button id={e.id} onClick={(event)=>deleteOffices(event)} >Eliminar Oficina</button>
-                </div>)}
+                    <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">Codesuc</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">modificar</th>
+                        </tr>
+                    </thead>
+                    {viewOffices.length>0&&viewOffices.map(e=>
+                            <tbody>
+                                <tr>
+                                    <td>{e.codesuc}</td>
+                                    <td>{e.name}</td>
+                                    <td>{e.address}</td>
+                                    <td>{e.phone}</td>
+                                    <td><button id={e.id} disabled={true} onClick={(event)=>deleteOffices(event)} >Eliminar Oficina</button></td>
+                                </tr>
+                            </tbody>   
+                        )}
+                </table> 
+                </div>}   
             </div>
             <br />
-            <br />
-            
             <div>
-                <button onClick={e=>renderFormNewOffice(e)}>Crear nueva Oficina</button>
-                {renderNewOffice&&
-                    <div>
-                    <form>
-                
-                    <div class="mb-3">
-                        <label htmlFor="codesuc" class="form-label">Codeduc</label>
-                        <input type="number" name="codesuc" min={Math.max(...allCodesuc)+1} class="form-control" id="codesuc" onChange={e=>handleChange(e)} />
-                    </div>
-                    <div class="mb-3">
-                        <label htmlFor="name" class="form-label">Nombre</label>
-                        <input type="text" name="name"  class="form-control" id="name" onChange={e=>handleChange(e)} />
-                    </div>
-                    <div class="mb-3">
-                        <label htmlFor="address" class="form-label">Dirección</label>
-                        <input type="text" name="address"  class="form-control" id="address" onChange={e=>handleChange(e)} />
-                    </div>
-                    <div class="mb-3">
-                        <label htmlFor="phone" class="form-label">Telefono</label>
-                        <input type="number" name="phone" class="form-control" id="phone" onChange={e=>handleChange(e)} />
+            <button onClick={e=>renderFormNewOffice(e)}>Crear nueva Oficina</button>
+            <br />
+            <br />
+            {renderNewOffice&&
+            <div className="col-sm-9 grid-main px-5">
+                <form>
+                <fieldset className="fieldset info">
+                    <legend className="legend">
+                    <span>Datos Requeridos Para la Creación</span>
+                    </legend>
+                        <br />
+                        <div className="field field-username required">
+                            <label htmlFor="codesuc" className="label">
+                                <span>Codesuc</span>
+                            </label>
+                            <div className="control">
+                                <input type="number" name="codesuc" className="input-text required-entry" aria-required="true" id="codesuc" onChange={e => handleChange(e)} />
+                            </div>
+                        </div>
+                        <div className="field field-email required">
+                            <label htmlFor="nombre" className="label">
+                                <span>Nombre</span>
+                            </label>
+                            <div className="control">
+                                <input type="text" name="name" className="input-text required-entry" aria-required="true" id="name" />
+                            </div>
+                         </div>
+                        <div className="field field-name-firstname required">
+                            <label htmlFo="address" className="label">
+                                <span>Dirección</span>
+                            </label>
+                            <div className="control">
+                            <input id="address" type="text" name="address" aria-required="true" class="input-text required-entry" onChange={e => handleChange(e)} />
+                            </div>
+                        </div> 
+                        <div className="field field-name-firstname required">
+                            <label htmlFo="phone" className="label">
+                                <span>Telefono</span>
+                            </label>
+                            <div className="control">
+                            <input id="phone" type="number" name="phone" aria-required="true" class="input-text required-entry" onChange={e => handleChange(e)} />
+                            </div>
+                        </div>   
+                    </fieldset>
+                    <div className="actions-toolbar">
+                        <div className="primary">
+                            <button type="submit" className="action save primary" onClick={e=>postNewOffice(e)}>
+                                <span>Crear Nueva Oficina </span>
+                            </button>
+                        </div>
                     </div>
                 </form>
-                <button onClick={e=>postNewOffice(e)} >Crear Nueva Oficina</button>
                 </div>}
             </div>
 
