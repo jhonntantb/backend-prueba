@@ -1,13 +1,16 @@
+import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "../../redux/actions/cart/index";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import OrderButton from "./OrderButton";
 import CartProduct from "./CartProduct";
+import { PRODUCTS } from "../../routes"
 import "./ShowCartProduct.css";
 
 export default function ShowCartProduct() {
   const dispatch = useDispatch();
+  const history = useHistory()
   const [total, setTotal] = useState(0);
   const cart = useSelector((state) => state.cartReducer.cart);
   const prices = useSelector((state) => state.cartReducer.prices);
@@ -16,9 +19,17 @@ export default function ShowCartProduct() {
   //get del carrito
   useEffect(() => {
     console.log(user.id);
-    if (user.id) dispatch(getCart(user.id));
-    else dispatch(getCart());
+    if (user.id) {
+      dispatch(getCart(user.id))
+    }
+    else {
+      dispatch(getCart())
+    };
   }, [user]);
+
+  useEffect(() => {
+    cart.cartProducts.length <= 0 && sweetAlert()
+  }, [cart])
 
   //calcular el total
   useEffect(() => {
@@ -29,6 +40,20 @@ export default function ShowCartProduct() {
     setTotal(acum);
   }, [prices]);
 
+  const sweetAlert = () => Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'No tienes productos en tu carrito',
+    confirmButtonText: 'Ok',
+    allowOutsideClick: false
+    })
+    .then((result) => {
+      if (result.isConfirmed) 
+      {
+        history.push(PRODUCTS)
+      }
+    })
+    
   console.log("length: ", cart.cartProducts.length);
 
   return cart.cartProducts.length > 0 ? (
@@ -69,11 +94,13 @@ export default function ShowCartProduct() {
 
       <OrderButton />
     </div>
-  ) : (
-    <div style={{ marginTop: "100px" }} className="text-center text-dark mt-5">
-      <h1 style={{ marginTop: "300px" }} className="text-center ">
-        No hay articulos en tu carrito
-      </h1>
-    </div>
-  );
+  ) : null//(
+  //   <div style={{ marginTop: "100px" }} className="text-center text-dark mt-5">
+  //     <h1 style={{ marginTop: "300px" }} className="text-center ">
+  //       {
+          
+  //       }
+  //     </h1>
+  //   </div>
+  // );
 }

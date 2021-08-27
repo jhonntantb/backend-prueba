@@ -132,7 +132,7 @@ function Stock() {
   });
   //-------------------------------------------------------------------------
   return admin != "null" ? (
-    <div className="container-fluid mt-5">
+    <div className="container-fluid mt-5" >
       <table className="row">
         <div id="tableleft" className="col-md-2">
           <h3 className=""> Oficinas</h3>
@@ -200,7 +200,7 @@ function Stock() {
 
       {
         <nav aria-label="Page navigation example" className="pageNumbers">
-          <ul className="pagination justify-content-center">
+          <ul className="pagination justify-content-center mt-5">
             <li className="page-item">
               <button
                 onClick={handlePrevbtn}
@@ -224,9 +224,11 @@ function Stock() {
         </nav>
       }
       {stock && stock.length > 0 ? (
-        <button className="buttonstock" onClick={(e) => handleChanges(e)}>
+        <div className="d-flex justify-content-center mb-5">
+        <button className="button-enviar-stock" onClick={(e) => handleChanges(e)}>
           Enviar cambios
         </button>
+        </div>
       ) : null}
     </div>
   ) : null;

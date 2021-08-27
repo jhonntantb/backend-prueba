@@ -34,7 +34,7 @@ function Shopping() {
   };
   return (
     <div className="container-fluid shop">
-      <div style={{ marginTop: "130px" }}>
+      <div style={{ marginTop: "200px" }}>
         {history === true ? (
           <h3 className="text-center">Seguimiento de Pedidos</h3>
         ) : (

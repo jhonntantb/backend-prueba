@@ -16,6 +16,11 @@
   width: 200px;
 }
 
-/* .button-enviar-stock {
-
-} */
+.button-enviar-stock {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
+  height: 50px;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}

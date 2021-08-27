@@ -29,11 +29,11 @@ function OrderDetail(props) {
         setmodifi(!modifi)
     }
 
-    useEffect(() => {
-        if(detailOrder.length===0) {
-            alerterror()
-        }
-    }, [dispatch])
+    // useEffect(() => {
+    //     if(detailOrder.length===0) {
+    //         alerterror()
+    //     }
+    // }, [dispatch])
 
     const handleStatusClick = (e) => {
         e.preventDefault()
@@ -72,7 +72,7 @@ function OrderDetail(props) {
     }
 
     return admin != 'null' ? (
-        <div>
+        <div style={{marginBottom: "100px"}}>
             <br />
             <h3 className="text-center">Detalle del Producto</h3>
             <div>

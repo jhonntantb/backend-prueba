@@ -81,7 +81,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <ul className="navbar-nav mx-4">
-              {authUser && admin != "null" ? (
+              {authUser && (admin != "null" && admin != undefined) ? (
                 <li className="nav-item">
                   {" "}
                   <NavLink
@@ -148,10 +148,10 @@ const Navbar = () => {
                 </ul>
               </li>
             )}
-            <ul className="navbar-nav mx-3">
+           <ul className="navbar-nav mx-3">
               <li className="nav-item">
-                <NavLink to={ROUTES.CART}>
-                  <button
+                <NavLink hidden={storeUser.id ? false : true} to={ROUTES.CART}>
+                <button
                     id="buttoncart"
                     className="btn btn-block btn-black rm-border"
                   >

@@ -101,7 +101,7 @@ function Index() {
     }
 
     return (
-        <div>
+        <div style={{ marginTop: "75px" }}>
         <main className="page-main">
             <div>
                 <div>

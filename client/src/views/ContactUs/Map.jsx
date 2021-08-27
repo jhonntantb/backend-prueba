@@ -5,16 +5,16 @@ import "./Map.css"
 
 export const Map = () => {
   return (
-    <div style={{marginTop:"5%"}} className="container-fluid">
+    <div style={{marginTop:"150px"}} className="container-fluid">
       <div className="page-title">
         <h2 className="title-contanct">Contactanos</h2>
       </div>
       <h3>Donde estamos</h3>
       <MapView /> <br /> <br />
       <span className="row row-fluid">
-        <div className="col col-container col-lg-6 col-md-12 col-sm-12">
+        <div className="col col-container col-lg-12 col-md-12 col-sm-12" style={{marginBottom: "100px"}}>
           <h4>Informacion de contacto</h4>
-          <div className="adress-container">
+          <div className="adress-container" >
             <div className="adress-text">
               <div className="adress-text-inner">
                 <span className="icon">
@@ -63,7 +63,7 @@ export const Map = () => {
             </div>
           </div>
         </div>
-        <div className="col col-container col-lg-6 col-md-12 col-sm-12 ">
+        <div hidden={true} className="col col-container col-lg-6 col-md-12 col-sm-12 ">
           <h4 >Escribinos</h4>
           <br />
           <div>
