@@ -8,8 +8,12 @@ import { BrowserRouter } from 'react-router-dom';
 import Firebase, { FirebaseContext } from './components/FireBase/index';
 import { Provider } from "react-redux";
 import ConfigureStore from "./redux/store/index";
+import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 const store = ConfigureStore();
+axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
 
