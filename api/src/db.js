@@ -17,12 +17,39 @@ if(CONNECT==='CLOUD') {
   });
   }
   else {
+
+    let sequelize =
+    process.env.NODE_ENV === "production"
+      ? new Sequelize(ELEPHANT_CONNECT,{
+          dialect: "postgres",
+          pool: {
+            max: 3,
+            min: 1,
+            idle: 10000,
+          },
+          dialectOptions: {
+            ssl: {
+              require: true,
+              // Ref.: https://github.com/brianc/node-postgres/issues/2009
+              rejectUnauthorized: false,
+            },
+            keepAlive: true,
+          },
+          ssl: true,
+        })
+      : new Sequelize(
+          `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/merceria`,
+          { logging: false, native: false }
+        );
+
+
   //Codigo para Postgress local
-   console.log('Conexión a base local');
-  var sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/merceria`, {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  });
+  // console.log('Conexión a base local');
+  //var sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/merceria`, {
+  //  logging: false, // set to console.log to see the raw SQL queries
+  //  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  //});
+  
   }
  
   
