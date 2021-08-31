@@ -7,14 +7,10 @@ export const getCart = (userId) => {
         let cart = {order: null, cartProducts: []}
         
         if (userId) {
-            let res = await axios.get("http://localhost:3001/order?status=cart&userId=" + userId)
+            let res = await axios.get("/order?status=cart&userId=" + userId)
             // console.log("esto es res.data en el reducer " , res.data)
             cart = res.data.length>0 ? {order: res.data[0], cartProducts: res.data[0].products} : {order: null, cartProducts : []}
-            // console.log(cart)
         }
-        // else
-        //     cart.cartProducts = JSON.parse(localStorage.getItem("cart")) || []
-        
         return dispatch({ type: TYPES.GET_CART, payload: cart})
     }
 }

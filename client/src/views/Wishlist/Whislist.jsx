@@ -25,6 +25,7 @@ export default function Wishlist() {
       icon: "error",
       title: "Oops",
       text: "Parece que todavia no tenes favoritos",
+      confirmButtonColor: "#ee8589",
       confirmButtonText: `Ir a productos`,
       allowOutsideClick: false,
     }).then((result) => {

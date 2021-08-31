@@ -7,7 +7,7 @@ export default function NotFound() {
     history.push("/");
   }
   return (
-    <div className="not-found text-center">
+    <div className="not-found text-center" style={{marginTop:"233px"}}>
       <img
         className="not-found"
         src="https://sabuss.com/404.png"

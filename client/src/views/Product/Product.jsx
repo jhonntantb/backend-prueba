@@ -134,7 +134,7 @@ export default function Product({ match }) {
   }
 
   return !Loading ? (
-    <div className="container" style={{marginTop:"5%"}}>
+    <div className="container" style={{ marginTop: "200px" }}>
       <div className="cartas">
         <div className="container-fluid">
           <div className="wrapper row box-shadow bg-white">
@@ -174,7 +174,7 @@ export default function Product({ match }) {
                   Añadir al carrito
                 </button>
 
-                {admin !== "null" ? (
+                {admin !== "null" && admin !== undefined  ? (
                   <NavLink to={`/productupdate/${product.id}`}>
                     <button className="btn btn-default mt-2 boton-modificar">
                       Modificar producto

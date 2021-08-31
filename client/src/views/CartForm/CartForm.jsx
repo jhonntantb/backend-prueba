@@ -20,7 +20,7 @@ export default function CartForm(){
     useEffect(() => dispatch(getCart(user.id)), [address])
 
     return (
-        <div style={{marginTop: "10%"}}>
+        <div style={{marginTop: "230px"}}>
             <div>
                 <h2>Detalles del Pedido</h2>
                 <CartReceipt/>

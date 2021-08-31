@@ -43,7 +43,7 @@ function UserOrdenDetail(props) {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{marginTop:"230px",marginBottom:"50px"}}>
       <h3 className="text-center mt-4">Detalle de la Orden</h3>
       <div className="row mt-4">
         <div className="col-md-4 border rounded">

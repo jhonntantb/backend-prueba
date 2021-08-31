@@ -19,12 +19,12 @@ function CardProduct(props) {
   const [Fav, addFav] = useState(false);
   const [add, setAdd] = useState(false);
 
-  // useEffect(() => {
-  //   if(cart.order)
-  //     setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
-  //   else
-  //       setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
-  // }, [cart])
+  useEffect(() => {
+    if(cart.order)
+      setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
+    else
+        setAdd(cart.cartProducts.find((prod) => props.id == prod.id) ? true : false)
+  }, [cart])
 
   const sweetAlert = () => {
     Swal.fire({
@@ -116,7 +116,7 @@ function CardProduct(props) {
             postal_code: "0000",
             phone_number: "0000000000",
             userId: user.id,
-            products: [prod],
+            products: prod,
           })
         ).then(() => {
           setTimeout(() => {
@@ -124,11 +124,25 @@ function CardProduct(props) {
             setAdd(true);
             sweetAlert();
           }, 600);
-        });
+          // dispatch(getCart(user.id));
+        })
+        ;
       }
     } else {
-      alert("por favor, ingresa para seguir comprando");
-      history.push("/signin");
+      // alert("por favor, ingresa para seguir comprando");
+      // history.push("/signin");
+      Swal.fire({
+        icon: "error",
+        title: "Oops",
+        text: "Debes estar logueado para añadir al carrito",
+        confirmButtonColor: "#ee8589",
+        confirmButtonText: "Iniciar sesión",
+        allowOutsideClick: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          history.push("/signin");
+        }
+      });
     }
   };
 

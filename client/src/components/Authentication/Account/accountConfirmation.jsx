@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { updateUser, getUser } from "../../../redux/actions/user";
 import Swal from 'sweetalert2'
+import { useHistory } from "react-router-dom";
 
 
 
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2'
 
 export default function AccountConfirmation(props) {
  
-
+  const history = useHistory()
   const dispatch = useDispatch()
 
   var search = props.location.search
@@ -47,9 +48,9 @@ export default function AccountConfirmation(props) {
       denyButtonText: `Mi cuenta`,
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "/productlist";
+        history.push("/productlist");
       } else if (result.isDenied) {
-        window.location.href = "/account";
+        history.push("/user/mydata")
       }
     })
   }

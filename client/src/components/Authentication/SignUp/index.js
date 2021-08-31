@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2'
 import { withRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +16,7 @@ import './index.css';
 
 
 const SignUpPage = () => (
-  <div>
+  <div style={{marginTop: "200px"}}>
     <SignUpForm />
   </div>
 );
@@ -106,7 +107,13 @@ function SignUpFormBase(props) {
 
   useEffect(() => {
     if (storeUser.email) {
-      alert("verifica tu correo electronico para continuar con el proceso")
+      Swal.fire({
+        icon:"success",
+        title:"Correcto",
+        text:"Verifica tu casilla de correo por favor",
+        confirmButtonText:"Ok",
+        confirmButtonColor:"#ee8589"
+      })
       dispatch(sendEmailConfirmation(storeUser))
       dispatch(clearUser())
       props.history.push(ROUTES.LANDING)
