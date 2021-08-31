@@ -8,14 +8,14 @@ const dataUsers = require ('./src/datasets/dataUsers')
 const dataReviews = require ('./src/datasets/dataReviews')
 
 // Syncing all the models at once.
-console.log('Connect: ', CONNECT)
+//console.log('Connect: ', CONNECT)
 
 // Para la base local poner en true para recarga productos ejemplo o false para no recargar
 var update = false ;
 
 // Si se va a usar la base de la cloud, el update debe estar en false para que no se pierda la info que vamos ingresando.
 // Por favor no cambiar !
-CONNECT === 'CLOUD' ? update = false : null ;
+//CONNECT === 'CLOUD' ? update = false : null ;
 conn.sync({ force: update }).then(() => {
 
   server.listen(process.env.PORT, () => {
