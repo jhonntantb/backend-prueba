@@ -90,9 +90,9 @@ function OrderDetail(props) {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{detailOrder.id}</td>
-                                        <td>{detailOrder.status}</td>
-                                        <td>{detailOrder.delivery_date}</td>
+                                        <td>{detailOrder?.id}</td>
+                                        <td>{detailOrder?.status}</td>
+                                        <td>{detailOrder?.delivery_date}</td>
                                     </tr>
 
                                 </tbody>
@@ -112,9 +112,9 @@ function OrderDetail(props) {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{detailOrder.user.first_name}</td>
-                                        <td>{detailOrder.user.last_name}</td>
-                                        <td>{detailOrder.user.email}</td>
+                                        <td>{detailOrder.user?.first_name}</td>
+                                        <td>{detailOrder.user?.last_name}</td>
+                                        <td>{detailOrder.user?.email}</td>
                                         <td>9807896789</td>
                                     </tr>
 
