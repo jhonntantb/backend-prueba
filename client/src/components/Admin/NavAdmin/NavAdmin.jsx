@@ -15,7 +15,7 @@ function NavAdmin() {
 
   return admin !== "null" ? (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid" style={{ marginTop: "200px" }}>
+      <div className="container-fluid" style={{ marginTop: "100px" }}>
         <span className="navbar-text">Tareas</span>
         <button
           className="navbar-toggler"

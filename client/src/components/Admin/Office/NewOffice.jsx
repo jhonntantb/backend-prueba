@@ -1,7 +1,8 @@
 import React,{ useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom'
-import { createOffice, deleteOffice, getAllOffice } from '../../../redux/actions/office'
+import { createOffice, deleteOffice, getAllOffice } from '../../../redux/actions/office';
+
 function NewOffice() {
     const dispatch = useDispatch()
     const {push} =useHistory()
@@ -66,7 +67,13 @@ function NewOffice() {
                                     <td>{e.name}</td>
                                     <td>{e.address}</td>
                                     <td>{e.phone}</td>
-                                    <td><button id={e.id} disabled={true} onClick={(event)=>deleteOffices(event)} >Eliminar Oficina</button></td>
+                                    <td>
+                                        <div  className="primary">
+                                        <button  type="submit" className="action save primary" id={e.id} disabled={true} onClick={(event)=>deleteOffices(event)} >
+                                            <span>Eliminar Oficina</span>
+                                        </button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>   
                         )}
@@ -75,7 +82,11 @@ function NewOffice() {
             </div>
             <br />
             <div>
-            <button onClick={e=>renderFormNewOffice(e)}>Crear nueva Oficina</button>
+                <div className="primary">
+                    <button type="submit" className="action save primary" onClick={e=>renderFormNewOffice(e)}>
+                        <span>Crear nueva Oficina</span>
+                        </button>
+                </div>
             <br />
             <br />
             {renderNewOffice&&

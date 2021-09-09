@@ -1,6 +1,7 @@
 import React,{ useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { getAllOffice, updateOffice } from '../../../redux/actions/office';
+import "./office.css"
 
 function UpadateOffice() {
     const dispatch=useDispatch();
@@ -30,10 +31,10 @@ function UpadateOffice() {
         setForm(!form)
         setIdOffice(e.target.id)
         const office=allOffices.find(o=>o.id===e.target.id)
-        setCodesuc(office.codesuc)
-        setName(office.name)
-        setPhone(office.phone)
-        setAddress(office.address)
+        setCodesuc(office?.codesuc)
+        setName(office?.name)
+        setPhone(office?.phone)
+        setAddress(office?.address)
     }
     const changes={
         codesuc:codesuc,
@@ -66,7 +67,13 @@ function UpadateOffice() {
                                     <td>{e.name}</td>
                                     <td>{e.address}</td>
                                     <td>{e.phone}</td>
-                                    <td><button id={e.id} onClick={(event)=>setUpdateOffice(event)} >Modificar Oficina</button></td>
+                                    <td>
+                                        <div className="primary">
+                                        <button  type="submit" className="action save primary" id={e.id} onClick={(event)=>setUpdateOffice(event)}>
+                                           <span>Modificar Oficina</span>
+                                        </button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>   
                         )}

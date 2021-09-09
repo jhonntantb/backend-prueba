@@ -35,8 +35,10 @@ const Navbar = () => {
               borderRadius: "50px",
               backgroundPosition: "center",
             }}
-            src="https://scontent.ftuc1-1.fna.fbcdn.net/v/t1.18169-9/10923273_406735952831411_3065322763382978546_n.jpg?_nc_cat=104&ccb=1-4&_nc_sid=09cbfe&_nc_ohc=mPv01XSVFSgAX9-cxzs&tn=s9y3TrQbg6IVf8rV&_nc_ht=scontent.ftuc1-1.fna&oh=5435ad22048225e9211a64eff661f9e7&oe=61377CD8"
+            src="https://scontent.flim1-4.fna.fbcdn.net/v/t1.18169-9/10923273_406735952831411_3065322763382978546_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGrxCVBF-VTWPkqhNBfjFLe7LRiD_fiG1nstGIP9-IbWa4_0SlMgwrRv7S6DBQ5NBYYoXOIZ9sS3NTf1K9H3MN1&_nc_ohc=7HZDMuT0pQEAX850BOX&_nc_ht=scontent.flim1-4.fna&oh=170fddbfb26d3a314fe1fa45a084d305&oe=615F09D8"
             alt="logotipo"
+            width="100px"
+            height="100px"
           />
         </NavLink>
         <button
