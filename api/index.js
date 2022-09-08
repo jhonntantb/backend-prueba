@@ -28,7 +28,7 @@ var update = false;
 CONNECT === "CLOUD" ? (update = false) : null;
 conn.sync({ force: update }).then(() => {
   server.listen(process.env.PORT, () => {
-    console.log("%s listening at 3001");
+    console.log("%s listening at 3001" + process.env.PORT);
 
     // ************  POR FAVOR NO COMENTAR ****************** //
 
